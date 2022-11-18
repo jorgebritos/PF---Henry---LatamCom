@@ -60,4 +60,31 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.put('/:id', async (req, res) => {
+    const selectedUser = await User.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+    if(selectedUser) {
+        let data = {...req.body}
+        res.send(data)
+        let cont = 0;
+        for (const i in data) {
+            if (Object.hasOwnProperty.call(data, i)) {
+                let items = Object.keys(data);
+                const element = data[i];
+                let item = items[cont++];
+
+                if(selectedUser[item] == data[item]) {
+                    console.log("son iguales")
+                } else {
+                    console.log("son distintas")
+                }
+            }
+        }
+    } else {
+        res.sendStatus(404)
+    }
+})
 module.exports = router
