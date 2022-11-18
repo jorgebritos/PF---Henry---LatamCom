@@ -40,6 +40,11 @@ module.exports = (sequelize) => {
       allowNull: true,
       defaultValue: 0
     },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
+    },
     softdelete: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
