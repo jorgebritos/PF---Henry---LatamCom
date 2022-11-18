@@ -31,6 +31,15 @@ module.exports = (sequelize) => {
       allowNull: true,
       defaultValue: 0
     },
+    brand: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    amountSold: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
     softdelete: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
