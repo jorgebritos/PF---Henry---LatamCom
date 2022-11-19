@@ -3,14 +3,15 @@ const axios = require("axios");
 const { Op } = require("sequelize");
 const { User } = require("../db.js");
 const router = Router();
-const {
-    API_KEY
-} = process.env;
 
 
 router.get('/', async (req, res) => {
     const { name } = req.query
-    let userTable = await User.findAll({})
+    let userTable = await User.findAll({
+        order: [
+            ['id', 'ASC']
+        ]
+    })
 
     if (userTable.length === 0) {
         try {
@@ -66,23 +67,18 @@ router.put('/:id', async (req, res) => {
             id: req.params.id
         }
     });
-    if(selectedUser) {
-        let data = {...req.body}
-        res.send(data)
-        let cont = 0;
-        for (const i in data) {
-            if (Object.hasOwnProperty.call(data, i)) {
-                let items = Object.keys(data);
-                const element = data[i];
-                let item = items[cont++];
+    if (selectedUser) {
+        let data = { ...req.body }
 
-                if(selectedUser[item] == data[item]) {
-                    console.log("son iguales")
-                } else {
-                    console.log("son distintas")
-                }
-            }
-        }
+        let keys = Object.keys(data);
+
+        keys.forEach(k => {
+            selectedUser[k] = data[k]
+        });
+
+        await selectedUser.save()
+
+        res.sendStatus(200)
     } else {
         res.sendStatus(404)
     }

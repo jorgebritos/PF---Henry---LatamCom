@@ -3,9 +3,6 @@ const axios = require("axios");
 const { Op } = require("sequelize");
 const { Product, Category } = require("../db.js");
 const router = Router();
-const {
-    API_KEY
-} = process.env;
 
 
 router.get('/', async (req, res) => {

@@ -2,9 +2,6 @@ const { Router } = require("express");
 const { Category, Product } = require("../db.js");
 const router = Router()
 const axios = require("axios");
-const {
-    API_KEY
-} = process.env;
 
 router.post('/', async (req, res) => {
     try {
