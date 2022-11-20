@@ -32,20 +32,16 @@ router.post('/', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    const categoryTable = await Category.findAll()
+    let categoryTable = await Category.findAll()
 
     if (categoryTable.length > 0) return res.send(categoryTable)
 
     let apiInfo = axios.get(`https://fakestoreapi.com/products/categories`)
-    apiInfo.then(info => info.data.map(c => { return { name: c } }))
-        .then(info => {
-            cont = 0;
-            for (const i of info) {
-                i.id = ++cont;
-            }
-            res.send(info);
-
+    apiInfo.then( info => info.data.map(c => { return { name: c } }))
+        .then(async info => {
             Category.bulkCreate(info)
+            categoryTable = await Category.findAll()
+            res.send(categoryTable);
         })
         .catch(error => console.error('Inside error:', error))
 })

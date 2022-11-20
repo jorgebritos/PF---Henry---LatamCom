@@ -18,7 +18,6 @@ router.get('/', async (req, res) => {
             let apiInfo = await axios.get(`https://fakestoreapi.com/users`)
             const users = apiInfo.data.map(u => {
                 return {
-                    id: u.id,
                     firstname: u.name['firstname'],
                     lastname: u.name['lastname'],
                     email: u.email,
@@ -28,7 +27,13 @@ router.get('/', async (req, res) => {
             });
             await User.bulkCreate(users)
 
-            return res.send(users)
+            userTable = await User.findAll({
+                order: [
+                    ['id', 'ASC']
+                ]
+            })
+
+            return res.send(userTable)
         } catch (error) {
             res.status(404).send(error)
         }

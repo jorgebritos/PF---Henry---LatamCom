@@ -26,7 +26,6 @@ router.get('/', async (req, res) => {
             let apiInfo = await axios.get(`https://fakestoreapi.com/products`)
             const products = apiInfo.data.map(p => {
                 return {
-                    id: p.id,
                     name: p.title,
                     description: p.description,
                     image: p.image,
@@ -55,7 +54,21 @@ router.get('/', async (req, res) => {
                 let category = await categoryTable.find(c => c.name == product.category)
                 data.addCategory(category)
             }
-            return res.send(products)
+
+            productTable = await Product.findAll({
+                include: {
+                    model: Category,
+                    attributes: ["name"],
+                    through: {
+                        attributes: []
+                    }
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
+            });
+
+            return res.send(productTable)
         } catch (error) {
             res.status(404).send(error)
         }
