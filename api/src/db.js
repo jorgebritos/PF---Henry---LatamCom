@@ -34,8 +34,13 @@ const { Category, Comment, Product, Purchase, User } = sequelize.models;
 
 // Aca vendrian las relaciones
 Product.belongsToMany(Comment, { through: "products_comments" })
+Comment.belongsToMany(Product, { through: "products_comments" })
+
 Product.belongsToMany(Category, { through: "products_categories" })
+Category.belongsToMany(Product, { through: "products_categories" })
+
 User.belongsToMany(Purchase, { through: "users_purchases" })
+
 User.belongsToMany(Comment, { through: "users_comments" })
 
 module.exports = {
