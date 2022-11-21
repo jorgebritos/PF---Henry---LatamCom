@@ -70,4 +70,23 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+async function deleteComment (id) {
+    const where = {id};
+    let comment = await Comment.findByPk(id);
+    if (!comment) return 0;
+    return await Comment.destroy({ where });
+}
+
+router.delete('/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        let rows = await deleteComment(id);
+
+        return res.status(200).json("Comment deleted");
+    }
+    catch (err) {
+        return res.status(500).send(`Comment could not be deleted (${err})`);
+    }
+});
+
 module.exports = router
