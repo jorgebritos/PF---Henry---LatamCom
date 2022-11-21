@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('purchase', {
     products: {
-      type: DataTypes.JSON,
+      type: DataTypes.ARRAY(DataTypes.JSON),
       allowNull: false
     },
     totalPrice: {
