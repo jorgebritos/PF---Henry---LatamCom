@@ -3,34 +3,6 @@ const { Category, Product } = require("../db.js");
 const router = Router()
 const axios = require("axios");
 
-router.post('/', async (req, res) => {
-    try {
-        const { id, name, image, summary, healthScore, steps, diets } = req.body
-        if (!name || !summary || !healthScore || !steps || !diets) {
-            return res.status(422).send("Missing data")
-        }
-
-        const newRecipe = await Product.create({
-            id,
-            name,
-            image,
-            summary,
-            healthScore,
-            steps
-        })
-
-        diets.forEach(async c => {
-            const searchDiet = await Category.findOne({
-                where: { name: c }
-            })
-            newRecipe.addDiet(searchDiet)
-        });
-        res.status(200)
-    } catch (error) {
-        res.sendStatus(404)
-    }
-})
-
 router.get('/', async (req, res) => {
     let categoryTable = await Category.findAll()
 

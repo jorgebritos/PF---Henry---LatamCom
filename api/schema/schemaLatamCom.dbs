@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="prueba" id="Project-961" database="LogicalDesign" >
+	<schema name="INSTANCE" catalogname="prueba" >
+		<table name="category" prior="entity" >
+			<column name="id" type="INT" jt="4" mandatory="y" />
+			<column name="name" type="VARCHAR" length="30" jt="12" mandatory="y" />
+			<index name="pk_category" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="comments" prior="comentaries" >
+			<column name="id" type="INT" jt="4" mandatory="y" />
+			<column name="comment" prior="commentary" type="TEXT" jt="-1" mandatory="y" />
+			<column name="rating" prior="count" type="INT" jt="4" mandatory="y" />
+			<index name="pk_rating" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="product_category" prior="entity" >
+			<column name="idProducto" type="INT" jt="4" mandatory="y" />
+			<column name="idCategory" type="INT" jt="4" mandatory="y" />
+			<fk name="fk_product_category" virtual="y" to_schema="prueba.INSTANCE" to_table="products" type="Identifying" >
+				<fk_column name="idProducto" pk="id" />
+			</fk>
+			<fk name="fk_category_product" virtual="y" to_schema="prueba.INSTANCE" to_table="category" type="ManyToMany" >
+				<fk_column name="idCategory" pk="id" />
+			</fk>
+		</table>
+		<table name="product_commentaries" prior="users" >
+			<column name="idProducto" type="INT" jt="4" mandatory="y" />
+			<column name="idComment" prior="idCommentary" type="INT" jt="4" mandatory="y" />
+			<fk name="fk_product_commentaries" virtual="y" to_schema="prueba.INSTANCE" to_table="products" type="ManyToMany" >
+				<fk_column name="idProducto" pk="id" />
+			</fk>
+			<fk name="fk_commentaries_product" virtual="y" to_schema="prueba.INSTANCE" to_table="comments" type="ManyToMany" >
+				<fk_column name="idComment" pk="id" />
+			</fk>
+		</table>
+		<table name="products" prior="productos" >
+			<column name="id" type="INT" jt="4" mandatory="y" />
+			<column name="name" prior="title" type="CHAR" length="100" jt="1" mandatory="y" />
+			<column name="description" type="TEXT" jt="-1" />
+			<column name="image" type="BLOB" jt="2004" />
+			<column name="price" type="DOUBLE" jt="8" mandatory="y" />
+			<column name="stock" type="INT" jt="4" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="brand" type="CHAR" length="60" jt="1" />
+			<column name="amountSold" type="INT" jt="4" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="softdelete" type="BOOLEAN" jt="-7" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<index name="pk_productos" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="purchases" prior="entity" >
+			<column name="id" type="INT" jt="4" mandatory="y" />
+			<column name="products" type="TEXT" jt="-1" mandatory="y" />
+			<column name="totalPrice" prior="price" type="DOUBLE" jt="8" mandatory="y" />
+			<index name="pk_purchases" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="users" prior="entity" >
+			<column name="id" type="INT" jt="4" mandatory="y" />
+			<column name="firstname" type="VARCHAR" length="40" jt="12" mandatory="y" />
+			<column name="lastname" type="VARCHAR" length="40" jt="12" mandatory="y" />
+			<column name="email" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="profile_image" type="BLOB" jt="2004" />
+			<column name="username" type="VARCHAR" length="50" jt="12" mandatory="y" />
+			<column name="password" type="VARCHAR" length="100" jt="12" mandatory="y" />
+			<column name="admin" type="BOOLEAN" jt="-7" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<index name="pk_users" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="users_comments" prior="entity" >
+			<column name="idUser" type="INT" jt="4" mandatory="y" />
+			<column name="idComment" type="INT" jt="4" mandatory="y" />
+			<fk name="fk_users_comments" virtual="y" to_schema="prueba.INSTANCE" to_table="users" type="Identifying" >
+				<fk_column name="idUser" pk="id" />
+			</fk>
+			<fk name="fk_comments_users" virtual="y" to_schema="prueba.INSTANCE" to_table="comments" type="Identifying" >
+				<fk_column name="idComment" pk="id" />
+			</fk>
+		</table>
+		<table name="users_purchases" prior="entity" >
+			<column name="idUser" type="INT" jt="4" mandatory="y" />
+			<column name="idPurchase" type="INT" jt="4" mandatory="y" />
+			<fk name="fk_users_purchases_users" virtual="y" to_schema="prueba.INSTANCE" to_table="users" type="ManyToMany" >
+				<fk_column name="idUser" pk="id" />
+			</fk>
+			<fk name="fk_users_purchases_purchases" virtual="y" to_schema="prueba.INSTANCE" to_table="purchases" type="ManyToMany" >
+				<fk_column name="idPurchase" pk="id" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-581" show_relation="columns" >
+		<entity schema="prueba.INSTANCE" name="category" color="C1D8EE" x="48" y="64" />
+		<entity schema="prueba.INSTANCE" name="comments" color="C1D8EE" x="912" y="80" />
+		<entity schema="prueba.INSTANCE" name="product_category" color="C1D8EE" x="224" y="64" />
+		<entity schema="prueba.INSTANCE" name="product_commentaries" color="C1D8EE" x="640" y="64" />
+		<entity schema="prueba.INSTANCE" name="products" color="C1D8EE" x="448" y="48" />
+		<entity schema="prueba.INSTANCE" name="purchases" color="C1D8EE" x="496" y="384" />
+		<entity schema="prueba.INSTANCE" name="users" color="C1D8EE" x="896" y="368" />
+		<entity schema="prueba.INSTANCE" name="users_comments" color="C1D8EE" x="896" y="224" />
+		<entity schema="prueba.INSTANCE" name="users_purchases" color="C1D8EE" x="704" y="384" />
+	</layout>
+</project>

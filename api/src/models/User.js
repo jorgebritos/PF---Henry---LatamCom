@@ -32,6 +32,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       length: 100,
       allowNull: false
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
     }
   });
 };
