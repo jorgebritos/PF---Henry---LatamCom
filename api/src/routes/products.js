@@ -88,6 +88,42 @@ router.get('/', async (req, res) => {
     res.status(200).send(productTable);
 })
 
+router.post('/', async(req, res) =>{
+    let {
+        name,
+        description,
+        image,
+        price,
+        stock,
+        brand,
+        amountSold,
+        admin,
+        softdelete,
+        categories
+
+        }=req.body
+
+    let productCreate = await Product.create({
+        name,
+        description,
+        image,
+        price,
+        stock,
+        brand,
+        amountSold,
+        admin,
+        softdelete
+
+    })
+
+    let categoryDB = await Category.findAll({
+        where: {name: categories}
+    });
+
+    await productCreate.addCategory(categoryDB);
+    res.send("Created product successful");
+})
+
 router.get('/:id', async (req, res) => {
     const selectedProduct = await Product.findOne({
         where: {

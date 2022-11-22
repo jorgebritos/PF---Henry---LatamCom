@@ -6,7 +6,7 @@ const categoriesRoute = require("./categories.js")
 const usersRoute = require("./users.js")
 const commentsRoute = require("./comments.js")
 
-const router = Router();
+const router = Router(); 
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
