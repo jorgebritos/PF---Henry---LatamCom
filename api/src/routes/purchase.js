@@ -23,7 +23,7 @@ try {
         newPurchase.addUser(searchUser)
         res.status(200).send(newPurchase)
     }else{
-        res.send("no tiene id")
+        res.send("Missing Id")
     }
     
 
