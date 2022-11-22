@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import usericon from '../../asset/usericon.jpg';
+import React from 'react';
+
 import Logo from '../../asset/Logo.png';
+import SearchBar from './Modules/SearchBar.jsx';
+
 import './NavBar.css';
+import LoginRegister from './Modules/LoginBar';
 
 function NavBar() {
-	const [productName, setName] = useState('');
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		setName('');
-	}
-
-	function handleOnChange(e) {
-		setName(e.target.value);
-	}
+	
 
 	return (
 		<div className='navBar'>
@@ -27,27 +20,11 @@ function NavBar() {
 					<div className='navOption'>Shop</div>
 				</div>
 				<div className='searchbar'>
-					<form onSubmit={(e) => handleSubmit(e)}>
-						<input
-							type='text'
-							name='product'
-							id='productsearch'
-							value={productName}
-							onChange={(e) => handleOnChange(e)}
-						/>
-						<Link to={`/SearchResults/${productName}`}>
-							<button type='submit' className='button'>
-								SEARCH
-							</button>
-						</Link>
-					</form>
+					<SearchBar/>
 				</div>
 				<div className='useroptions'>
 					<div className='login'>
-						<Link to={`/login-register`} className='loginlink'>
-							<img src={usericon} alt='user' className='user' />
-							Login/Register
-						</Link>
+						<LoginRegister/>
 					</div>
 					<div className='cart'>Cart icon</div>
 					<div className='favorites'>♥</div>
