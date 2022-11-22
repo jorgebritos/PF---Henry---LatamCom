@@ -1,0 +1,79 @@
+.navBar{
+    background-color: black;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.logodiv{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    
+}
+
+.logo{
+    width: 50%;
+}
+
+.options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    
+}
+
+.navOption{
+    margin: auto;
+}
+
+.searchbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+    
+}
+#productsearch{
+    width: 100%;
+    border-radius: 10px;
+    border-color:cyan;
+    background-color: cyan;
+}
+
+
+
+.useroptions{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    color:aqua;
+}
+
+.user{
+    border-radius: 100%;
+    width: 8%;
+}
+
+.login{
+    display: flex;
+    align-items: center;
+    width: 70%;
+}
+
+.loginlink{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.cart{
+    color: aqua;
+}
+
