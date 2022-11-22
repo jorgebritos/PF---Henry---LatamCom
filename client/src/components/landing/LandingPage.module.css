@@ -1,0 +1,17 @@
+.backgraun {
+	background-image: url(../../asset/Landig.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.btn {
+	position: absolute;
+	top: 50%;
+	width: 182px;
+	height: 110px;
+}
