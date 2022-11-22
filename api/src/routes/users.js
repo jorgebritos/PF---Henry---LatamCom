@@ -88,4 +88,30 @@ router.put('/:id', async (req, res) => {
         res.sendStatus(404)
     }
 })
+
+router.post('/', async (req, res) =>{
+    const { firstname, lastname, email, profile_image, username, password, admin } = req.body;
+
+    try {
+    
+    if(!firstname||!lastname||!email||!profile_image||!username||!password){
+     return res.status(404).send("Missing parameters")
+    }
+   
+    const newUser =await User.create({
+        firstname,
+        lastname,
+        email,
+        profile_image,
+        username,
+        password,
+        admin
+    })
+
+    return res.status(200).send(newUser)
+    
+   } catch (error) {
+    console.log('Error en el post User', error)
+   }
+});
 module.exports = router
