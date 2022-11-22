@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import usericon from '../../asset/usericon.png';
 import Logo from '../../asset/Logo.png';
 import SearchBar from './Modules/SearchBar.jsx';
 
