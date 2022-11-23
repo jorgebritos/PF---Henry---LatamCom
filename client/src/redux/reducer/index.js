@@ -16,6 +16,9 @@ const initialState = {
     categories: []
 }
 
+const allProducts = state.allProducts;
+let result = [];
+
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_PRODUCTS:
@@ -63,18 +66,34 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productDetail: {}
             }
+        case FILTER_BY_BRAND:
+            result = [];
+            for (const p of allProducts) {
+                if (p.brand === action.payload) result.push(p)
+            }
+            return {
+                ...state,
+                products: result
+            }
+        case FILTER_BY_PRICE:
+            result = [];
+            for (const p of allProducts) {
+                if (p.price > action.payload.min && p.price < action.payload.max) result.push(p)
+            }
+            return {
+                ...state,
+                products: result
+            }
         case FILTER_BY_CATEGORY:
-            const allProducts = state.allProducts
-            let result = [];
-
+            result = [];
             if (action.payload === "All") {
                 result = allProducts
             } else {
-                for (const r of allProducts) {
-                    for (const k in r.categories) {
-                        if (Object.hasOwnProperty.call(r.categories, k)) {
-                            const element = r.categories[k];
-                            if (element.name === action.payload) result.push(r)
+                for (const p of allProducts) {
+                    for (const k in p.categories) {
+                        if (Object.hasOwnProperty.call(p.categories, k)) {
+                            const element = p.categories[k];
+                            if (element.name === action.payload) result.push(p)
                         }
                     }
                 }
@@ -84,11 +103,10 @@ export default function rootReducer(state = initialState, action) {
                 products: result
             }
         case SEARCH_BY_NAME:
-            const allRecipes2 = state.allProducts
-            const searchedRecipes = allRecipes2.filter(recipe => recipe.name.toLowerCase().includes(action.payload.toLowerCase()))
+            const searchedProducts = allProducts.filter(product => product.name.toLowerCase().includes(action.payload.toLowerCase()))
             return {
                 ...state,
-                products: searchedRecipes
+                products: searchedProducts
             }
         case ORDER_ALPHABETICALLY:
             const sortProducts = action.payload === "asc" ?
