@@ -48,6 +48,13 @@ export function getAllComments() {
     }
 }
 
+export function getAllUsers() {
+    return async function (dispatch) {
+        const users = await axios.get('http://localhost:3001/users')
+        return users
+    }
+}
+
 export function getUser(id) {
     return async function (dispatch) {
         const user = await axios.get(`http://localhost:3001/users/${id}`)
