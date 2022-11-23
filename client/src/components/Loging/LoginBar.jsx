@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import usericon from '../../asset/usericon.png';
 import { getUser, getAllUsers } from '../../redux/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,12 +19,6 @@ const LoginRegister = () => {
 				<div>
 					<img src={usericon} alt='' />
 					<h1>{user.username}</h1>
-					<div>
-						<img src='' alt='Imagen Carrito' />1
-					</div>
-					<div>
-						<img src='' alt='Imagen Favoritos' />1
-					</div>
 				</div>
 			) : (
 				'Esto no existe'
