@@ -10,7 +10,7 @@ function App() {
 		<div className='App'>
 			{location.pathname !== '/' && <NavBar />}
 			<Route path='/' exact component={LandingPage} />
-
+			<Route path='/SearchResults' exact component={LandingPage}/>
 			{/* <Route exact path='/home' component={HomePage} /> */}
 		</div>
 	);

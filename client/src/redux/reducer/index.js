@@ -13,7 +13,7 @@ const initialState = {
     allProducts: [],
     productDetail: {},
     productComments: [],
-    categories: []
+    categories: [],
 }
 
 const allProducts = initialState.allProducts;
@@ -103,10 +103,10 @@ export default function rootReducer(state = initialState, action) {
                 products: result
             }
         case SEARCH_BY_NAME:
-            const searchedProducts = allProducts.filter(product => product.name.toLowerCase().includes(action.payload.toLowerCase()))
-            return {
+
+        return {
                 ...state,
-                products: searchedProducts
+                products: action.payload
             }
         case ORDER_ALPHABETICALLY:
             const sortProducts = action.payload === "asc" ?

@@ -193,10 +193,17 @@ export function filterByCategory(payload) {
     }
 }
 
-export function searchByName(payload) {
-    return {
-        type: SEARCH_BY_NAME,
-        payload
+export function searchByName(productName) {
+    console.log(productName);
+    return async function (dispatch) {
+        const productsInfo = await axios.get('http://localhost:3001/products')
+        
+        const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
+        console.log(searchedProducts);
+        dispatch({
+            type: SEARCH_BY_NAME,
+            payload: searchedProducts
+        })
     }
 }
 
