@@ -91,16 +91,12 @@ export default function rootReducer(state = initialState, action) {
                 products: searchedRecipes
             }
         case ORDER_ALPHABETICALLY:
-            const sortRecipes = action.payload === "asc" ?
+            const sortProducts = action.payload === "asc" ?
                 state.products.sort((a, b) => a.name.localeCompare(b.name)) :
-                action.payload === "desc" ? state.products.sort((a, b) => b.name.localeCompare(a.name)) :
-
-                    action.payload === "hs+" ? state.products.sort((a, b) => b.healthScore - a.healthScore) :
-                        state.products.sort((a, b) => a.healthScore - b.healthScore)
-
+                state.products.sort((a, b) => b.name.localeCompare(a.name))
             return {
                 ...state,
-                products: sortRecipes
+                products: sortProducts
             }
         default:
             return state;
