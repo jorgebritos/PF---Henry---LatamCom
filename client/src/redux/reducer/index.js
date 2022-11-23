@@ -16,7 +16,7 @@ const initialState = {
     categories: []
 }
 
-const allProducts = state.allProducts;
+const allProducts = initialState.allProducts;
 let result = [];
 
 export default function rootReducer(state = initialState, action) {
