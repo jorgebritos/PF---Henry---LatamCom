@@ -1,0 +1,37 @@
+.navBar {
+	background-color: black;
+}
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.logodiv {
+	margin-top: 1%;
+	margin-bottom: 1%;
+	margin-left: 2%;
+}
+
+.options {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	color: white;
+}
+
+.navOption {
+	margin-left: 15px;
+}
+
+.cart {
+	color: aqua;
+}
+
+.favorites {
+	color: #17abda;
+	margin-right: 2%;
+}
