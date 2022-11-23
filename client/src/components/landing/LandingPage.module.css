@@ -1,4 +1,4 @@
-.backgraun {
+.background {
 	background-image: url(../../asset/Landig.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -9,9 +9,28 @@
 	justify-content: center;
 	align-items: center;
 }
+.divbtn {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-items: center;
+	text-decoration: none;
+}
+
 .btn {
-	position: absolute;
-	top: 50%;
-	width: 182px;
-	height: 110px;
+	margin-top: 450px;
+	width: 150px;
+	height: 50px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+}
+
+.btn:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
+}
+.Link {
+	text-decoration: none;
 }
