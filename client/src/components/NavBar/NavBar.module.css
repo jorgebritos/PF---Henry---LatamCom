@@ -15,43 +15,25 @@
 	margin-left: 2%;
 }
 
-.options {
+.ul {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
+	flex-wrap: wrap;
 	align-items: center;
-	color: white;
+}
+.li {
+	position: static;
+	margin-right: 10px;
 }
 
-.navOption {
-	margin-left: 15px;
+.favorites {
+	color: #17abda;
+	margin-right: 2%;
 }
 
-.user {
-	border-radius: 100%;
-	width: 8%;
-}
-
-.cart {
-	color: aqua;
-}
-
-.btn {
-	margin-top: 450px;
-	width: 150px;
-	height: 50px;
-	border-radius: 13px;
-	background-color: #17abda;
-	backdrop-filter: blur(4px);
-}
-
-.btn:hover {
-	background-color: #0e7d86;
-	color: whitesmoke;
-}
 .Link {
 	text-decoration: none;
+	color: white;
 }
-.favorites {
+.Link:hover {
 	color: #17abda;
 }

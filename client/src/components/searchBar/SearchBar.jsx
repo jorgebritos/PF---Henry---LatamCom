@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import s from './SearchBar.module.css';
 import { useSelector, useDispatch } from 'react-redux'
 import { searchByName } from '../../redux/actions/index'
 import './SearchBar.css'
@@ -53,7 +54,7 @@ function SearchBar(){
                 </Link>
             </form>
 		</div>
-    )
+	);
 }
 
-export default SearchBar
+export default SearchBar;

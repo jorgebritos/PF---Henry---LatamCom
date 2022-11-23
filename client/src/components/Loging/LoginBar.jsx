@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import usericon from '../../asset/usericon.png';
 import { getUser, getAllUsers } from '../../redux/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import s from './LoginBar.module.css';
 
 const LoginRegister = () => {
 	const dispatch = useDispatch();
@@ -14,21 +14,15 @@ const LoginRegister = () => {
 		dispatch(getUser(1));
 	});
 	return (
-		<div>
-			{user.username ? (
-				<div>
-					<img src={usericon} alt='' />
-					<h1>{user.username}</h1>
-					<div>
-						<img src='' alt='Imagen Carrito' />1
-					</div>
-					<div>
-						<img src='' alt='Imagen Favoritos' />1
-					</div>
-				</div>
-			) : (
+		<div className={s.Login}>
+			{/* {user.username ? ( */}
+			<div>
+				<img src={usericon} alt='' height='35px' />
+				<h3>{user.username}</h3>
+			</div>
+			{/* ) : (
 				'Esto no existe'
-			)}
+			)} */}
 		</div>
 	);
 };
