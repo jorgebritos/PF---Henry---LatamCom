@@ -1,23 +1,19 @@
 import './App.css';
+import { Route, useLocation } from 'react-router-dom';
+import LandingPage from './components/landing/LandingPage';
+// import HomePage from './components/home/HomePage';
+import NavBar from './components/NavBar/NavBar.jsx';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	let location = useLocation();
+	return (
+		<div className='App'>
+			{location.pathname !== '/' && <NavBar />}
+			<Route path='/' exact component={LandingPage} />
+
+			{/* <Route exact path='/home' component={HomePage} /> */}
+		</div>
+	);
 }
 
 export default App;
