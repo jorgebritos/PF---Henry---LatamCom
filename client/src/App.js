@@ -1,20 +1,24 @@
+import { useAuth0 } from "@auth0/auth0-react";
+
+import { LoginButton } from './component/Login';
+import { LogoutButton } from './component/Logout';
+import {Profile} from './component/Profile'
 import './App.css';
 
 function App() {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      {isAuthenticated ? (
+         <>
+         <Profile/>
+         <LogoutButton/>
+        </>
+        ) : (
+        <LoginButton/>
+        )}
       </header>
     </div>
   );
