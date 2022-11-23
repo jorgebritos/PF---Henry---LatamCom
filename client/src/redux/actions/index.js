@@ -21,6 +21,8 @@ export const UPDATE_COMMENT = "UPDATE_COMMENT"
 export const DELETE_COMMENT = "DELETE_COMMENT"
 
 //FILTRADOS
+export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
+export const FILTER_BY_PRICE = "FILTER_BY_PRICE"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY"
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
 export const ORDER_ALPHABETICALLY = "ORDER_ALPHABETICALLY"
@@ -167,6 +169,20 @@ export function resetDetail() {
         dispatch({
             type: RESET_DETAIL
         })
+    }
+}
+
+export function filterByBrand(payload) {
+    return {
+        type: FILTER_BY_BRAND,
+        payload
+    }
+}
+
+export function filterByPrice(payload) {
+    return {
+        type: FILTER_BY_PRICE,
+        payload
     }
 }
 
