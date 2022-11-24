@@ -3,6 +3,9 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin-top: 20%;
 	color: #17abda;
+}
+
+.h3 {
+	margin-left: 10px;
 }
