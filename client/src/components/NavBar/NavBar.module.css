@@ -15,23 +15,25 @@
 	margin-left: 2%;
 }
 
-.options {
+.ul {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
+	flex-wrap: wrap;
 	align-items: center;
-	color: white;
 }
-
-.navOption {
-	margin-left: 15px;
-}
-
-.cart {
-	color: aqua;
+.li {
+	position: static;
+	margin-right: 10px;
 }
 
 .favorites {
 	color: #17abda;
 	margin-right: 2%;
+}
+
+.Link {
+	text-decoration: none;
+	color: white;
+}
+.Link:hover {
+	color: #17abda;
 }
