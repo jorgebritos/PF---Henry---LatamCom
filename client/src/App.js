@@ -29,7 +29,6 @@ function App() {
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
 			<Route path='/SearchResults' exact component={LandingPage}/>
-			{/* <Route exact path='/home' component={HomePage} />
 		</div>
 	);
 }
