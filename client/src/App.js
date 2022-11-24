@@ -7,7 +7,7 @@ import { Profile } from './component/Profile'
 import { Route, useLocation } from 'react-router-dom';
 
 import LandingPage from './components/landing/LandingPage';
-import HomePage from './components/Home/HomePage.jsx';
+import HomePage from './components/home/HomePage.jsx';
 import NavBar from './components/NavBar/NavBar.jsx';
 import Product from "./components/Product.jsx"
 

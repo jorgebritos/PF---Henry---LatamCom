@@ -16,12 +16,15 @@ const getProduct = async (req, res) => {
             ['id', 'ASC']
         ]
     })
-
+    if (productTable.length > 1) {
+        console.log("tengo datos")
+        res.send(productTable);
+    }
     let categoryTable = await Category.findAll({});
     if (productTable.length === 0 && categoryTable.length > 1) {
         try {
-            let apiInfo = await axios.get(`https://fakestoreapi.com/products`)
-            const products = apiInfo.data.map(p => {
+            let products = require("../JSON/products.json")
+            products = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
@@ -29,6 +32,8 @@ const getProduct = async (req, res) => {
                     price: p.price
                 }
             });
+            console.log(products)
+            
             await Product.bulkCreate(products)
 
             let info = apiInfo.data.map(p => {
@@ -94,7 +99,6 @@ const getProduct = async (req, res) => {
             return res.status(404).send("No such Product");
         }
     }
-    res.status(200).send(productTable);
 }
 
 const putProduct = async (req, res) => {
