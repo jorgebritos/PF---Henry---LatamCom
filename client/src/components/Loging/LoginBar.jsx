@@ -16,9 +16,9 @@ const LoginRegister = () => {
 	return (
 		<div className={s.Login}>
 			{/* {user.username ? ( */}
-			<div>
+			<div className={s.Login}>
 				<img src={usericon} alt='' height='35px' />
-				<h3>{user.username}</h3>
+				<h3 className={s.h3}>{user.username}</h3>
 			</div>
 			{/* ) : (
 				'Esto no existe'

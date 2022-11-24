@@ -5,9 +5,8 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('product', {
     name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      length: 100
+      type: DataTypes.STRING(100),
+      allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
