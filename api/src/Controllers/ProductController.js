@@ -17,14 +17,14 @@ const getProduct = async (req, res) => {
         ]
     })
     if (productTable.length > 1) {
-        console.log("tengo datos")
         res.send(productTable);
     }
     let categoryTable = await Category.findAll({});
-    if (productTable.length === 0 && categoryTable.length > 1) {
+    console.log(categoryTable[0])
+    if (productTable.length === 0 && categoryTable.length > 1   ) {
         try {
             let products = require("../JSON/products.json")
-            products = products.map(p => {
+            Bulkproducts = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
@@ -32,11 +32,10 @@ const getProduct = async (req, res) => {
                     price: p.price
                 }
             });
-            console.log(products)
-            
-            await Product.bulkCreate(products)
 
-            let info = apiInfo.data.map(p => {
+            await Product.bulkCreate(Bulkproducts)
+
+            let info = products.map(p => {
                 return {
                     id: p.id,
                     name: p.title,
@@ -47,6 +46,7 @@ const getProduct = async (req, res) => {
                 }
             });
 
+
             productTable = await Product.findAll();
 
 
@@ -54,6 +54,7 @@ const getProduct = async (req, res) => {
                 let product = info[i];
                 let data = await productTable.find(r => r.id == product.id);
                 let category = await categoryTable.find(c => c.name == product.category)
+                console.log(category)
                 data.addCategory(category)
             }
 

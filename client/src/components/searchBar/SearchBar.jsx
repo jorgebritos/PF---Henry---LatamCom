@@ -26,8 +26,8 @@ function SearchBar() {
 	function handleOnChange(e) {
 		setproductName(e.target.value);
 	}
-	console.log(products);
-	console.log(predictionProduct);
+	// console.log(products);
+	// console.log(predictionProduct);
 
 	return (
 		<div>

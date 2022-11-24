@@ -12,7 +12,7 @@ const LoginRegister = () => {
 	useEffect(async () => {
 		await dispatch(getAllUsers());
 		await dispatch(getUser(1));
-	});
+	}, []);
 	return (
 		<div className={s.Login}>
 			{/* {user.username ? ( */}

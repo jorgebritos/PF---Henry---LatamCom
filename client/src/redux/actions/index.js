@@ -31,6 +31,7 @@ export const RESET_DETAIL = "RESET_DETAIL"
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get('http://localhost:3001/products')
+        console.log(productsInfo.data)
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: productsInfo.data
@@ -70,6 +71,7 @@ export function getUser(id) {
 export function getAllCategories() {
     return async function (dispatch) {
         const categoriesInfo = await axios.get('http://localhost:3001/categories')
+        console.log(categoriesInfo.data)
         dispatch({
             type: GET_ALL_CATEGORIES,
             payload: categoriesInfo.data
@@ -194,12 +196,12 @@ export function filterByCategory(payload) {
 }
 
 export function searchByName(productName) {
-    console.log(productName);
+    // console.log(productName);
     return async function (dispatch) {
         const productsInfo = await axios.get('http://localhost:3001/products')
         
         const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
-        console.log(searchedProducts);
+        // console.log(searchedProducts);
         dispatch({
             type: SEARCH_BY_NAME,
             payload: searchedProducts
