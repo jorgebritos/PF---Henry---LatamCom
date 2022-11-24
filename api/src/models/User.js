@@ -5,18 +5,15 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('user', {
     firstname: {
-      type: DataTypes.STRING,
-      length: 40,
+      type: DataTypes.STRING(30),
       allowNull: false
     },
     lastname: {
-      type: DataTypes.STRING,
-      length: 40,
+      type: DataTypes.STRING(30),
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING,
-      length: 50,
+      type: DataTypes.STRING(40),
       allowNull: false
     },
     profile_image: {
@@ -24,13 +21,11 @@ module.exports = (sequelize) => {
       allowNull: true
     },
     username: {
-      type: DataTypes.STRING,
-      length: 50,
+      type: DataTypes.STRING(50),
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING,
-      length: 100,
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     admin: {

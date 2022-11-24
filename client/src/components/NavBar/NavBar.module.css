@@ -1,0 +1,40 @@
+.navBar {
+	background-color: black;
+}
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.logodiv {
+	margin-top: 1%;
+	margin-bottom: 1%;
+	margin-left: 2%;
+}
+
+.ul {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.li {
+	list-style: none;
+	position: static;
+	margin-right: 10px;
+}
+
+.favorites {
+	color: #17abda;
+	margin-right: 2%;
+}
+
+.Link {
+	text-decoration: none;
+	color: white;
+}
+.Link:hover {
+	color: #17abda;
+}
