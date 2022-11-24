@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import  {getProductDetail, getAllComments , resetDetail} from "../redux/actions/index"
+import  {getProductDetail, getAllComments , resetDetail, getAllProducts, getAllCategories} from "../redux/actions/index"
 
 
 
@@ -15,14 +15,12 @@ const Product = (props)=>{
     ///////////////////////////////////////////////////
 
     // Hook de ciclo de vida //////////////////////////
-    useEffect(()=>{
-
-        dispatch(getProductDetail(id))
-        dispatch(getAllComments())
-        return(
-            dispatch(resetDetail())
-        )
-        
+    useEffect(async ()=>{
+        await dispatch(resetDetail())
+        await dispatch(getAllCategories())
+        await dispatch(getAllProducts())
+        await dispatch(getProductDetail(id))
+        await dispatch(getAllComments())
     },[])
     //////////////////////////////////////////////////
     
@@ -59,8 +57,7 @@ const Product = (props)=>{
                     {product.name} <br/>
                     Price: {product.price} <br/>
                     <img src={product.image}></img> <br/>
-                    Description: {product.description} <br/>
-                    
+                    Description: {product.description} <br/>                    
                     Categories: {product.categories.map((e)=>{
                         return(
                             <div key={e.name}>

@@ -1,7 +1,7 @@
 import './App.css';
 import { Route } from "react-router-dom";
 
-import Product from "./components/Product"
+import Product from "./components/Product.jsx"
 
 function App() {
   return (
