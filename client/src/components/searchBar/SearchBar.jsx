@@ -14,24 +14,36 @@ function SearchBar() {
 		dispatch(searchByName(productName));
 	}, [productName]);
 
-	if (products.length > 5) {
-		predictionProduct = [...products.slice(0, 5)];
-	} else {
-		predictionProduct = [...products];
+	if(showList){
+		if (products.length > 5) {
+			predictionProduct = [...products.slice(0, 5)];
+		} else {
+			predictionProduct = [...products];
+		}
 	}
+
 	function handleSubmit(e) {
 		e.preventDefault();
 		setproductName('');
-        setShowList(false)
+		setShowList(false)
+		console.log(productName);
 	}
+	
 
 	function handleOnChange(e) {
 		setproductName(e.target.value);
-        setShowList(true)
+
+		if(e.target.value.length >= 4){
+    	    setShowList(true)
+		}
+		else{
+			setShowList(false)
+		}
 	}
 
     function handleClick(e) {
         setShowList(false)
+		setproductName('')
 	}
 
 	console.log(products);
@@ -39,7 +51,7 @@ function SearchBar() {
 
 	return (
 		<div>
-			<form onSubmit={(e) => handleSubmit(e)}>
+			<form onSubmit={(e) => handleSubmit(e)} autoComplete='off'>
 				<div className={s.content}>
 					<input
 						className={s.input}
@@ -48,13 +60,16 @@ function SearchBar() {
 						id='productsearch'
 						value={productName}
 						onChange={(e) => handleOnChange(e)}
+						onFocus ={(e) => handleOnChange(e)}
+						onBlur={(e) => setShowList(false)}
+
 					/>
-					{productName.length >= 4 && showList? (
+					{showList? (
 						<ul className={s.ul}>
 							{predictionProduct.map((sp) => (
                                 <Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)}>    
                                     <li className={s.li} key={sp.id} title={sp.name}>
-                                        {sp.name.slice(0,12)+"..."}
+                                        {sp.name.slice(0,18)+"..."}
                                     </li>
                                 </Link>
 							))}
