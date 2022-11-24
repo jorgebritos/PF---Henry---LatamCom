@@ -47,39 +47,39 @@ const getUser = async (req, res) => {
 }
 
 const getUserByID = async (req, res) => {
-  const selectedUser = await User.findOne({
-      where: {
-          id: req.params.id
-      }
-  })
-  if (selectedUser) {
-      res.status(200).send(selectedUser)
-  } else {
-      res.sendStatus(404)
-  }
+	const selectedUser = await User.findOne({
+		where: {
+			id: req.params.id
+		}
+	})
+	if (selectedUser) {
+		res.status(200).send(selectedUser)
+	} else {
+		res.sendStatus(404)
+	}
 }
 
 const putUser = async (req, res) => {
-  const selectedUser = await User.findOne({
-      where: {
-          id: req.params.id
-      }
-  });
-  if (selectedUser) {
-      let data = { ...req.body }
+	const selectedUser = await User.findOne({
+		where: {
+			id: req.params.id
+		}
+	});
+	if (selectedUser) {
+		let data = { ...req.body }
 
-      let keys = Object.keys(data);
+		let keys = Object.keys(data);
 
-      keys.forEach(k => {
-          selectedUser[k] = data[k]
-      });
+		keys.forEach(k => {
+			selectedUser[k] = data[k]
+		});
 
-      await selectedUser.save()
+		await selectedUser.save()
 
-      res.sendStatus(200)
-  } else {
-      res.sendStatus(404)
-  }
+		res.sendStatus(200)
+	} else {
+		res.sendStatus(404)
+	}
 }
 
 const postUser = async (req, res) => {
@@ -121,9 +121,28 @@ const postUser = async (req, res) => {
 	}
 }
 
+const deleteUser = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const deletedUser = await User.findOne({
+			where: {
+				id: req.params.id
+			}
+		})
+		if (!deletedUser) return 0;
+		await User.destroy({ where: { id: id } });
+
+		return res.status(200).json("User deleted");
+	}
+	catch (err) {
+		return res.status(500).send(`User could not be deleted (${err})`);
+	}
+}
+
 module.exports = {
-  getUser,
-  getUserByID,
-  putUser,
-  postUser
+	getUser,
+	getUserByID,
+	putUser,
+	postUser,
+	deleteUser
 }
