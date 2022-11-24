@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import s from './SearchBar.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { searchByName } from '../../redux/actions/index';
-// import './SearchBar.css'
 
 function SearchBar() {
 	const dispatch = useDispatch();
@@ -45,8 +44,8 @@ function SearchBar() {
 					{productName.length >= 4 ? (
 						<ul className={s.ul}>
 							{predictionProduct.map((sp) => (
-								<li className={s.li} key={sp.id}>
-									{sp.name}
+								<li className={s.li} key={sp.id} title={sp.name}>
+									{sp.name.slice(0,12)+"..."}
 								</li>
 							))}
 						</ul>
