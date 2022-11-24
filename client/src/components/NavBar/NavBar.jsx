@@ -1,6 +1,7 @@
 import React from 'react';
 import Logo from '../../asset/Logo.png';
 import Carito from '../../asset/carrito.png';
+import star from '../../asset/star.png';
 import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
@@ -40,7 +41,9 @@ function NavBar() {
 				<div className={s.cart}>
 					<img src={Carito} alt='Carro de compras' height='25px' />
 				</div>
-				<div className={s.favorites}>♥</div>
+				<div className={s.favorites}>
+					<img src={star} alt='estrella de favoritos' height='25px' />
+				</div>
 			</nav>
 		</div>
 	);

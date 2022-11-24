@@ -1,4 +1,5 @@
 import React from 'react';
+// import Paginate from '../Paginate/Paginate';
 
 export default function HomePage() {
 	return (
