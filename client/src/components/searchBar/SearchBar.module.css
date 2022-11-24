@@ -1,3 +1,8 @@
+/* .content {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+} */
 .btn {
 	margin-left: 10px;
 	width: 90px;
@@ -25,4 +30,20 @@
 .input:hover {
 	background-color: #d9d9d9;
 	color: rgb(0, 0, 0);
+}
+.ul {
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	width: 8%;
+	justify-content: center;
+	list-style: none;
+	position: fixed;
+}
+
+.li {
+	display: flex;
+	flex-direction: row;
+	flex: content;
+	width: 100%;
 }
