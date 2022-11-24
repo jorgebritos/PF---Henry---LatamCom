@@ -9,9 +9,9 @@ const LoginRegister = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 
-	useEffect(() => {
-		dispatch(getAllUsers());
-		dispatch(getUser(1));
+	useEffect(async () => {
+		await dispatch(getAllUsers());
+		await dispatch(getUser(1));
 	});
 	return (
 		<div className={s.Login}>

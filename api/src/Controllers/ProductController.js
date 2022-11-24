@@ -18,7 +18,7 @@ const getProduct = async (req, res) => {
     })
 
     let categoryTable = await Category.findAll({});
-    if (productTable.length === 0) {
+    if (productTable.length === 0 && categoryTable.length > 1) {
         try {
             let apiInfo = await axios.get(`https://fakestoreapi.com/products`)
             const products = apiInfo.data.map(p => {
@@ -64,6 +64,18 @@ const getProduct = async (req, res) => {
                     ['id', 'ASC']
                 ]
             });
+            productTable = await Product.findAll({
+                include: {
+                    model: Category,
+                    attributes: ["name"],
+                    through: {
+                        attributes: []
+                    }
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
+            })
 
             return res.send(productTable)
         } catch (error) {
@@ -173,7 +185,7 @@ const deleteProduct = async (req, res) => {
             }
         })
         if (!deletedProduct) return 0;
-        await Product.destroy({where: { id: id }});
+        await Product.destroy({ where: { id: id } });
 
         return res.status(200).json("Product deleted");
     }

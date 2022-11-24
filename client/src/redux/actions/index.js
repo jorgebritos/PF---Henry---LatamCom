@@ -69,10 +69,10 @@ export function getUser(id) {
 
 export function getAllCategories() {
     return async function (dispatch) {
-        const productsInfo = await axios.get('http://localhost:3001/categories')
+        const categoriesInfo = await axios.get('http://localhost:3001/categories')
         dispatch({
             type: GET_ALL_CATEGORIES,
-            payload: productsInfo.data
+            payload: categoriesInfo.data
         })
     }
 }
