@@ -1,91 +1,14 @@
 const { Router } = require("express");
-const axios = require("axios");
-const { Op } = require("sequelize");
-const { User } = require("../db.js");
 const router = Router();
+const usersController = require('./../Controllers/UsersController');
 
+router.get('/', usersController.getUser);
 
-router.get('/', async (req, res) => {
-    const { name } = req.query
-    let userTable = await User.findAll({
-        order: [
-            ['id', 'ASC']
-        ]
-    })
+router.get('/:id', usersController.getUserByID);
 
-    if (userTable.length === 0) {
-        try {
-            let apiInfo = await axios.get(`https://fakestoreapi.com/users`)
-            const users = apiInfo.data.map(u => {
-                return {
-                    firstname: u.name['firstname'],
-                    lastname: u.name['lastname'],
-                    email: u.email,
-                    username: u.username,
-                    password: u.password
-                }
-            });
-            await User.bulkCreate(users)
+router.put('/:id', usersController.putUser);
 
-            userTable = await User.findAll({
-                order: [
-                    ['id', 'ASC']
-                ]
-            })
+router.post('/', usersController.postUser);
 
-            return res.send(userTable)
-        } catch (error) {
-            res.status(404).send(error)
-        }
-    } else {
-        if (name) {
-            const specificUser = await Product.findAll({
-                where: {
-                    name: { [Op.iLike]: `%${name}%` }
-                }
-            })
-
-            if (specificUser.length > 0) return res.status(200).send(specificUser);
-
-            return res.status(404).send("No such User");
-        }
-    }
-    res.status(200).send(userTable);
-})
-
-router.get('/:id', async (req, res) => {
-    const selectedUser = await User.findOne({
-        where: {
-            id: req.params.id
-        }
-    })
-    if (selectedUser) {
-        res.status(200).send(selectedUser)
-    } else {
-        res.sendStatus(404)
-    }
-})
-
-router.put('/:id', async (req, res) => {
-    const selectedUser = await User.findOne({
-        where: {
-            id: req.params.id
-        }
-    });
-    if (selectedUser) {
-        let data = { ...req.body }
-
-        let keys = Object.keys(data);
-
-        keys.forEach(k => {
-            selectedUser[k] = data[k]
-        });
-
-        await selectedUser.save()
-
-        res.sendStatus(200)
-    } else {
-        res.sendStatus(404)
-    }
-})
 module.exports = router
+
