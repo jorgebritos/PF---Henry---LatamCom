@@ -11,3 +11,4 @@ router.put('/:id', usersController.putUser);
 router.post('/', usersController.postUser);
 
 module.exports = router
+
