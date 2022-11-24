@@ -41,6 +41,11 @@
 	position: fixed;
 }
 
+.ilink{
+	text-decoration: none;
+	color: black;
+}
+
 .li {
 	display: flex;
 	flex-direction: row;

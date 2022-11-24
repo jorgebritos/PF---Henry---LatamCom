@@ -8,6 +8,7 @@ function SearchBar() {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products);
 	const [productName, setproductName] = useState('');
+    let [showList, setShowList] = useState(false)
 	let predictionProduct = [];
 	useEffect(() => {
 		dispatch(searchByName(productName));
@@ -21,11 +22,18 @@ function SearchBar() {
 	function handleSubmit(e) {
 		e.preventDefault();
 		setproductName('');
+        setShowList(false)
 	}
 
 	function handleOnChange(e) {
 		setproductName(e.target.value);
+        setShowList(true)
 	}
+
+    function handleClick(e) {
+        setShowList(false)
+	}
+
 	console.log(products);
 	console.log(predictionProduct);
 
@@ -41,12 +49,14 @@ function SearchBar() {
 						value={productName}
 						onChange={(e) => handleOnChange(e)}
 					/>
-					{productName.length >= 4 ? (
+					{productName.length >= 4 && showList? (
 						<ul className={s.ul}>
 							{predictionProduct.map((sp) => (
-								<li className={s.li} key={sp.id} title={sp.name}>
-									{sp.name.slice(0,12)+"..."}
-								</li>
+                                <Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)}>    
+                                    <li className={s.li} key={sp.id} title={sp.name}>
+                                        {sp.name.slice(0,12)+"..."}
+                                    </li>
+                                </Link>
 							))}
 						</ul>
 					) : (
