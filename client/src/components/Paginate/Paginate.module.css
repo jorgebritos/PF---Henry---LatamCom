@@ -1,3 +1,6 @@
+/* .nav:hover {
+	cursor: pointer;
+} */
 .Paginate {
 	margin-bottom: 5%;
 	display: inline-flex;
@@ -5,6 +8,7 @@
 	flex-wrap: wrap;
 	align-content: space-between;
 	flex-direction: row;
+	/* cursor: pointer; */
 }
 
 .ButPaginate {
@@ -18,6 +22,7 @@
 	margin: 10px 10px;
 	box-shadow: 2px 2px 15px #142328cc;
 	text-shadow: 1px 1px 1px rgb(0, 0, 0);
+	cursor: pointer;
 }
 
 .actual {

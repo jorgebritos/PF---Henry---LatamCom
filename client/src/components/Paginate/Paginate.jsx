@@ -9,7 +9,7 @@ export default function Paginado({ producPrePage, totalProducts, paginado }) {
 	}
 
 	return (
-		<nav>
+		<nav className={s.nav}>
 			<ul>
 				{pageNumbers &&
 					pageNumbers.map((number) => (
