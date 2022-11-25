@@ -7,7 +7,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 55rem;
+	max-width: 20rem;
 	background-color: aqua;
 }
 
@@ -22,5 +22,4 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	margin-top: 2em;
 }
