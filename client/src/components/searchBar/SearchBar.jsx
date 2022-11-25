@@ -9,7 +9,10 @@ function SearchBar() {
 	const products = useSelector((state) => state.products);
 	const [productName, setproductName] = useState('');
     let [showList, setShowList] = useState(false)
+	let [clickSelect, setClickSelect] = useState(false)
 	let predictionProduct = [];
+	let [currentURL, setCurrentURL]= useState(window.location.href)
+
 	useEffect(() => {
 		dispatch(searchByName(productName));
 	}, [productName]);
@@ -22,17 +25,23 @@ function SearchBar() {
 		}
 	}
 
+	if(currentURL !== window.location.href){
+		setproductName('')
+		setShowList(false)
+		setCurrentURL(window.location.href)
+	}
+
 	function handleSubmit(e) {
 		e.preventDefault();
 		setproductName('');
-		setShowList(false)
-		console.log(productName);
+		setShowList(true)
+		setClickSelect(false)
+		
 	}
 	
 
 	function handleOnChange(e) {
 		setproductName(e.target.value);
-
 		if(e.target.value.length >= 4){
     	    setShowList(true)
 		}
@@ -41,18 +50,41 @@ function SearchBar() {
 		}
 	}
 
+	
+
     function handleClick(e) {
-        setShowList(false)
-		setproductName('')
+		console.log(e.target);
+		if(e.target.name !=='product'){
+			setproductName('')
+			setShowList(true)
+			setClickSelect(false)
+		}
+		else if(e.target.className === 'li'){
+			console.log('ol');
+		}
+		
+		
+        
+		
 	}
 
-	console.log(products);
-	console.log(predictionProduct);
-
+	document.addEventListener('click', (e) =>{
+		if(e.target.name !== 'product' && e.target !== 'li'){
+			setShowList(false)
+		}
+		else{
+			e.target.value.length >=4?
+			setShowList(true):
+			setShowList(false)
+		}
+	})
+	//console.log(clickSelect);
+	
+	
 	return (
-		<div>
+		<div >
 			<form onSubmit={(e) => handleSubmit(e)} autoComplete='off'>
-				<div className={s.content}>
+				<div className={s.content} >
 					<input
 						className={s.input}
 						type='text'
@@ -61,14 +93,13 @@ function SearchBar() {
 						value={productName}
 						onChange={(e) => handleOnChange(e)}
 						onFocus ={(e) => handleOnChange(e)}
-						onBlur={(e) => setShowList(false)}
 
 					/>
 					{showList? (
-						<ul className={s.ul}>
+						<ul className={s.ul} >
 							{predictionProduct.map((sp) => (
-                                <Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)}>    
-                                    <li className={s.li} key={sp.id} title={sp.name}>
+                                <Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)} >    
+                                    <li className={s.li} key={sp.id} title={sp.name} >
                                         {sp.name.slice(0,18)+"..."}
                                     </li>
                                 </Link>
