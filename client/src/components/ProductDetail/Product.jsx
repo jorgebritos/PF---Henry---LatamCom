@@ -8,6 +8,7 @@ import {
 	getAllProducts,
 	getAllCategories,
 } from '../../redux/actions/index';
+import s from './Product.module.css';
 
 const Product = (props) => {
 	// Hooks y estados ////////////////////////////////
@@ -50,34 +51,43 @@ const Product = (props) => {
 
 		return (
 			<div>
-				<div>
-					{product.name} <br />
-					Price: {product.price} <br />
-					<img src={product.image}></img> <br />
-					Description: {product.description} <br />
-					Categories:{' '}
-					{product.categories.map((e) => {
-						return (
-							<div key={e.name}>
-								<p>{e.name}</p>
+				<div className={s.cont}>
+					<div className={s.contImg}>
+						<img
+							src={product.image}
+							alt='imagen del Producto'
+							className={s.img}
+						/>
+					</div>
+					<div className={s.contInfo}>
+						<h1 className={s.name}>{product.name} </h1>
+						<h2 className={s.price}>${product.price} </h2>
+						<h4 className={s.h4}>Description:</h4>
+						<p className={s.parafo}>{product.description}</p>
+						<h4 className={s.h4}>Categories:</h4>
+						{product.categories.map((e) => {
+							return (
+								<div key={e.name}>
+									<p className={s.parafo}>{e.name}</p>
+								</div>
+							);
+						})}
+						{productComments.length ? (
+							<div>
+								Comments:{' '}
+								{productComments.map((com) => {
+									return (
+										<div key={com.id}>
+											<p className={s.parafo}>{com.comment}</p>
+											<p className={s.parafo}>Rating: {com.rating}</p>
+										</div>
+									);
+								})}
 							</div>
-						);
-					})}
-					{productComments.length ? (
-						<div>
-							Comments:{' '}
-							{productComments.map((com) => {
-								return (
-									<div key={com.id}>
-										<p>{com.comment}</p>
-										<p>Rating: {com.rating}</p>
-									</div>
-								);
-							})}
-						</div>
-					) : (
-						<p>Without comentaries</p>
-					)}
+						) : (
+							<p className={s.parafo}>Without comentaries</p>
+						)}
+					</div>
 				</div>
 			</div>
 		);

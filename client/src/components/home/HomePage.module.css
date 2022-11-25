@@ -7,8 +7,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 50rem;
-	background-color: aqua;
+	width: 55rem;
+	/* background-color: aqua; */
 }
 
 .cads {
