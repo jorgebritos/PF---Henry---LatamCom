@@ -16,7 +16,6 @@ export default function HomePage() {
 			dispatch(getAllProducts());
 		}, 1);
 	}, []);
-	console.log(products);
 	return (
 		<div className={s.cont}>
 			<div className={s.filter}>filtro</div>
