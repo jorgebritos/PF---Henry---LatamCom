@@ -16,12 +16,15 @@ const getProduct = async (req, res) => {
             ['id', 'ASC']
         ]
     })
-
+    if (productTable.length > 1) {
+        res.send(productTable);
+    }
     let categoryTable = await Category.findAll({});
-    if (productTable.length === 0) {
+    console.log(categoryTable[0])
+    if (productTable.length === 0 && categoryTable.length > 1   ) {
         try {
-            let apiInfo = await axios.get(`https://fakestoreapi.com/products`)
-            const products = apiInfo.data.map(p => {
+            let products = require("../JSON/products.json")
+            Bulkproducts = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
@@ -29,9 +32,10 @@ const getProduct = async (req, res) => {
                     price: p.price
                 }
             });
-            await Product.bulkCreate(products)
 
-            let info = apiInfo.data.map(p => {
+            await Product.bulkCreate(Bulkproducts)
+
+            let info = products.map(p => {
                 return {
                     id: p.id,
                     name: p.title,
@@ -42,6 +46,7 @@ const getProduct = async (req, res) => {
                 }
             });
 
+
             productTable = await Product.findAll();
 
 
@@ -49,6 +54,7 @@ const getProduct = async (req, res) => {
                 let product = info[i];
                 let data = await productTable.find(r => r.id == product.id);
                 let category = await categoryTable.find(c => c.name == product.category)
+                console.log(category)
                 data.addCategory(category)
             }
 
@@ -64,6 +70,18 @@ const getProduct = async (req, res) => {
                     ['id', 'ASC']
                 ]
             });
+            productTable = await Product.findAll({
+                include: {
+                    model: Category,
+                    attributes: ["name"],
+                    through: {
+                        attributes: []
+                    }
+                },
+                order: [
+                    ['id', 'ASC']
+                ]
+            })
 
             return res.send(productTable)
         } catch (error) {
@@ -82,7 +100,6 @@ const getProduct = async (req, res) => {
             return res.status(404).send("No such Product");
         }
     }
-    res.status(200).send(productTable);
 }
 
 const putProduct = async (req, res) => {
@@ -173,7 +190,7 @@ const deleteProduct = async (req, res) => {
             }
         })
         if (!deletedProduct) return 0;
-        await Product.destroy({where: { id: id }});
+        await Product.destroy({ where: { id: id } });
 
         return res.status(200).json("Product deleted");
     }

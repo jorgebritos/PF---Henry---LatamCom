@@ -6,16 +6,16 @@ const getCategories = async (req, res) => {
 
   if (categoryTable.length > 0) return res.send(categoryTable)
 
-  let apiInfo = axios.get(`https://fakestoreapi.com/products/categories`)
-  apiInfo.then( info => info.data.map(c => { return { name: c } }))
-      .then(async info => {
-          Category.bulkCreate(info)
-          categoryTable = await Category.findAll()
-          res.send(categoryTable);
-      })
-      .catch(error => console.error('Inside error:', error))
+  let apiInfo = ["electronics", "jewelery", "men's clothing", "women's clothing"]
+    apiInfo = apiInfo.map(c => { return { name: c } })
+  for (const i of apiInfo) {
+    console.log(i)
+  }
+  Category.bulkCreate(apiInfo)
+  categoryTable = await Category.findAll()
+  res.send(categoryTable);
 }
 
-module.exports={
+module.exports = {
   getCategories
 }
