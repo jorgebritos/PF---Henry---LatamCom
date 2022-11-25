@@ -93,28 +93,31 @@ const postUser = async (req, res) => {
 	} = req.body;
 
 	try {
-		if (
-			!firstname ||
-			!lastname ||
-			!email ||
-			!profile_image ||
-			!username ||
-			!password
-		) {
-			return res.status(404).send('Missing parameters');
+		if (!firstname || !lastname || !email || !profile_image || !username || !password) return res.status(404).send('Missing parameters');
+
+		if (!admin) {
+			const newUser = await User.create({
+				firstname,
+				lastname,
+				email,
+				profile_image,
+				username,
+				password
+			});
+			return res.status(200).send(newUser);
+		} else {
+			const newAdmin = await User.create({
+				firstname,
+				lastname,
+				email,
+				profile_image,
+				username,
+				password,
+				admin
+			});
+			return res.status(200).send(newAdmin);
 		}
 
-		const newUser = await User.create({
-			firstname,
-			lastname,
-			email,
-			profile_image,
-			username,
-			password,
-			admin,
-		});
-
-		return res.status(200).send(newUser);
 	} catch (error) {
 		console.log('Error en el post User', error);
 	}

@@ -58,19 +58,7 @@ const getProduct = async (req, res) => {
                 let category = await categoryTable.find(c => c.name == product.category)
                 data.addCategory(category)
             }
-
-            // productTable = await Product.findAll({
-            //     include: {
-            //         model: Category,
-            //         attributes: ["name"],
-            //         through: {
-            //             attributes: []
-            //         }
-            //     },
-            //     order: [
-            //         ['id', 'ASC']
-            //     ]
-            // });
+            
             productTable = await Product.findAll({
                 include: {
                     model: Category,
