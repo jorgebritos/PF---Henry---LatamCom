@@ -16,15 +16,17 @@ const getProduct = async (req, res) => {
             ['id', 'ASC']
         ]
     })
-    if (productTable.length > 1) {
-        res.send(productTable);
-    }
+
+    if (productTable.length > 1) res.send(productTable);
+
     let categoryTable = await Category.findAll({});
-    console.log(categoryTable[0])
-    if (productTable.length === 0 && categoryTable.length > 1   ) {
+
+    if (categoryTable.length === 0) return res.send("Please Create Categories First")
+
+    if (productTable.length === 0 && categoryTable.length > 1) {
         try {
             let products = require("../JSON/products.json")
-            Bulkproducts = products.map(p => {
+            let Bulkproducts = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
@@ -54,22 +56,21 @@ const getProduct = async (req, res) => {
                 let product = info[i];
                 let data = await productTable.find(r => r.id == product.id);
                 let category = await categoryTable.find(c => c.name == product.category)
-                console.log(category)
                 data.addCategory(category)
             }
 
-            productTable = await Product.findAll({
-                include: {
-                    model: Category,
-                    attributes: ["name"],
-                    through: {
-                        attributes: []
-                    }
-                },
-                order: [
-                    ['id', 'ASC']
-                ]
-            });
+            // productTable = await Product.findAll({
+            //     include: {
+            //         model: Category,
+            //         attributes: ["name"],
+            //         through: {
+            //             attributes: []
+            //         }
+            //     },
+            //     order: [
+            //         ['id', 'ASC']
+            //     ]
+            // });
             productTable = await Product.findAll({
                 include: {
                     model: Category,
@@ -154,7 +155,6 @@ const postProduct = async (req, res) => {
         stock,
         brand,
         amountSold,
-        admin,
         softdelete,
         categories
 
@@ -168,9 +168,7 @@ const postProduct = async (req, res) => {
         stock,
         brand,
         amountSold,
-        admin,
         softdelete
-
     })
 
     let categoryDB = await Category.findAll({

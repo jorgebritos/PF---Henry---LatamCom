@@ -8,9 +8,6 @@ const getCategories = async (req, res) => {
 
   let apiInfo = ["electronics", "jewelery", "men's clothing", "women's clothing"]
     apiInfo = apiInfo.map(c => { return { name: c } })
-  for (const i of apiInfo) {
-    console.log(i)
-  }
   Category.bulkCreate(apiInfo)
   categoryTable = await Category.findAll()
   res.send(categoryTable);
