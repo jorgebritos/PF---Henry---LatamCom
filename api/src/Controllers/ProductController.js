@@ -17,11 +17,16 @@ const getProduct = async (req, res) => {
         ]
     })
 
+    if (productTable.length > 1) res.send(productTable);
+
     let categoryTable = await Category.findAll({});
-    if (productTable.length === 0) {
+
+    if (categoryTable.length === 0) return res.send("Please Create Categories First")
+
+    if (productTable.length === 0 && categoryTable.length > 1) {
         try {
-            let apiInfo = await axios.get(`https://fakestoreapi.com/products`)
-            const products = apiInfo.data.map(p => {
+            let products = require("../JSON/products.json")
+            let Bulkproducts = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
@@ -29,9 +34,10 @@ const getProduct = async (req, res) => {
                     price: p.price
                 }
             });
-            await Product.bulkCreate(products)
 
-            let info = apiInfo.data.map(p => {
+            await Product.bulkCreate(Bulkproducts)
+
+            let info = products.map(p => {
                 return {
                     id: p.id,
                     name: p.title,
@@ -41,6 +47,7 @@ const getProduct = async (req, res) => {
                     category: p.category
                 }
             });
+
 
             productTable = await Product.findAll();
 
@@ -52,6 +59,18 @@ const getProduct = async (req, res) => {
                 data.addCategory(category)
             }
 
+            // productTable = await Product.findAll({
+            //     include: {
+            //         model: Category,
+            //         attributes: ["name"],
+            //         through: {
+            //             attributes: []
+            //         }
+            //     },
+            //     order: [
+            //         ['id', 'ASC']
+            //     ]
+            // });
             productTable = await Product.findAll({
                 include: {
                     model: Category,
@@ -63,7 +82,7 @@ const getProduct = async (req, res) => {
                 order: [
                     ['id', 'ASC']
                 ]
-            });
+            })
 
             return res.send(productTable)
         } catch (error) {
@@ -82,7 +101,6 @@ const getProduct = async (req, res) => {
             return res.status(404).send("No such Product");
         }
     }
-    res.status(200).send(productTable);
 }
 
 const putProduct = async (req, res) => {
@@ -137,7 +155,6 @@ const postProduct = async (req, res) => {
         stock,
         brand,
         amountSold,
-        admin,
         softdelete,
         categories
 
@@ -151,9 +168,7 @@ const postProduct = async (req, res) => {
         stock,
         brand,
         amountSold,
-        admin,
         softdelete
-
     })
 
     let categoryDB = await Category.findAll({
@@ -173,7 +188,7 @@ const deleteProduct = async (req, res) => {
             }
         })
         if (!deletedProduct) return 0;
-        await Product.destroy({where: { id: id }});
+        await Product.destroy({ where: { id: id } });
 
         return res.status(200).json("Product deleted");
     }

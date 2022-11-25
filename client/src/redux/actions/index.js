@@ -69,10 +69,10 @@ export function getUser(id) {
 
 export function getAllCategories() {
     return async function (dispatch) {
-        const productsInfo = await axios.get('http://localhost:3001/categories')
+        const categoriesInfo = await axios.get('http://localhost:3001/categories')
         dispatch({
             type: GET_ALL_CATEGORIES,
-            payload: productsInfo.data
+            payload: categoriesInfo.data
         })
     }
 }
@@ -194,16 +194,20 @@ export function filterByCategory(payload) {
 }
 
 export function searchByName(productName) {
-    console.log(productName);
+    // console.log(productName);
     return async function (dispatch) {
         const productsInfo = await axios.get('http://localhost:3001/products')
-        
-        const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
-        console.log(searchedProducts);
-        dispatch({
-            type: SEARCH_BY_NAME,
-            payload: searchedProducts
-        })
+
+        if (productsInfo.data !== "Please Create Categories First") {
+            const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
+            // console.log(searchedProducts);
+            dispatch({
+                type: SEARCH_BY_NAME,
+                payload: searchedProducts
+            })
+        } else {
+            return 0
+        }
     }
 }
 

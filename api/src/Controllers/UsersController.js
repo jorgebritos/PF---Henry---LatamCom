@@ -8,11 +8,10 @@ const getUser = async (req, res) => {
 		order: [['id', 'ASC']],
 	});
 	if (userTable.length > 1) return res.send(userTable);
-
 	if (userTable.length === 0) {
 		try {
-			let apiInfo = await axios.get(`https://fakestoreapi.com/users`);
-			const users = apiInfo.data.map((u) => {
+			let users = require("../JSON/users.json")
+			users = users.map((u) => {
 				return {
 					firstname: u.name['firstname'],
 					lastname: u.name['lastname'],
