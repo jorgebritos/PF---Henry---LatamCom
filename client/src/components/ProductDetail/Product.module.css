@@ -7,8 +7,9 @@
 	background-position: center;
 	background-repeat: repeat;
 	/* width: 100%; */
+	height: 100%;
 	padding: 5rem;
-	/* padding-bottom: 11rem; */
+	padding-bottom: 6.12rem;
 }
 .contImg {
 	display: flex;

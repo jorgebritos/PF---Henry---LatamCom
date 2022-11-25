@@ -67,7 +67,7 @@ const Product = (props) => {
 						<h4 className={s.h4}>Categories:</h4>
 						{product.categories.map((e) => {
 							return (
-								<div key={e.name} className={s.Cpar}>
+								<div key={e.name}>
 									<p className={s.parafo}>{e.name}</p>
 								</div>
 							);
