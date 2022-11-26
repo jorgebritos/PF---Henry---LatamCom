@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { UserName } from '../../component/userName';
-// import Cookies from "universal-cookie";
 import { LogoutButton } from '../../component/Logout';
 import { LoginButton } from '../../component/Login';
 import { useHistory } from "react-router-dom";
@@ -18,7 +17,6 @@ const LoginRegister = () => {
 	const user = useSelector((state) => state.user);
 	const { loginWithRedirect, isAuthenticated } = useAuth0();
 	const history = useHistory();
-	// const cookies = new Cookies();
 
 	const userConfig = () => {
         history.push("/profile");
@@ -58,11 +56,11 @@ const LoginRegister = () => {
         },
     ];
 
-	
-	useEffect(async () => {
-		await dispatch(getAllUsers());
-		await dispatch(getUser(1));
-	}, []);
+//	useEffect(async () => {
+//		await dispatch(getAllUsers());
+//		await dispatch(getUser(1));
+//	}, []);
+
 	return (
 		<div className={s.Login}>
 			{/* {user.username ? ( */}
@@ -120,9 +118,6 @@ const LoginRegister = () => {
         )}
 				<h3 className={s.h3}>{user.username}</h3>
 			</div>
-			{/* ) : (
-				'Esto no existe'
-			)} */}
 		</div>
 	);
 };
