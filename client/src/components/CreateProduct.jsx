@@ -157,8 +157,11 @@ const CreateProduct = () => {
     // Post Product /////////////////////////////
     const submitData = async (event) => {
         event.preventDefault();
-        await dispatch(createProduct(input))
-        alert("se ha creado el producto")
+        try {
+            await dispatch(createProduct(input))
+        } catch (error) {
+            alert("El nombre indicado ya pertenece a otro producto, por favor seleccione otro")
+        }
         //history.push("/enviado") enviar a otro componente para dar el mensaje de "Enviado"
     }
     /////////////////////////////////////////////
