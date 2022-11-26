@@ -6,9 +6,10 @@ const ProductShopCart = () => {
 
 
 
-    const [productsSelected, setProductsSelected] = useState([])
+    
     const [total, setTotal] = useState(0)
-
+    const [productsSelected, setProductsSelected] = useState([])
+    let cant = 0
 
     useEffect(() => {
 
@@ -25,7 +26,8 @@ const ProductShopCart = () => {
         }
 
         setProductsSelected(cart)
-        totalAccount()
+        let cant = cart
+        totalAccount(cant)
     }
 
     const deleteProduct = (e, id) => {
@@ -33,7 +35,10 @@ const ProductShopCart = () => {
         let carrito = productsSelected.filter((p) => p.id !== id)
         setProductsSelected(carrito)
 
-        localStorage.setItem("cart", JSON.stringify(productsSelected))
+        localStorage.setItem("cart", JSON.stringify(carrito))
+        
+        let cant = carrito
+        totalAccount(cant)
 
     }
 
@@ -55,7 +60,8 @@ const ProductShopCart = () => {
         })
 
         setProductsSelected(increase)
-        totalAccount()
+        cant = increase
+        totalAccount(cant)
 
     }
 
@@ -74,22 +80,23 @@ const ProductShopCart = () => {
         })
 
         setProductsSelected(decrease)
-        totalAccount()
+        cant = decrease
+        totalAccount(cant)
 
     }
 
 
-    const totalAccount = () => {
+    const totalAccount = (cant) => {
 
-        if (productsSelected.length) {
-            if (productsSelected.length === 1) {
-                console.log(productsSelected)
-                setTotal(productsSelected[0].price * productsSelected[0].amount)
+        if (cant.length) {
+            if (cant.length === 1) {
+                
+                setTotal(cant[0].price * cant[0].amount)
             }
 
-            if (productsSelected.length > 1) {
+            if (cant.length > 1) {
                 let account = 0
-                productsSelected.forEach((p) => {
+                cant.forEach((p) => {
                     account += p.price * p.amount
                     setTotal(account.toFixed(2))
                 });
@@ -132,9 +139,9 @@ const ProductShopCart = () => {
                     )
                 })}
             </div>
-
+            {console.log(productsSelected)}
             <div>
-                <p>Total: {total} </p>
+                {productsSelected.length? <div>Total: {total}</div> : <div>Without products</div>}
             </div>
 
             <div>
