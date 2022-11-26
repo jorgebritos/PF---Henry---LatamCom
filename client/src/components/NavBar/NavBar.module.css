@@ -38,3 +38,12 @@
 .Link:hover {
 	color: #17abda;
 }
+
+.CarritoCantidad{
+	color: rgb(255, 255, 255);
+	background: linear-gradient(45deg, rgba(9,68,121,1) 0%, rgba(0,212,255,1) 83%);
+	border-radius: 50px;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+}
