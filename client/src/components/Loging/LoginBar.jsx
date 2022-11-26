@@ -34,7 +34,7 @@ const LoginRegister = () => {
             if (result.isConfirmed) {
                 
                     // dispatch(Logout());
-                    history.push("/home");
+                    history.push("/");
                 } else Logout();{
                 Swal.fire(
                     'Log out succesfully!',
@@ -94,7 +94,7 @@ const LoginRegister = () => {
                                                 >
                                                      <div ></div>
                                                      <div>
-                                                            <p >
+                                                            <p style={{cursor: "pointer"}}>
                                                               {
                                                                 item.name
                                                              }

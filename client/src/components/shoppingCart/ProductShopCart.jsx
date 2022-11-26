@@ -147,7 +147,6 @@ const ProductShopCart = () => {
                     )
                 })}
             </div>
-            {console.log(productsSelected)}
             <div>
                 {productsSelected.length? <div>Total: {total}</div> : <div>Without products</div>}
             </div>
