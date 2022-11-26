@@ -6,6 +6,7 @@ import LandingPage from './components/landing/LandingPage';
 import HomePage from './components/home/HomePage.jsx';
 import NavBar from './components/NavBar/NavBar.jsx';
 import Product from './components/ProductDetail/Product';
+import ProductShopCart from "./components/shoppingCart/ProductShopCart.jsx"
 import CreateProduct from './components/CreateProduct';
 import Profile from './component/Profile';
 
@@ -18,6 +19,7 @@ function App() {
 			<Route exact path='/home' component={HomePage} />
 			<Route path='/SearchResults' exact component={HomePage} />
 			<Route path='/product/:id' component={Product} />
+			<Route path='/shoppingcart' component={ProductShopCart} />
 			<Route path='/create/product' component={CreateProduct} />
       <Route path='/profile' component={Profile} />
 		</div>
