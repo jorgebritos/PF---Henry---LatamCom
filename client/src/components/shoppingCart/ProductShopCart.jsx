@@ -42,6 +42,14 @@ const ProductShopCart = () => {
 
     }
 
+    const cleanCart = (e)=>{
+        e.preventDefault()
+        setProductsSelected([])
+        localStorage.removeItem("cart")
+        let cant = 0
+        totalAccount(cant)
+    }
+
 
 
     const suma = (event) => {
@@ -146,7 +154,7 @@ const ProductShopCart = () => {
 
             <div>
                 <button>BUY</button>
-                <button>Clean cart</button>
+                <button onClick={(e)=>cleanCart(e)}>Clean cart</button>
             </div>
         </div>
     )
