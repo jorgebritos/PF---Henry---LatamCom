@@ -24,8 +24,8 @@ function NavBar() {
 							</Link>
 						</li>
 						<li className={s.li}>
-							<Link to={'/shop'} className={s.Link}>
-								<h3>Shop</h3>
+							<Link to={'/create/product'} className={s.Link}>
+								<h3>Create-Product</h3>
 							</Link>
 						</li>
 					</ul>

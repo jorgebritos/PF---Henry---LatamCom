@@ -127,6 +127,7 @@ const putProduct = async (req, res) => {
 }
 
 const getProductByID = async (req, res) => {
+    console.log(req.params)
     const selectedProduct = await Product.findOne({
         where: {
             id: req.params.id
@@ -176,7 +177,7 @@ const postProduct = async (req, res) => {
     });
 
     await productCreate.addCategory(categoryDB);
-    res.send("Created product successful");
+    res.status(200);
 }
 
 const deleteProduct = async (req, res) => {

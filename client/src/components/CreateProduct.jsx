@@ -1,68 +1,68 @@
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import {createProduct, getAllCategories, res} from "../redux/actions/index"
+import { createProduct, getAllCategories, res } from "../redux/actions/index"
 
 
 
 // Input Validate /////////////////////////////
-const validateInput = (input)=>{
-        
+const validateInput = (input) => {
+
     let errors = {}
-    
+
     // Error name ////////////////////////////////////////////
-    if(!input.name){
+    if (!input.name) {
         errors.name = "Introduce a name"
     }
     //////////////////////////////////////////////////////////
 
     // Error Image ///////////////////////////////////////
-    if(!input.image){
+    if (!input.image) {
         errors.image = "Introduce an image"
     }
     //////////////////////////////////////////////////////////
 
     // Error Price ////////////////////////////////////////
-    if(!input.price){
+    if (!input.price) {
         errors.price = "Introduce a price"
     }
-    else if(typeof parseInt(input.price) !== "number"){
+    else if (typeof parseInt(input.price) !== "number") {
         errors.price = "You must introduce only number"
     }
-    else if(input.price<0){
+    else if (input.price < 0) {
         errors.price = "It must be a positive number"
     }
     //////////////////////////////////////////////////////////
-    
+
     // Error Categories //////////////////////////////////////
-    if(!input.categories.length){
+    if (!input.categories.length) {
         errors.categories = "Introduce categories"
     }
     //////////////////////////////////////////////////////////
 
     // Enable/disable button ////////////////////////////////
     const sendButton = document.getElementById("sendButtom")
-    
-    if(Object.entries(errors).length){
+
+    if (Object.entries(errors).length) {
         sendButton.disabled = true
     }
-    else{
+    else {
         sendButton.disabled = false
     }
     //////////////////////////////////////////////////////////
 
-    
+
 
     return errors
 }
 ///////////////////////////////////////////////
 
 
-const CreateProduct = ()=>{
+const CreateProduct = () => {
 
     //Hooks and states ///////////////////////
     const dispatch = useDispatch()
-    const categories = useSelector((state)=>state.categories)
+    const categories = useSelector((state) => state.categories)
     const history = useHistory()
 
     const [input, setInput] = useState({
@@ -89,21 +89,21 @@ const CreateProduct = ()=>{
 
     const [loading, setLoading] = useState(false)
 
-    useEffect(()=>{
+    useEffect(() => {
 
         dispatch(getAllCategories())
 
-    },[])
+    }, [])
     ////////////////////////////////////////
 
     // Cloudinary ////////////////////////////////////////////////////////
 
-    const uploadImage = async(e)=>{
-        
+    const uploadImage = async (e) => {
+
         const files = e.target.files
         const data = new FormData()
-        data.append("file",files[0])
-        data.append("upload_preset","LatamCom")
+        data.append("file", files[0])
+        data.append("upload_preset", "LatamCom")
         setLoading(true)
         const res = await fetch("https://api.cloudinary.com/v1_1/drruxw6zi/image/upload",
             {
@@ -112,64 +112,65 @@ const CreateProduct = ()=>{
             }
         )
         const file = await res.json()
-        setInput({...input,image:file.secure_url})
+        setInput({ ...input, image: file.secure_url })
         setLoading(false)
-        setErrors(validateInput({...input,image:file.secure_url}))
+        setErrors(validateInput({ ...input, image: file.secure_url }))
 
     }
 
     ///////////////////////////////////////////////////////////////////////
 
     // Change Local States //////////////////////
-    const introduceData = (event)=>{
+    const introduceData = (event) => {
         event.preventDefault();
         const value = event.target.value
         const property = event.target.name
 
-        setInput({...input,[property]:value})
-        setErrors(validateInput({...input,[property]:value}))
-        
+        setInput({ ...input, [property]: value })
+        setErrors(validateInput({ ...input, [property]: value }))
+
     }
     /////////////////////////////////////////////
 
     // Functions of Categories ///////////////////////////
-    const introduceCategories = (event)=>{
+    const introduceCategories = (event) => {
         event.preventDefault();
         const catSelected = event.target.value
-        
-        if (!input.categories.includes(catSelected) && catSelected !== ""){
-            
-            setInput({...input,categories: [...input.categories, catSelected]})
-            setErrors(validateInput({...input,categories:catSelected}))
-            
-        }   
+
+        if (!input.categories.includes(catSelected) && catSelected !== "") {
+
+            setInput({ ...input, categories: [...input.categories, catSelected] })
+            setErrors(validateInput({ ...input, categories: catSelected }))
+
+        }
 
     }
 
-    const deleteCategories = (event)=>{
+    const deleteCategories = (event) => {
         event.preventDefault()
-        setInput({...input, categories:[]})
-        setErrors(validateInput({...input,categories:event.target.value}))
-        
+        setInput({ ...input, categories: [] })
+        setErrors(validateInput({ ...input, categories: event.target.value }))
+
     }
     ///////////////////////////////////////////////////////
-    
+
     // Post Product /////////////////////////////
-    const submitData = async (event)=>{
+    const submitData = async (event) => {
         event.preventDefault();
         await dispatch(createProduct(input))
+        alert("se ha creado el producto")
         //history.push("/enviado") enviar a otro componente para dar el mensaje de "Enviado"
     }
     /////////////////////////////////////////////
 
-    return(
+    return (
         <div>
             <h2>CREAR PRODUCTO</h2>
 
             <div>
 
-                <form onSubmit={(e)=>submitData(e)}>
-                    
+                <form onSubmit={(e) => submitData(e)}>
+
                     <div>
                         <label>P. Name: </label>
                         <input name="name" value={input.name} onChange={introduceData} autoComplete="off"  ></input>
@@ -183,9 +184,9 @@ const CreateProduct = ()=>{
 
                     <div>
                         <label>P. Image: </label>
-                        <input name="file"  onChange={uploadImage} autoComplete="off" type="file"  ></input>
+                        <input name="file" onChange={uploadImage} autoComplete="off" type="file"  ></input>
                         {errors.image && <p>{errors.image}</p>}
-                        {loading? (<h4>Uploading image...</h4>) : (<img src={input.image} style={{width: "300px"}} ></img>)}
+                        {loading ? (<h4>Uploading image...</h4>) : (<img src={input.image} style={{ width: "300px" }} ></img>)}
                     </div>
 
                     <div>
@@ -206,39 +207,39 @@ const CreateProduct = ()=>{
 
 
                     <div>
-                            
-                            {categories.length &&
-                                <div>
-                                    <select name="categories" onChange={introduceCategories} >
-                                        <option value="" >Chose yours categories...</option>
-                                        {categories.map((cat)=>{
-                                            return(
-                                                <option key={cat.name}>{cat.name}</option>
-                                            )
-                                        })}
 
-                                    </select>
-                                </div>
-                            }
-                        
-                        
+                        {categories.length &&
+                            <div>
+                                <select name="categories" onChange={introduceCategories} >
+                                    <option value="" >Chose yours categories...</option>
+                                    {categories.map((cat) => {
+                                        return (
+                                            <option key={cat.name}>{cat.name}</option>
+                                        )
+                                    })}
+
+                                </select>
+                            </div>
+                        }
+
+
                     </div>
 
                     <div>
                         {/* Opcion 1 */}
                         <label>Categories Selected</label>
                         <input value={input.categories} disabled ></input>
-                        
+
                         {/* Opcion 2 */}
-                        {input.categories.map((e)=>{
-                            return(
-                                    <p key={e}>{e}</p>
+                        {input.categories.map((e) => {
+                            return (
+                                <p key={e}>{e}</p>
                             )
                         })}
                         {errors.categories && <p>{errors.categories}</p>}
 
                         {/* Seleccionar el mas deseado y comodo para poder visualizar y acomodar con CSS */}
-                        
+
                     </div>
 
                     <div>
