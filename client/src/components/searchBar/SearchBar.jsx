@@ -8,31 +8,73 @@ function SearchBar() {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.products);
 	const [productName, setproductName] = useState('');
+    let [showList, setShowList] = useState(false)
 	let predictionProduct = [];
+	let [currentURL, setCurrentURL]= useState(window.location.href)
+
 	useEffect(() => {
 		dispatch(searchByName(productName));
-	}, [productName]);
+	}, [productName, currentURL]);
 
-	if (products.length > 5) {
-		predictionProduct = [...products.slice(0, 5)];
-	} else {
-		predictionProduct = [...products];
+	if(showList){
+		if (products.length > 5) {
+			predictionProduct = [...products.slice(0, 5)];
+		} else if(products.length===0){
+			predictionProduct =[...[{id:-1,name:'Producto no encontrado'}]]
+		}
+		else {
+			predictionProduct = [...products];
+		}
 	}
+
+	if(currentURL !== window.location.href){
+		setproductName('')
+		setShowList(false)
+		setCurrentURL(window.location.href)
+	}
+
 	function handleSubmit(e) {
 		e.preventDefault();
 		setproductName('');
+		setShowList(true)
+		
 	}
-
+	
 	function handleOnChange(e) {
 		setproductName(e.target.value);
+		if(e.target.value.length >= 4){
+    	    setShowList(true)
+		}
+		else{
+			setShowList(false)
+		}
 	}
-	// console.log(products);
-	// console.log(predictionProduct);
 
+    function handleClick(e) {
+		if(e.target.name !=='product'){
+			setproductName('')
+			setShowList(true)
+		}
+		else if(e.target.className === 'li'){
+			console.log('ol');
+		}
+	}
+
+	document.addEventListener('click', (e) =>{
+		if(e.target.name !== 'product' && e.target !== 'li'){
+			setShowList(false)
+		}
+		else{
+			e.target.value.length >=4?
+			setShowList(true):
+			setShowList(false)
+		}
+	})
+	
 	return (
-		<div>
-			<form onSubmit={(e) => handleSubmit(e)}>
-				<div className={s.content}>
+		<div >
+			<form onSubmit={(e) => handleSubmit(e)} autoComplete='off'>
+				<div className={s.content} >
 					<input
 						className={s.input}
 						type='text'
@@ -40,13 +82,17 @@ function SearchBar() {
 						id='productsearch'
 						value={productName}
 						onChange={(e) => handleOnChange(e)}
+						onFocus ={(e) => handleOnChange(e)}
+
 					/>
-					{productName.length >= 4 ? (
-						<ul className={s.ul}>
+					{showList? (
+						<ul className={s.ul} >
 							{predictionProduct.map((sp) => (
-								<li className={s.li} key={sp.id} title={sp.name}>
-									{sp.name.slice(0,12)+"..."}
-								</li>
+                                <Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)} >    
+                                    <li className={s.li} key={sp.id} title={sp.name} >
+                                        {sp.name.slice(0,18)+"..."}
+                                    </li>
+                                </Link>
 							))}
 						</ul>
 					) : (
