@@ -39,7 +39,6 @@ function SearchBar() {
 		
 	}
 	
-
 	function handleOnChange(e) {
 		setproductName(e.target.value);
 		if(e.target.value.length >= 4){
@@ -49,8 +48,6 @@ function SearchBar() {
 			setShowList(false)
 		}
 	}
-
-	
 
     function handleClick(e) {
 		console.log(e.target);
@@ -62,10 +59,6 @@ function SearchBar() {
 		else if(e.target.className === 'li'){
 			console.log('ol');
 		}
-		
-		
-        
-		
 	}
 
 	document.addEventListener('click', (e) =>{
@@ -79,7 +72,6 @@ function SearchBar() {
 		}
 	})
 	//console.log(clickSelect);
-	
 	
 	return (
 		<div >

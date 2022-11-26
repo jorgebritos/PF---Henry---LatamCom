@@ -12,12 +12,12 @@ const LoginRegister = () => {
 	useEffect(async () => {
 		await dispatch(getAllUsers());
 		await dispatch(getUser(1));
-	});
+	}, []);
 	return (
 		<div className={s.Login}>
 			{/* {user.username ? ( */}
 			<div className={s.Login}>
-				<img src={usericon} alt='' height='35px' />
+				<img src={usericon} alt='' height='25px' />
 				<h3 className={s.h3}>{user.username}</h3>
 			</div>
 			{/* ) : (

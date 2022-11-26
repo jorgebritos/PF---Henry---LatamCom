@@ -8,11 +8,10 @@ const getUser = async (req, res) => {
 		order: [['id', 'ASC']],
 	});
 	if (userTable.length > 1) return res.send(userTable);
-
 	if (userTable.length === 0) {
 		try {
-			let apiInfo = await axios.get(`https://fakestoreapi.com/users`);
-			const users = apiInfo.data.map((u) => {
+			let users = require("../JSON/users.json")
+			users = users.map((u) => {
 				return {
 					firstname: u.name['firstname'],
 					lastname: u.name['lastname'],
@@ -94,28 +93,31 @@ const postUser = async (req, res) => {
 	} = req.body;
 
 	try {
-		if (
-			!firstname ||
-			!lastname ||
-			!email ||
-			!profile_image ||
-			!username ||
-			!password
-		) {
-			return res.status(404).send('Missing parameters');
+		if (!firstname || !lastname || !email || !profile_image || !username || !password) return res.status(404).send('Missing parameters');
+
+		if (!admin) {
+			const newUser = await User.create({
+				firstname,
+				lastname,
+				email,
+				profile_image,
+				username,
+				password
+			});
+			return res.status(200).send(newUser);
+		} else {
+			const newAdmin = await User.create({
+				firstname,
+				lastname,
+				email,
+				profile_image,
+				username,
+				password,
+				admin
+			});
+			return res.status(200).send(newAdmin);
 		}
 
-		const newUser = await User.create({
-			firstname,
-			lastname,
-			email,
-			profile_image,
-			username,
-			password,
-			admin,
-		});
-
-		return res.status(200).send(newUser);
 	} catch (error) {
 		console.log('Error en el post User', error);
 	}
