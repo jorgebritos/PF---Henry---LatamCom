@@ -1,29 +1,35 @@
-import React from "react";
-import "../Css/Paginate.css";
+import React from 'react';
+import s from './Paginate.module.css';
 
-export default function Paginado({videogamesPerPage, allVideogames, paginado,value}){
-    const pageNumbers=[]
+export default function Paginado({ producPrePage, totalProducts, paginado }) {
+	const pageNumbers = [];
 
-    for (let i=1; i <= Math.ceil(allVideogames/videogamesPerPage); i++){
-        pageNumbers.push(i)
-    }
+	for (let i = 1; i <= Math.ceil(totalProducts / producPrePage); i++) {
+		pageNumbers.push(i);
+	}
 
-    return(
-        <nav>   
-            <ul >
-                {pageNumbers && pageNumbers.map(number =>(
-                    <li className="Paginate" key={number}>
-                        <button className={number === value? "actual" : "ButPaginate"} onClick={()=> paginado(number)}>{number}</button>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    )
+	return (
+		<nav className={s.nav}>
+			<ul>
+				{pageNumbers &&
+					pageNumbers.map((number) => (
+						<li className={s.Paginate} key={number}>
+							<button
+								// className={number === value ? s.actual : s.ButPaginate}
+								className={s.ButPaginate}
+								onClick={() => paginado(number)}>
+								{number}
+							</button>
+						</li>
+					))}
+			</ul>
+		</nav>
+	);
 }
 //Una vez montado el Home:
 // const allVideogames = useSelector((state)=> state.videogames) //en nuestro caso seria allProducts
 // const [order, setOrder]= useState('');
-// const [currentPage, setCurrentPage]= useState(1);//seteo mi estado local inicial en la pagina 1 
+// const [currentPage, setCurrentPage]= useState(1);//seteo mi estado local inicial en la pagina 1
 // const [videogamesPerPage,setVideogamesPerPage]=useState(15);
 // const indexOfLastVideogame = currentPage * videogamesPerPage//15
 // const indexOfFirstVideogame = indexOfLastVideogame - videogamesPerPage//0
@@ -33,7 +39,7 @@ export default function Paginado({videogamesPerPage, allVideogames, paginado,val
 //     setCurrentPage(pageNumber)
 // }
 
-//  <Paginado 
+//  <Paginado
 //value={currentPage}
 //videogamesPerPage={videogamesPerPage}
 //allVideogames={allVideogames.length}

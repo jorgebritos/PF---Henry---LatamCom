@@ -7,8 +7,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 55rem;
-	/* background-color: aqua; */
+	max-width: 20rem;
+	background-color: aqua;
 }
 
 .cads {
@@ -17,4 +17,9 @@
 	flex-direction: row;
 	justify-content: center;
 	margin-top: 2em;
+}
+.pag {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
 }
