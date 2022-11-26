@@ -9,18 +9,20 @@ function SearchBar() {
 	const products = useSelector((state) => state.products);
 	const [productName, setproductName] = useState('');
     let [showList, setShowList] = useState(false)
-	let [clickSelect, setClickSelect] = useState(false)
 	let predictionProduct = [];
 	let [currentURL, setCurrentURL]= useState(window.location.href)
 
 	useEffect(() => {
 		dispatch(searchByName(productName));
-	}, [productName]);
+	}, [productName, currentURL]);
 
 	if(showList){
 		if (products.length > 5) {
 			predictionProduct = [...products.slice(0, 5)];
-		} else {
+		} else if(products.length===0){
+			predictionProduct =[...[{id:-1,name:'Producto no encontrado'}]]
+		}
+		else {
 			predictionProduct = [...products];
 		}
 	}
@@ -35,7 +37,6 @@ function SearchBar() {
 		e.preventDefault();
 		setproductName('');
 		setShowList(true)
-		setClickSelect(false)
 		
 	}
 	
@@ -50,11 +51,9 @@ function SearchBar() {
 	}
 
     function handleClick(e) {
-		console.log(e.target);
 		if(e.target.name !=='product'){
 			setproductName('')
 			setShowList(true)
-			setClickSelect(false)
 		}
 		else if(e.target.className === 'li'){
 			console.log('ol');
@@ -71,7 +70,6 @@ function SearchBar() {
 			setShowList(false)
 		}
 	})
-	//console.log(clickSelect);
 	
 	return (
 		<div >
