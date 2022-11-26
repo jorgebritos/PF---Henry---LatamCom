@@ -114,6 +114,7 @@ const putProduct = async (req, res) => {
 };
 
 const getProductByID = async (req, res) => {
+    console.log(req.params)
     const selectedProduct = await Product.findOne({
         where: {
             id: req.params.id
@@ -145,6 +146,12 @@ const postProduct = async (req, res) => {
 
     } = req.body;
 
+    let exists = await Product.findOne({
+        where: {name: name}
+    })
+
+    if(exists) return res.status(406).send("El producto ya existe")
+
     let productCreate = await Product.create({
         name,
         description,
@@ -159,8 +166,8 @@ const postProduct = async (req, res) => {
     });
 
     await productCreate.addCategory(categoryDB);
-    res.send("Created product successful");
-};
+    res.status(201);
+}
 
 const deleteProduct = async (req, res) => {
     const { id } = req.params;
