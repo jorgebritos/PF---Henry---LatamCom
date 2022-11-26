@@ -37,7 +37,8 @@ function NavBar() {
 					</ul>
 				</div>
 				<div>
-					{(localStorage.getItem("cart")) && <div className={s.CarritoCantidad}> {cart.length}</div>  }
+					{(localStorage.getItem("cart"))? <div className={s.CarritoCantidad}> {cart.length}</div> 
+					:<div className={s.CarritoCantidad}> 0</div>  }
 				</div>
 				<div>
 					<SearchBar />
