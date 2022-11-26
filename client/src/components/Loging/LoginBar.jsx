@@ -4,9 +4,9 @@ import { getUser, getAllUsers } from '../../redux/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { UserName } from '../../component/userName';
-import { LogoutButton } from '../../component/Logout';
-import { LoginButton } from '../../component/Login';
+import { UserName } from '../../components/login/userName';
+import { LogoutButton } from '../../components/login/Logout';
+import { LoginButton } from '../login/Login';
 import { useHistory } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import Swal from "sweetalert2"
@@ -87,7 +87,7 @@ const LoginRegister = () => {
                                      <div >
                                          {solutions.map(
                                              (item) => (
-                                             <div
+                                             <div key={item.name}
                                                  onClick={
                                                          item.href
                                                      }

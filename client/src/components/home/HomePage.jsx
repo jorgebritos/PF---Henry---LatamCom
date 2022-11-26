@@ -37,7 +37,7 @@ export default function HomePage() {
 					producPrePage={perPage}
 					totalProducts={totalProducts.length}
 					paginado={paginado}
-					// value={currentPage}
+				// value={currentPage}
 				/>
 			</div>
 			<div className={s.cont}>
