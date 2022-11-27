@@ -29,6 +29,7 @@ export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
 export const ORDER_ALPHABETICALLY = "ORDER_ALPHABETICALLY"
 export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
+export const NEW_SEARCH = "NEW_SEARCH"
 
 export function getAllProducts() {
     return async function (dispatch) {
@@ -230,6 +231,23 @@ export function filterByCategory(payload) {
 export function removeFilters() {
     return {
         type: REMOVE_ALL_FILTERS
+    }
+}
+
+export function newSearch(productName) {
+    return async function (dispatch) {
+        const productsInfo = await axios.get('http://localhost:3001/products')
+
+        if (productsInfo.data !== "Please Create Categories First") {
+            const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
+            // console.log(searchedProducts);
+            dispatch({
+                type: NEW_SEARCH,
+                payload: searchedProducts
+            })
+        } else {
+            return 0
+        }
     }
 }
 
