@@ -1,135 +1,188 @@
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { filterByBrand, filterByCategory, filterByPrice, getAllBrands, getAllCategories, getAllProducts, removeFilters } from "../../redux/actions";
-
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	filterByBrand,
+	filterByCategory,
+	filterByPrice,
+	getAllBrands,
+	getAllCategories,
+	getAllProducts,
+	removeFilters,
+} from '../../redux/actions';
+import s from './Filtros.module.css';
 
 export default function Filtros() {
+	const dispatch = useDispatch();
+	const categories = useSelector((state) => state.categories);
+	const products = useSelector((state) => state.products);
+	const brands = useSelector((state) => state.brands);
 
-    const dispatch = useDispatch();
-    const categories = useSelector((state) => state.categories);
-    const products = useSelector((state) => state.products);
-    const brands = useSelector((state) => state.brands)
+	useEffect(async () => {
+		await dispatch(getAllCategories());
+		await dispatch(getAllProducts());
+		dispatch(getAllBrands([]));
+	}, []);
 
-    useEffect(async () => {
-        await dispatch(getAllCategories())
-        await dispatch(getAllProducts())
-        dispatch(getAllBrands([]))
-    }, [])
+	const [priceFilter, setPriceFilter] = useState({
+		minPrice: 0,
+		maxPrice: 0,
+	});
 
-    const [priceFilter, setPriceFilter] = useState({
-        minPrice: 0,
-        maxPrice: 0
-    });
+	function handlePriceFilter(e) {
+		e.preventDefault();
+		setPriceFilter({
+			...priceFilter,
+			[e.target.name]: e.target.value,
+		});
+		return priceFilter;
+	}
 
-    function handlePriceFilter(e) {
-        e.preventDefault();
-        setPriceFilter({
-            ...priceFilter,
-            [e.target.name]: e.target.value
-        })
-        return priceFilter
-    }
+	const filterPrice = function (e) {
+		e.preventDefault();
+		dispatch(
+			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
+		);
+		dispatch(getAllBrands(products));
+	};
 
-    const filterPrice = function (e) {
-        e.preventDefault();
-        dispatch(filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }))
-        dispatch(getAllBrands(products))
-    }
+	const [categoryFilter, setCategoryFilter] = useState('All');
 
-    const [categoryFilter, setCategoryFilter] = useState("All");
+	function handleCategoryFilter(category) {
+		setCategoryFilter(category);
+	}
 
-    function handleCategoryFilter(category) {
-        setCategoryFilter(category)
-    }
+	const filterCategory = function (e) {
+		e.preventDefault();
+		dispatch(filterByCategory(categoryFilter));
+		dispatch(getAllBrands(products));
+	};
 
-    const filterCategory = function (e) {
-        e.preventDefault();
-        dispatch(filterByCategory(categoryFilter))
-        dispatch(getAllBrands(products))
-    }
+	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
 
-    const [checkedState, setCheckedState] = useState(
-        new Array(15).fill(false)
-    );
+	const [isChecked, setIsChecked] = useState([]);
 
-    const [isChecked, setIsChecked] = useState([]);
+	const handleOnChange = (position, e) => {
+		//SETEAR CAMPOS QUE ESTAN CHECKED
+		const updatedCheckedState = checkedState.map((item, index) =>
+			index === position ? !item : item,
+		);
 
-    const handleOnChange = (position, e) => {
-        //SETEAR CAMPOS QUE ESTAN CHECKED
-        const updatedCheckedState = checkedState.map((item, index) =>
-            index === position ? !item : item
-        );
+		//GUARDAR LOS VALORES O QUITARLOS DE LA LISTA DE DIETAS DEPENDIENDO DEL VALOR
+		if (e.target.checked) {
+			setIsChecked([...isChecked, e.target.value]);
+		} else {
+			let newArray = isChecked.filter((i) => i !== e.target.value);
+			setIsChecked(newArray);
+		}
 
-        //GUARDAR LOS VALORES O QUITARLOS DE LA LISTA DE DIETAS DEPENDIENDO DEL VALOR
-        if (e.target.checked) {
-            setIsChecked([...isChecked, e.target.value])
-        } else {
-            let newArray = isChecked.filter(i => i !== e.target.value)
-            setIsChecked(newArray)
-        }
+		setCheckedState(updatedCheckedState);
+	};
 
-        setCheckedState(updatedCheckedState);
-    };
+	const filterBrands = function (e) {
+		e.preventDefault();
+		dispatch(filterByBrand([...isChecked]));
+	};
 
-    const filterBrands = function (e) {
-        e.preventDefault();
-        dispatch(filterByBrand([...isChecked]))
-    }
+	const quitarFiltros = function (e) {
+		e.preventDefault();
+		dispatch(removeFilters());
+	};
 
-    const quitarFiltros = function (e) {
-        e.preventDefault();
-        dispatch(removeFilters())
-    }
+	return (
+		<div className={s.div}>
+			<div className={s.cont}>
+				<form className={s.from}>
+					<div className={s.filtro}>
+						<h3 className={s.h4}>Filtro Por Precio</h3>
+						<div>
+							<label className={s.labelM} htmlFor={'minPrice'}>
+								Min
+							</label>
+							<input
+								className={s.inputM}
+								type={'number'}
+								name={'minPrice'}
+								value={priceFilter.minPrice}
+								onChange={(e) => handlePriceFilter(e)}></input>
+						</div>
+						<div>
+							<label className={s.labelM} htmlFor={'maxPrice'}>
+								Max
+							</label>
+							<input
+								className={s.inputM}
+								type={'number'}
+								name={'maxPrice'}
+								value={priceFilter.maxPrice}
+								onChange={(e) => handlePriceFilter(e)}></input>
+						</div>
+						<br />
+						<div>
+							<button className={s.btn} onClick={(e) => filterPrice(e)}>
+								Filtrar
+							</button>
+						</div>
+					</div>
 
-    return (
-        <div>
-            <div>
-                Filtro Por Precio
-                <hr />
-                <div>
-                    <label htmlFor={"minPrice"}>Minimo</label>
-                    <input type={"number"} name={"minPrice"} value={priceFilter.minPrice} onChange={e => handlePriceFilter(e)}></input>
-                    <label htmlFor={"maxPrice"}>Maximo</label>
-                    <input type={"number"} name={"maxPrice"} value={priceFilter.maxPrice} onChange={e => handlePriceFilter(e)}></input>
-                </div>
-                <button onClick={e => filterPrice(e)}>Filtrar</button>
-            </div>
-            <hr />
-            <div>
-                Filtro Por Categoria
-                <hr />
-                <div>
-                    <ul>
-                        {
-                            categories?.map((c) => {
-                                return (
-                                    <li key={c.name}>
-                                        <input type={"radio"} value={c.name} name={"category"} onInput={e => handleCategoryFilter(c.name)} />{c.name}
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
-                    <button onClick={e => filterCategory(e)}>Filtrar</button>
-                </div>
-            </div>
-            <div>
-                Filtro Por Marca
-                <hr />
-                <div>
-                    <ul>
-                        {
-                            brands.length > 0 ? brands.map((b, index) => {
-                                return (
-                                    <li key={b}><input type={"checkbox"} checked={checkedState[index]} value={b} onChange={(e) => handleOnChange(index, e)} />{b}</li>
-                                )
-                            }) : null
-                        }
-                    </ul>
-                </div>
-                <button onClick={e => filterBrands(e)}>Filtrar</button>
-            </div>
-            <button onClick={e => quitarFiltros(e)}>Quitar Filtros</button>
-        </div>
-    )
+					<div className={s.filtro}>
+						<h4 className={s.h4}>Filtro Por Categoria</h4>
+						<ul>
+							{categories?.map((c) => {
+								return (
+									<li className={s.li} key={c.name}>
+										<label className={s.label}>
+											<input
+												className={s.input}
+												type={'radio'}
+												value={c.name}
+												name={'category'}
+												id='categoria'
+												onInput={(e) => handleCategoryFilter(c.name)}
+											/>
+											<span className={s.span}>{c.name}</span>
+										</label>
+									</li>
+								);
+							})}
+						</ul>
+						<button className={s.btn} onClick={(e) => filterCategory(e)}>
+							Filter
+						</button>
+					</div>
+					<div className={s.filtro}>
+						<h4 className={s.h4}> Filtro Por Marca</h4>
+						<ul>
+							{brands.length > 0
+								? brands.map((b, index) => {
+										return (
+											<li className={s.li} key={b}>
+												<label className={s.label}>
+													<input
+														className={s.input}
+														type={'checkbox'}
+														checked={checkedState[index]}
+														value={b}
+														onChange={(e) => handleOnChange(index, e)}
+													/>
+													<span className={s.spanC}>{b}</span>
+												</label>
+											</li>
+										);
+								  })
+								: null}
+						</ul>
+						<button className={s.btn} onClick={(e) => filterBrands(e)}>
+							Filter
+						</button>
+					</div>
+					<br />
+					<div className={s.contBtn}>
+						<button className={s.btnC} onClick={(e) => quitarFiltros(e)}>
+							Clear Filter
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	);
 }
