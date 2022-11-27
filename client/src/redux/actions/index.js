@@ -6,6 +6,7 @@ export const GET_ALL_COMMENTS = "GET_ALL_COMMENTS"
 export const GET_USER = "GET_USER"
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL"
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES"
+export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
 
 //RUTAS POST
 export const CREATE_PRODUCT = "CREATE_PRODUCT"
@@ -27,6 +28,7 @@ export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY"
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
 export const ORDER_ALPHABETICALLY = "ORDER_ALPHABETICALLY"
 export const RESET_DETAIL = "RESET_DETAIL"
+export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
 
 export function getAllProducts() {
     return async function (dispatch) {
@@ -74,6 +76,38 @@ export function getAllCategories() {
             type: GET_ALL_CATEGORIES,
             payload: categoriesInfo.data
         })
+    }
+}
+
+export function getAllBrands(payload) {
+    return async function (dispatch) {
+        if (payload.length > 0) {
+            console.log("selected products")
+            const products = payload
+            let brands = [];
+            for (const p of products) {
+                if (p.brand) brands.push(p.brand)
+            }
+            brands = new Set(brands)
+            brands = [...brands]
+            dispatch({
+                type: GET_ALL_BRANDS,
+                payload: brands
+            })
+        } else {
+            console.log("all products")
+            const products = await axios.get('http://localhost:3001/products')
+            let brands = [];
+            for (const p of products.data) {
+                if (p.brand) brands.push(p.brand)
+            }
+            brands = new Set(brands)
+            brands = [...brands]
+            dispatch({
+                type: GET_ALL_BRANDS,
+                payload: brands
+            })
+        }
     }
 }
 
@@ -190,6 +224,12 @@ export function filterByCategory(payload) {
     return {
         type: FILTER_BY_CATEGORY,
         payload
+    }
+}
+
+export function removeFilters() {
+    return {
+        type: REMOVE_ALL_FILTERS
     }
 }
 

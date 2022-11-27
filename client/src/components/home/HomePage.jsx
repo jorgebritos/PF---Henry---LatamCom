@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCategories, getAllProducts } from '../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
+import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
 import s from './HomePage.module.css';
 
 export default function HomePage() {
 	const dispatch = useDispatch();
 	// const allCategories = useSelector((state) => state.categories);
-	const totalProducts = useSelector((state) => state.allProducts);
+	const totalProducts = useSelector((state) => state.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, setperPage] = useState(8);
@@ -41,7 +42,7 @@ export default function HomePage() {
 				/>
 			</div>
 			<div className={s.cont}>
-				<div className={s.filter}>filtro</div>
+				<div className={s.filter}><Filtros /></div>
 
 				<div className={s.cads}>
 					{currentProducts?.map((p) => {

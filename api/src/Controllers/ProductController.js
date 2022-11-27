@@ -25,12 +25,14 @@ const getProduct = async (req, res) => {
     if (productTable.length === 0 && categoryTable.length > 1) {
         try {
             let products = require("../JSON/products.json");
+
             let Bulkproducts = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
                     image: p.image,
-                    price: p.price
+                    price: p.price,
+                    brand: p.brand ? p.brand : null
                 };
             });
 
