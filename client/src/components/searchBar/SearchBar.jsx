@@ -87,13 +87,20 @@ function SearchBar() {
 					/>
 					{showList? (
 						<ul className={s.ul} >
-							{predictionProduct.map((sp) => (
-                                <Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)} key={sp.id}>    
-                                    <li className={s.li} key={sp.id} title={sp.name} >
-                                        {sp.name.slice(0,18)+"..."}
-                                    </li>
-                                </Link>
-							))}
+							{predictionProduct.map((sp) => 	
+								sp.id!==-1?
+									<Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)} >    
+										<li className={s.li} key={sp.id} title={sp.name} >
+											{sp.name.slice(0,18)+"..."}
+										</li>
+									</Link>:
+									
+										<li className={s.li} key={sp.id} title={sp.name} >
+										{sp.name.slice(0,18)+"..."}
+									</li>
+									
+								
+							)}
 						</ul>
 					) : (
 						<></>
