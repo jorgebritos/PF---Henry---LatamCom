@@ -25,7 +25,7 @@ const Product = (props) => {
 		await dispatch(getAllProducts());
 		await dispatch(getProductDetail(id));
 		await dispatch(getAllComments());
-	}, []);
+	}, [id]);
 	//////////////////////////////////////////////////
 
 	// Comprobacion renderizado //////////////////////

@@ -194,7 +194,6 @@ export function filterByCategory(payload) {
 }
 
 export function searchByName(productName) {
-    // console.log(productName);
     return async function (dispatch) {
         const productsInfo = await axios.get('http://localhost:3001/products')
 

@@ -38,3 +38,16 @@
 .Link:hover {
 	color: #17abda;
 }
+
+.cart {
+	display: flex;
+	flex-direction: row;
+}
+
+.CarritoCantidad{
+	color: rgb(255, 255, 255);
+	border-radius: 50px;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+}
