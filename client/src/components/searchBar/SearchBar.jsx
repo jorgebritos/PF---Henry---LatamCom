@@ -109,7 +109,7 @@ function SearchBar() {
 					) : (
 						<></>
 					)}
-					<Link className={s.Link} to={`/home?search=${productName}`}>
+					<Link className={s.Link} to={productName.length > 0 ? `/home?search=${productName}` : `/home`}>
 						<button type='submit' className={s.btn} onClick={e => search(e)}>
 							SEARCH
 						</button>
