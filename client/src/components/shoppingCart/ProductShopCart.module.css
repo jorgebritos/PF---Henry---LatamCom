@@ -1,0 +1,131 @@
+.cont {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.contG {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.contentP {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.producCard {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 2em;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #142328;
+	width: 700px;
+	height: 200px;
+	padding: 23px;
+	border-radius: 23px;
+	cursor: pointer;
+	box-shadow: 2px 2px 15px #142328cc;
+}
+.cimg {
+	display: flex;
+	justify-content: center;
+	background-color: white;
+	width: 200px;
+	justify-items: center;
+	border-radius: 23px;
+}
+.img {
+	max-width: 140px;
+	padding: 5px;
+	margin: 1rem;
+}
+.name {
+	color: whitesmoke;
+	font-size: 1.2rem;
+	font-weight: bold;
+}
+.precio {
+	color: #17abda;
+	font-size: 1.39 rem;
+	font-weight: bold;
+}
+.btn {
+	margin-left: 10px;
+	width: 140px;
+	height: 30px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+}
+
+.btn:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
+}
+.btnM {
+	margin-left: 10px;
+	width: 35px;
+	height: 30px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+}
+
+.btnM:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
+}
+.form {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	justify-content: space-around;
+}
+.price {
+	color: whitesmoke;
+	font-size: 1rem;
+	font-weight: normal;
+}
+.contenedor {
+	margin-top: 2em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+}
+.contpago {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	width: 400px;
+	height: 500px;
+	background-color: #142328;
+	border-radius: 23px;
+	box-shadow: 2px 2px 15px #142328cc;
+	backdrop-filter: blur(4px);
+}
+
+.btnB {
+	margin-left: 10px;
+	width: 140px;
+	height: 40px;
+	border-radius: 13px;
+	background-color: #17dac8;
+	backdrop-filter: blur(4px);
+}
+
+.btnB:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
+}

@@ -156,7 +156,7 @@ const CreateProduct = () => {
 	return (
 		<div className={s.cont}>
 			<div className={s.contF}>
-				<h1 className={s.h1}>CREAR PRODUCTO</h1>
+				<h1 className={s.h1}>CREATE PRODUCT</h1>
 				<form onSubmit={(e) => submitData(e)}>
 					<div className={s.contsp}>
 						<label className={s.label}>P. Name: </label>
