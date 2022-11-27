@@ -6,7 +6,7 @@ import LandingPage from './components/landing/LandingPage';
 import HomePage from './components/home/HomePage.jsx';
 import NavBar from './components/NavBar/NavBar.jsx';
 import Product from './components/ProductDetail/Product';
-import CreateProduct from './components/CreateProduct';
+import CreateProduct from './components/CreateProduct/CreateProduct';
 import Profile from './component/Profile';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
 			<Route path='/SearchResults' exact component={HomePage} />
 			<Route path='/product/:id' component={Product} />
 			<Route path='/create/product' component={CreateProduct} />
-      <Route path='/profile' component={Profile} />
+			<Route path='/profile' component={Profile} />
 		</div>
 	);
 }
