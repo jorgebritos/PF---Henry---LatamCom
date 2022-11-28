@@ -87,8 +87,6 @@ export default function rootReducer(state = initialState, action) {
                     ...state,
                     products: result
                 }
-            } else {
-                console.log("sin products")
             }
         case FILTER_BY_PRICE:
             result = [];

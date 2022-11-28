@@ -60,7 +60,6 @@ function SearchBar() {
 			setShowList(true)
 		}
 		else if (e.target.className === 'li') {
-			console.log('ol');
 		}
 	}
 
