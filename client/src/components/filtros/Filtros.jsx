@@ -12,7 +12,7 @@ import {
 } from '../../redux/actions';
 import s from './Filtros.module.css';
 
-export default function Filtros({setCurrentPage, setOrder}) {
+export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
 	const products = useSelector((state) => state.products);
@@ -32,12 +32,21 @@ export default function Filtros({setCurrentPage, setOrder}) {
 	});
 
 	function handlePriceFilter(e) {
-		e.preventDefault();
-		setPriceFilter({
-			...priceFilter,
-			[e.target.name]: e.target.value,
-		});
-		return priceFilter;
+		if (e.target.checkValidity()) {
+			e.preventDefault();
+			setPriceFilter({
+				...priceFilter,
+				[e.target.name]: e.target.value,
+			});
+			return priceFilter;
+		} else {
+			e.preventDefault();
+			setPriceFilter({
+				...setPriceFilter,
+				[e.target.name]: e.target.min
+			});
+			return priceFilter
+		}
 	}
 
 	const filterPrice = function (e) {
@@ -50,7 +59,7 @@ export default function Filtros({setCurrentPage, setOrder}) {
 			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
 		);
 		dispatch(getAllBrands(products));
-        setCurrentPage(1);
+		setCurrentPage(1);
 	};
 
 	const [categoryFilter, setCategoryFilter] = useState('All');
@@ -63,7 +72,7 @@ export default function Filtros({setCurrentPage, setOrder}) {
 		e.preventDefault();
 		dispatch(filterByCategory(categoryFilter));
 		dispatch(getAllBrands(products));
-        setCurrentPage(1)
+		setCurrentPage(1)
 	};
 
 	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
@@ -90,21 +99,25 @@ export default function Filtros({setCurrentPage, setOrder}) {
 	const filterBrands = function (e) {
 		e.preventDefault();
 		dispatch(filterByBrand([...isChecked]));
-        setCurrentPage(1);
+		setCurrentPage(1);
 	};
 
 	const sort = e => {
 		e.preventDefault()
 		dispatch(orderBy(e.target.value))
-        setCurrentPage(1)
-        setOrder(e.target.value)
+		setCurrentPage(1)
+		setOrder(e.target.value)
 	}
 
 	const quitarFiltros = function (e) {
 		e.preventDefault();
 		dispatch(removeFilters());
-        setCheckedState(new Array(15).fill(false));
-        setCategoryFilter("All");
+		let radios = document.getElementsByName("category");
+		for (const r of radios) {
+			r.checked = false;
+		}
+		setCheckedState(new Array(15).fill(false));
+		setCategoryFilter("All");
 	};
 
 	return (
@@ -136,7 +149,10 @@ export default function Filtros({setCurrentPage, setOrder}) {
 								type={'number'}
 								name={'minPrice'}
 								value={priceFilter.minPrice}
-								onChange={(e) => handlePriceFilter(e)}></input>
+								min={0}
+								minLength={1}
+
+								onInput={(e) => handlePriceFilter(e)}></input>
 						</div>
 						<div>
 							<label className={s.labelM} htmlFor={'maxPrice'}>
@@ -147,7 +163,9 @@ export default function Filtros({setCurrentPage, setOrder}) {
 								type={'number'}
 								name={'maxPrice'}
 								value={priceFilter.maxPrice}
-								onChange={(e) => handlePriceFilter(e)}></input>
+								min={0}
+								minLength={1}
+								onInput={(e) => handlePriceFilter(e)}></input>
 						</div>
 						<br />
 						<div>
