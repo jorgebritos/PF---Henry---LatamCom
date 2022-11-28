@@ -20,18 +20,12 @@ const validateInput = (input) => {
         errors.name = "Name your product properly!"
 	}else if((expreg.test(input.description))) {
 			errors.description = 'Introduce a valid description!';
-    }else if(!input.description || input.description?.trim().length <= 1) {
-		errors.description = 'Introduce a description!';
-	}else if (!(regexURL.test(input.image))) {
+    }else if (!(regexURL.test(input.image))) {
 		errors.image = 'Introduce an image';
 	}else if (!input.price) {
 		errors.price = 'Introduce a price';
 	}else if ((expreg.test(input.price))) {
 		errors.price = 'Introduce a valid price';
-	}else if (!input.stock) {
-		errors.stock = 'Introduce stock';
-	}else if (!(input.brand || input.name?.trim() >= 1)) {
-		errors.brand = 'Introduce brand';
 	}else if ((expreg.test(input.brand))) {
 		errors.brand = 'Introduce a valid brand';
 	}else if (!input.categories.length) {
@@ -158,7 +152,7 @@ const CreateProduct = () => {
 				
 				<form onSubmit={(e) => submitData(e)}>
 					<div className={s.contsp}>
-						<label className={s.label}>P. Name: </label>
+						<label className={s.label}>*P. Name: </label>
 						<input
 							className={s.input}
 							name='name'
@@ -184,7 +178,7 @@ const CreateProduct = () => {
 					<br />
 
 					<div className={s.contsp}>
-						<label className={s.label}>P. Image: </label>
+						<label className={s.label}>*P. Image: </label>
 						<input
 							className={s.input}
 							name='file'
@@ -202,7 +196,7 @@ const CreateProduct = () => {
 					<br />
 
 					<div className={s.contsp}>
-						<label className={s.label}>P. Price: </label>
+						<label className={s.label}>*P. Price: </label>
 						<input
 							className={s.input}
 							name='price'
@@ -264,7 +258,7 @@ const CreateProduct = () => {
 
 					<div className={s.contsp}>
 						
-						<label className={s.label}>Categories Selected</label>
+						<label className={s.label}>*Categories Selected</label>
 						<input
 							className={s.input}
 							value={input.categories}
