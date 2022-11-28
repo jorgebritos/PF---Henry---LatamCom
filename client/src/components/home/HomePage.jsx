@@ -22,7 +22,7 @@ export default function HomePage() {
 	);
 	const paginado = (pageNumber) => setCurrentPage(pageNumber);
 
-	// const [order, setOrder]= useState('');
+	 const [order, setOrder]= useState('');
 
 	useEffect(async () => {
 		await dispatch(getAllCategories());
@@ -35,7 +35,7 @@ export default function HomePage() {
 		<div>
 			<div className={s.cont}>
 				<div className={s.filter}>
-					<Filtros setCurrentPage={setCurrentPage}/>
+					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder}/>
 				</div>
 				<div>
 					<div className={s.pag}>

@@ -12,11 +12,13 @@ import {
 } from '../../redux/actions';
 import s from './Filtros.module.css';
 
-export default function Filtros({setCurrentPage}) {
+export default function Filtros({setCurrentPage, setOrder}) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
 	const products = useSelector((state) => state.products);
 	const brands = useSelector((state) => state.brands);
+
+
 
 	useEffect(async () => {
 		await dispatch(getAllCategories());
@@ -94,6 +96,8 @@ export default function Filtros({setCurrentPage}) {
 	const sort = e => {
 		e.preventDefault()
 		dispatch(orderBy(e.target.value))
+        setCurrentPage(1)
+        setOrder(e.target.value)
 	}
 
 	const quitarFiltros = function (e) {
