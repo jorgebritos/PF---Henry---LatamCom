@@ -43,9 +43,9 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 			e.preventDefault();
 			setPriceFilter({
 				...setPriceFilter,
-				[e.target.name]: e.target.min
+				[e.target.name]: e.target.min,
 			});
-			return priceFilter
+			return priceFilter;
 		}
 	}
 
@@ -54,7 +54,8 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		let min = priceFilter.minPrice;
 		let max = priceFilter.maxPrice;
 
-		if (Number(min) > Number(max)) return alert("El minimo no puede ser mayor al maximo")
+		if (Number(min) > Number(max))
+			return alert('El minimo no puede ser mayor al maximo');
 		dispatch(
 			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
 		);
@@ -107,22 +108,24 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setCurrentPage(1);
 	};
 
-	const sort = e => {
-		e.preventDefault()
-		dispatch(orderBy(e.target.value))
-		setCurrentPage(1)
-		setOrder(e.target.value)
-	}
+	const sort = (e) => {
+		e.preventDefault();
+		dispatch(orderBy(e.target.value));
+		setCurrentPage(1);
+		setOrder(e.target.value);
+	};
 
 	const quitarFiltros = function (e) {
 		e.preventDefault();
 		dispatch(removeFilters());
-		let radios = document.getElementsByName("category");
+		let radios = document.getElementsByName('category');
 		for (const r of radios) {
 			r.checked = false;
 		}
+		setPriceFilter({ minPrice: 0, maxPrice: 0 });
 		setCheckedState(new Array(15).fill(false));
-		setCategoryFilter("All");
+		setIsChecked([]);
+		setCategoryFilter('All');
 	};
 
 	return (
@@ -130,15 +133,15 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 			<div className={s.cont}>
 				<div>
 					Ordenamientos
-					<select onChange={e => sort(e)}>
+					<select onChange={(e) => sort(e)}>
 						<option>Select Order</option>
 						<optgroup label='Alphabetically'>
-							<option value={"asc"}>A-Z</option>
-							<option value={"desc"}>Z-A</option>
+							<option value={'asc'}>A-Z</option>
+							<option value={'desc'}>Z-A</option>
 						</optgroup>
 						<optgroup label='Price'>
-							<option value={"ascP"}>Major to Minor</option>
-							<option value={"descP"}>Minor to Major</option>
+							<option value={'ascP'}>Max to Min</option>
+							<option value={'descP'}>Min to Max</option>
 						</optgroup>
 					</select>
 				</div>
@@ -156,9 +159,9 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 								value={priceFilter.minPrice}
 								min={0}
 								minLength={1}
-
 								onInput={(e) => handlePriceFilter(e)}></input>
 						</div>
+						<br />
 						<div>
 							<label className={s.labelM} htmlFor={'maxPrice'}>
 								Max

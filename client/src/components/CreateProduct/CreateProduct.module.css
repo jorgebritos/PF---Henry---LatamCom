@@ -41,16 +41,15 @@
 	backdrop-filter: blur(4px);
 }
 
-.btn:hover {
+/* .btn:hover {
 	background-color: #0e7d86;
 	color: whitesmoke;
-}
+} */
 .btnd {
 	margin-left: 10px;
 	width: 150px;
 	height: 30px;
 	border-radius: 13px;
-	color: #da4617;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
 }

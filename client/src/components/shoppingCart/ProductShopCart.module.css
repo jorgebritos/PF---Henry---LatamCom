@@ -7,13 +7,16 @@
 .contG {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+}
+.contP {
+	display: flex;
+	flex-direction: column;
 }
 .contentP {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 }
 
 .producCard {
@@ -104,13 +107,19 @@
 	font-size: 1rem;
 	font-weight: normal;
 }
+.contT {
+	display: scroll;
+	position: fixed;
+}
 .contenedor {
-	margin-top: 2em;
+	margin-top: 18rem;
+	margin-right: 30rem;
+	margin-left: 30px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	padding: 10px;
+	padding: 5px;
 }
 .contpago {
 	display: flex;

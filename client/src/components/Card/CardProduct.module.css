@@ -1,6 +1,7 @@
 .espacio {
 	margin: 20px;
 }
+
 .card {
 	width: 300px;
 	height: 350px;
@@ -14,6 +15,7 @@
 	cursor: pointer;
 	box-shadow: 2px 2px 15px #142328cc;
 }
+
 .cimg {
 	display: flex;
 	justify-content: center;
@@ -23,6 +25,7 @@
 	justify-items: center;
 	border-radius: 23px;
 }
+
 .img {
 	max-width: 140px;
 	max-height: 140px;
@@ -47,11 +50,22 @@
 	text-overflow: ellipsis;
 	overflow: hidden; */
 }
+
 .price {
 	color: #17abda;
 	font-size: 1.1rem;
 	font-weight: bold;
 }
+
 .Link {
 	text-decoration: none;
+}
+
+.btn {
+	margin-left: 10px;
+	width: 120px;
+	height: 30px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
 }
