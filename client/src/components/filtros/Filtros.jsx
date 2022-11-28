@@ -110,8 +110,14 @@ export default function Filtros({setCurrentPage}) {
 					Ordenamientos
 					<select onChange={e => sort(e)}>
 						<option>Select Order</option>
-						<option value={"asc"}>A-Z</option>
-						<option value={"desc"}>Z-A</option>
+						<optgroup label='Alphabetically'>
+							<option value={"asc"}>A-Z</option>
+							<option value={"desc"}>Z-A</option>
+						</optgroup>
+						<optgroup label='Price'>
+							<option value={"ascP"}>Major to Minor</option>
+							<option value={"descP"}>Minor to Major</option>
+						</optgroup>
 					</select>
 				</div>
 				<form className={s.from}>

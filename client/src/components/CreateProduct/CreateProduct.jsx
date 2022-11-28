@@ -11,36 +11,32 @@ import s from './CreateProduct.module.css';
 // Input Validate /////////////////////////////
 const validateInput = (input) => {
 	let errors = {};
+	let expreg = /[.*+\-?^${}()|[\]\\/]/;
+	let regexURL = /((http|ftp|https):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
 
-	// Error name ////////////////////////////////////////////
-	if (!input.name) {
-		errors.name = 'Introduce a name';
-	}
-	//////////////////////////////////////////////////////////
-
-	// Error Image ///////////////////////////////////////
-	if (!input.image) {
+	if (!input.name || input.name?.trim() >= 1 ) {
+		errors.name = 'Introduce a name!';
+	}else if((expreg.test(input.name))){
+        errors.name = "Name your product properly!"
+	}else if((expreg.test(input.description))) {
+			errors.description = 'Introduce a valid description!';
+    }else if(!input.description || input.description?.trim().length <= 1) {
+		errors.description = 'Introduce a description!';
+	}else if (!(regexURL.test(input.image))) {
 		errors.image = 'Introduce an image';
-	}
-	//////////////////////////////////////////////////////////
-
-	// Error Price ////////////////////////////////////////
-	if (!input.price) {
+	}else if (!input.price) {
 		errors.price = 'Introduce a price';
-	} else if (typeof parseInt(input.price) !== 'number') {
-		errors.price = 'You must introduce only number';
-	} else if (input.price < 0) {
-		errors.price = 'It must be a positive number';
+	}else if ((expreg.test(input.price))) {
+		errors.price = 'Introduce a valid price';
+	}else if (!input.stock) {
+		errors.stock = 'Introduce stock';
+	}else if (!(input.brand || input.name?.trim() >= 1)) {
+		errors.brand = 'Introduce brand';
+	}else if ((expreg.test(input.brand))) {
+		errors.brand = 'Introduce a valid brand';
+	}else if (!input.categories.length) {
+		errors.categories = 'Category is required!';
 	}
-	//////////////////////////////////////////////////////////
-
-	// Error Categories //////////////////////////////////////
-	if (!input.categories.length) {
-		errors.categories = 'Introduce categories';
-	}
-	//////////////////////////////////////////////////////////
-
-	// Enable/disable button ////////////////////////////////
 	const sendButton = document.getElementById('sendButtom');
 
 	if (Object.entries(errors).length) {
@@ -148,7 +144,7 @@ const CreateProduct = () => {
 			
 		} catch (error) {
 			alert(
-				'El nombre indicado ya pertenece a otro producto, por favor seleccione otro',
+				'Chosen name already belongs to another product, please select again.',
 			);
 		}
 		
@@ -182,6 +178,7 @@ const CreateProduct = () => {
 							value={input.description}
 							onChange={introduceData}
 							autoComplete='off'></input>
+							{errors.description && <p>{errors.description}</p>}
 					</div>
 
 					<br />
@@ -229,6 +226,7 @@ const CreateProduct = () => {
 							autoComplete='off'
 							type='number'
 							min='0'></input>
+							{errors.stock && <p>{errors.stock}</p>}
 					</div>
 
 					<br />
@@ -241,6 +239,7 @@ const CreateProduct = () => {
 							value={input.brand}
 							onChange={introduceData}
 							autoComplete='off'></input>
+							{errors.brand && <p>{errors.brand}</p>}
 					</div>
 
 					<br />

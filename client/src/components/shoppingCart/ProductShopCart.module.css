@@ -42,8 +42,18 @@
 }
 .img {
 	max-width: 140px;
+	max-height: 140px;
 	padding: 5px;
 	margin: 1rem;
+}
+.nameP {
+	color: white;
+	font-size: 1rem;
+	font-weight: bold;
+	width: 250px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 .name {
 	color: whitesmoke;
