@@ -108,8 +108,10 @@ const ProductShopCart = () => {
 									<img className={s.img} src={producto.image} width='100px' />
 								</div>
 								<div className={s.cname}>
-									<h4 className={s.name}>{producto.name}</h4>
-									<h2 className={s.precio}>${producto.price}</h2>
+									<div>
+										<h4 className={s.nameP}>{producto.name}</h4>
+										<h2 className={s.precio}>${producto.price}</h2>
+									</div>
 
 									<button
 										className={s.btn}
