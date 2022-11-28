@@ -116,7 +116,7 @@ const ProductShopCart = () => {
 									<button
 										className={s.btn}
 										onClick={(e) => deleteProduct(e, producto.id)}>
-										Clean product
+										REMOVE ITEM
 									</button>
 								</div>
 								<div>
@@ -163,7 +163,7 @@ const ProductShopCart = () => {
 
 							<div className={s.contP}>
 								<button className={s.btn} onClick={(e) => cleanCart(e)}>
-									Clean cart
+									CLEAN CART
 								</button>
 								<br />
 								<button className={s.btnB}>BUY</button>

@@ -42,7 +42,7 @@ export default function CardProduct({ id, name, price, image, categories }) {
 					</div>
 					<div className={s.cardBody}>
 						<p className={s.name}>{name}</p>
-						<p className={s.price}>${price}</p>
+						<p className={s.price}>${price} USD</p>
 						{/* <br /> */}
 						{/* Categories:{' '}
 						{categories.map((e) => {
@@ -54,12 +54,12 @@ export default function CardProduct({ id, name, price, image, categories }) {
 						})} */}
 
 					</div>
+			<div>
+				<button className={s.btn} onClick={addProduct}>ADD TO CART</button>
+			</div>
 				</div>
 			</Link>
 
-			<div>
-				<button onClick={addProduct}>BUY</button>
-			</div>
 		</div>
 	);
 }
