@@ -13,7 +13,6 @@ const validateInput = (input) => {
 	let errors = {};
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
 	let regexURL = /((http|ftp|https):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
-	let num = /1234567890/;
 
 	if (!input.name || input.name?.trim() >= 1 ) {
 		errors.name = 'Introduce a name!';
