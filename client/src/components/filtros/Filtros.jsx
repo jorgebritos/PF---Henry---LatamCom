@@ -3,23 +3,25 @@ import { useDispatch, useSelector } from "react-redux"
 import { filterByBrand, filterByCategory, filterByPrice, getAllBrands, getAllCategories, getAllProducts, removeFilters } from "../../redux/actions";
 
 
-export default function Filtros() {
+export default function Filtros({setCurrentPage}) {
 
     const dispatch = useDispatch();
     const categories = useSelector((state) => state.categories);
     const products = useSelector((state) => state.products);
     const brands = useSelector((state) => state.brands)
 
+    const [priceFilter, setPriceFilter] = useState({
+        minPrice: 0,
+        maxPrice: 0
+    });
+    
     useEffect(async () => {
         await dispatch(getAllCategories())
         await dispatch(getAllProducts())
         dispatch(getAllBrands([]))
     }, [])
 
-    const [priceFilter, setPriceFilter] = useState({
-        minPrice: 0,
-        maxPrice: 0
-    });
+    
 
     function handlePriceFilter(e) {
         e.preventDefault();
@@ -34,6 +36,7 @@ export default function Filtros() {
         e.preventDefault();
         dispatch(filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }))
         dispatch(getAllBrands(products))
+        setCurrentPage(1)
     }
 
     const [categoryFilter, setCategoryFilter] = useState("All");
@@ -46,6 +49,7 @@ export default function Filtros() {
         e.preventDefault();
         dispatch(filterByCategory(categoryFilter))
         dispatch(getAllBrands(products))
+        setCurrentPage(1)
     }
 
     const [checkedState, setCheckedState] = useState(
@@ -74,15 +78,18 @@ export default function Filtros() {
     const filterBrands = function (e) {
         e.preventDefault();
         dispatch(filterByBrand([...isChecked]))
+        setCurrentPage(1)
     }
 
     const quitarFiltros = function (e) {
         e.preventDefault();
         dispatch(removeFilters())
+        setCheckedState(new Array(15).fill(false))
+        setCategoryFilter("All")
     }
 
     return (
-        <div>
+        <form id="formFilter">
             <div>
                 Filtro Por Precio
                 <hr />
@@ -104,7 +111,7 @@ export default function Filtros() {
                             categories?.map((c) => {
                                 return (
                                     <li key={c.name}>
-                                        <input type={"radio"} value={c.name} name={"category"} onInput={e => handleCategoryFilter(c.name)} />{c.name}
+                                        <input type={"radio"} value={c.name} name={"category"} checked={categoryFilter == "All"?false:true} onChange={e => handleCategoryFilter(c.name)} />{c.name}
                                     </li>
                                 )
                             })
@@ -130,6 +137,6 @@ export default function Filtros() {
                 <button onClick={e => filterBrands(e)}>Filtrar</button>
             </div>
             <button onClick={e => quitarFiltros(e)}>Quitar Filtros</button>
-        </div>
+        </form>
     )
 }

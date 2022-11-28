@@ -42,7 +42,7 @@ export default function HomePage() {
 				/>
 			</div>
 			<div className={s.cont}>
-				<div className={s.filter}><Filtros /></div>
+				<div className={s.filter}><Filtros setCurrentPage={setCurrentPage} /></div>
 
 				<div className={s.cads}>
 					{currentProducts?.map((p) => {
