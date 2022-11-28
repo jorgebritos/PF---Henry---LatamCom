@@ -8,6 +8,12 @@ import s from './NavBar.module.css';
 import LoginRegister from '../Loging/LoginBar';
 
 function NavBar() {
+
+	let cart = ""
+	if (localStorage.getItem("cart")) {
+		cart = JSON.parse(localStorage.getItem("cart"))
+	}
+
 	return (
 		<div className={s.navBar}>
 			<nav className={s.navbar}>
@@ -24,8 +30,8 @@ function NavBar() {
 							</Link>
 						</li>
 						<li className={s.li}>
-							<Link to={'/shop'} className={s.Link}>
-								<h3>Shop</h3>
+							<Link to={'/create/product'} className={s.Link}>
+								<h3>Create-Product</h3>
 							</Link>
 						</li>
 					</ul>
@@ -38,8 +44,16 @@ function NavBar() {
 					<LoginRegister />
 				</div>
 
-				<div className={s.cart}>
-					<img src={Carito} alt='Carro de compras' height='25px' />
+				<div>
+					<Link to="/shoppingcart" className={s.cart}>
+						<img src={Carito} alt='Carro de compras' height='25px' />
+						{(localStorage.getItem("cart")) ? <div className={s.CarritoCantidad}> {cart.length}</div>
+							: <div className={s.CarritoCantidad}> 0</div>}
+					</Link>
+
+				</div>
+				<div>
+
 				</div>
 				<div className={s.favorites}>
 					<img src={star} alt='estrella de favoritos' height='25px' />

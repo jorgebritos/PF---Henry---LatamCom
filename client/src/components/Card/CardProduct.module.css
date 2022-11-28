@@ -1,8 +1,9 @@
 .espacio {
 	margin: 20px;
 }
+
 .card {
-	width: 250px;
+	width: 300px;
 	height: 350px;
 	background-color: #142328;
 	display: flex;
@@ -12,17 +13,22 @@
 	padding: 1rem;
 	border-radius: 1rem;
 	cursor: pointer;
+	box-shadow: 2px 2px 15px #142328cc;
 }
+
 .cimg {
 	display: flex;
 	justify-content: center;
 	background-color: white;
 	width: 200px;
+	max-height: 200px;
 	justify-items: center;
 	border-radius: 23px;
 }
+
 .img {
 	max-width: 140px;
+	max-height: 140px;
 	padding: 5px;
 	margin: 1rem;
 }
@@ -38,13 +44,28 @@
 .name {
 	color: white;
 	font-size: 1rem;
-	font-weight: 600;
+	font-weight: bold;
+	/* width: 250px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden; */
 }
+
 .price {
 	color: #17abda;
 	font-size: 1.1rem;
-	font-weight: 600;
+	font-weight: bold;
 }
+
 .Link {
 	text-decoration: none;
+}
+
+.btn {
+	margin-left: 10px;
+	width: 120px;
+	height: 30px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
 }

@@ -1,9 +1,8 @@
-const axios = require("axios");
 const { Product, Category } = require("../db.js");
 const { Op } = require("sequelize");
 
 const getProduct = async (req, res) => {
-    const { name } = req.query
+    const { name } = req.query;
     let productTable = await Product.findAll({
         include: {
             model: Category,
@@ -15,27 +14,29 @@ const getProduct = async (req, res) => {
         order: [
             ['id', 'ASC']
         ]
-    })
+    });
 
     if (productTable.length > 1) res.send(productTable);
 
     let categoryTable = await Category.findAll({});
 
-    if (categoryTable.length === 0) return res.send("Please Create Categories First")
+    if (categoryTable.length === 0) return res.send("Please Create Categories First");
 
     if (productTable.length === 0 && categoryTable.length > 1) {
         try {
-            let products = require("../JSON/products.json")
+            let products = require("../JSON/products.json");
+
             let Bulkproducts = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
                     image: p.image,
-                    price: p.price
-                }
+                    price: p.price,
+                    brand: p.brand ? p.brand : null
+                };
             });
 
-            await Product.bulkCreate(Bulkproducts)
+            await Product.bulkCreate(Bulkproducts);
 
             let info = products.map(p => {
                 return {
@@ -45,7 +46,7 @@ const getProduct = async (req, res) => {
                     image: p.image,
                     price: p.price,
                     category: p.category
-                }
+                };
             });
 
 
@@ -55,22 +56,10 @@ const getProduct = async (req, res) => {
             for (let i = 0; i < info.length; i++) {
                 let product = info[i];
                 let data = await productTable.find(r => r.id == product.id);
-                let category = await categoryTable.find(c => c.name == product.category)
-                data.addCategory(category)
-            }
+                let category = await categoryTable.find(c => c.name == product.category);
+                data.addCategory(category);
+            };
 
-            // productTable = await Product.findAll({
-            //     include: {
-            //         model: Category,
-            //         attributes: ["name"],
-            //         through: {
-            //             attributes: []
-            //         }
-            //     },
-            //     order: [
-            //         ['id', 'ASC']
-            //     ]
-            // });
             productTable = await Product.findAll({
                 include: {
                     model: Category,
@@ -82,26 +71,26 @@ const getProduct = async (req, res) => {
                 order: [
                     ['id', 'ASC']
                 ]
-            })
+            });
 
-            return res.send(productTable)
+            return res.send(productTable);
         } catch (error) {
-            res.status(404).send(error)
-        }
+            res.status(404).send(error);
+        };
     } else {
         if (name) {
             const specificProduct = await Product.findAll({
                 where: {
                     name: { [Op.iLike]: `%${name}%` }
                 }
-            })
+            });
 
             if (specificProduct.length > 0) return res.status(200).send(specificProduct);
 
             return res.status(404).send("No such Product");
-        }
-    }
-}
+        };
+    };
+};
 
 const putProduct = async (req, res) => {
     const selectedProduct = await Product.findOne({
@@ -110,21 +99,21 @@ const putProduct = async (req, res) => {
         }
     });
     if (selectedProduct) {
-        let data = { ...req.body }
+        let data = { ...req.body };
 
         let keys = Object.keys(data);
 
         keys.forEach(k => {
-            selectedProduct[k] = data[k]
+            selectedProduct[k] = data[k];
         });
 
-        await selectedProduct.save()
+        await selectedProduct.save();
 
-        res.sendStatus(200)
+        res.sendStatus(200);
     } else {
-        res.sendStatus(404)
-    }
-}
+        res.sendStatus(404);
+    };
+};
 
 const getProductByID = async (req, res) => {
     const selectedProduct = await Product.findOne({
@@ -138,13 +127,13 @@ const getProductByID = async (req, res) => {
                 attributes: []
             }
         }
-    })
+    });
     if (selectedProduct) {
-        res.status(200).send(selectedProduct)
+        res.status(200).send(selectedProduct);
     } else {
-        res.sendStatus(404)
-    }
-}
+        res.sendStatus(404);
+    };
+};
 
 const postProduct = async (req, res) => {
     let {
@@ -154,11 +143,15 @@ const postProduct = async (req, res) => {
         price,
         stock,
         brand,
-        amountSold,
-        softdelete,
         categories
 
-    } = req.body
+    } = req.body;
+
+    let exists = await Product.findOne({
+        where: {name: name}
+    })
+
+    if(exists) return res.status(406).send("El producto ya existe")
 
     let productCreate = await Product.create({
         name,
@@ -167,16 +160,14 @@ const postProduct = async (req, res) => {
         price,
         stock,
         brand,
-        amountSold,
-        softdelete
-    })
+    });
 
     let categoryDB = await Category.findAll({
         where: { name: categories }
     });
 
     await productCreate.addCategory(categoryDB);
-    res.send("Created product successful");
+    res.status(201);
 }
 
 const deleteProduct = async (req, res) => {
@@ -186,7 +177,7 @@ const deleteProduct = async (req, res) => {
             where: {
                 id: req.params.id
             }
-        })
+        });
         if (!deletedProduct) return 0;
         await Product.destroy({ where: { id: id } });
 
@@ -195,7 +186,7 @@ const deleteProduct = async (req, res) => {
     catch (err) {
         return res.status(500).send(`Product could not be deleted (${err})`);
     }
-}
+};
 
 module.exports = {
     getProduct,
@@ -203,4 +194,4 @@ module.exports = {
     getProductByID,
     putProduct,
     deleteProduct
-}
+};

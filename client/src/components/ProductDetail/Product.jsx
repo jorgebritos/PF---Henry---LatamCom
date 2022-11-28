@@ -25,7 +25,7 @@ const Product = (props) => {
 		await dispatch(getAllProducts());
 		await dispatch(getProductDetail(id));
 		await dispatch(getAllComments());
-	}, []);
+	}, [id]);
 	//////////////////////////////////////////////////
 
 	// Comprobacion renderizado //////////////////////
@@ -50,7 +50,7 @@ const Product = (props) => {
 		///////////////////////////////////////////////
 
 		return (
-			<div>
+			<div className={s.body}>
 				<div className={s.cont}>
 					<div className={s.contImg}>
 						<img
