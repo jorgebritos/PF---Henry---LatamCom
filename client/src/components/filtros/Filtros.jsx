@@ -133,8 +133,8 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 							<option value={'desc'}>Z-A</option>
 						</optgroup>
 						<optgroup label='Price'>
-							<option value={'ascP'}>Major to Minor</option>
-							<option value={'descP'}>Minor to Major</option>
+							<option value={'ascP'}>Max to Min</option>
+							<option value={'descP'}>Min to Max</option>
 						</optgroup>
 					</select>
 				</div>
