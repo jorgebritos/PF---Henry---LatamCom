@@ -122,10 +122,12 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		for (const r of radios) {
 			r.checked = false;
 		}
+		
 		setPriceFilter({ minPrice: 0, maxPrice: 0 });
 		setCheckedState(new Array(15).fill(false));
 		setIsChecked([]);
 		setCategoryFilter('All');
+		dispatch(filterByCategory("All"))
 	};
 
 	return (
