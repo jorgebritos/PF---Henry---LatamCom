@@ -33,30 +33,34 @@ export default function HomePage() {
 
 	return (
 		<div>
-			<div className={s.pag}>
-				<Paginate
-					producPrePage={perPage}
-					totalProducts={totalProducts.length}
-					paginado={paginado}
-				// value={currentPage}
-				/>
-			</div>
 			<div className={s.cont}>
-				<div className={s.filter}><Filtros setCurrentPage={setCurrentPage} /></div>
-
-				<div className={s.cads}>
-					{currentProducts?.map((p) => {
-						return (
-							<CardProduct
-								key={p.id}
-								id={p.id}
-								name={p.name}
-								image={p.image}
-								categories={p.categories}
-								price={p.price}
-							/>
-						);
-					})}
+				<div className={s.filter}>
+					<Filtros setCurrentPage={setCurrentPage}/>
+				</div>
+				<div>
+					<div className={s.pag}>
+						<Paginate
+							producPrePage={perPage}
+							totalProducts={totalProducts.length}
+							paginado={paginado}
+						// value={currentPage}
+						/>
+					</div>
+					<div className={s.cads}>
+						{currentProducts?.map((p) => {
+							return (
+								<CardProduct
+									key={p.id}
+									id={p.id}
+									name={p.name}
+									image={p.image}
+									categories={p.categories}
+									price={p.price}
+								/>
+							);
+						})}
+						{!currentProducts.length ? <h1>No se han encontrado productos</h1> : ""}
+					</div>
 				</div>
 			</div>
 		</div>

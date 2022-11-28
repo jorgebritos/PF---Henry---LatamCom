@@ -2,32 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import s from './SearchBar.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { searchByName } from '../../redux/actions/index';
+import { newSearch, searchByName } from '../../redux/actions/index';
 
 function SearchBar() {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.searchedProducts);
 	const [productName, setproductName] = useState('');
-    let [showList, setShowList] = useState(false)
+	let [showList, setShowList] = useState(false)
 	let predictionProduct = [];
-	let [currentURL, setCurrentURL]= useState(window.location.href)
+	let [currentURL, setCurrentURL] = useState(window.location.href)
 
 	useEffect(() => {
 		dispatch(searchByName(productName));
 	}, [productName, currentURL]);
 
-	if(showList){
+	function search(e) {
+		dispatch(newSearch(productName))
+	}
+
+	if (showList) {
 		if (products.length > 5) {
 			predictionProduct = [...products.slice(0, 5)];
-		} else if(products.length===0){
-			predictionProduct =[...[{id:-1,name:'Producto no encontrado'}]]
+		} else if (products.length === 0) {
+			predictionProduct = [...[{ id: -1, name: 'Producto no encontrado' }]]
 		}
 		else {
 			predictionProduct = [...products];
 		}
 	}
 
-	if(currentURL !== window.location.href){
+	if (currentURL !== window.location.href) {
 		setproductName('')
 		setShowList(false)
 		setCurrentURL(window.location.href)
@@ -37,40 +41,39 @@ function SearchBar() {
 		e.preventDefault();
 		setproductName('');
 		setShowList(true)
-		
+
 	}
-	
+
 	function handleOnChange(e) {
 		setproductName(e.target.value);
-		if(e.target.value.length >= 4){
-    	    setShowList(true)
+		if (e.target.value.length >= 4) {
+			setShowList(true)
 		}
-		else{
+		else {
 			setShowList(false)
 		}
 	}
 
-    function handleClick(e) {
-		if(e.target.name !=='product'){
+	function handleClick(e) {
+		if (e.target.name !== 'product') {
 			setproductName('')
 			setShowList(true)
 		}
-		else if(e.target.className === 'li'){
-			console.log('ol');
+		else if (e.target.className === 'li') {
 		}
 	}
 
-	document.addEventListener('click', (e) =>{
-		if(e.target.name !== 'product' && e.target !== 'li'){
+	document.addEventListener('click', (e) => {
+		if (e.target.name !== 'product' && e.target !== 'li') {
 			setShowList(false)
 		}
-		else{
-			e.target.value.length >=4?
-			setShowList(true):
-			setShowList(false)
+		else {
+			e.target.value.length >= 4 ?
+				setShowList(true) :
+				setShowList(false)
 		}
 	})
-	
+
 	return (
 		<div >
 			<form onSubmit={(e) => handleSubmit(e)} autoComplete='off'>
@@ -82,31 +85,31 @@ function SearchBar() {
 						id='productsearch'
 						value={productName}
 						onChange={(e) => handleOnChange(e)}
-						onFocus ={(e) => handleOnChange(e)}
+						onFocus={(e) => handleOnChange(e)}
 
 					/>
-					{showList? (
+					{showList ? (
 						<ul className={s.ul} >
-							{predictionProduct.map((sp) => 	
-								sp.id!==-1?
-									<Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e)=> handleClick(e)} key={sp.id} >    
+							{predictionProduct.map((sp) =>
+								sp.id !== -1 ?
+									<Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e) => handleClick(e)} key={sp.id} >
 										<li className={s.li} key={sp.id} title={sp.name} >
-											{sp.name.slice(0,18)+"..."}
+											{sp.name.slice(0, 18) + "..."}
 										</li>
-									</Link>:
-									
-										<li className={s.li} key={sp.id} title={sp.name} >
-										{sp.name.slice(0,18)+"..."}
+									</Link> :
+
+									<li className={s.li} key={sp.id} title={sp.name} >
+										{sp.name.slice(0, 18) + "..."}
 									</li>
-									
-								
+
+
 							)}
 						</ul>
 					) : (
 						<></>
 					)}
-					<Link className={s.Link} to={`/SearchResults/${productName}`}>
-						<button type='submit' className={s.btn}>
+					<Link className={s.Link} to={productName.length > 0 ? `/home?search=${productName}` : `/home`}>
+						<button type='submit' className={s.btn} onClick={e => search(e)}>
 							SEARCH
 						</button>
 					</Link>

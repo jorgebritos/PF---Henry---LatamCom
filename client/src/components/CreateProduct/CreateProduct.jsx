@@ -55,6 +55,7 @@ const validateInput = (input) => {
 ///////////////////////////////////////////////
 
 const CreateProduct = () => {
+
 	//Hooks and states ///////////////////////
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
@@ -143,13 +144,14 @@ const CreateProduct = () => {
 	const submitData = async (event) => {
 		event.preventDefault();
 		try {
-			await dispatch(createProduct(input));
+			await dispatch(createProduct(input)).then(history.push("/create/productsended"))
+			
 		} catch (error) {
 			alert(
 				'El nombre indicado ya pertenece a otro producto, por favor seleccione otro',
 			);
 		}
-		//history.push("/enviado") enviar a otro componente para dar el mensaje de "Enviado"
+		
 	};
 	/////////////////////////////////////////////
 
@@ -157,6 +159,7 @@ const CreateProduct = () => {
 		<div className={s.cont}>
 			<div className={s.contF}>
 				<h1 className={s.h1}>CREATE PRODUCT</h1>
+				
 				<form onSubmit={(e) => submitData(e)}>
 					<div className={s.contsp}>
 						<label className={s.label}>P. Name: </label>
@@ -261,20 +264,15 @@ const CreateProduct = () => {
 					<br />
 
 					<div className={s.contsp}>
-						{/* Opcion 1 */}
+						
 						<label className={s.label}>Categories Selected</label>
 						<input
 							className={s.input}
 							value={input.categories}
-							disabled></input>
-
-						{/* Opcion 2 */}
-						{input.categories.map((e) => {
-							return <p key={e}>{e}</p>;
-						})}
+							disabled>
+						</input>
 						{errors.categories && <p>{errors.categories}</p>}
 
-						{/* Seleccionar el mas deseado y comodo para poder visualizar y acomodar con CSS */}
 					</div>
 
 					<br />

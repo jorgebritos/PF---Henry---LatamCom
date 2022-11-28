@@ -29,6 +29,7 @@ export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
 export const ORDER_ALPHABETICALLY = "ORDER_ALPHABETICALLY"
 export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
+export const NEW_SEARCH = "NEW_SEARCH"
 
 export function getAllProducts() {
     return async function (dispatch) {
@@ -82,7 +83,6 @@ export function getAllCategories() {
 export function getAllBrands(payload) {
     return async function (dispatch) {
         if (payload.length > 0) {
-            console.log("selected products")
             const products = payload
             let brands = [];
             for (const p of products) {
@@ -95,7 +95,6 @@ export function getAllBrands(payload) {
                 payload: brands
             })
         } else {
-            console.log("all products")
             const products = await axios.get('http://localhost:3001/products')
             let brands = [];
             for (const p of products.data) {
@@ -233,13 +232,28 @@ export function removeFilters() {
     }
 }
 
+export function newSearch(productName) {
+    return async function (dispatch) {
+        const productsInfo = await axios.get('http://localhost:3001/products')
+
+        if (productsInfo.data !== "Please Create Categories First") {
+            const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
+            dispatch({
+                type: NEW_SEARCH,
+                payload: searchedProducts
+            })
+        } else {
+            return 0
+        }
+    }
+}
+
 export function searchByName(productName) {
     return async function (dispatch) {
         const productsInfo = await axios.get('http://localhost:3001/products')
 
         if (productsInfo.data !== "Please Create Categories First") {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
-            // console.log(searchedProducts);
             dispatch({
                 type: SEARCH_BY_NAME,
                 payload: searchedProducts

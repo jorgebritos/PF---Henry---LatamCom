@@ -1,6 +1,6 @@
 import {
     GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS,
-    FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_ALPHABETICALLY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS,
+    FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_ALPHABETICALLY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT
@@ -87,8 +87,6 @@ export default function rootReducer(state = initialState, action) {
                     ...state,
                     products: result
                 }
-            } else {
-                console.log("sin products")
             }
         case FILTER_BY_PRICE:
             result = [];
@@ -128,6 +126,11 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 searchedProducts: action.payload
+            }
+        case NEW_SEARCH:
+            return {
+                ...state,
+                products: action.payload
             }
         case ORDER_ALPHABETICALLY:
             const sortProducts = action.payload === "asc" ?
