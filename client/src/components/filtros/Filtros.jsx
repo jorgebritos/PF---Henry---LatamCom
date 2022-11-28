@@ -7,6 +7,7 @@ import {
 	getAllBrands,
 	getAllCategories,
 	getAllProducts,
+	orderBy,
 	removeFilters,
 } from '../../redux/actions';
 import s from './Filtros.module.css';
@@ -87,6 +88,11 @@ export default function Filtros() {
 		dispatch(filterByBrand([...isChecked]));
 	};
 
+	const sort = e => {
+		e.preventDefault()
+		dispatch(orderBy(e.target.value))
+	}
+
 	const quitarFiltros = function (e) {
 		e.preventDefault();
 		dispatch(removeFilters());
@@ -95,6 +101,14 @@ export default function Filtros() {
 	return (
 		<div className={s.div}>
 			<div className={s.cont}>
+				<div>
+					Ordenamientos
+					<select onChange={e => sort(e)}>
+						<option>Select Order</option>
+						<option value={"asc"}>A-Z</option>
+						<option value={"desc"}>Z-A</option>
+					</select>
+				</div>
 				<form className={s.from}>
 					<div className={s.filtro}>
 						<h3 className={s.h4}>Filter By Price</h3>

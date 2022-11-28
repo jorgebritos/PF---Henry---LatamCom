@@ -83,7 +83,6 @@ export function getAllCategories() {
 export function getAllBrands(payload) {
     return async function (dispatch) {
         if (payload.length > 0) {
-            console.log("selected products")
             const products = payload
             let brands = [];
             for (const p of products) {
@@ -96,7 +95,6 @@ export function getAllBrands(payload) {
                 payload: brands
             })
         } else {
-            console.log("all products")
             const products = await axios.get('http://localhost:3001/products')
             let brands = [];
             for (const p of products.data) {
@@ -240,7 +238,6 @@ export function newSearch(productName) {
 
         if (productsInfo.data !== "Please Create Categories First") {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
-            // console.log(searchedProducts);
             dispatch({
                 type: NEW_SEARCH,
                 payload: searchedProducts
@@ -257,7 +254,6 @@ export function searchByName(productName) {
 
         if (productsInfo.data !== "Please Create Categories First") {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
-            // console.log(searchedProducts);
             dispatch({
                 type: SEARCH_BY_NAME,
                 payload: searchedProducts

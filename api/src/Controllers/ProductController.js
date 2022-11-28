@@ -116,7 +116,6 @@ const putProduct = async (req, res) => {
 };
 
 const getProductByID = async (req, res) => {
-    console.log(req.params)
     const selectedProduct = await Product.findOne({
         where: {
             id: req.params.id

@@ -35,7 +35,7 @@ export default function HomePage() {
 		<div>
 			<div className={s.cont}>
 				<div className={s.filter}>
-					<Filtros />
+					<Filtros setCurrentPage={setCurrentPage}/>
 				</div>
 				<div>
 					<div className={s.pag}>
