@@ -144,3 +144,12 @@
 	background-color: #d9d9d9;
 	color: rgb(0, 0, 0);
 }
+
+.select {
+	width: 245px;
+	height: 20px;
+	border-radius: 13px;
+	background-color: #17addac5;
+	color: whitesmoke;
+	backdrop-filter: blur(4px);
+}
