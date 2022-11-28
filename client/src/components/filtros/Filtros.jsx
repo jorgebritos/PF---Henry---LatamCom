@@ -39,6 +39,10 @@ export default function Filtros() {
 
 	const filterPrice = function (e) {
 		e.preventDefault();
+		let min = priceFilter.minPrice;
+		let max = priceFilter.maxPrice;
+
+		if (Number(min) > Number(max)) return alert("El minimo no puede ser mayor al maximo")
 		dispatch(
 			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
 		);
@@ -93,7 +97,7 @@ export default function Filtros() {
 			<div className={s.cont}>
 				<form className={s.from}>
 					<div className={s.filtro}>
-						<h3 className={s.h4}>Filtro Por Precio</h3>
+						<h3 className={s.h4}>Filter By Price</h3>
 						<div>
 							<label className={s.labelM} htmlFor={'minPrice'}>
 								Min
@@ -125,7 +129,7 @@ export default function Filtros() {
 					</div>
 
 					<div className={s.filtro}>
-						<h4 className={s.h4}>Filtro Por Categoria</h4>
+						<h4 className={s.h4}>Filter By Category</h4>
 						<ul>
 							{categories?.map((c) => {
 								return (
@@ -150,25 +154,25 @@ export default function Filtros() {
 						</button>
 					</div>
 					<div className={s.filtro}>
-						<h4 className={s.h4}> Filtro Por Marca</h4>
+						<h4 className={s.h4}>Filter By Brand</h4>
 						<ul>
 							{brands.length > 0
 								? brands.map((b, index) => {
-										return (
-											<li className={s.li} key={b}>
-												<label className={s.label}>
-													<input
-														className={s.input}
-														type={'checkbox'}
-														checked={checkedState[index]}
-														value={b}
-														onChange={(e) => handleOnChange(index, e)}
-													/>
-													<span className={s.spanC}>{b}</span>
-												</label>
-											</li>
-										);
-								  })
+									return (
+										<li className={s.li} key={b}>
+											<label className={s.label}>
+												<input
+													className={s.input}
+													type={'checkbox'}
+													checked={checkedState[index]}
+													value={b}
+													onChange={(e) => handleOnChange(index, e)}
+												/>
+												<span className={s.spanC}>{b}</span>
+											</label>
+										</li>
+									);
+								})
 								: null}
 						</ul>
 						<button className={s.btn} onClick={(e) => filterBrands(e)}>
@@ -178,7 +182,7 @@ export default function Filtros() {
 					<br />
 					<div className={s.contBtn}>
 						<button className={s.btnC} onClick={(e) => quitarFiltros(e)}>
-							Clear Filter
+							Clear Filters
 						</button>
 					</div>
 				</form>

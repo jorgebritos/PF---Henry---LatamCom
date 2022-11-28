@@ -43,7 +43,7 @@ export default function HomePage() {
 							producPrePage={perPage}
 							totalProducts={totalProducts.length}
 							paginado={paginado}
-							// value={currentPage}
+						// value={currentPage}
 						/>
 					</div>
 					<div className={s.cads}>
@@ -59,6 +59,7 @@ export default function HomePage() {
 								/>
 							);
 						})}
+						{!currentProducts.length ? <h1>No se han encontrado productos</h1> : ""}
 					</div>
 				</div>
 			</div>
