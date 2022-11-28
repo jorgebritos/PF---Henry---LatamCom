@@ -19,13 +19,13 @@ const Product = (props) => {
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////
-	useEffect(async () => {
-		await dispatch(resetDetail());
-		await dispatch(getAllCategories());
-		await dispatch(getAllProducts());
-		await dispatch(getProductDetail(id));
-		await dispatch(getAllComments());
-	}, [id]);
+	useEffect(() => {
+		dispatch(resetDetail())
+		dispatch(getAllCategories());
+		dispatch(getAllProducts());
+		dispatch(getProductDetail(id));
+		dispatch(getAllComments());
+	}, [id, dispatch]);
 	//////////////////////////////////////////////////
 
 	// Comprobacion renderizado //////////////////////

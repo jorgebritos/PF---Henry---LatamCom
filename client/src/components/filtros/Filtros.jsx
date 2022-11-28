@@ -18,11 +18,11 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const products = useSelector((state) => state.products);
 	const brands = useSelector((state) => state.brands);
 
-	useEffect(async () => {
-		await dispatch(getAllCategories());
-		await dispatch(getAllProducts());
+	useEffect(() => {
+		dispatch(getAllCategories());
+		dispatch(getAllProducts());
 		dispatch(getAllBrands([]));
-	}, []);
+	}, [dispatch]);
 
 	const [priceFilter, setPriceFilter] = useState({
 		minPrice: 0,

@@ -1,14 +1,8 @@
 import React from 'react';
-import { useSelector, useDispatch } from "react-redux"
 import { Link } from 'react-router-dom';
 import s from './CardProduct.module.css';
-import { addProductToShoppingCart } from "../../redux/actions/index.js"
 
 export default function CardProduct({ id, name, price, image, categories }) {
-
-	const shopCart = useSelector((state) => state.shopCart)
-	const dispatch = useDispatch()
-
 
 	const addProduct = async (event) => {
 		event.preventDefault()

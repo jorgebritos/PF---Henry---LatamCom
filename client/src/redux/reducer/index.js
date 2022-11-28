@@ -76,18 +76,21 @@ export default function rootReducer(state = initialState, action) {
                 productDetail: {}
             }
         case FILTER_BY_BRAND:
+            result = [];
             if (action.payload.length > 0) {
-                result = [];
-                for (const p of actualProducts) {
-                    action.payload.forEach(b => {
-                        if (p.brand === b) result.push(p)
-                    });
+                for (let i = 0; i < actualProducts.length; i++) {
+                    let product = actualProducts[i];
+                    for (let b = 0; b < action.payload.length; b++) {
+                        let brand = action.payload[b];
+                        if (product.brand === brand) result.push(product);
+                    }
                 }
                 return {
                     ...state,
                     products: result
                 }
             }
+            break;
         case FILTER_BY_PRICE:
             result = [];
             for (const p of actualProducts) {
