@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './CardProduct.module.css';
 
-export default function CardProduct({ id, name, price, image, categories }) {
+export default function CardProduct({ id, name, price, image }) {
 
 	const addProduct = async (event) => {
 		event.preventDefault()

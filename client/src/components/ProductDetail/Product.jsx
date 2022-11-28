@@ -11,6 +11,22 @@ import {
 import s from './Product.module.css';
 
 const Product = (props) => {
+
+	const addProduct = async (event) => {
+		event.preventDefault()
+		let cart = []
+
+		if (localStorage.getItem("cart")) {
+			cart = JSON.parse(localStorage.getItem("cart"))
+		}
+		if (cart.find((p) => p.id === product.id)) {
+			return 0
+		}
+		cart.push(product)
+		localStorage.setItem("cart", JSON.stringify(cart))
+
+	}
+
 	// Hooks y estados ////////////////////////////////
 	const { id } = useParams();
 	const dispatch = useDispatch();
@@ -60,6 +76,7 @@ const Product = (props) => {
 						/>
 					</div>
 					<div className={s.contInfo}>
+						<button className={s.btn} onClick={addProduct}>ADD TO CART</button>
 						<h1 className={s.name}>{product.name} </h1>
 						<h2 className={s.price}>${product.price} </h2>
 						<h4 className={s.h4}>Description:</h4>
