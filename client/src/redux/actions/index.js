@@ -85,12 +85,15 @@ export function getAllBrands(payload) {
         if (payload.length > 0) {
             const products = payload
             let brands = [];
-            for (const p of products) {
+            for (let p of products) {
                 if (p.brand) brands.push(p.brand)
             }
+            
             brands = new Set(brands)
             brands = [...brands]
-            dispatch({
+            console.log(products)
+            console.log(brands)
+            await dispatch({
                 type: GET_ALL_BRANDS,
                 payload: brands
             })

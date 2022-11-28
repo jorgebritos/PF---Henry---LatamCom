@@ -17,14 +17,14 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const categories = useSelector((state) => state.categories);
 	const products = useSelector((state) => state.products);
 	const brands = useSelector((state) => state.brands);
-
+	const filBrands = useSelector((state) => state.filBrands)
 
 
 	useEffect(async () => {
 		await dispatch(getAllCategories());
 		await dispatch(getAllProducts());
-		dispatch(getAllBrands([]));
-	}, []);
+		await dispatch(getAllBrands([]));
+	}, [dispatch]);
 
 	const [priceFilter, setPriceFilter] = useState({
 		minPrice: 0,
@@ -68,12 +68,17 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setCategoryFilter(category);
 	}
 
-	const filterCategory = function (e) {
+	const filterCategory = async function (e) {
 		e.preventDefault();
+		
 		dispatch(filterByCategory(categoryFilter));
-		dispatch(getAllBrands(products));
+		//distBrands(products);
 		setCurrentPage(1)
 	};
+	const distBrands =  function (products){
+		console.log(`Es productos: ${products}`);
+		dispatch(getAllBrands(products));
+	}
 
 	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
 
@@ -186,9 +191,9 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 												className={s.input}
 												type={'radio'}
 												value={c.name}
-												name={'category'}
+												name={"category"}
 												id='categoria'
-												onInput={(e) => handleCategoryFilter(c.name)}
+												onClick={(e) => handleCategoryFilter(c.name)}
 											/>
 											<span className={s.span}>{c.name}</span>
 										</label>
@@ -203,8 +208,8 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 					<div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Brand</h4>
 						<ul>
-							{brands.length > 0
-								? brands.map((b, index) => {
+							{filBrands.length > 0
+								? filBrands.map((b, index) => {
 									return (
 										<li className={s.li} key={b}>
 											<label className={s.label}>
