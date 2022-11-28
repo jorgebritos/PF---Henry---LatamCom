@@ -20,7 +20,13 @@ export default function HomePage() {
 		indexOfFirstProduct,
 		indexOfLastProduct,
 	);
-	const paginado = (pageNumber) => setCurrentPage(pageNumber);
+	const paginado = (pageNumber) => {
+		if(typeof pageNumber === 'number')
+			setCurrentPage(pageNumber)
+		else if(pageNumber==='-')
+			setCurrentPage(currentPage-1)
+		else 
+			setCurrentPage(currentPage+1)};
 
 	 const [order, setOrder]= useState('');
 
@@ -43,7 +49,7 @@ export default function HomePage() {
 							producPrePage={perPage}
 							totalProducts={totalProducts.length}
 							paginado={paginado}
-						// value={currentPage}
+							page={currentPage}
 						/>
 					</div>
 					<div className={s.cads}>
