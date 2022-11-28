@@ -26,7 +26,7 @@ export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
 export const FILTER_BY_PRICE = "FILTER_BY_PRICE"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY"
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
-export const ORDER_ALPHABETICALLY = "ORDER_ALPHABETICALLY"
+export const ORDER_BY = "ORDER_BY"
 export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
 export const NEW_SEARCH = "NEW_SEARCH"
@@ -266,7 +266,7 @@ export function searchByName(productName) {
 
 export function orderBy(payload) {
     return {
-        type: ORDER_ALPHABETICALLY,
+        type: ORDER_BY,
         payload
     }
 }
