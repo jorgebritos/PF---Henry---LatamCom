@@ -1,9 +1,26 @@
 .Login {
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	color: #17abda;
+}
+
+.form{
+	display: flex;
+	flex-direction: row;
+}
+
+.ul{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	list-style: none;
+}
+
+.popover{
+	display: flex;
 }
 
 .h3 {
