@@ -1,7 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategories, getAllProducts, getAllUsers } from '../../redux/actions/index.js';
+import {
+	getAllCategories,
+	getAllProducts,
+	getAllUsers,
+} from '../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
@@ -13,7 +17,7 @@ export default function HomePage() {
 	const totalProducts = useSelector((state) => state.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage,] = useState(8);
+	const [perPage] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
 	const currentProducts = totalProducts.slice(
@@ -21,19 +25,16 @@ export default function HomePage() {
 		indexOfLastProduct,
 	);
 	const paginado = (pageNumber) => {
-		if (typeof pageNumber === 'number')
-			setCurrentPage(pageNumber)
-		else if (pageNumber === '-')
-			setCurrentPage(currentPage - 1)
-		else
-			setCurrentPage(currentPage + 1)
+		if (typeof pageNumber === 'number') setCurrentPage(pageNumber);
+		else if (pageNumber === '-') setCurrentPage(currentPage - 1);
+		else setCurrentPage(currentPage + 1);
 	};
 
 	const [, setOrder] = useState('');
 
 	useEffect(() => {
 		dispatch(getAllCategories());
-		dispatch(getAllUsers())
+		dispatch(getAllUsers());
 		dispatch(getAllProducts());
 	}, [dispatch]);
 
@@ -65,7 +66,20 @@ export default function HomePage() {
 								/>
 							);
 						})}
-						{!currentProducts.length ? <h1>No se han encontrado productos</h1> : ""}
+						{!currentProducts.length ? (
+							<h1>No se han encontrado productos</h1>
+						) : (
+							''
+						)}
+					</div>
+					<br />
+					<div className={s.pag}>
+						<Paginate
+							producPrePage={perPage}
+							totalProducts={totalProducts.length}
+							paginado={paginado}
+							page={currentPage}
+						/>
 					</div>
 				</div>
 			</div>

@@ -1,13 +1,14 @@
 .cont {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	/* justify-content: center; */
 	align-items: center;
-	min-height: calc(100vh -91.44px);
+	min-height: calc(100vh - 145px);
 }
 .contG {
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 30px;
 }
 .contP {
 	display: flex;
