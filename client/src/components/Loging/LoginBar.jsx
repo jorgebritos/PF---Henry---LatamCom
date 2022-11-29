@@ -78,21 +78,21 @@ const LoginRegister = () => {
 				}}>
 				<img className={s.img} src={usericon} alt='' height='25px' />
 			</div>
-
-			{isAuthenticated ? (
-				<div className={`s.dropdown_menu${open ? '.active' : '.inactive'}`}>
-					<h3> {user?.name}</h3>
-					{solutions.map((item) => (
-						<ul key={item.name} onClick={item.href}>
-							<DropdownItem text={item.name} />
-						</ul>
-					))}
-					<UserName />
-				</div>
-			) : (
-				<p onClick={() => loginWithRedirect()}>Login</p>
-			)}
-			<h3 className={s.h3}>{user.username}</h3>
+			<UserName>
+				{isAuthenticated ? (
+					<div className={`s.dropdown_menu${open ? '.active' : '.inactive'}`}>
+						<h3 className={s.h3}> {user?.name}</h3>
+						{solutions.map((item) => (
+							<ul key={item.name} onClick={item.href}>
+								<DropdownItem text={item.name} />
+							</ul>
+						))}
+					</div>
+				) : (
+					<p onClick={() => loginWithRedirect()}>Login</p>
+				)}
+				{/* <h3 className={s.h3}>{user.username}</h3> */}
+			</UserName>
 		</div>
 	);
 };
