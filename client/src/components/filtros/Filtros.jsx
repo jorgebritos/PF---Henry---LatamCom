@@ -74,6 +74,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setCheckedState(new Array(15).fill(false))
 		dispatch(filterByCategory(categoryFilter));
 		//distBrands(products);
+		setIsChecked([])
 		setCurrentPage(1)
 	};
 	const distBrands =  function (products){
@@ -122,7 +123,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		for (const r of radios) {
 			r.checked = false;
 		}
-		
+
 		setPriceFilter({ minPrice: 0, maxPrice: 0 });
 		setCheckedState(new Array(15).fill(false));
 		setIsChecked([]);

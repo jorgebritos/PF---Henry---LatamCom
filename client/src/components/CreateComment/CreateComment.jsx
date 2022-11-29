@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createComment, getAllUsers, getUser } from "../../redux/actions";
+import { createComment, getAllComments } from "../../redux/actions";
 
 const CreateComment = () => {
 
@@ -28,30 +28,30 @@ const CreateComment = () => {
             idUser: 1,
             idProduct
         }))
+        dispatch(getAllComments())
     }
 
     const dispatch = useDispatch();
     const product = useSelector((state) => state.productDetail);
-    const user = useSelector((state) => state.user);
+    // const user = useSelector((state) => state.user);
 
     return (
         <div>
-            {user ?
-                <div>
-                    <label>Rating:</label>
-                    <select name="rating" onChange={e => handleComment(e)}>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
-                    <br />
+            <div>
+                <label>Rating:</label>
+                <select name="rating" onChange={e => handleComment(e)}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <br />
 
-                    <textarea cols={50} name="comment" rows={10} placeholder={"Please, write a comment"} value={comment.comment} onChange={e => handleComment(e)}></textarea>
-                    <button onClick={e => sendComment(e)}>Send Comment</button>
-                </div>
-                : ""}
+                <textarea cols={50} name="comment" rows={10} placeholder={"Please, write a comment"} value={comment.comment} onChange={e => handleComment(e)}></textarea>
+                <button onClick={e => sendComment(e)}>Send Comment</button>
+            </div>
+
         </div>
     )
 

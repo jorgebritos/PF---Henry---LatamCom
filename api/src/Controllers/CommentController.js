@@ -51,7 +51,7 @@ const postComment = async (req, res) => {
 
         newComment.addUser(searchUser)
         searchProduct.addComment(newComment)
-        res.sendStatus(200)
+        res.status(201);
     } catch (error) {
         res.sendStatus(404)
     }
