@@ -71,7 +71,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 
 	const filterCategory = async function (e) {
 		e.preventDefault();
-		setIsChecked([])
+		setCheckedState(new Array(15).fill(false))
 		dispatch(filterByCategory(categoryFilter));
 		//distBrands(products);
 		setCurrentPage(1)
