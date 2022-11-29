@@ -126,6 +126,7 @@ export function getProductDetail(id) {
 //RUTAS POST
 
 export function createProduct(payload) {
+    console.log("asd")
     return async function (dispatch) {
         const info = await axios.post('http://localhost:3001/products', payload)
         dispatch({
@@ -137,6 +138,7 @@ export function createProduct(payload) {
 
 export function createComment(payload) {
     return async function (dispatch) {
+        console.log("asdasdaasd")
         const info = await axios.post('http://localhost:3001/comments', payload)
         dispatch({
             type: CREATE_COMMENT,

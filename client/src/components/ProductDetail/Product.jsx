@@ -8,6 +8,7 @@ import {
 	getAllProducts,
 	getAllCategories,
 } from '../../redux/actions/index';
+import CreateComment from '../CreateComment/CreateComment';
 import s from './Product.module.css';
 
 const Product = (props) => {
@@ -72,6 +73,7 @@ const Product = (props) => {
 								</div>
 							);
 						})}
+						<CreateComment />
 						{productComments.length ? (
 							<div>
 								Comments:{' '}
