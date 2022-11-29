@@ -9,6 +9,7 @@ export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES"
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
 
 //RUTAS POST
+export const ADD_FAVORITE = "ADD_FAVORITE" 
 export const CREATE_PRODUCT = "CREATE_PRODUCT"
 export const CREATE_COMMENT = "CREATE_COMMENT"
 export const CREATE_PURCHASE = "CREATE_PURCHASE"
@@ -88,7 +89,7 @@ export function getAllBrands(payload) {
             for (let p of products) {
                 if (p.brand) brands.push(p.brand)
             }
-            
+
             brands = new Set(brands)
             brands = [...brands]
             console.log(products)
@@ -140,7 +141,7 @@ export function createComment(payload) {
         const info = await axios.post('http://localhost:3001/comments', payload)
         dispatch({
             type: CREATE_COMMENT,
-            payload: info.data  
+            payload: info.data
         })
     }
 }
@@ -264,6 +265,16 @@ export function searchByName(productName) {
         } else {
             return 0
         }
+    }
+}
+
+export function addFavorites(payload) {
+    return async function (dispatch) {
+        const info = await axios.post('http://localhost:3001/favorites', payload)
+        dispatch({
+            type: ADD_FAVORITE,
+            payload: info.data
+        })
     }
 }
 
