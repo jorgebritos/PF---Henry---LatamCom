@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createComment, getAllComments } from "../../redux/actions";
+import { createComment, getProductDetail } from "../../redux/actions";
+import s from '../ProductDetail/Product.module.css';
 
 const CreateComment = () => {
+
+    const product = useSelector((state) => state.productDetail);
 
     const [comment, setComment] = useState({
         comment: "",
@@ -17,7 +20,10 @@ const CreateComment = () => {
         });
         return comment;
     }
-
+    const comments = useSelector((state) => state.productComments);
+    const productComments = comments.filter((c) => {
+        return c.products[0].name === product.name;
+    });
     function sendComment(e) {
         e.preventDefault();
         let idProduct = product.id;
@@ -28,11 +34,11 @@ const CreateComment = () => {
             idUser: 1,
             idProduct
         }))
-        dispatch(getAllComments())
+        setComment({...comment, comment: ""})
+        dispatch(getProductDetail(idProduct))
     }
 
     const dispatch = useDispatch();
-    const product = useSelector((state) => state.productDetail);
     // const user = useSelector((state) => state.user);
 
     return (
@@ -51,7 +57,21 @@ const CreateComment = () => {
                 <textarea cols={50} name="comment" rows={10} placeholder={"Please, write a comment"} value={comment.comment} onChange={e => handleComment(e)}></textarea>
                 <button onClick={e => sendComment(e)}>Send Comment</button>
             </div>
-
+            {productComments.length ? (
+                <div>
+                    Comments:{' '}
+                    {productComments.map((c) => {
+                        return (
+                            <div key={c.id}>
+                                <p className={s.parafo}>{c.comment}</p>
+                                <p className={s.parafo}>Rating: {c.rating}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                <p className={s.parafo}>Without comentaries</p>
+            )}
         </div>
     )
 

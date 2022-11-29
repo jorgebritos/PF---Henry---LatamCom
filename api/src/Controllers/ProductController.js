@@ -1,16 +1,16 @@
-const { Product, Category } = require("../db.js");
+const { Product, Category, Comment } = require("../db.js");
 const { Op } = require("sequelize");
 
 const getProduct = async (req, res) => {
     const { name } = req.query;
     let productTable = await Product.findAll({
-        include: {
+        include: [{
             model: Category,
             attributes: ["name"],
             through: {
                 attributes: []
             }
-        },
+        }],
         order: [
             ['id', 'ASC']
         ]
@@ -120,13 +120,27 @@ const getProductByID = async (req, res) => {
         where: {
             id: req.params.id
         },
-        include: {
+        include: [{
             model: Category,
             attributes: ["name"],
             through: {
                 attributes: []
             }
-        }
+        },
+        {
+            model: Comment,
+            attributes: ["comment", "rating"],
+            through: {
+                attributes: []
+            },
+            include: {
+                model: Product,
+                attributes: ["name"],
+                through: {
+                    attributes: []
+                }
+            }
+        }]
     });
     if (selectedProduct) {
         res.status(200).send(selectedProduct);
@@ -148,10 +162,10 @@ const postProduct = async (req, res) => {
     } = req.body;
 
     let exists = await Product.findOne({
-        where: {name: name}
+        where: { name: name }
     })
 
-    if(exists) return res.status(406).send("El producto ya existe")
+    if (exists) return res.status(406).send("El producto ya existe")
 
     let productCreate = await Product.create({
         name,

@@ -47,7 +47,8 @@ export default function rootReducer(state = initialState, action) {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: action.payload
+                productDetail: action.payload,
+                productComments: [...action.payload.comments]
             }
         case GET_ALL_CATEGORIES:
             return {
@@ -79,7 +80,8 @@ export default function rootReducer(state = initialState, action) {
         case RESET_DETAIL:
             return {
                 ...state,
-                productDetail: {}
+                productDetail: {},
+                productComments: []
             }
         case FILTER_BY_BRAND:
             result = [];

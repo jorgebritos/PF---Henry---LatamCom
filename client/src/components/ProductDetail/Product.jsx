@@ -31,7 +31,6 @@ const Product = (props) => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const product = useSelector((state) => state.productDetail);
-	const comments = useSelector((state) => state.productComments);
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////
@@ -59,10 +58,7 @@ const Product = (props) => {
 	//////////////////////////////////////////////////
 	else {
 		// Filtrado de comentarios ////////////////////
-
-		const productComments = comments.filter((com) => {
-			return com.products[0].name === product.name;
-		});
+		
 		///////////////////////////////////////////////
 
 		return (
@@ -90,21 +86,7 @@ const Product = (props) => {
 							);
 						})}
 						<CreateComment />
-						{productComments.length ? (
-							<div>
-								Comments:{' '}
-								{productComments.map((com) => {
-									return (
-										<div key={com.id}>
-											<p className={s.parafo}>{com.comment}</p>
-											<p className={s.parafo}>Rating: {com.rating}</p>
-										</div>
-									);
-								})}
-							</div>
-						) : (
-							<p className={s.parafo}>Without comentaries</p>
-						)}
+						
 					</div>
 				</div>
 			</div>
