@@ -23,9 +23,8 @@ const Product = (props) => {
 		if (cart.find((p) => p.id === product.id)) {
 			return 0
 		}
-		cart.push(product)
+		cart.push({...product, amount: 1})
 		localStorage.setItem("cart", JSON.stringify(cart))
-
 	}
 
 	// Hooks y estados ////////////////////////////////

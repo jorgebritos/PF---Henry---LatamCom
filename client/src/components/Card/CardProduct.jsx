@@ -24,7 +24,7 @@ export default function CardProduct({ id, name, price, image }) {
 		if (exists) {
 			return alert("Este objeto ya es de tus favoritos")
 		} else {
-			dispatch(addFavorites(product))
+			dispatch(addFavorites({idProduct: product.id, idUser: 1}))
 		}
 
 	}

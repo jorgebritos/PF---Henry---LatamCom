@@ -62,6 +62,9 @@ const ProductShopCart = () => {
 		event.preventDefault();
 		const name = event.target.name;
 		const decrease = productsSelected.map((p) => {
+			console.log(p)
+			console.log(typeof(name))
+			console.log(typeof(p.amount))
 			if (p.id === Number(name) && p.amount !== 1) {
 				return {
 					...p,

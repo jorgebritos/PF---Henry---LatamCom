@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategories, getAllProducts } from '../../redux/actions/index.js';
+import { getAllCategories, getAllProducts, getAllUsers } from '../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
@@ -21,27 +21,27 @@ export default function HomePage() {
 		indexOfLastProduct,
 	);
 	const paginado = (pageNumber) => {
-		if(typeof pageNumber === 'number')
+		if (typeof pageNumber === 'number')
 			setCurrentPage(pageNumber)
-		else if(pageNumber==='-')
-			setCurrentPage(currentPage-1)
-		else 
-			setCurrentPage(currentPage+1)};
+		else if (pageNumber === '-')
+			setCurrentPage(currentPage - 1)
+		else
+			setCurrentPage(currentPage + 1)
+	};
 
-	 const [, setOrder]= useState('');
+	const [, setOrder] = useState('');
 
 	useEffect(() => {
 		dispatch(getAllCategories());
-		setTimeout(() => {
-			dispatch(getAllProducts());
-		}, 1);
+		dispatch(getAllUsers())
+		dispatch(getAllProducts());
 	}, [dispatch]);
 
 	return (
 		<div>
 			<div className={s.cont}>
 				<div className={s.filter}>
-					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder}/>
+					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} />
 				</div>
 				<div>
 					<div className={s.pag}>
