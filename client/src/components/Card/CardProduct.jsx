@@ -1,14 +1,13 @@
 import React from 'react';
-import { useSelector, useDispatch } from "react-redux"
 import { Link } from 'react-router-dom';
 import s from './CardProduct.module.css';
 import { addFavorites } from "../../redux/actions/index.js"
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function CardProduct({ id, name, price, image, categories }) {
+export default function CardProduct({ id, name, price, image }) {
 
 	const favorites = useSelector((state) => state.favorites)
 	const dispatch = useDispatch()
-
 
 	const addFavorite = async (event) => {
 		event.preventDefault();
@@ -20,11 +19,11 @@ export default function CardProduct({ id, name, price, image, categories }) {
 			image
 		}
 
-		let exists = await favorites.find((f) => f.id == id);
+		let exists = await favorites.find((f) => f.id === Number(id));
 
 		if (exists) {
 			return alert("Este objeto ya es de tus favoritos")
-		} {
+		} else {
 			dispatch(addFavorites(product))
 		}
 

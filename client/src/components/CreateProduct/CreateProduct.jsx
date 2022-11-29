@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
 	createProduct,
-	getAllCategories,
-	res,
+	getAllCategories
 } from '../../redux/actions/index';
 import s from './CreateProduct.module.css';
 
@@ -12,7 +11,7 @@ import s from './CreateProduct.module.css';
 const validateInput = (input) => {
 	let errors = {};
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
-	let regexURL = /((http|ftp|https):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/;
+	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
 	if (!input.name || input.name?.trim() >= 1 ) {
 		errors.name = 'Introduce a name!';
@@ -75,7 +74,7 @@ const CreateProduct = () => {
 
 	useEffect(() => {
 		dispatch(getAllCategories());
-	}, []);
+	}, [dispatch]);
 	////////////////////////////////////////
 
 	// Cloudinary ////////////////////////////////////////////////////////
@@ -189,7 +188,7 @@ const CreateProduct = () => {
 						{loading ? (
 							<h4>Uploading image...</h4>
 						) : (
-							<img src={input.image} style={{ width: '300px' }}></img>
+							<img src={input.image} style={{ width: '300px' }} alt=''></img>
 						)}
 					</div>
 

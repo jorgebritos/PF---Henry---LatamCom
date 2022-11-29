@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import s from './ProductShopCart.module.css';
 
 const ProductShopCart = () => {
@@ -8,9 +6,7 @@ const ProductShopCart = () => {
 	const [productsSelected, setProductsSelected] = useState([]);
 	let cant = 0;
 
-	useEffect(() => {
-		seeProducts();
-	}, []);
+
 
 	const seeProducts = () => {
 		let cart = [];
@@ -48,7 +44,7 @@ const ProductShopCart = () => {
 		const name = event.target.name;
 
 		const increase = productsSelected.map((p) => {
-			if (p.id == name) {
+			if (p.id === Number(name)) {
 				return {
 					...p,
 					amount: p.amount + 1,
@@ -66,7 +62,7 @@ const ProductShopCart = () => {
 		event.preventDefault();
 		const name = event.target.name;
 		const decrease = productsSelected.map((p) => {
-			if (p.id == name && p.amount !== 1) {
+			if (p.id === Number(name) && p.amount !== 1) {
 				return {
 					...p,
 					amount: p.amount - 1,
@@ -98,6 +94,7 @@ const ProductShopCart = () => {
 
 	return (
 		<div className={s.cont}>
+			{!productsSelected.length ? seeProducts() : ""}
 			<h1>SHOPPING CART</h1>
 			<div className={s.contentP}>
 				<div className={s.contG}>
@@ -105,7 +102,7 @@ const ProductShopCart = () => {
 						return (
 							<div className={s.producCard} key={producto.id}>
 								<div className={s.cimg}>
-									<img className={s.img} src={producto.image} width='100px' />
+									<img className={s.img} src={producto.image} width='100px' alt='' />
 								</div>
 								<div className={s.cname}>
 									<div>

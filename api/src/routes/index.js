@@ -5,9 +5,10 @@ const productsRoute = require("./products.js")
 const categoriesRoute = require("./categories.js")
 const usersRoute = require("./users.js")
 const commentsRoute = require("./comments.js")
-const purchaseRoute =  require("./purchase.js")
+const purchaseRoute = require("./purchase.js")
+const favoritesRoute = require("./favorites.js")
 
-const router = Router(); 
+const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -16,6 +17,7 @@ router.use('/products', productsRoute)
 router.use('/categories', categoriesRoute)
 router.use('/users', usersRoute)
 router.use('/comments', commentsRoute)
-router.use('/purchase', purchaseRoute )
+router.use('/purchase', purchaseRoute)
+router.use('/favorites', favoritesRoute)
 
 module.exports = router;

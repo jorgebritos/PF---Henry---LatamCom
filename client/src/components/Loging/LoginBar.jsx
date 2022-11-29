@@ -2,10 +2,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import usericon from '../../asset/usericon.png';
 import { useSelector } from 'react-redux';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from "@auth0/auth0-react";
 import { UserName } from '../../components/login/userName';
-import { useHistory } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useHistory } from "react-router-dom";
+// import { Popover, Transition } from "@headlessui/react";
+import Swal from "sweetalert2"
 import s from './LoginBar.module.css';
 
 const LoginRegister = () => {
@@ -66,8 +67,8 @@ const LoginRegister = () => {
 		};
 	});
 
-	const active = s.active;
-	const inactive = s.inactive;
+	// const active = s.active;
+	// const inactive = s.inactive;
 
 	return (
 		<div className={s.conten} ref={menuRef}>
@@ -100,8 +101,8 @@ const LoginRegister = () => {
 function DropdownItem(props) {
 	return (
 		<li className='dropdownItem'>
-			<img src={props.img}></img>
-			<a> {props.text} </a>
+			<img src={props.img} alt=''></img>
+			<a href={' '}>{props.text}</a>
 		</li>
 	);
 }

@@ -16,14 +16,13 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
 	const products = useSelector((state) => state.products);
-	const brands = useSelector((state) => state.brands);
 	const filBrands = useSelector((state) => state.filBrands)
 
 
-	useEffect(async () => {
-		await dispatch(getAllCategories());
-		await dispatch(getAllProducts());
-		await dispatch(getAllBrands([]));
+	useEffect(() => {
+		dispatch(getAllCategories());
+		dispatch(getAllProducts());
+		dispatch(getAllBrands([]));
 	}, [dispatch]);
 
 	const [priceFilter, setPriceFilter] = useState({
@@ -77,10 +76,10 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setIsChecked([])
 		setCurrentPage(1)
 	};
-	const distBrands =  function (products){
-		console.log(`Es productos: ${products}`);
-		dispatch(getAllBrands(products));
-	}
+	// const distBrands =  function (products){
+	// 	console.log(`Es productos: ${products}`);
+	// 	dispatch(getAllBrands(products));
+	// }
 
 	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
 

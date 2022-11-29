@@ -13,7 +13,7 @@ export default function HomePage() {
 	const totalProducts = useSelector((state) => state.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage, setperPage] = useState(8);
+	const [perPage,] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
 	const currentProducts = totalProducts.slice(
@@ -28,14 +28,14 @@ export default function HomePage() {
 		else 
 			setCurrentPage(currentPage+1)};
 
-	 const [order, setOrder]= useState('');
+	 const [, setOrder]= useState('');
 
-	useEffect(async () => {
-		await dispatch(getAllCategories());
+	useEffect(() => {
+		dispatch(getAllCategories());
 		setTimeout(() => {
 			dispatch(getAllProducts());
 		}, 1);
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div>
