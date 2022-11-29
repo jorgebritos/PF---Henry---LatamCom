@@ -16,7 +16,8 @@ const initialState = {
     categories: [],
     searchedProducts: [],
     brands: [],
-    filBrands:[]
+    filBrands: [],
+    filCategory: []
 }
 
 
@@ -80,7 +81,7 @@ export default function rootReducer(state = initialState, action) {
         case FILTER_BY_BRAND:
             if (action.payload.length > 0) {
                 result = [];
-                for (const p of actualProducts) {
+                for (const p of state.filCategory) {
                     action.payload.forEach(b => {
                         if (p.brand === b) result.push(p)
                     });
@@ -90,6 +91,9 @@ export default function rootReducer(state = initialState, action) {
                     products: result
                 }
             }
+            return state
+
+
         case FILTER_BY_PRICE:
             result = [];
             for (const p of actualProducts) {
@@ -124,6 +128,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 products: result,
+                filCategory: result,
                 filBrands:[...new Set(marcas)]
             }
         case REMOVE_ALL_FILTERS:
