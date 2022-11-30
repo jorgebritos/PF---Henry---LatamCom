@@ -47,7 +47,7 @@ const CreateComment = () => {
 
 	return (
 		<div className={s.conten}>
-		{ratings > 0 ? <label>Rating General del Producto: {ratings.toFixed(1)}</label> : ""}
+		{ratings > 0 ? <label>Rating General del Producto: {ratings.toFixed(1)} ({productComments.length})</label> : ""}
 			<div className={s.rating}>
 				<label>Rating:</label>
 				<br />
