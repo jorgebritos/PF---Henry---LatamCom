@@ -5,8 +5,6 @@ import {
 	filterByCategory,
 	filterByPrice,
 	getAllBrands,
-	getAllCategories,
-	getAllProducts,
 	orderBy,
 	removeFilters,
 } from '../../../redux/actions';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, getProductDetail, updateRatingProduct } from '../../../../redux/actions';
+import { createComment } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
 
 const CreateComment = () => {
@@ -23,6 +23,11 @@ const CreateComment = () => {
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
+	let ratings = 0
+	for (const c of productComments) {
+			ratings+=c.rating
+	}
+	ratings/=productComments.length;
 	async function sendComment(e) {
 		e.preventDefault();
 		let idProduct = product.id;
@@ -35,7 +40,6 @@ const CreateComment = () => {
 			})
 		);
 		setComment({ ...comment, comment: '' });
-		dispatch(getProductDetail(idProduct));
 	}
 
 	const dispatch = useDispatch();
@@ -43,6 +47,7 @@ const CreateComment = () => {
 
 	return (
 		<div className={s.conten}>
+		{ratings > 0 ? <label>Rating General del Producto: {ratings.toFixed(1)}</label> : ""}
 			<div className={s.rating}>
 				<label>Rating:</label>
 				<br />
