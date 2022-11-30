@@ -5,7 +5,7 @@ import {
 	getAllCategories,
 	getAllProducts,
 	getAllUsers,
-} from '../../redux/actions/index.js';
+} from '../../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
@@ -55,6 +55,7 @@ export default function HomePage() {
 					</div>
 					<div className={s.cads}>
 						{currentProducts?.map((p) => {
+							console.log(p.rating)
 							return (
 								<CardProduct
 									key={p.id}
@@ -63,6 +64,7 @@ export default function HomePage() {
 									image={p.image}
 									categories={p.categories}
 									price={p.price}
+									rating={p.rating}
 								/>
 							);
 						})}

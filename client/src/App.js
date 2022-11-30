@@ -1,13 +1,13 @@
 import { Route, useLocation } from 'react-router-dom';
 import LandingPage from './components/landing/LandingPage';
-import HomePage from './components/home/HomePage.jsx';
-import NavBar from './components/NavBar/NavBar.jsx';
+import HomePage from './components/home/home/HomePage';
+import NavBar from './components/NavBar/Navbar/NavBar.jsx';
 import FooterBar from './components/Footer/FooterBar';
-import Product from './components/ProductDetail/Product';
+import Product from './components/home/ProductDetail/ProductDetail/Product';
 import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
 import ProductSended from './components/CreateProduct/ProductSended.jsx';
-import { Profile } from './components/login/Profile';
+import { Profile } from './components/NavBar/login/Profile.jsx';
 
 function App() {
 	let location = useLocation();

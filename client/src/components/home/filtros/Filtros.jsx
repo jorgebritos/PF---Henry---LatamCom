@@ -9,7 +9,7 @@ import {
 	getAllProducts,
 	orderBy,
 	removeFilters,
-} from '../../redux/actions';
+} from '../../../redux/actions';
 import s from './Filtros.module.css';
 
 export default function Filtros({ setCurrentPage, setOrder }) {
@@ -19,8 +19,6 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const filBrands = useSelector((state) => state.filBrands);
 
 	useEffect(() => {
-		dispatch(getAllCategories());
-		dispatch(getAllProducts());
 		dispatch(getAllBrands([]));
 	}, [dispatch]);
 

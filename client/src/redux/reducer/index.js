@@ -3,7 +3,8 @@ import {
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    UPDATE_RATING
 } from "../actions"
 
 const initialState = {
@@ -68,6 +69,8 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
+            return action.payload
+        case UPDATE_RATING:
             return action.payload
         case UPDATE_USER:
             return action.payload

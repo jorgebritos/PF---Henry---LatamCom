@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './CardProduct.module.css';
-import { addFavorites } from "../../redux/actions/index.js"
+import { addFavorites } from "../../../redux/actions/index.js"
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function CardProduct({ id, name, price, image }) {
+export default function CardProduct({ id, name, price, image, rating }) {
 
 	const favorites = useSelector((state) => state.favorites)
 	const dispatch = useDispatch()
@@ -40,6 +40,7 @@ export default function CardProduct({ id, name, price, image }) {
 					<div className={s.cardBody}>
 						<p className={s.name}>{name}</p>
 						<p className={s.price}>${price} USD</p>
+						<p>{rating ? rating + " ⋆": ""}</p>
 						{/* <br /> */}
 						{/* Categories:{' '}
 						{categories.map((e) => {

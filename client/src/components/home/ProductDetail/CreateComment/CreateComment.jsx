@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, getProductDetail } from '../../redux/actions';
+import { createComment, getProductDetail, updateRatingProduct } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
 
 const CreateComment = () => {
@@ -23,17 +23,16 @@ const CreateComment = () => {
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
-	function sendComment(e) {
+	async function sendComment(e) {
 		e.preventDefault();
 		let idProduct = product.id;
-		console.log(idProduct);
 		if (!idProduct) return console.log('faltan datos');
 		dispatch(
 			createComment({
 				...comment,
 				idUser: 1,
 				idProduct,
-			}),
+			})
 		);
 		setComment({ ...comment, comment: '' });
 		dispatch(getProductDetail(idProduct));
@@ -76,11 +75,11 @@ const CreateComment = () => {
 			{productComments.length ? (
 				<div>
 					Comments:{' '}
-					{productComments.map((c) => {
+					{productComments.map((c, index) => {
 						return (
-							<div key={c.id}>
+							<div key={index}>
+								<p className={s.parafo}>{c.users[0].username} - Rating: {c.rating}</p>
 								<p className={s.parafo}>{c.comment}</p>
-								<p className={s.parafo}>Rating: {c.rating}</p>
 							</div>
 						);
 					})}

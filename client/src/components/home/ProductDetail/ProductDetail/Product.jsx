@@ -7,7 +7,7 @@ import {
 	resetDetail,
 	getAllProducts,
 	getAllCategories,
-} from '../../redux/actions/index';
+} from '../../../../redux/actions/index';
 import CreateComment from '../CreateComment/CreateComment';
 import s from './Product.module.css';
 

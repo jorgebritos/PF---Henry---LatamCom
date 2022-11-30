@@ -1,4 +1,4 @@
-const { Product, Category, Comment } = require("../db.js");
+const { Product, Category, Comment, User } = require("../db.js");
 const { Op } = require("sequelize");
 
 const getProduct = async (req, res) => {
@@ -133,13 +133,20 @@ const getProductByID = async (req, res) => {
             through: {
                 attributes: []
             },
-            include: {
+            include: [{
                 model: Product,
                 attributes: ["name"],
                 through: {
                     attributes: []
                 }
-            }
+            },
+            {
+                model: User,
+                attributes: ["username"],
+                through: {
+                    attributes: []
+                }
+            }]
         }]
     });
     if (selectedProduct) {
