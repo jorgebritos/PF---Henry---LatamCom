@@ -18,7 +18,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
 	const products = useSelector((state) => state.products);
-	const brands = useSelector((state) => state.brands);
+	const brands = useSelector((state) => state.filBrands);
 
 	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
 	const [isChecked, setIsChecked] = useState([]);
@@ -74,13 +74,17 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setCategoryFilter(category);
 	}
 
-	const filterCategory = function (e) {
+	const filterCategory = async function (e) {
 		e.preventDefault();
+		setCheckedState(new Array(15).fill(false));
 		dispatch(filterByCategory(categoryFilter));
-		dispatch(getAllBrands(products));
-		
+		setIsChecked([]);		
 		setCurrentPage(1);
 	};
+	// const distBrands =  function (products){
+	// 	console.log(`Es productos: ${products}`);
+	// 	dispatch(getAllBrands(products));
+	// }
 
 
 
@@ -121,18 +125,20 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		for (const r of radios) {
 			r.checked = false;
 		}
+
 		setPriceFilter({ minPrice: 0, maxPrice: 0 });
 		setCheckedState(new Array(15).fill(false));
 		setIsChecked([]);
 		setCategoryFilter('All');
+		dispatch(filterByCategory('All'));
 	};
 
 	return (
 		<div className={s.div}>
 			<div className={s.cont}>
-				<div>
-					Ordenamientos
-					<select onChange={(e) => sort(e)}>
+				<div className={s.filtro}>
+					<h3 className={s.h4}>Order by:</h3>
+					<select className={s.select} onChange={(e) => sort(e)}>
 						<option>Select Order</option>
 						<optgroup label='Alphabetically'>
 							<option value={'asc'}>A-Z</option>
@@ -195,7 +201,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 												value={c.name}
 												name={'category'}
 												id='categoria'
-												onInput={(e) => handleCategoryFilter(c.name)}
+												onClick={(e) => handleCategoryFilter(c.name)}
 											/>
 											<span className={s.span}>{c.name}</span>
 										</label>
@@ -214,8 +220,8 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 {/* 					<div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Brand</h4>
 						<ul>
-							{brands.length > 0
-								? brands.map((b, index) => {
+							{filBrands.length > 0
+								? filBrands.map((b, index) => {
 										return (
 											<li className={s.li} key={b}>
 												<label className={s.label}>

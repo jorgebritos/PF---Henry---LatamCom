@@ -1,7 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategories, getAllProducts } from '../../redux/actions/index.js';
+import {
+	getAllCategories,
+	getAllProducts,
+	getAllUsers,
+} from '../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
@@ -13,29 +17,32 @@ export default function HomePage() {
 	const totalProducts = useSelector((state) => state.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage,] = useState(8);
+	const [perPage] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
 	const currentProducts = totalProducts.slice(
 		indexOfFirstProduct,
 		indexOfLastProduct,
 	);
-	const paginado = (pageNumber) => setCurrentPage(pageNumber);
+	const paginado = (pageNumber) => {
+		if (typeof pageNumber === 'number') setCurrentPage(pageNumber);
+		else if (pageNumber === '-') setCurrentPage(currentPage - 1);
+		else setCurrentPage(currentPage + 1);
+	};
 
-	 const [, setOrder]= useState('');
+	const [, setOrder] = useState('');
 
 	useEffect(() => {
 		dispatch(getAllCategories());
-		setTimeout(() => {
-			dispatch(getAllProducts());
-		}, 1);
+		dispatch(getAllUsers());
+		dispatch(getAllProducts());
 	}, [dispatch]);
 
 	return (
 		<div>
 			<div className={s.cont}>
 				<div className={s.filter}>
-					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder}/>
+					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} />
 				</div>
 				<div>
 					<div className={s.pag}>
@@ -43,7 +50,7 @@ export default function HomePage() {
 							producPrePage={perPage}
 							totalProducts={totalProducts.length}
 							paginado={paginado}
-						// value={currentPage}
+							page={currentPage}
 						/>
 					</div>
 					<div className={s.cads}>
@@ -59,7 +66,20 @@ export default function HomePage() {
 								/>
 							);
 						})}
-						{!currentProducts.length ? <h1>No se han encontrado productos</h1> : ""}
+						{!currentProducts.length ? (
+							<h1>No se han encontrado productos</h1>
+						) : (
+							''
+						)}
+					</div>
+					<br />
+					<div className={s.pag}>
+						<Paginate
+							producPrePage={perPage}
+							totalProducts={totalProducts.length}
+							paginado={paginado}
+							page={currentPage}
+						/>
 					</div>
 				</div>
 			</div>

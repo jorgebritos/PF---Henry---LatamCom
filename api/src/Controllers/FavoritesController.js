@@ -3,6 +3,7 @@ const { User, Product } = require("../db.js");
 const postFavorite = async (req, res) => {
     let { idUser, idProduct } = req.body;
 
+
     let user = await User.findOne({
         where: { id: idUser }
     })
@@ -10,11 +11,10 @@ const postFavorite = async (req, res) => {
     let product = await Product.findOne({
         where: { id: idProduct }
     })
-    console.log(user.firstname)
-    console.log(product.name)
-    await user.addFavorite(product)
+    
+    await user.addFavorites(product)
 
-    res.sendStatus(201);
+    res.status(201);
 }
 
 module.exports = {

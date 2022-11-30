@@ -49,9 +49,9 @@ const postComment = async (req, res) => {
             where: { id: idProduct }
         })
 
-        newComment.addUser(searchUser)
-        searchProduct.addComment(newComment)
-        res.sendStatus(200)
+        await newComment.addUser(searchUser)
+        await searchProduct.addComment(newComment)
+        res.status(201);
     } catch (error) {
         res.sendStatus(404)
     }

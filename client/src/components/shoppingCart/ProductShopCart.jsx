@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import s from './ProductShopCart.module.css';
 
 const ProductShopCart = () => {
@@ -6,11 +7,12 @@ const ProductShopCart = () => {
 	const [productsSelected, setProductsSelected] = useState([]);
 	let cant = 0;
 
-
+	useEffect(() => {
+		seeProducts()
+	}, [])
 
 	const seeProducts = () => {
 		let cart = [];
-
 		if (localStorage.getItem('cart')) {
 			cart = JSON.parse(localStorage.getItem('cart'));
 		}
@@ -94,7 +96,6 @@ const ProductShopCart = () => {
 
 	return (
 		<div className={s.cont}>
-			{!productsSelected.length ? seeProducts() : ""}
 			<h1>SHOPPING CART</h1>
 			<div className={s.contentP}>
 				<div className={s.contG}>

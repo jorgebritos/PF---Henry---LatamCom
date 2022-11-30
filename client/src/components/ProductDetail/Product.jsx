@@ -8,35 +8,33 @@ import {
 	getAllProducts,
 	getAllCategories,
 } from '../../redux/actions/index';
+import CreateComment from '../CreateComment/CreateComment';
 import s from './Product.module.css';
 
 const Product = (props) => {
-
 	const addProduct = async (event) => {
-		event.preventDefault()
-		let cart = []
+		event.preventDefault();
+		let cart = [];
 
-		if (localStorage.getItem("cart")) {
-			cart = JSON.parse(localStorage.getItem("cart"))
+		if (localStorage.getItem('cart')) {
+			cart = JSON.parse(localStorage.getItem('cart'));
 		}
 		if (cart.find((p) => p.id === product.id)) {
-			return 0
+			return 0;
 		}
-		cart.push(product)
-		localStorage.setItem("cart", JSON.stringify(cart))
-
-	}
+		cart.push({ ...product, amount: 1 });
+		localStorage.setItem('cart', JSON.stringify(cart));
+	};
 
 	// Hooks y estados ////////////////////////////////
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const product = useSelector((state) => state.productDetail);
-	const comments = useSelector((state) => state.productComments);
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////
 	useEffect(() => {
-		dispatch(resetDetail())
+		dispatch(resetDetail());
 		dispatch(getAllCategories());
 		dispatch(getAllProducts());
 		dispatch(getProductDetail(id));
@@ -60,9 +58,6 @@ const Product = (props) => {
 	else {
 		// Filtrado de comentarios ////////////////////
 
-		const productComments = comments.filter((com) => {
-			return com.products[0].name === product.name;
-		});
 		///////////////////////////////////////////////
 
 		return (
@@ -76,7 +71,6 @@ const Product = (props) => {
 						/>
 					</div>
 					<div className={s.contInfo}>
-						<button className={s.btn} onClick={addProduct}>ADD TO CART</button>
 						<h1 className={s.name}>{product.name} </h1>
 						<h2 className={s.price}>${product.price} </h2>
 						<h4 className={s.h4}>Description:</h4>
@@ -89,21 +83,16 @@ const Product = (props) => {
 								</div>
 							);
 						})}
-						{productComments.length ? (
-							<div>
-								Comments:{' '}
-								{productComments.map((com) => {
-									return (
-										<div key={com.id}>
-											<p className={s.parafo}>{com.comment}</p>
-											<p className={s.parafo}>Rating: {com.rating}</p>
-										</div>
-									);
-								})}
-							</div>
-						) : (
-							<p className={s.parafo}>Without comentaries</p>
-						)}
+
+						<button className={s.btn} onClick={addProduct}>
+							ADD TO CART
+						</button>
+					</div>
+				</div>
+				<div className={s.contInfoComent}>
+					<h2 className={s.h2}>Comments</h2>
+					<div>
+						<CreateComment />
 					</div>
 				</div>
 			</div>
