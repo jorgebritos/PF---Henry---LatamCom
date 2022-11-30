@@ -1,7 +1,8 @@
 .cont {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: flex-start;
+	align-items: flex-start;
 }
 .filter {
 	display: flex;
@@ -9,7 +10,6 @@
 	align-items: center;
 	/* width: 600px; */
 	max-width: 700px;
-	/* background-color: aqua; */
 }
 
 .cads {
@@ -20,7 +20,7 @@
 	/* align-content: space-around; */
 	/* margin-top: 0.5em; */
 	margin-block-start: 20px;
-	margin-right: 50px;
+	min-width: 1400px;
 }
 .pag {
 	display: flex;
