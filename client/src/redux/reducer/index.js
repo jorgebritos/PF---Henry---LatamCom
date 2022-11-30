@@ -29,7 +29,7 @@ export default function rootReducer(state = initialState, action) {
     let result = [];
 
     switch (action.type) {
-        case GET_ALL_PRODUCTS:
+       /*  case GET_ALL_PRODUCTS:
             return {
                 ...state,
                 products: action.payload,
@@ -61,7 +61,7 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 brands: action.payload,
                 filBrands: action.payload
-            }
+            } */
         case ADD_FAVORITE:
             return action.payload
         case CREATE_PRODUCT:

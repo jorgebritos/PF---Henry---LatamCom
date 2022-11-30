@@ -6,11 +6,11 @@ import getReducer from '../reducer/getreducers';
 
 let combinedReducers = combineReducers;
 
-let rootReducers = combinedReducers({
+let rotReducers = combinedReducers({
     allTheOthers: rootReducer,
     gets: getReducer
 })
 
-const store = createStore(rootReducers, composeWithDevTools(applyMiddleware(thunk)));
+const store = createStore(rotReducers, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store

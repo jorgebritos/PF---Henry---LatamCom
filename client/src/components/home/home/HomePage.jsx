@@ -5,6 +5,7 @@ import {
 	getAllCategories,
 	getAllProducts,
 	getAllUsers,
+	getProductDetail
 } from '../../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
