@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
 	getProductDetail,
-	getAllComments,
 	resetDetail,
 	getAllProducts,
 	getAllCategories,
@@ -11,7 +10,7 @@ import {
 import CreateComment from '../CreateComment/CreateComment';
 import s from './Product.module.css';
 
-const Product = (props) => {
+const Product = () => {
 	const addProduct = async (event) => {
 		event.preventDefault();
 		let cart = [];
@@ -38,7 +37,6 @@ const Product = (props) => {
 		dispatch(getAllCategories());
 		dispatch(getAllProducts());
 		dispatch(getProductDetail(id));
-		dispatch(getAllComments());
 	}, [id, dispatch]);
 	//////////////////////////////////////////////////
 
@@ -92,7 +90,7 @@ const Product = (props) => {
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
 					<div>
-						<CreateComment />
+						<CreateComment/>
 					</div>
 				</div>
 			</div>

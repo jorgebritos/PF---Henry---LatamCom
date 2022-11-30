@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment } from '../../../../redux/actions';
+import { createComment, updateRatingProduct } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
 
-const CreateComment = () => {
+const CreateComment = (id) => {
 	const product = useSelector((state) => state.productDetail);
 
 	const [comment, setComment] = useState({
 		comment: '',
 		rating: 1,
 	});
+
+
 
 	function handleComment(e) {
 		e.preventDefault();
@@ -25,9 +27,9 @@ const CreateComment = () => {
 	});
 	let ratings = 0
 	for (const c of productComments) {
-			ratings+=c.rating
+		ratings += c.rating
 	}
-	ratings/=productComments.length;
+	ratings /= productComments.length;
 	async function sendComment(e) {
 		e.preventDefault();
 		let idProduct = product.id;
@@ -44,10 +46,17 @@ const CreateComment = () => {
 
 	const dispatch = useDispatch();
 	// const user = useSelector((state) => state.user);
+	useEffect(() => {
+		if (ratings && id !== undefined) {
+			console.log(ratings)
+			console.log(product.id)
+			dispatch(updateRatingProduct({rating: ratings, id:product.id}))
+		}
+	}, [dispatch, ratings, id])
 
 	return (
 		<div className={s.conten}>
-		{ratings > 0 ? <label>Rating General del Producto: {ratings.toFixed(1)} ({productComments.length})</label> : ""}
+			{ratings > 0 ? <label>Rating General del Producto: {ratings.toFixed(1)} ({productComments.length})</label> : ""}
 			<div className={s.rating}>
 				<label>Rating:</label>
 				<br />
@@ -83,7 +92,7 @@ const CreateComment = () => {
 					{productComments.map((c, index) => {
 						return (
 							<div key={index}>
-								<p className={s.parafo}>{c.users[0].username} - Rating: {c.rating}</p>
+								<p className={s.parafo}>{c.users.length? c.users[0].username : ""} - Rating: {c.rating}</p>
 								<p className={s.parafo}>{c.comment}</p>
 							</div>
 						);

@@ -40,7 +40,7 @@ export default function CardProduct({ id, name, price, image, rating }) {
 					<div className={s.cardBody}>
 						<p className={s.name}>{name}</p>
 						<p className={s.price}>${price} USD</p>
-						<p>{rating ? rating + " ⋆": ""}</p>
+						<p>{rating ? rating.toFixed(1) + " ⋆": ""}</p>
 						{/* <br /> */}
 						{/* Categories:{' '}
 						{categories.map((e) => {

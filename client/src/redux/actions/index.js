@@ -170,6 +170,7 @@ export function updateUser(payload) {
 }
 
 export function updateRatingProduct(payload) {
+    console.log(payload)
     let id = payload.id;
     return async function(dispatch) {
         const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
