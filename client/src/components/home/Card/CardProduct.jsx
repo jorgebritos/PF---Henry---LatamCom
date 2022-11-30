@@ -40,10 +40,10 @@ export default function CardProduct({ id, name, price, image, rating }) {
 						<p className={s.price}>${price} USD</p>
 						<p className={s.price}>
 							{rating ? (
-								<div>
-									<label>{rating.toFixed(1)}</label>{' '}
+								<label>
+									<span>{rating.toFixed(1)}</span>{' '}
 									<img className={s.star} src={star} height={'15px'} />
-								</div>
+								</label>
 							) : (
 								''
 							)}
