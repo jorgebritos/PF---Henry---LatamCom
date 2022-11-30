@@ -11,6 +11,8 @@ import {
 	removeFilters,
 } from '../../redux/actions';
 import s from './Filtros.module.css';
+import FiltroCategory from './FiltroCategory';
+import FiltroBrand from './FiltroBrand';
 
 export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
@@ -18,16 +20,21 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const products = useSelector((state) => state.products);
 	const brands = useSelector((state) => state.brands);
 
+	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
+	const [isChecked, setIsChecked] = useState([]);
+	const [categoryFilter, setCategoryFilter] = useState('All');
+	const [priceFilter, setPriceFilter] = useState({
+			minPrice: 0,
+			maxPrice: 0,
+		});
+
 	useEffect(() => {
 		dispatch(getAllCategories());
 		dispatch(getAllProducts());
 		dispatch(getAllBrands([]));
 	}, [dispatch]);
 
-	const [priceFilter, setPriceFilter] = useState({
-		minPrice: 0,
-		maxPrice: 0,
-	});
+	
 
 	function handlePriceFilter(e) {
 		if (e.target.checkValidity()) {
@@ -61,7 +68,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setCurrentPage(1);
 	};
 
-	const [categoryFilter, setCategoryFilter] = useState('All');
+	
 
 	function handleCategoryFilter(category) {
 		setCategoryFilter(category);
@@ -71,12 +78,11 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		e.preventDefault();
 		dispatch(filterByCategory(categoryFilter));
 		dispatch(getAllBrands(products));
+		
 		setCurrentPage(1);
 	};
 
-	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
 
-	const [isChecked, setIsChecked] = useState([]);
 
 	const handleOnChange = (position, e) => {
 		//SETEAR CAMPOS QUE ESTAN CHECKED
@@ -176,7 +182,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						</div>
 					</div>
 
-					<div className={s.filtro}>
+					{/* <div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Category</h4>
 						<ul>
 							{categories?.map((c) => {
@@ -200,8 +206,12 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						<button className={s.btn} onClick={(e) => filterCategory(e)}>
 							Filter
 						</button>
-					</div>
-					<div className={s.filtro}>
+					</div> */}
+{/* Ejemplar de como se modulariza en front React usen el código comentado de arriba *solo* para comparar
+	  Una vez resueltas las dudas borren el código comentado de arriba*/}
+					<FiltroCategory s={s} categories={categories} handleCategoryFilter={handleCategoryFilter} filterCategory={filterCategory} />
+
+{/* 					<div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Brand</h4>
 						<ul>
 							{brands.length > 0
@@ -226,7 +236,11 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						<button className={s.btn} onClick={(e) => filterBrands(e)}>
 							Filter
 						</button>
-					</div>
+					</div> */}
+{/* Ejemplar de como se modulariza en front React usen el código comentado de arriba *solo* para comparar
+	  Una vez resueltas las dudas borren el código comentado de arriba*/}
+					<FiltroBrand s={s} brands={brands} filterBrands={filterBrands} handleOnChange={handleOnChange} checkedState={checkedState} />
+
 					<br />
 					<div className={s.contBtn}>
 						<button className={s.btnC} onClick={(e) => quitarFiltros(e)}>
