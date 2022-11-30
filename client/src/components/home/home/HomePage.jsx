@@ -44,7 +44,7 @@ export default function HomePage() {
 				<div className={s.filter}>
 					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} />
 				</div>
-				<div>
+				<div className={s.conthome}>
 					<div className={s.pag}>
 						<Paginate
 							producPrePage={perPage}

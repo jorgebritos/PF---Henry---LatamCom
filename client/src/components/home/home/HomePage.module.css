@@ -17,10 +17,21 @@
 	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: center;
-	margin-top: 0.5em;
+	/* align-content: space-around; */
+	/* margin-top: 0.5em; */
+	margin-block-start: 20px;
+	margin-right: 50px;
 }
 .pag {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+}
+.conthome {
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	align-items: center;
+	/* justify-content: center; */
+	align-content: center;
 }

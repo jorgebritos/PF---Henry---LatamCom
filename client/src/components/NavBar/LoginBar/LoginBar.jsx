@@ -2,11 +2,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import usericon from '../../../asset/usericon.png';
 import { useSelector } from 'react-redux';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 import { UserName } from '../login/userName';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 // import { Popover, Transition } from "@headlessui/react";
-import Swal from "sweetalert2"
+import Swal from 'sweetalert2';
 import s from './LoginBar.module.css';
 
 const LoginRegister = () => {
@@ -78,21 +78,20 @@ const LoginRegister = () => {
 				}}>
 				<img className={s.img} src={usericon} alt='' height='25px' />
 			</div>
-			<UserName>
-				{isAuthenticated ? (
-					<div className={`s.dropdown_menu${open ? '.active' : '.inactive'}`}>
-						<h3 className={s.h3}> {user?.name}</h3>
-						{solutions.map((item) => (
-							<ul key={item.name} onClick={item.href}>
-								<DropdownItem text={item.name} />
-							</ul>
-						))}
-					</div>
-				) : (
-					<p onClick={() => loginWithRedirect()}>Login</p>
-				)}
-				{/* <h3 className={s.h3}>{user.username}</h3> */}
-			</UserName>
+			<UserName></UserName>
+			{isAuthenticated ? (
+				<div className={`s.dropdown_menu${open ? '.active' : '.inactive'}`}>
+					<h3 className={s.h3}> {user?.name}</h3>
+					{solutions.map((item) => (
+						<ul key={item.name} onClick={item.href}>
+							<DropdownItem text={item.name} />
+						</ul>
+					))}
+				</div>
+			) : (
+				<p onClick={() => loginWithRedirect()}>Login</p>
+			)}
+			{/* <h3 className={s.h3}>{user.username}</h3> */}
 		</div>
 	);
 };

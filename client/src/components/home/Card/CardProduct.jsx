@@ -39,8 +39,14 @@ export default function CardProduct({ id, name, price, image, rating }) {
 						<p className={s.name}>{name}</p>
 						<p className={s.price}>${price} USD</p>
 						<p className={s.price}>
-							{rating ? <div><label>{rating.toFixed(1)}</label> <img className={s.star} src={star} height={'15px'} /></div> : ''}
-
+							{rating ? (
+								<div>
+									<label>{rating.toFixed(1)}</label>{' '}
+									<img className={s.star} src={star} height={'15px'} />
+								</div>
+							) : (
+								''
+							)}
 						</p>
 						<div>
 							<button className={s.btn} onClick={(e) => addFavorite(e)}>
