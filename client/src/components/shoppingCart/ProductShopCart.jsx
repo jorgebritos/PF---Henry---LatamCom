@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import s from './ProductShopCart.module.css';
 
 const ProductShopCart = () => {
 	const [total, setTotal] = useState(0);
 	const [productsSelected, setProductsSelected] = useState([]);
+	const history = useHistory()
 	let cant = 0;
 
 
@@ -92,6 +94,13 @@ const ProductShopCart = () => {
 		}
 	};
 
+	const buyItems = (event) =>{
+		event.preventDefault()
+		history.push("/buyproducts")
+		localStorage.setItem("total", JSON.stringify(total))
+
+	}
+
 	return (
 		<div className={s.cont}>
 			{!productsSelected.length ? seeProducts() : ""}
@@ -163,7 +172,7 @@ const ProductShopCart = () => {
 									CLEAN CART
 								</button>
 								<br />
-								<button className={s.btnB}>BUY</button>
+								<button className={s.btnB} onClick={buyItems} >BUY</button>
 							</div>
 						</div>
 					</div>

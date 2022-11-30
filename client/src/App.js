@@ -6,6 +6,7 @@ import Product from './components/ProductDetail/Product';
 import ProductShopCart from "./components/shoppingCart/ProductShopCart.jsx"
 import CreateProduct from './components/CreateProduct/CreateProduct';
 import ProductSended from "./components/CreateProduct/ProductSended.jsx"
+import Buy from "./components/BuyProducts/Buy.jsx"
 import { Profile } from './components/login/Profile'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 			<Route path='/create/product' component={CreateProduct} />
 			<Route path='/create/productsended' component={ProductSended} />
 			<Route path='/profile' component={Profile} />
+			<Route path="/buyproducts" component={Buy} />
 
 		</div>
 	);
