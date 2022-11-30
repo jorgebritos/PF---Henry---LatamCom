@@ -12,9 +12,9 @@ import s from './Filtros.module.css';
 
 export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
-	const categories = useSelector((state) => state.categories);
-	const products = useSelector((state) => state.products);
-	const filBrands = useSelector((state) => state.filBrands);
+	const categories = useSelector((state) => state.gets.categories);
+	const products = useSelector((state) => state.gets.products);
+	const filBrands = useSelector((state) => state.gets.filBrands);
 
 	useEffect(() => {
 		dispatch(getAllBrands([]));

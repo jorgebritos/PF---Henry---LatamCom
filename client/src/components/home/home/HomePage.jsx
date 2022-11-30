@@ -14,7 +14,7 @@ import s from './HomePage.module.css';
 export default function HomePage() {
 	const dispatch = useDispatch();
 	// const allCategories = useSelector((state) => state.categories);
-	const totalProducts = useSelector((state) => state.products);
+	const totalProducts = useSelector((state) => state.gets.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage] = useState(8);
