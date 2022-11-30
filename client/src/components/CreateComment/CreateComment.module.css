@@ -1,0 +1,67 @@
+.conten {
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	color: whitesmoke;
+	background-color: #1b2d33;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.rating {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 10px 20px;
+	padding: 10px 20px;
+	color: whitesmoke;
+}
+
+.select {
+	width: 50px;
+	height: 20px;
+	border-radius: 13px;
+	background-color: #17addac5;
+	color: whitesmoke;
+	backdrop-filter: blur(4px);
+	margin-left: 20px;
+}
+
+.comment {
+	width: 100%;
+	margin-left: 40px;
+	display: flex;
+	flex-direction: column;
+}
+
+.textarea {
+	border: 1px solid black;
+	border-radius: 13px;
+	background-color: #bde2ed;
+	width: 30rem;
+	padding: 0.5rem;
+	min-height: 3rem;
+	color: black;
+}
+.textarea:empty::before {
+	position: absolute;
+	content: 'Escribe aquí...';
+}
+
+.btn {
+	margin-top: 10px;
+	width: 150px;
+	height: 30px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+}
+
+.btn:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
+}

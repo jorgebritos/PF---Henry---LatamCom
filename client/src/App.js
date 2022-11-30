@@ -2,18 +2,25 @@ import { Route, useLocation } from 'react-router-dom';
 import LandingPage from './components/landing/LandingPage';
 import HomePage from './components/home/HomePage.jsx';
 import NavBar from './components/NavBar/NavBar.jsx';
+import FooterBar from './components/Footer/FooterBar';
 import Product from './components/ProductDetail/Product';
-import ProductShopCart from "./components/shoppingCart/ProductShopCart.jsx"
+import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
+<<<<<<< HEAD
 import ProductSended from "./components/CreateProduct/ProductSended.jsx"
 import Buy from "./components/BuyProducts/Buy.jsx"
 import { Profile } from './components/login/Profile'
+=======
+import ProductSended from './components/CreateProduct/ProductSended.jsx';
+import { Profile } from './components/login/Profile';
+>>>>>>> e805c1be604a6f69fc214fa6c9b9bada5dfabb96
 
 function App() {
 	let location = useLocation();
 	return (
 		<div className='App'>
 			{location.pathname !== '/' && <NavBar />}
+
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
 			<Route path='/SearchResults' exact component={HomePage} />
@@ -24,6 +31,7 @@ function App() {
 			<Route path='/profile' component={Profile} />
 			<Route path="/buyproducts" component={Buy} />
 
+			{location.pathname !== '/' && <FooterBar />}
 		</div>
 	);
 }

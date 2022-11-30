@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { useHistory } from 'react-router-dom'
+=======
+import { useEffect } from 'react';
+>>>>>>> e805c1be604a6f69fc214fa6c9b9bada5dfabb96
 import s from './ProductShopCart.module.css';
 
 const ProductShopCart = () => {
@@ -8,11 +12,12 @@ const ProductShopCart = () => {
 	const history = useHistory()
 	let cant = 0;
 
-
+	useEffect(() => {
+		seeProducts()
+	}, [])
 
 	const seeProducts = () => {
 		let cart = [];
-
 		if (localStorage.getItem('cart')) {
 			cart = JSON.parse(localStorage.getItem('cart'));
 		}
@@ -103,7 +108,6 @@ const ProductShopCart = () => {
 
 	return (
 		<div className={s.cont}>
-			{!productsSelected.length ? seeProducts() : ""}
 			<h1>SHOPPING CART</h1>
 			<div className={s.contentP}>
 				<div className={s.contG}>

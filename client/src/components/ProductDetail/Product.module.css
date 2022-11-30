@@ -12,15 +12,15 @@
 	display: flex;
 	flex-direction: row;
 	background-color: #142328;
-
-	/* width: 100%; */
 	height: 100%;
-	padding: 5rem;
-	padding-bottom: 6.12rem;
+	padding: 2rem 5rem;
+	/* padding-bottom: 6.12rem; */
 }
 
 .contImg {
 	display: flex;
+	flex-direction: column;
+	align-items: center;
 	justify-content: center;
 	background-color: white;
 	width: 990px;
@@ -44,6 +44,15 @@
 	width: 50%;
 }
 
+.contInfoComent {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	background-color: #142328;
+	padding: 0.5rem 5rem;
+	padding-bottom: 6.12rem;
+}
+
 .conts {
 	display: flex;
 	flex-direction: column;
@@ -64,18 +73,27 @@
 	font-size: 1.35rem;
 	color: white;
 }
+.h2 {
+	font-size: 1.95rem;
+	color: #17abda;
+}
 
 .parafo {
 	font-size: 1rem;
 	color: white;
-	width: 50%;
+	max-width: 80%;
 }
 
 .btn {
 	margin-left: 10px;
-	width: 120px;
-	height: 30px;
+	width: 200px;
+	height: 35px;
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+}
+
+.btn:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
 }

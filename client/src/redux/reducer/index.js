@@ -1,7 +1,7 @@
 import {
     GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS,
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
-    CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE,
+    CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT
 } from "../actions"
@@ -9,13 +9,16 @@ import {
 const initialState = {
     products: [],
     user: {},
+    favorites: [],
     // ESTE ES PARA APLICAR LOS FILTROS, ASÍ NO SE PIERDE EL STATE
     allProducts: [],
     productDetail: {},
     productComments: [],
     categories: [],
     searchedProducts: [],
-    brands: []
+    brands: [],
+    filBrands: [],
+    filCategory: []
 }
 
 
@@ -44,7 +47,8 @@ export default function rootReducer(state = initialState, action) {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: action.payload
+                productDetail: action.payload,
+                productComments: [...action.payload.comments]
             }
         case GET_ALL_CATEGORIES:
             return {
@@ -54,8 +58,11 @@ export default function rootReducer(state = initialState, action) {
         case GET_ALL_BRANDS:
             return {
                 ...state,
-                brands: action.payload
+                brands: action.payload,
+                filBrands: action.payload
             }
+        case ADD_FAVORITE:
+            return action.payload
         case CREATE_PRODUCT:
             return action.payload
         case CREATE_COMMENT:
@@ -73,7 +80,8 @@ export default function rootReducer(state = initialState, action) {
         case RESET_DETAIL:
             return {
                 ...state,
-                productDetail: {}
+                productDetail: {},
+                productComments: []
             }
         case FILTER_BY_BRAND:
             result = [];
@@ -90,7 +98,7 @@ export default function rootReducer(state = initialState, action) {
                     products: result
                 }
             }
-            break;
+            return state
         case FILTER_BY_PRICE:
             result = [];
             for (const p of actualProducts) {
@@ -107,6 +115,7 @@ export default function rootReducer(state = initialState, action) {
             if (action.payload === "All") {
                 result = allProducts
             } else {
+                console.log("actualProducts:", allProducts);
                 for (const p of allProducts) {
                     for (const k in p.categories) {
                         if (Object.hasOwnProperty.call(p.categories, k)) {
@@ -116,9 +125,16 @@ export default function rootReducer(state = initialState, action) {
                     }
                 }
             }
+            let marcas = result.map((p) => {
+                return p.brand
+            })
+            marcas = marcas.filter((m) => m != null)
+            console.log("actualProducts2:", [...new Set(marcas)]);
             return {
                 ...state,
-                products: result
+                products: result,
+                filCategory: result,
+                filBrands: [...new Set(marcas)]
             }
         case REMOVE_ALL_FILTERS:
             return {
