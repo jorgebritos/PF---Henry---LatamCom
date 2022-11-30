@@ -48,8 +48,7 @@ export default function rootReducer(state = initialState, action) {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: action.payload,
-                productComments: [...action.payload.comments]
+                productDetail: action.payload
             }
         case GET_ALL_CATEGORIES:
             return {

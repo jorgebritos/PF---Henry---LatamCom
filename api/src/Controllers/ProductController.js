@@ -126,27 +126,6 @@ const getProductByID = async (req, res) => {
             through: {
                 attributes: []
             }
-        },
-        {
-            model: Comment,
-            attributes: ["comment", "rating"],
-            through: {
-                attributes: []
-            },
-            include: [{
-                model: Product,
-                attributes: ["name"],
-                through: {
-                    attributes: []
-                }
-            },
-            {
-                model: User,
-                attributes: ["username"],
-                through: {
-                    attributes: []
-                }
-            }]
         }]
     });
     if (selectedProduct) {

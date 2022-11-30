@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, updateRatingProduct } from '../../../../redux/actions';
+import { createComment, getAllComments, updateRatingProduct } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
 
 const CreateComment = (id) => {
@@ -19,8 +19,8 @@ const CreateComment = (id) => {
 		});
 		return comment;
 	}
-	const comments = useSelector((state) => state.productComments);
-	const productComments = comments.filter((c) => {
+	let comments = useSelector((state) => state.productComments);
+	let productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
 	let ratings = 0;
@@ -40,14 +40,13 @@ const CreateComment = (id) => {
 			}),
 		);
 		setComment({ ...comment, comment: '' });
+		dispatch(getAllComments())
 	}
 
 	const dispatch = useDispatch();
 	// const user = useSelector((state) => state.user);
 	useEffect(() => {
 		if (ratings && id !== undefined) {
-			console.log(ratings);
-			console.log(product.id);
 			dispatch(updateRatingProduct({ rating: ratings, id: product.id }));
 		}
 	}, [dispatch, ratings, id]);
