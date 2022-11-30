@@ -55,7 +55,6 @@ export default function HomePage() {
 					</div>
 					<div className={s.cads}>
 						{currentProducts?.map((p) => {
-							console.log(p.rating)
 							return (
 								<CardProduct
 									key={p.id}
