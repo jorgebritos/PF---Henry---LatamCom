@@ -16,8 +16,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
 	const products = useSelector((state) => state.products);
-	const filBrands = useSelector((state) => state.filBrands)
-
+	const filBrands = useSelector((state) => state.filBrands);
 
 	useEffect(() => {
 		dispatch(getAllCategories());
@@ -70,11 +69,11 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 
 	const filterCategory = async function (e) {
 		e.preventDefault();
-		setCheckedState(new Array(15).fill(false))
+		setCheckedState(new Array(15).fill(false));
 		dispatch(filterByCategory(categoryFilter));
 		//distBrands(products);
-		setIsChecked([])
-		setCurrentPage(1)
+		setIsChecked([]);
+		setCurrentPage(1);
 	};
 	// const distBrands =  function (products){
 	// 	console.log(`Es productos: ${products}`);
@@ -127,15 +126,15 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setCheckedState(new Array(15).fill(false));
 		setIsChecked([]);
 		setCategoryFilter('All');
-		dispatch(filterByCategory("All"))
+		dispatch(filterByCategory('All'));
 	};
 
 	return (
 		<div className={s.div}>
 			<div className={s.cont}>
-				<div>
-					Ordenamientos
-					<select onChange={(e) => sort(e)}>
+				<div className={s.filtro}>
+					<h3 className={s.h4}>Order by:</h3>
+					<select className={s.select} onChange={(e) => sort(e)}>
 						<option>Select Order</option>
 						<optgroup label='Alphabetically'>
 							<option value={'asc'}>A-Z</option>
@@ -196,7 +195,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 												className={s.input}
 												type={'radio'}
 												value={c.name}
-												name={"category"}
+												name={'category'}
 												id='categoria'
 												onClick={(e) => handleCategoryFilter(c.name)}
 											/>
@@ -215,21 +214,21 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						<ul>
 							{filBrands.length > 0
 								? filBrands.map((b, index) => {
-									return (
-										<li className={s.li} key={b}>
-											<label className={s.label}>
-												<input
-													className={s.input}
-													type={'checkbox'}
-													checked={checkedState[index]}
-													value={b}
-													onChange={(e) => handleOnChange(index, e)}
-												/>
-												<span className={s.spanC}>{b}</span>
-											</label>
-										</li>
-									);
-								})
+										return (
+											<li className={s.li} key={b}>
+												<label className={s.label}>
+													<input
+														className={s.input}
+														type={'checkbox'}
+														checked={checkedState[index]}
+														value={b}
+														onChange={(e) => handleOnChange(index, e)}
+													/>
+													<span className={s.spanC}>{b}</span>
+												</label>
+											</li>
+										);
+								  })
 								: null}
 						</ul>
 						<button className={s.btn} onClick={(e) => filterBrands(e)}>
