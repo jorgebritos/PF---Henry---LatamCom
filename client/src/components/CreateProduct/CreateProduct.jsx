@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-	createProduct,
-	getAllCategories
-} from '../../redux/actions/index';
+import { createProduct, getAllCategories } from '../../redux/actions/index';
 import s from './CreateProduct.module.css';
 
 // Input Validate /////////////////////////////
 const validateInput = (input) => {
 	let errors = {};
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
-	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
+	let regexURL =
+		/((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
-	if (!input.name || input.name?.trim() >= 1 ) {
+	if (!input.name || input.name?.trim() >= 1) {
 		errors.name = 'Introduce a name!';
-	}else if((expreg.test(input.name))){
-        errors.name = "Name your product properly!"
-	}else if((expreg.test(input.description))) {
-			errors.description = 'Introduce a valid description!';
-    }else if (!(regexURL.test(input.image))) {
+	} else if (expreg.test(input.name)) {
+		errors.name = 'Name your product properly!';
+	} else if (expreg.test(input.description)) {
+		errors.description = 'Introduce a valid description!';
+	} else if (!regexURL.test(input.image)) {
 		errors.image = 'Introduce an image';
-	}else if (!input.price) {
+	} else if (!input.price) {
 		errors.price = 'Introduce a price';
-	}else if ((expreg.test(input.price))) {
+	} else if (expreg.test(input.price)) {
 		errors.price = 'Introduce a valid price';
-	}else if ((expreg.test(input.brand))) {
+	} else if (expreg.test(input.brand)) {
 		errors.brand = 'Introduce a valid brand';
-	}else if (!input.categories.length) {
+	} else if (!input.categories.length) {
 		errors.categories = 'Category is required!';
 	}
 	const sendButton = document.getElementById('sendButtom');
@@ -44,7 +42,6 @@ const validateInput = (input) => {
 ///////////////////////////////////////////////
 
 const CreateProduct = () => {
-
 	//Hooks and states ///////////////////////
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
@@ -57,7 +54,7 @@ const CreateProduct = () => {
 		price: '',
 		stock: 0,
 		brand: '',
-		categories: []
+		categories: [],
 	});
 
 	const [errors, setErrors] = useState({
@@ -67,12 +64,10 @@ const CreateProduct = () => {
 		price: '',
 		stock: '',
 		brand: '',
-		categories: []
+		categories: [],
 	});
 
 	const [loading, setLoading] = useState(false);
-	
-	
 
 	useEffect(() => {
 		dispatch(getAllCategories());
@@ -101,13 +96,12 @@ const CreateProduct = () => {
 	};
 
 	///////////////////////////////////////////////////////////////////////
-	
-	
+
 	// Change Local States //////////////////////
 
 	const introduceData = (event) => {
 		// si el event.target.type no es checkbox que haga esto, sino que modifique otra cosa
-		const {name ,value} = event.target
+		const { name, value } = event.target;
 
 		setInput({ ...input, [name]: value });
 		setErrors(validateInput({ ...input, [name]: value }));
@@ -116,14 +110,13 @@ const CreateProduct = () => {
 
 	// Functions of Categories ///////////////////////////
 	const introduceCategories = (event) => {
-		const { value, checked} = event.target
-		
+		const { value, checked } = event.target;
+
 		if (!input.categories.includes(value) && checked === true) {
 			setInput({ ...input, categories: [...input.categories, value] });
 			setErrors(validateInput({ ...input, categories: value }));
-		}
-		else if(checked === false){
-			let filtrado = input.categories.filter((e)=> e !== value)
+		} else if (checked === false) {
+			let filtrado = input.categories.filter((e) => e !== value);
 			setInput({ ...input, categories: filtrado });
 			setErrors(validateInput({ ...input, categories: filtrado }));
 		}
@@ -134,25 +127,22 @@ const CreateProduct = () => {
 	const submitData = async (event) => {
 		event.preventDefault();
 		try {
-			await dispatch(createProduct(input)).then(history.push("/create/productsended"))
-			
+			await dispatch(createProduct(input)).then(
+				history.push('/create/productsended'),
+			);
 		} catch (error) {
 			alert(
 				'Chosen name already belongs to another product, please select again.',
 			);
 		}
-		
 	};
 	/////////////////////////////////////////////
-
-	
-
 
 	return (
 		<div className={s.cont}>
 			<div className={s.contF}>
 				<h1 className={s.h1}>CREATE PRODUCT</h1>
-				
+
 				<form onSubmit={(e) => submitData(e)}>
 					<div className={s.contsp}>
 						<label className={s.label}>*P. Name: </label>
@@ -175,7 +165,7 @@ const CreateProduct = () => {
 							value={input.description}
 							onChange={introduceData}
 							autoComplete='off'></input>
-							{errors.description && <p>{errors.description}</p>}
+						{errors.description && <p>{errors.description}</p>}
 					</div>
 
 					<br />
@@ -223,7 +213,7 @@ const CreateProduct = () => {
 							autoComplete='off'
 							type='number'
 							min='0'></input>
-							{errors.stock && <p>{errors.stock}</p>}
+						{errors.stock && <p>{errors.stock}</p>}
 					</div>
 
 					<br />
@@ -236,7 +226,7 @@ const CreateProduct = () => {
 							value={input.brand}
 							onChange={introduceData}
 							autoComplete='off'></input>
-							{errors.brand && <p>{errors.brand}</p>}
+						{errors.brand && <p>{errors.brand}</p>}
 					</div>
 
 					<br />
@@ -245,18 +235,24 @@ const CreateProduct = () => {
 						{categories.length && (
 							<div>
 								<label className={s.label}>*P. Categories: </label>
-								{categories.map((cat,index) => {
+								<ul>
+									{categories.map((cat, index) => {
 										return (
-											<div key={cat.name}>
-												<input  
-												type={"checkbox"}
-												name= "categories"
-												value={cat.name}
-												onChange= {(e)=>introduceCategories(e)} />
-												<span>{cat.name}</span>
-											</div>
-										)
+											<li key={cat.name} className={s.li}>
+												<label className={s.labelC}>
+													<input
+														className={s.inputC}
+														type={'checkbox'}
+														name='categories'
+														value={cat.name}
+														onChange={(e) => introduceCategories(e)}
+													/>
+													<span className={s.spanC}>{cat.name}</span>
+												</label>
+											</li>
+										);
 									})}
+								</ul>
 							</div>
 						)}
 					</div>
