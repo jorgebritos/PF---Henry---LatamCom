@@ -247,9 +247,8 @@ const CreateProduct = () => {
 								<label className={s.label}>*P. Categories: </label>
 								{categories.map((cat,index) => {
 										return (
-											<div>
+											<div key={cat.name}>
 												<input  
-												key={cat.name} 
 												type={"checkbox"}
 												name= "categories"
 												value={cat.name}
