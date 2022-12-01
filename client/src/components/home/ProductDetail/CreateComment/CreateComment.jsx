@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, getAllComments, updateRatingProduct } from '../../../../redux/actions';
+import {
+	createComment,
+	getAllComments,
+	updateRatingProduct,
+} from '../../../../redux/actions';
 import s from './CreateComment.module.css';
+import star from '../../../../asset/puntajes.png';
 
 const CreateComment = (id) => {
 	const product = useSelector((state) => state.productDetail);
@@ -20,7 +25,7 @@ const CreateComment = (id) => {
 		return comment;
 	}
 	const comments = useSelector((state) => state.productComments);
-	console.log(comments)
+	console.log(comments);
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
@@ -52,8 +57,8 @@ const CreateComment = (id) => {
 	}, [dispatch, ratings, id]);
 
 	useEffect(() => {
-		dispatch(getAllComments())
-	}, [dispatch])
+		dispatch(getAllComments());
+	}, [dispatch]);
 
 	return (
 		<div className={s.conten}>
@@ -105,7 +110,15 @@ const CreateComment = (id) => {
 									<p>{c.users.length ? c.users[0].username : ''}</p>
 									<div className={s.divrow}>
 										<h4 className={s.h3}>Rating:</h4>
-										<p className={s.par}>{c.rating}</p>
+										<div className={s.divrow}>
+											<p className={s.par}>{c.rating}</p>
+											<img
+												src={star}
+												alt=''
+												height={'10px'}
+												className={s.immg}
+											/>
+										</div>
 									</div>
 
 									<p className={s.parafo}>{c.comment}</p>
