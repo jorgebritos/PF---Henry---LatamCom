@@ -1,17 +1,16 @@
 import React from 'react';
-import Logo from '../../asset/Logo.png';
-import Carito from '../../asset/carrito.png';
-import star from '../../asset/star.png';
+import Logo from '../../../asset/Logo.png';
+import Carito from '../../../asset/carrito.png';
+import star from '../../../asset/star.png';
 import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
-import LoginRegister from '../Loging/LoginBar';
+import LoginRegister from '../LoginBar/LoginBar';
 
 function NavBar() {
-
-	let cart = ""
-	if (localStorage.getItem("cart")) {
-		cart = JSON.parse(localStorage.getItem("cart"))
+	let cart = '';
+	if (localStorage.getItem('cart')) {
+		cart = JSON.parse(localStorage.getItem('cart'));
 	}
 
 	return (
@@ -45,16 +44,16 @@ function NavBar() {
 				</div>
 
 				<div>
-					<Link to="/shoppingcart" className={s.cart}>
+					<Link to='/shoppingcart' className={s.cart}>
 						<img src={Carito} alt='Carro de compras' height='25px' />
-						{(localStorage.getItem("cart")) ? <div className={s.CarritoCantidad}> {cart.length}</div>
-							: <div className={s.CarritoCantidad}> 0</div>}
+						{localStorage.getItem('cart') ? (
+							<div className={s.CarritoCantidad}> {cart.length}</div>
+						) : (
+							<div className={s.CarritoCantidad}> 0</div>
+						)}
 					</Link>
-
 				</div>
-				<div>
-
-				</div>
+				<div></div>
 				<div className={s.favorites}>
 					<img src={star} alt='estrella de favoritos' height='25px' />
 				</div>

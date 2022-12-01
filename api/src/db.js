@@ -33,9 +33,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Category, Comment, Product, Purchase, User } = sequelize.models;
 
 // Aca vendrian las relaciones
+Product.belongsToMany(User, { as:"favorites", through: "favorites_user" })
+User.belongsToMany(Product, { as:"favorites",through: "user_favorites" })
 
-Product.belongsToMany(Comment,{ through: "products_comments" })
-Comment.belongsToMany(Product,{ through: "products_comments" })
+Product.belongsToMany(Comment, { through: "products_comments" })
+Comment.belongsToMany(Product, { through: "products_comments" })
 
 Product.belongsToMany(Category, { through: "products_categories" })
 Category.belongsToMany(Product, { through: "products_categories" })

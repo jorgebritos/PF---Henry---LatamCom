@@ -1,11 +1,12 @@
 /* eslint-disable no-lone-blocks */
 import React, { useState, useRef, useEffect } from 'react';
-import usericon from '../../asset/usericon.png';
+import usericon from '../../../asset/usericon.png';
 import { useSelector } from 'react-redux';
-import { useAuth0 } from '@auth0/auth0-react';
-import { UserName } from '../../components/login/userName';
-import { useHistory } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useAuth0 } from "@auth0/auth0-react";
+import { UserName } from '../login/userName';
+import { useHistory } from "react-router-dom";
+// import { Popover, Transition } from "@headlessui/react";
+import Swal from "sweetalert2"
 import s from './LoginBar.module.css';
 
 const LoginRegister = () => {
@@ -55,7 +56,6 @@ const LoginRegister = () => {
 		let handler = (e) => {
 			if (!menuRef.current.contains(e.target)) {
 				setOpen(false);
-				console.log(menuRef.current);
 			}
 		};
 
@@ -66,30 +66,33 @@ const LoginRegister = () => {
 		};
 	});
 
+	// const active = s.active;
+	// const inactive = s.inactive;
+
 	return (
-		<div className='menu-container' ref={menuRef}>
+		<div className={s.conten} ref={menuRef}>
 			<div
-				className='menu-trigger'
+				className={s.menu_trigger}
 				onClick={() => {
 					setOpen(!open);
 				}}>
-				<img src={usericon} alt='' height='25px' />
+				<img className={s.img} src={usericon} alt='' height='25px' />
 			</div>
-
-			{isAuthenticated ? (
-				<div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
-					<h3> {user?.name}</h3>
-					{solutions.map((item) => (
-						<ul key={item.name} onClick={item.href}>
-							<DropdownItem text={item.name} />
-						</ul>
-					))}
-					<UserName/>
-				</div>
-			) : (
-				<p onClick={() => loginWithRedirect()}>Login</p>
-			)}
-			<h3 className={s.h3}>{user.username}</h3>
+			<UserName>
+				{isAuthenticated ? (
+					<div className={`s.dropdown_menu${open ? '.active' : '.inactive'}`}>
+						<h3 className={s.h3}> {user?.name}</h3>
+						{solutions.map((item) => (
+							<ul key={item.name} onClick={item.href}>
+								<DropdownItem text={item.name} />
+							</ul>
+						))}
+					</div>
+				) : (
+					<p onClick={() => loginWithRedirect()}>Login</p>
+				)}
+				{/* <h3 className={s.h3}>{user.username}</h3> */}
+			</UserName>
 		</div>
 	);
 };
@@ -97,8 +100,8 @@ const LoginRegister = () => {
 function DropdownItem(props) {
 	return (
 		<li className='dropdownItem'>
-			<img src={props.img}></img>
-			<a> {props.text} </a>
+			<img src={props.img} alt=''></img>
+			<a href={' '}>{props.text}</a>
 		</li>
 	);
 }

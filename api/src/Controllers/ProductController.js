@@ -1,16 +1,16 @@
-const { Product, Category } = require("../db.js");
+const { Product, Category, Comment, User } = require("../db.js");
 const { Op } = require("sequelize");
 
 const getProduct = async (req, res) => {
     const { name } = req.query;
     let productTable = await Product.findAll({
-        include: {
+        include: [{
             model: Category,
             attributes: ["name"],
             through: {
                 attributes: []
             }
-        },
+        }],
         order: [
             ['id', 'ASC']
         ]
@@ -25,12 +25,14 @@ const getProduct = async (req, res) => {
     if (productTable.length === 0 && categoryTable.length > 1) {
         try {
             let products = require("../JSON/products.json");
+
             let Bulkproducts = products.map(p => {
                 return {
                     name: p.title,
                     description: p.description,
                     image: p.image,
-                    price: p.price
+                    price: p.price,
+                    brand: p.brand ? p.brand : null
                 };
             });
 
@@ -107,25 +109,45 @@ const putProduct = async (req, res) => {
 
         await selectedProduct.save();
 
-        res.sendStatus(200);
+        res.status(200);
     } else {
-        res.sendStatus(404);
+        res.status(404);
     };
 };
 
 const getProductByID = async (req, res) => {
-    console.log(req.params)
     const selectedProduct = await Product.findOne({
         where: {
             id: req.params.id
         },
-        include: {
+        include: [{
             model: Category,
             attributes: ["name"],
             through: {
                 attributes: []
             }
-        }
+        },
+        {
+            model: Comment,
+            attributes: ["comment", "rating"],
+            through: {
+                attributes: []
+            },
+            include: [{
+                model: Product,
+                attributes: ["name"],
+                through: {
+                    attributes: []
+                }
+            },
+            {
+                model: User,
+                attributes: ["username"],
+                through: {
+                    attributes: []
+                }
+            }]
+        }]
     });
     if (selectedProduct) {
         res.status(200).send(selectedProduct);
@@ -147,10 +169,10 @@ const postProduct = async (req, res) => {
     } = req.body;
 
     let exists = await Product.findOne({
-        where: {name: name}
+        where: { name: name }
     })
 
-    if(exists) return res.status(406).send("El producto ya existe")
+    if (exists) return res.status(406).send("El producto ya existe")
 
     let productCreate = await Product.create({
         name,

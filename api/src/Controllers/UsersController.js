@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { Op } = require("sequelize");
-const { User } = require("../db.js");
+const { User, Product } = require("../db.js");
 
 const getUser = async (req, res) => {
 	const { name } = req.query;
@@ -49,6 +49,14 @@ const getUserByID = async (req, res) => {
 	const selectedUser = await User.findOne({
 		where: {
 			id: req.params.id
+		},
+		include: {
+			model: Product,
+			as: "favorites",
+			attributes: ["id", "name", "price", "image"],
+			through: {
+				attributes: []
+			}
 		}
 	})
 	if (selectedUser) {

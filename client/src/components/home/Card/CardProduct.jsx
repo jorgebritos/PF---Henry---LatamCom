@@ -1,34 +1,31 @@
 import React from 'react';
-import { useSelector, useDispatch } from "react-redux"
 import { Link } from 'react-router-dom';
 import s from './CardProduct.module.css';
-import { addProductToShoppingCart } from "../../redux/actions/index.js"
+import { addFavorites } from "../../../redux/actions/index.js"
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function CardProduct({ id, name, price, image, categories }) {
+export default function CardProduct({ id, name, price, image, rating }) {
 
-	const shopCart = useSelector((state) => state.shopCart)
+	const favorites = useSelector((state) => state.favorites)
 	const dispatch = useDispatch()
 
+	const addFavorite = async (event) => {
+		event.preventDefault();
 
-	const addProduct = async (event) => {
-		event.preventDefault()
 		let product = {
 			id,
 			name,
 			price,
-			image,
-			amount: 1
+			image
 		}
-		let cart = []
 
-		if (localStorage.getItem("cart")) {
-			cart = JSON.parse(localStorage.getItem("cart"))
+		let exists = await favorites.find((f) => f.id === Number(id));
+
+		if (exists) {
+			return alert("Este objeto ya es de tus favoritos")
+		} else {
+			dispatch(addFavorites({idProduct: product.id, idUser: 1}))
 		}
-		if (cart.find((p) => p.id === product.id)) {
-			return 0
-		}
-		cart.push(product)
-		localStorage.setItem("cart", JSON.stringify(cart))
 
 	}
 
@@ -42,7 +39,8 @@ export default function CardProduct({ id, name, price, image, categories }) {
 					</div>
 					<div className={s.cardBody}>
 						<p className={s.name}>{name}</p>
-						<p className={s.price}>${price}</p>
+						<p className={s.price}>${price} USD</p>
+						<p>{rating ? rating.toFixed(1) + " ⋆": ""}</p>
 						{/* <br /> */}
 						{/* Categories:{' '}
 						{categories.map((e) => {
@@ -54,12 +52,12 @@ export default function CardProduct({ id, name, price, image, categories }) {
 						})} */}
 
 					</div>
+					<div>
+						<button className={s.btn} onClick={e => addFavorite(e)}>ADD FAVORITE</button>
+					</div>
 				</div>
 			</Link>
 
-			<div>
-				<button onClick={addProduct}>BUY</button>
-			</div>
 		</div>
 	);
 }

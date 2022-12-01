@@ -1,16 +1,24 @@
 import React from 'react';
 import s from './Paginate.module.css';
 
-export default function Paginado({ producPrePage, totalProducts, paginado }) {
+export default function Paginado({ producPrePage, totalProducts, paginado, page }) {
 	const pageNumbers = [];
+	const numOfPages =Math.ceil(totalProducts / producPrePage)
 
-	for (let i = 1; i <= Math.ceil(totalProducts / producPrePage); i++) {
+	for (let i = 1; i <= numOfPages; i++) {
 		pageNumbers.push(i);
 	}
 
 	return (
 		<nav className={s.nav}>
 			<ul>
+				{page===1?<></>:
+				<li className={s.Paginate}>
+					<button className={s.ButPaginate} key='-1' onClick={()=> paginado('-') }>
+						|◄
+					</button>
+				</li>}
+
 				{pageNumbers &&
 					pageNumbers.map((number) => (
 						<li className={s.Paginate} key={number}>
@@ -22,6 +30,13 @@ export default function Paginado({ producPrePage, totalProducts, paginado }) {
 							</button>
 						</li>
 					))}
+
+				{page===numOfPages?<></>:
+				<li className={s.Paginate}>
+					<button className={s.ButPaginate} key='+1' onClick={()=> paginado('+') }>
+					►|
+					</button>
+				</li>}
 			</ul>
 		</nav>
 	);
