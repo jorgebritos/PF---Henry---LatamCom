@@ -5,6 +5,7 @@ import {
 	filterByCategory,
 	filterByPrice,
 	getAllBrands,
+	getAllCategories,
 	orderBy,
 	removeFilters,
 } from '../../../redux/actions';
@@ -12,18 +13,25 @@ import s from './Filtros.module.css';
 
 export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
+
 	const categories = useSelector((state) => state.gets.categories);
 	const products = useSelector((state) => state.gets.products);
 	const filBrands = useSelector((state) => state.gets.filBrands);
 
-	useEffect(() => {
-		dispatch(getAllBrands([]));
-	}, [dispatch]);
-
+	const [categoryFilter, setCategoryFilter] = useState('All');
+	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
+	const [isChecked, setIsChecked] = useState([]);
 	const [priceFilter, setPriceFilter] = useState({
 		minPrice: 0,
 		maxPrice: 0,
 	});
+	
+	useEffect(() => {
+		dispatch(getAllBrands([]));
+		dispatch(getAllCategories("All"))
+	}, [dispatch]);
+
+
 
 	function handlePriceFilter(e) {
 		if (e.target.checkValidity()) {
@@ -43,43 +51,10 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		}
 	}
 
-	const filterPrice = function (e) {
-		e.preventDefault();
-		let min = priceFilter.minPrice;
-		let max = priceFilter.maxPrice;
-
-		if (Number(min) > Number(max))
-			return alert('El minimo no puede ser mayor al maximo');
-		dispatch(
-			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
-		);
-		dispatch(getAllBrands(products));
-		setCurrentPage(1);
-	};
-
-	const [categoryFilter, setCategoryFilter] = useState('All');
-
 	function handleCategoryFilter(category) {
 		setCategoryFilter(category);
 	}
-
-	const filterCategory = async function (e) {
-		e.preventDefault();
-		setCheckedState(new Array(15).fill(false));
-		dispatch(filterByCategory({categoryFilter:categoryFilter, products: products}));
-		//distBrands(products);
-		setIsChecked([]);
-		setCurrentPage(1);
-	};
-	// const distBrands =  function (products){
-	// 	console.log(`Es productos: ${products}`);
-	// 	dispatch(getAllBrands(products));
-	// }
-
-	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
-
-	const [isChecked, setIsChecked] = useState([]);
-
+	
 	const handleOnChange = (position, e) => {
 		//SETEAR CAMPOS QUE ESTAN CHECKED
 		const updatedCheckedState = checkedState.map((item, index) =>
@@ -96,6 +71,34 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 
 		setCheckedState(updatedCheckedState);
 	};
+	
+
+	const filterPrice = function (e) {
+		e.preventDefault();
+		let min = priceFilter.minPrice;
+		let max = priceFilter.maxPrice;
+
+		if (Number(min) > Number(max))
+			return alert('El minimo no puede ser mayor al maximo');
+		dispatch(
+			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
+		);
+		dispatch(getAllBrands(products));
+		setCurrentPage(1);
+	};
+
+	const filterCategory = async function (e) {
+		e.preventDefault();
+		setCheckedState(new Array(15).fill(false));
+		dispatch(filterByCategory({categoryFilter:categoryFilter, products: products}));
+		//distBrands(products);
+		setIsChecked([]);
+		setCurrentPage(1);
+	};
+	// const distBrands =  function (products){
+	// 	console.log(`Es productos: ${products}`);
+	// 	dispatch(getAllBrands(products));
+	// }
 
 	const filterBrands = function (e) {
 		e.preventDefault();

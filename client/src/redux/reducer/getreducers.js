@@ -17,7 +17,7 @@ switch (action.type) {
       return {
           ...state,
           products: action.payload,
-          allProducts: action.payload
+          
       }
   case GET_ALL_COMMENTS:
       return {
