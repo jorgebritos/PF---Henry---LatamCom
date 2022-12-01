@@ -3,7 +3,8 @@ import {
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
-    DELETE_COMMENT,
+    DELETE_COMMENT,CREATE_USER,
+    GET_ALL_USERS,
     UPDATE_RATING
 } from "../actions"
 
@@ -11,6 +12,7 @@ const initialState = {
     products: [],
     user: {},
     favorites: [],
+    allUsers: {},
     // ESTE ES PARA APLICAR LOS FILTROS, ASÍ NO SE PIERDE EL STATE
     allProducts: [],
     productDetail: {},
@@ -40,6 +42,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productComments: action.payload,
             }
+            case GET_ALL_USERS:
+            return {
+                ...state,
+                allUsers: action.payload,
+            }
         case GET_USER:
             return {
                 ...state,
@@ -66,6 +73,8 @@ export default function rootReducer(state = initialState, action) {
             return action.payload
         case CREATE_PRODUCT:
             return action.payload
+        case CREATE_USER:
+                return action.payload
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
