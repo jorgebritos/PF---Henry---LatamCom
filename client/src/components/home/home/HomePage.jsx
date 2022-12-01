@@ -15,8 +15,9 @@ import s from './HomePage.module.css';
 export default function HomePage() {
 	const dispatch = useDispatch();
 	// const allCategories = useSelector((state) => state.categories);
-	const totalProducts = useSelector((state) => state.gets.products);
-
+	const totalProduct = useSelector((state) => state.allTheOthers.products);
+ 	const todosProductos = useSelector((state) => state.gets.products); 
+	let totalProducts = totalProduct.length > 0?totalProduct:todosProductos
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8

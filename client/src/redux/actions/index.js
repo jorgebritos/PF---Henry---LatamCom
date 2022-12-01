@@ -33,6 +33,7 @@ export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
 export const NEW_SEARCH = "NEW_SEARCH"
 
+//RUTAS GET
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get('http://localhost:3001/products')
@@ -43,7 +44,7 @@ export function getAllProducts() {
     }
 }
 
-//RUTAS GET
+
 
 export function getAllComments() {
     return async function (dispatch) {

@@ -28,7 +28,7 @@ const Product = () => {
 	// Hooks y estados ////////////////////////////////
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const product = useSelector((state) => state.productDetail);
+	const product = useSelector((state) => state.gets.productDetail);
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////

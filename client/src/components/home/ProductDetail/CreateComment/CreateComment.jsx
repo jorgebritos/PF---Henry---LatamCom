@@ -21,7 +21,7 @@ const CreateComment = (id) => {
 		});
 		return comment;
 	}
-	const comments = useSelector((state) => state.productComments);
+	const comments = useSelector((state) => state.gets.productComments);
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
