@@ -9,6 +9,7 @@ import Product from './components/ProductDetail/Product';
 import ProductShopCart from "./components/shoppingCart/ProductShopCart.jsx"
 import CreateProduct from './components/CreateProduct';
 import { Profile } from './components/login/Profile'
+import { LoginForm } from './components/login/LoginForm'
 
 function App() {
 	let location = useLocation();
@@ -22,6 +23,8 @@ function App() {
 			<Route path='/shoppingcart' component={ProductShopCart} />
 			<Route path='/create/product' component={CreateProduct} />
 			<Route path='/profile' component={Profile} />
+			<Route path='/LoginForm' component={LoginForm} />
+
 		</div>
 	);
 }
