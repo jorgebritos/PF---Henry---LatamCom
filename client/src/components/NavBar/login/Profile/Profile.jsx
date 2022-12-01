@@ -21,12 +21,15 @@ export const Profile = () => {
 					<div className={s.imgPerfil}>
 						<img src={user.picture} alt={user.name} className={s.img} />
 					</div>
-					<div>
+					<div className={s.infoPerfil}>
 						<h2>{user.name}</h2>
 						<p>Email: {user.email}</p>
 					</div>
 				</div>
-				<div>Consola de compras</div>
+				<div className={s.conCompra}>
+					<h2>Consola de Compras</h2>
+					<div></div>
+				</div>
 			</div>
 		)
 	);
