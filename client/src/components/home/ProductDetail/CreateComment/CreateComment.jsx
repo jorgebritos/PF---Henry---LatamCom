@@ -19,8 +19,9 @@ const CreateComment = (id) => {
 		});
 		return comment;
 	}
-	let comments = useSelector((state) => state.productComments);
-	let productComments = comments.filter((c) => {
+	const comments = useSelector((state) => state.productComments);
+	console.log(comments)
+	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
 	let ratings = 0;
@@ -40,7 +41,6 @@ const CreateComment = (id) => {
 			}),
 		);
 		setComment({ ...comment, comment: '' });
-		dispatch(getAllComments())
 	}
 
 	const dispatch = useDispatch();
@@ -50,6 +50,10 @@ const CreateComment = (id) => {
 			dispatch(updateRatingProduct({ rating: ratings, id: product.id }));
 		}
 	}, [dispatch, ratings, id]);
+
+	useEffect(() => {
+		dispatch(getAllComments())
+	}, [dispatch])
 
 	return (
 		<div className={s.conten}>
