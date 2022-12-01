@@ -50,14 +50,22 @@ const getUserByID = async (req, res) => {
 		where: {
 			id: req.params.id
 		},
-		include: {
+		include: [{
 			model: Product,
 			as: "favorites",
 			attributes: ["id", "name", "price", "image"],
 			through: {
 				attributes: []
 			}
-		}
+		},
+		{
+			model: Product,
+			as: "cart",
+			attributes: ["id", "name", "price", "image"],
+			through: {
+				attributes: []
+			}
+		}]
 	})
 	if (selectedUser) {
 		res.status(200).send(selectedUser)
