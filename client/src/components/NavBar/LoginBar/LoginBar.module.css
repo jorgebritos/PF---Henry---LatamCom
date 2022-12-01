@@ -3,15 +3,15 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	color: aqua;
+	color: #17abda;
 	margin: 0 5px;
 }
 
-.h3 {
-	color: aqua;
-}
-
-.menu-trigger + .img {
+.menu + .img {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	position: relative;
 	top: 20px;
 	right: 20px;

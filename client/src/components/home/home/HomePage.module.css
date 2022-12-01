@@ -1,0 +1,41 @@
+.cont {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+	background-color: aliceblue;
+}
+.filter {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* width: 600px; */
+	max-width: 700px;
+}
+
+.cads {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	/* align-content: space-around; */
+	/* margin-top: 0.5em; */
+	margin-block-start: 20px;
+	min-width: 1000px;
+	min-height: 615px;
+	background-color: whitesmoke;
+}
+.pag {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.conthome {
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	align-items: center;
+	/* justify-content: center; */
+	align-content: center;
+	background-color: whitesmoke;
+}

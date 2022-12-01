@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
 	getProductDetail,
-	getAllComments,
 	resetDetail,
 	getAllProducts,
 	getAllCategories,
-} from '../../redux/actions/index';
+	getAllUsers,
+} from '../../../../redux/actions/index';
 import CreateComment from '../CreateComment/CreateComment';
 import s from './Product.module.css';
 
-const Product = (props) => {
+const Product = () => {
 	const addProduct = async (event) => {
 		event.preventDefault();
 		let cart = [];
@@ -37,8 +37,8 @@ const Product = (props) => {
 		dispatch(resetDetail());
 		dispatch(getAllCategories());
 		dispatch(getAllProducts());
+		dispatch(getAllUsers())
 		dispatch(getProductDetail(id));
-		dispatch(getAllComments());
 	}, [id, dispatch]);
 	//////////////////////////////////////////////////
 
@@ -72,7 +72,7 @@ const Product = (props) => {
 					</div>
 					<div className={s.contInfo}>
 						<h1 className={s.name}>{product.name} </h1>
-						<h2 className={s.price}>${product.price} </h2>
+						<h2 className={s.price}>${product.price} USD</h2>
 						<h4 className={s.h4}>Description:</h4>
 						<p className={s.parafo}>{product.description}</p>
 						<h4 className={s.h4}>Categories:</h4>
@@ -92,7 +92,7 @@ const Product = (props) => {
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
 					<div>
-						<CreateComment />
+						<CreateComment/>
 					</div>
 				</div>
 			</div>

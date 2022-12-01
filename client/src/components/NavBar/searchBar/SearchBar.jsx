@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import s from './SearchBar.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { newSearch, searchByName } from '../../redux/actions/index';
+import { newSearch, searchByName } from '../../../redux/actions/index';
 
 function SearchBar() {
 	const dispatch = useDispatch();

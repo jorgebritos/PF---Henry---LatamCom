@@ -5,7 +5,7 @@ import {
 	getAllCategories,
 	getAllProducts,
 	getAllUsers,
-} from '../../redux/actions/index.js';
+} from '../../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
@@ -17,7 +17,7 @@ export default function HomePage() {
 	const totalProducts = useSelector((state) => state.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage] = useState(8);
+	const [perPage, ] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
 	const currentProducts = totalProducts.slice(
@@ -44,7 +44,7 @@ export default function HomePage() {
 				<div className={s.filter}>
 					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} />
 				</div>
-				<div>
+				<div className={s.conthome}>
 					<div className={s.pag}>
 						<Paginate
 							producPrePage={perPage}
@@ -63,6 +63,7 @@ export default function HomePage() {
 									image={p.image}
 									categories={p.categories}
 									price={p.price}
+									rating={p.rating}
 								/>
 							);
 						})}

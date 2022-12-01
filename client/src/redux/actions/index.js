@@ -18,6 +18,7 @@ export const CREATE_PURCHASE = "CREATE_PURCHASE"
 export const UPDATE_USER = "UPDATE_USER"
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT"
 export const UPDATE_COMMENT = "UPDATE_COMMENT"
+export const UPDATE_RATING = "UPDATE_RATING"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
@@ -163,6 +164,18 @@ export function updateUser(payload) {
         const info = await axios.put('http://localhost:3001/users', payload)
         dispatch({
             type: UPDATE_USER,
+            payload: info.data
+        })
+    }
+}
+
+export function updateRatingProduct(payload) {
+    console.log(payload)
+    let id = payload.id;
+    return async function(dispatch) {
+        const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
+        dispatch({
+            type: UPDATE_RATING,
             payload: info.data
         })
     }
