@@ -9,7 +9,7 @@ import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
 import ProductSended from "./components/CreateProduct/ProductSended.jsx"
 import Buy from "./components/BuyProducts/Buy.jsx"
-import { Profile } from './components/Navbar/login/Profile/Profile'
+import { Profile } from './components/NavBar/login/Profile/Profile'
 import { LoginForm } from './components/NavBar/login/LoginForm';
 
 function App() {
