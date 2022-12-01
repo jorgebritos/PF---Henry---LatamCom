@@ -57,7 +57,7 @@ const CreateProduct = () => {
 		price: '',
 		stock: 0,
 		brand: '',
-		categories: [],
+		categories: []
 	});
 
 	const [errors, setErrors] = useState({
@@ -67,10 +67,12 @@ const CreateProduct = () => {
 		price: '',
 		stock: '',
 		brand: '',
-		categories: [],
+		categories: []
 	});
 
 	const [loading, setLoading] = useState(false);
+	
+	
 
 	useEffect(() => {
 		dispatch(getAllCategories());
@@ -99,33 +101,32 @@ const CreateProduct = () => {
 	};
 
 	///////////////////////////////////////////////////////////////////////
-
+	
+	
 	// Change Local States //////////////////////
-	const introduceData = (event) => {
-		event.preventDefault();
-		const value = event.target.value;
-		const property = event.target.name;
 
-		setInput({ ...input, [property]: value });
-		setErrors(validateInput({ ...input, [property]: value }));
+	const introduceData = (event) => {
+		// si el event.target.type no es checkbox que haga esto, sino que modifique otra cosa
+		const {name ,value} = event.target
+
+		setInput({ ...input, [name]: value });
+		setErrors(validateInput({ ...input, [name]: value }));
 	};
 	/////////////////////////////////////////////
 
 	// Functions of Categories ///////////////////////////
 	const introduceCategories = (event) => {
-		event.preventDefault();
-		const catSelected = event.target.value;
-
-		if (!input.categories.includes(catSelected) && catSelected !== '') {
-			setInput({ ...input, categories: [...input.categories, catSelected] });
-			setErrors(validateInput({ ...input, categories: catSelected }));
+		const { value, checked} = event.target
+		
+		if (!input.categories.includes(value) && checked === true) {
+			setInput({ ...input, categories: [...input.categories, value] });
+			setErrors(validateInput({ ...input, categories: value }));
 		}
-	};
-
-	const deleteCategories = (event) => {
-		event.preventDefault();
-		setInput({ ...input, categories: [] });
-		setErrors(validateInput({ ...input, categories: event.target.value }));
+		else if(checked === false){
+			let filtrado = input.categories.filter((e)=> e !== value)
+			setInput({ ...input, categories: filtrado });
+			setErrors(validateInput({ ...input, categories: filtrado }));
+		}
 	};
 	///////////////////////////////////////////////////////
 
@@ -143,6 +144,9 @@ const CreateProduct = () => {
 		
 	};
 	/////////////////////////////////////////////
+
+	
+
 
 	return (
 		<div className={s.cont}>
@@ -240,42 +244,23 @@ const CreateProduct = () => {
 					<div className={s.contsp}>
 						{categories.length && (
 							<div>
-								<select
-									className={s.select}
-									name='categories'
-									onChange={introduceCategories}>
-									<option value=''>Chose yours categories...</option>
-									{categories.map((cat) => {
-										return <option key={cat.name}>{cat.name}</option>;
+								<label className={s.label}>*P. Categories: </label>
+								{categories.map((cat,index) => {
+										return (
+											<div>
+												<input  
+												key={cat.name} 
+												type={"checkbox"}
+												name= "categories"
+												value={cat.name}
+												onChange= {(e)=>introduceCategories(e)} />
+												<span>{cat.name}</span>
+											</div>
+										)
 									})}
-								</select>
 							</div>
 						)}
 					</div>
-
-					<br />
-
-					<div className={s.contsp}>
-						
-						<label className={s.label}>*Categories Selected</label>
-						<input
-							className={s.input}
-							value={input.categories}
-							disabled>
-						</input>
-						{errors.categories && <p>{errors.categories}</p>}
-
-					</div>
-
-					<br />
-
-					<div>
-						<button className={s.btnd} onClick={deleteCategories}>
-							Delete Categories
-						</button>
-					</div>
-
-					<br />
 
 					<button className={s.btn} id='sendButtom' type='submit' disabled>
 						SEND

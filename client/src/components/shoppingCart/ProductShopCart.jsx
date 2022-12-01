@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
 import { useHistory } from 'react-router-dom'
-=======
 import { useEffect } from 'react';
->>>>>>> e805c1be604a6f69fc214fa6c9b9bada5dfabb96
 import s from './ProductShopCart.module.css';
 
 const ProductShopCart = () => {
