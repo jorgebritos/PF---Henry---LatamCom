@@ -78,35 +78,30 @@ const LoginRegister = () => {
 	// }
 
 	return (
-		<>
-			<div className={s.conten} ref={menuRef}>
-				<div
-					className={s.menu}
-					onClick={() => {
-						setOpen(!open);
-					}}>
-					<img className={s.img} src={usericon} alt='' height='25px' />
-
-					{isAuthenticated ? (
-						<>
-							<UserName />
-							<div className={`s.dropdown_menu${open ? active : inactive}`}>
-								<h3 className={s.h3}> {user?.name}</h3>
-								{solutions.map((item) => (
-									<ul key={item.name} onClick={item.href}>
-										<DropdownItem text={item.name} />
-									</ul>
-								))}
-							</div>
-						</>
-					) : (
-						<p onClick={() => loginWithRedirect()}>Login</p>
-					)}
-				</div>
-
-				{/* <h3 className={s.h3}>{user.username}</h3> */}
+		<div className={s.conten} ref={menuRef}>
+			<div
+				className={s.menu_trigger}
+				onClick={() => {
+					setOpen(!open);
+				}}>
+				<img className={s.img} src={usericon} alt='' height='25px' />
 			</div>
-		</>
+
+			{isAuthenticated ? (
+				<div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
+					<h3> {user?.name}</h3>
+					{solutions.map((item) => (
+						<ul key={item.name} onClick={item.href}>
+							<DropdownItem text={item.name} />
+						</ul>
+					))}
+					<UserName/>
+				</div>
+			) : (
+				<p onClick={() => history.push("/LoginForm")}>Login</p>
+			)}
+			<h3 className={s.h3}>{user.username}</h3>
+		</div>
 	);
 };
 
