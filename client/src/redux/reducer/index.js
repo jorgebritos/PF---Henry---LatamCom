@@ -3,7 +3,8 @@ import {
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    LOCALSTORAGE
 } from "../actions"
 
 const initialState = {
@@ -18,7 +19,9 @@ const initialState = {
     searchedProducts: [],
     brands: [],
     filBrands: [],
-    filCategory: []
+    filCategory: [],
+    //LOCALSTORAGE
+    localstorage : []
 }
 
 
@@ -162,6 +165,13 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 products: sortProducts
+            }
+        
+        case LOCALSTORAGE:
+            return{
+                ...state,
+                localstorage : [ action.payload ]
+
             }
         default:
             return state;

@@ -7,6 +7,7 @@ import {
 	resetDetail,
 	getAllProducts,
 	getAllCategories,
+	putLocalstorage
 } from '../../redux/actions/index';
 import CreateComment from '../CreateComment/CreateComment';
 import s from './Product.module.css';
@@ -24,6 +25,7 @@ const Product = (props) => {
 		}
 		cart.push({ ...product, amount: 1 });
 		localStorage.setItem('cart', JSON.stringify(cart));
+		dispatch(putLocalstorage())
 	};
 
 	// Hooks y estados ////////////////////////////////

@@ -32,6 +32,9 @@ export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
 export const NEW_SEARCH = "NEW_SEARCH"
 
+//LocalStorage
+export const LOCALSTORAGE = "LOCALSTORAGE"
+
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get('http://localhost:3001/products')
@@ -283,4 +286,24 @@ export function orderBy(payload) {
         type: ORDER_BY,
         payload
     }
+}
+
+// LocalStorage
+
+export function putLocalstorage(){
+    if (localStorage.getItem('cart')) {
+        let cart = JSON.parse(localStorage.getItem('cart'));
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    else{
+        let cart = []
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    
 }

@@ -6,12 +6,15 @@ import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../Loging/LoginBar';
+import {useSelector} from "react-redux"
 
 function NavBar() {
 	let cart = '';
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
+
+	const local = useSelector((state)=>state.localstorage)
 
 	return (
 		<div className={s.navBar}>
