@@ -51,10 +51,10 @@ const CreateComment = (id) => {
 	const dispatch = useDispatch();
 	// const user = useSelector((state) => state.user);
 	useEffect(() => {
-		if (ratings && id !== undefined) {
+		if (ratings && product.id !== undefined) {
 			dispatch(updateRatingProduct({ rating: ratings, id: product.id }));
 		}
-	}, [dispatch, ratings, id]);
+	}, [dispatch, product.id, ratings]);
 
 	useEffect(() => {
 		dispatch(getAllComments());

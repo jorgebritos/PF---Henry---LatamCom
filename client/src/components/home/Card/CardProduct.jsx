@@ -42,7 +42,7 @@ export default function CardProduct({ id, name, price, image, rating }) {
 							{rating ? (
 								<label>
 									<span>{rating.toFixed(1)}</span>{' '}
-									<img className={s.star} src={star} height={'15px'} />
+									<img className={s.star} src={star} height={'15px'} alt=''/>
 								</label>
 							) : (
 								''

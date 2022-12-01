@@ -17,7 +17,7 @@ export default function HomePage() {
 	const totalProducts = useSelector((state) => state.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage] = useState(8);
+	const [perPage, ] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
 	const currentProducts = totalProducts.slice(
