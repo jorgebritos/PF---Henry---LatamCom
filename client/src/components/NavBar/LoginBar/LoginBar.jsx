@@ -2,11 +2,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import usericon from '../../../asset/usericon.png';
 import { useSelector } from 'react-redux';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 import { UserName } from '../login/userName';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 // import { Popover, Transition } from "@headlessui/react";
-import Swal from "sweetalert2"
+import Swal from 'sweetalert2';
 import s from './LoginBar.module.css';
 
 const LoginRegister = () => {

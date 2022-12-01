@@ -55,8 +55,7 @@ export default function rootReducer(state = initialState, action) {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: action.payload,
-                productComments: [...action.payload.comments]
+                productDetail: action.payload
             }
         case GET_ALL_CATEGORIES:
             return {
@@ -118,16 +117,20 @@ export default function rootReducer(state = initialState, action) {
             }
 
             if (Number(action.payload.min) === 0 && Number(action.payload.max) === 0) return { ...state, products: allProducts }
+            let marcasPrice = result.map((p) => {
+                return p.brand
+            })
+            marcasPrice = marcasPrice.filter((m) => m != null)
             return {
                 ...state,
-                products: result
+                products: result,
+                filBrands: [...new Set(marcasPrice)]
             }
         case FILTER_BY_CATEGORY:
             result = [];
             if (action.payload === "All") {
                 result = allProducts
             } else {
-                console.log("actualProducts:", allProducts);
                 for (const p of allProducts) {
                     for (const k in p.categories) {
                         if (Object.hasOwnProperty.call(p.categories, k)) {
@@ -141,7 +144,6 @@ export default function rootReducer(state = initialState, action) {
                 return p.brand
             })
             marcas = marcas.filter((m) => m != null)
-            console.log("actualProducts2:", [...new Set(marcas)]);
             return {
                 ...state,
                 products: result,
