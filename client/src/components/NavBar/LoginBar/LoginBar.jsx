@@ -66,33 +66,47 @@ const LoginRegister = () => {
 		};
 	});
 
-	// const active = s.active;
-	// const inactive = s.inactive;
+	let active = s.dropdown_menu.active;
+	let inactive = s.dropdown_menu.inactive;
+
+	// function open(open) {
+	// 	if (open === true) {
+	// 		return s.active;
+	// 	} else {
+	// 		return s.inactive;
+	// 	}
+	// }
 
 	return (
-		<div className={s.conten} ref={menuRef}>
-			<div
-				className={s.menu_trigger}
-				onClick={() => {
-					setOpen(!open);
-				}}>
-				<img className={s.img} src={usericon} alt='' height='25px' />
-			</div>
-			<UserName></UserName>
-			{isAuthenticated ? (
-				<div className={`s.dropdown_menu${open ? '.active' : '.inactive'}`}>
-					<h3 className={s.h3}> {user?.name}</h3>
-					{solutions.map((item) => (
-						<ul key={item.name} onClick={item.href}>
-							<DropdownItem text={item.name} />
-						</ul>
-					))}
+		<>
+			<div className={s.conten} ref={menuRef}>
+				<div
+					className={s.menu}
+					onClick={() => {
+						setOpen(!open);
+					}}>
+					<img className={s.img} src={usericon} alt='' height='25px' />
+
+					{isAuthenticated ? (
+						<>
+							<UserName />
+							<div className={`s.dropdown_menu${open ? active : inactive}`}>
+								<h3 className={s.h3}> {user?.name}</h3>
+								{solutions.map((item) => (
+									<ul key={item.name} onClick={item.href}>
+										<DropdownItem text={item.name} />
+									</ul>
+								))}
+							</div>
+						</>
+					) : (
+						<p onClick={() => loginWithRedirect()}>Login</p>
+					)}
 				</div>
-			) : (
-				<p onClick={() => loginWithRedirect()}>Login</p>
-			)}
-			{/* <h3 className={s.h3}>{user.username}</h3> */}
-		</div>
+
+				{/* <h3 className={s.h3}>{user.username}</h3> */}
+			</div>
+		</>
 	);
 };
 
