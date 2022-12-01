@@ -12,7 +12,7 @@ import s from './LoginBar.module.css';
 const LoginRegister = () => {
 	// const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+	const { isAuthenticated, logout } = useAuth0();
 	const history = useHistory();
 	const [open, setOpen] = useState(false);
 	let menuRef = useRef();
@@ -66,8 +66,8 @@ const LoginRegister = () => {
 		};
 	});
 
-	let active = s.dropdown_menu.active;
-	let inactive = s.dropdown_menu.inactive;
+	// let active = s.dropdown_menu.active;
+	// let inactive = s.dropdown_menu.inactive;
 
 	// function open(open) {
 	// 	if (open === true) {

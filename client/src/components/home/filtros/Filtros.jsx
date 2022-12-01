@@ -15,7 +15,6 @@ import FiltroBrand from './FiltroBrand';
 export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
-	const products = useSelector((state) => state.products);
 	const brands = useSelector((state) => state.filBrands);
 
 	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));

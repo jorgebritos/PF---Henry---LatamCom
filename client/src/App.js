@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { Route, useLocation } from 'react-router-dom';
 import LandingPage from './components/landing/LandingPage';
 import HomePage from './components/home/home/HomePage';

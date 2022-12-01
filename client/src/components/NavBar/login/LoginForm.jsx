@@ -16,7 +16,7 @@ export const LoginForm = () => {
         if(usuario){
             dispatch(getAllUsers(usuario.id))
         }
-    }, [usuario])
+    }, [dispatch, usuario])
 
   if (isLoading) {
     return <div>Loading...</div>;
