@@ -1,4 +1,4 @@
-const { Product, Category, Comment } = require("../db.js");
+const { Product, Category, Comment, User } = require("../db.js");
 const { Op } = require("sequelize");
 
 const getProduct = async (req, res) => {
@@ -109,9 +109,9 @@ const putProduct = async (req, res) => {
 
         await selectedProduct.save();
 
-        res.sendStatus(200);
+        res.status(200);
     } else {
-        res.sendStatus(404);
+        res.status(404);
     };
 };
 
@@ -125,20 +125,6 @@ const getProductByID = async (req, res) => {
             attributes: ["name"],
             through: {
                 attributes: []
-            }
-        },
-        {
-            model: Comment,
-            attributes: ["comment", "rating"],
-            through: {
-                attributes: []
-            },
-            include: {
-                model: Product,
-                attributes: ["name"],
-                through: {
-                    attributes: []
-                }
             }
         }]
     });

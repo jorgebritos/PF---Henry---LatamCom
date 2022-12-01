@@ -5,11 +5,9 @@ import {
 	filterByCategory,
 	filterByPrice,
 	getAllBrands,
-	getAllCategories,
-	getAllProducts,
 	orderBy,
 	removeFilters,
-} from '../../redux/actions';
+} from '../../../redux/actions';
 import s from './Filtros.module.css';
 import FiltroCategory from './FiltroCategory';
 import FiltroBrand from './FiltroBrand';
@@ -17,7 +15,6 @@ import FiltroBrand from './FiltroBrand';
 export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
-	const products = useSelector((state) => state.products);
 	const brands = useSelector((state) => state.filBrands);
 
 	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
@@ -29,8 +26,6 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		});
 
 	useEffect(() => {
-		dispatch(getAllCategories());
-		dispatch(getAllProducts());
 		dispatch(getAllBrands([]));
 	}, [dispatch]);
 
@@ -59,12 +54,11 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		let min = priceFilter.minPrice;
 		let max = priceFilter.maxPrice;
 
-		if (Number(min) > Number(max))
-			return alert('El minimo no puede ser mayor al maximo');
-		dispatch(
-			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
-		);
-		dispatch(getAllBrands(products));
+		if (Number(min) > Number(max)) return alert('El minimo no puede ser mayor al maximo');
+		setCheckedState(new Array(15).fill(false));
+		dispatch(filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }));
+		setIsChecked([]);
+		// dispatch(getAllBrands(products));
 		setCurrentPage(1);
 	};
 
@@ -222,21 +216,21 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						<ul>
 							{filBrands.length > 0
 								? filBrands.map((b, index) => {
-										return (
-											<li className={s.li} key={b}>
-												<label className={s.label}>
-													<input
-														className={s.input}
-														type={'checkbox'}
-														checked={checkedState[index]}
-														value={b}
-														onChange={(e) => handleOnChange(index, e)}
-													/>
-													<span className={s.spanC}>{b}</span>
-												</label>
-											</li>
-										);
-								  })
+									return (
+										<li className={s.li} key={b}>
+											<label className={s.label}>
+												<input
+													className={s.input}
+													type={'checkbox'}
+													checked={checkedState[index]}
+													value={b}
+													onChange={(e) => handleOnChange(index, e)}
+												/>
+												<span className={s.spanC}>{b}</span>
+											</label>
+										</li>
+									);
+								})
 								: null}
 						</ul>
 						<button className={s.btn} onClick={(e) => filterBrands(e)}>

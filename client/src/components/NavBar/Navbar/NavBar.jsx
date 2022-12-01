@@ -1,12 +1,16 @@
 import React from 'react';
-import Logo from '../../asset/Logo.png';
-import Carito from '../../asset/carrito.png';
-import star from '../../asset/star.png';
+import Logo from '../../../asset/Logo.png';
+import Carito from '../../../asset/carrito.png';
+import star from '../../../asset/star.png';
 import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
+<<<<<<< HEAD:client/src/components/NavBar/NavBar.jsx
 import LoginRegister from '../Loging/LoginBar';
 import {useSelector} from "react-redux"
+=======
+import LoginRegister from '../LoginBar/LoginBar';
+>>>>>>> f54ec793bdb4a3409074553e67c5850b91f89338:client/src/components/NavBar/Navbar/NavBar.jsx
 
 function NavBar() {
 	let cart = '';

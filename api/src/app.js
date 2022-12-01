@@ -12,7 +12,6 @@ const jwt = require('jsonwebtoken');
 const keys = require('./settings/keys');
 
 
-
 server.name = 'API';
 
 server.set('key', keys.key)
@@ -33,7 +32,7 @@ server.use('/', routes);
 //   res.send('Hola Mundo')
 // })
 
-server.post('/login',(req,res)=>{
+server.post('/',(req,res)=>{
   if(req.body.user == 'admin' && req.body.pass =='12345'){
     const payload = {
       check:true
@@ -80,7 +79,7 @@ verification.use((req, res, next)=>{
     })
   }
 })
-server.get('/data', verification,(req,res)=>{
+server.get('/', verification,(req,res)=>{
   res.json('Important information delivered');
 })
 
