@@ -1,67 +1,59 @@
-const express = require('express');
-require('./db.js');
-const server = express();
-const { Router } = require("express");
-const router = Router()
+const Router = require("express");
+const {jwtVerify, SignJWT} =require("jose");
+const User= require("../db.js");
 
-const jwt = require('jsonwebtoken');
-const keys = require('./settings/keys');
+// import validateLoginDTO from "../dto/validate_login_dto.js";
+const authByEmailPwd = require("../helpers/auth-by-email-pwd.js");
 
-// server.name = 'API';
+//Login con email y password
+const authTokenRouter = async (req, res) => {
+  const { email, password } = req.body;
 
-router.set('key', keys.key)
+  try {
+    const { id } = authByEmailPwd(email, password);
 
-router.post('/login',(req,res)=>{
-    if(req.body.user == 'admin' && req.body.pass =='12345'){
-      const payload = {
-        check:true
-      };
-      const token = jwt.sign(payload, router.get('key'),{
-        expiresIn:'3d'
-      });
-      res.json({
-        message:'Log in Succesful!',
-        token:token
-      });
-    }else{
-      res.json({
-        message:'Incorrect user or password, check your credentials!'
-      })
-    }
-});
+    //GENERAR TOKEN Y DEVOLVER TOKEN
+    const jwtConstructor = new SignJWT({ id });
 
-//Middleware
-const verification = express.Router();
+    const encoder = new TextEncoder();
+    const jwt = await jwtConstructor
+      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+      .setIssuedAt()
+      .setExpirationTime("1h")
+      .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
 
-verification.use((req, res, next)=>{
-    let token = req.headers['x-access-token'] || req.headers['authorization'];
-    // console.log(token);
-    if(!token){
-      res.status(404).send({
-        error:'Authentification token is required!'
-      })
-      return
-    }
-    if(token.startsWith('Bearer ')){
-      token= token.slice(7,token.length);
-      console.log(token)
-    }
-    if(token){
-      jwt.verify(token, router.get('key'), (error,decoded)=>{
-        if(error){
-          return res.json({
-            message:'Invalid Token!'
-          });
-        }else{
-          req.decoded = decoded;
-          next();
-        }
-      })
-    }
-})
+    return res.send({ jwt });
+  } catch (err) {
+    return res.sendStatus(401);
+  }
+};
 
-router.get('/data', verification,(req,res)=>{
-    res.json('Important information delivered');
-})
+//Solicitud autenticada con token para obtener el perfil del usuario
+const authTokenRouterPerf = async (req, res) => {
+  const { authorization } = req.headers;
 
-module.exports = server;
+  if (!authorization) return res.sendStatus(401);
+
+  try {
+    const encoder = new TextEncoder();
+    const { payload } = await jwtVerify(
+      authorization,
+      encoder.encode(process.env.JWT_PRIVATE_KEY)
+    );
+
+    const user = User.find((user) => user.id === payload.id);
+    
+    if (!user) {return res.sendStatus(401);
+}
+    delete user.password;
+
+    return res.send(user);
+  } catch (err) {
+    return res.sendStatus(401);
+  }
+};
+
+module.exports={
+  authTokenRouter,
+  authTokenRouterPerf
+}
