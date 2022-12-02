@@ -10,6 +10,7 @@ import CreateProduct from './components/CreateProduct/CreateProduct';
 import ProductSended from './components/CreateProduct/ProductSended.jsx';
 import Profile from './components/NavBar/login/Profile/Profile';
 import { LoginForm } from './components/NavBar/login/LoginForm';
+import Contact from './components/Footer/Contact/Contact';
 
 function App() {
 	let location = useLocation();
@@ -26,6 +27,7 @@ function App() {
 			<Route path='/create/productsended' component={ProductSended} />
 			<Route path='/profile' component={Profile} />
 			<Route path='/LoginForm' component={LoginForm} />
+			<Route path='/contact' component={Contact}/>
 			{location.pathname !== '/' && <FooterBar />}
 
 		</div>
