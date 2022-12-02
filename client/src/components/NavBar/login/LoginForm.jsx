@@ -15,10 +15,8 @@ export const LoginForm = () => {
   const usuario = user && allUser.find(u=>u.email === user.email)
 
     useEffect(() => {
-        if(usuario){
-            dispatch(getAllUsers(usuario.id))
-        }
-    }, [usuario])
+            dispatch(getAllUsers(name))
+    }, [name, dispatch])
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -29,6 +27,13 @@ export const LoginForm = () => {
     setName(e.target.value)
     console.log(name)
    }   
+
+   function confirmUser(e){
+    e.preventDefault()
+    if(usuario){
+      
+    }
+   }
 
   return (
     <div> 
@@ -49,7 +54,7 @@ export const LoginForm = () => {
                     placeholder="password.."
                   />
             </div>
-            <button>Let`s get started</button>
+            <button onClick={(e) => confirmUser(e)}>Let`s get started</button>
             <button onClick={() => history.push("/CreateUser")}>Register</button>
         </div>
     </div>

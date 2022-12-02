@@ -2,9 +2,9 @@ const { Router } = require("express");
 const router = Router();
 const loginController = require('./../Controllers/loginController');
 
-router.get('/', loginController.authTokenRouter)
+router.post('/login', loginController.authTokenRouterLog)
 
-router.post('/log', loginController.authTokenRouterPerf)
+router.get('/profile', loginController.authTokenRouterPerf)
 
 
 module.exports = router

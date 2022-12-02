@@ -6,7 +6,7 @@ const User= require("../db.js");
 const authByEmailPwd = require("../helpers/auth-by-email-pwd.js");
 
 //Login con email y password
-const authTokenRouter = async (req, res) => {
+const authTokenRouterLog = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -54,6 +54,6 @@ const authTokenRouterPerf = async (req, res) => {
 };
 
 module.exports={
-  authTokenRouter,
+  authTokenRouterLog,
   authTokenRouterPerf
 }
