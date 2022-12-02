@@ -31,6 +31,7 @@ export default function Contact() {
         <div>
             <label htmlFor='title'>Title Mail:</label>
             <input name='title' onInput={e => handleMail(e)} value={mail.title}></input>
+            <br />
             <label htmlFor='emailTo'>Send To:</label>
             <select name='emailTo' onChange={e => handleMail(e)}>
                 <option value=''>Select Mail</option>
@@ -42,7 +43,9 @@ export default function Contact() {
                     })
                 }
             </select>
-            <textarea name='body' value={mail.body} onInput={e => handleMail(e)} />
+            <br />
+            <textarea name='body' rows={10} cols={50} value={mail.body} onInput={e => handleMail(e)} />
+            <br />
             <button onClick={e => sendMail(e)} disabled={handleButton()}>Send Mail</button>
         </div>
     );
