@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import s from './FooterBar.module.css';
-import logoS from '../../asset/logoS.png';
 
 export default function Contact() {
     const [mail, setMail] = useState({
@@ -15,10 +13,15 @@ export default function Contact() {
             ...mail,
             [e.target.name]: e.target.value
         })
+        handleButton()
     }
 
     function sendMail(e) {
         console.log(mail)
+    }
+
+    function handleButton() {
+        return !mail.title || !mail.emailTo || !mail.body
     }
 
     //AGREGUEN LOS SUYOS
@@ -30,16 +33,17 @@ export default function Contact() {
             <input name='title' onInput={e => handleMail(e)} value={mail.title}></input>
             <label htmlFor='emailTo'>Send To:</label>
             <select name='emailTo' onChange={e => handleMail(e)}>
+                <option value=''>Select Mail</option>
                 {
                     ourMails.map((m) => {
                         return (
-                            <option value={m}>{m}</option>
+                            <option value={m} key={m}>{m}</option>
                         )
                     })
                 }
             </select>
-            <textarea name='body' value={mail.body} onInput={e => handleMail(e)}/>
-            <button onClick={e => sendMail(e)}></button>
+            <textarea name='body' value={mail.body} onInput={e => handleMail(e)} />
+            <button onClick={e => sendMail(e)} disabled={handleButton()}>Send Mail</button>
         </div>
     );
 }
