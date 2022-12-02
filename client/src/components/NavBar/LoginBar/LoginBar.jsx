@@ -2,13 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { UserName } from '../login/userName';
+import usericon from '../../../asset/usericon.png';
 import {
 	dropdown_wrapper,
 	dropdown_activator,
 	dropdown_item_list,
 	active,
+	h4,
 	item_list,
+	componet_login,
 } from './LoginBar.module.css';
 
 function LoginRegister({ items = [] }) {
@@ -16,13 +18,13 @@ function LoginRegister({ items = [] }) {
 	const { logout, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
 	const userConfig = (e) => {
-		e.preventDefault()
+		e.preventDefault();
 		history.push('/profile');
 	};
 
 	const Logout = (e) => {
-		e.preventDefault()
-		console.log("entre")
+		e.preventDefault();
+		console.log('entre');
 		Swal.fire({
 			title: 'Sure about loging out?',
 			icon: 'warning',
@@ -32,7 +34,7 @@ function LoginRegister({ items = [] }) {
 			confirmButtonText: 'Log out!',
 		}).then((result) => {
 			if (result.isConfirmed) {
-				Swal.fire('Log out succesfully!', '', 'success',);
+				Swal.fire('Log out succesfully!', '', 'success');
 				history.push('/home');
 				logout();
 			} else {
@@ -64,7 +66,6 @@ function LoginRegister({ items = [] }) {
 			) {
 				return;
 			}
-     
 			setIsOpen(false);
 		}
 	};
@@ -119,7 +120,9 @@ function LoginRegister({ items = [] }) {
 								<li className={item_list} key={index}>
 									<a
 										onClick={(e) =>
-											item.anchor == 'Configuration' ? userConfig(e) : Logout(e)
+											item.anchor === 'Configuration'
+												? userConfig(e)
+												: Logout(e)
 										}>
 										{item.anchor}
 									</a>
@@ -127,6 +130,15 @@ function LoginRegister({ items = [] }) {
 							);
 						})}
 					</ul>
+				</div>
+			) : (
+				<div className={componet_login}>
+					<img src={usericon} alt='' height={'25px'} />
+					<h6 onClick={() => loginWithRedirect()} className={h4}>
+						Login
+					</h6>
+				</div>
+			)}
 		</>
 	);
 }

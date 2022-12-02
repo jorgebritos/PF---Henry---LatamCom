@@ -1,86 +1,7 @@
-/* .conten_menu {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	color: #17abda;
-	margin: 0 5px;
-}
-
-
-.h3 {
-	color: #17abda;
-}
-.li {
-	list-style: none;
-	text-decoration: none;
-}
-.text {
-	text-decoration: none;
-	color: #17abda;
-}
-
-.menu + .imgagen {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	top: 20px;
-	right: 20px;
-	height: 60px;
-	width: 60px;
-	border-radius: 50%;
-	overflow: hidden;
-	cursor: pointer;
-	background-color: #fff;
-}
-.dropdown_menu {
-	position: relative;
-	top: 100px;
-	right: 20px;
-	background-color: #fff;
-	border-radius: var(--border-radius);
-	padding: 10px 20px;
-	width: 200px;
-}
-
-.dropdown_menu::before {
-	content: '';
-	position: relative;
-	top: -5px;
-	right: 20px;
-	height: 20px;
-	width: 20px;
-	background: var(--secondary-bg);
-	transform: rotate(45deg);
-}
-
-.dropdown_menu.active {
-	opacity: 1;
-	visibility: visible;
-	transform: translateY(0);
-	transition: var(--speed) ease;
-}
-
-.dropdown_menu.inactive {
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(-20px);
-	transition: var(--speed) ease;
-}
-
-:root {
-	--primary-bg: #242526;
-	--secondary-bg: #fff;
-	--primary-text-color: #555;
-	--secondary-text-color: #cecece;
-	--border-radius: 8px;
-	--speed: 500ms;
-} */
 .dropdown_wrapper {
 	position: relative;
 	display: inline-block;
+	color: #17abda;
 }
 
 .dropdown_activator {
@@ -88,7 +9,7 @@
 	background-color: inherit;
 	border: none;
 	height: 100%;
-	color: gray;
+	color: #17abda;
 	font-weight: 500;
 	letter-spacing: 1.1px;
 	display: flex;
@@ -104,7 +25,7 @@
 	border-image: linear-gradient(
 			to right,
 			transparent 20%,
-			#1a1b1b,
+			#17abda,
 			transparent 80%
 		)
 		30;
@@ -116,7 +37,7 @@
 	margin: 0;
 	z-index: 1000;
 	position: absolute;
-	box-shadow: 0 0 2px 0 gray;
+	box-shadow: 0 0 2px 0 #08303d;
 	border-radius: 5px;
 	padding: 0;
 }
@@ -138,7 +59,7 @@
 .item_list a:link {
 	display: flex;
 	/* gap: 0.8rem; */
-	color: #666666;
+	color: #17addab6;
 	font-weight: 600;
 	text-decoration: none;
 	padding: 0.8rem;
@@ -147,6 +68,26 @@
 }
 
 .item_list a:hover {
-	background-color: gray;
+	background-color: #17abda;
 	color: white;
+	cursor: pointer;
+}
+.h4 {
+	height: 100%;
+	font-weight: 500;
+	letter-spacing: 1.1px;
+	display: flex;
+	align-items: center;
+	font-size: inherit;
+	cursor: pointer;
+	width: 100%;
+	font-size: 1rem;
+	color: #17abda;
+	cursor: pointer;
+	margin-left: 10px;
+}
+.componet_login {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
