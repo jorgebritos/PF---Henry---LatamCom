@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, updateRatingProduct } from '../../../../redux/actions';
+import { createComment, getAllComments, updateRatingProduct } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
 
 const CreateComment = (id) => {
@@ -11,8 +11,6 @@ const CreateComment = (id) => {
 		rating: 1,
 	});
 
-
-
 	function handleComment(e) {
 		e.preventDefault();
 		setComment({
@@ -22,12 +20,13 @@ const CreateComment = (id) => {
 		return comment;
 	}
 	const comments = useSelector((state) => state.productComments);
+	console.log(comments)
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
-	let ratings = 0
+	let ratings = 0;
 	for (const c of productComments) {
-		ratings += c.rating
+		ratings += c.rating;
 	}
 	ratings /= productComments.length;
 	async function sendComment(e) {
@@ -39,7 +38,7 @@ const CreateComment = (id) => {
 				...comment,
 				idUser: 1,
 				idProduct,
-			})
+			}),
 		);
 		setComment({ ...comment, comment: '' });
 	}
@@ -48,15 +47,24 @@ const CreateComment = (id) => {
 	// const user = useSelector((state) => state.user);
 	useEffect(() => {
 		if (ratings && id !== undefined) {
-			console.log(ratings)
-			console.log(product.id)
-			dispatch(updateRatingProduct({rating: ratings, id:product.id}))
+			dispatch(updateRatingProduct({ rating: ratings, id: product.id }));
 		}
-	}, [dispatch, ratings, id])
+	}, [dispatch, ratings, id]);
+
+	useEffect(() => {
+		dispatch(getAllComments())
+	}, [dispatch])
 
 	return (
 		<div className={s.conten}>
-			{ratings > 0 ? <label>Rating General del Producto: {ratings.toFixed(1)} ({productComments.length})</label> : ""}
+			{ratings > 0 ? (
+				<label>
+					Rating General del Producto: {ratings.toFixed(1)} (
+					{productComments.length})
+				</label>
+			) : (
+				''
+			)}
 			<div className={s.rating}>
 				<label>Rating:</label>
 				<br />
@@ -86,21 +94,29 @@ const CreateComment = (id) => {
 					Send Comment
 				</button>
 			</div>
-			{productComments.length ? (
-				<div>
-					Comments:{' '}
-					{productComments.map((c, index) => {
-						return (
-							<div key={index}>
-								<p className={s.parafo}>{c.users.length? c.users[0].username : ""} - Rating: {c.rating}</p>
-								<p className={s.parafo}>{c.comment}</p>
-							</div>
-						);
-					})}
-				</div>
-			) : (
-				<p className={s.parafo}>Without comentaries</p>
-			)}
+			<br />
+			<div>
+				{productComments.length ? (
+					<div>
+						<h3 className={s.h3}>Comments:</h3>
+						{productComments.map((c, index) => {
+							return (
+								<div className={s.contenComments} key={index}>
+									<p>{c.users.length ? c.users[0].username : ''}</p>
+									<div className={s.divrow}>
+										<h4 className={s.h3}>Rating:</h4>
+										<p className={s.par}>{c.rating}</p>
+									</div>
+
+									<p className={s.parafo}>{c.comment}</p>
+								</div>
+							);
+						})}
+					</div>
+				) : (
+					<p className={s.parafo}>Without comentaries</p>
+				)}
+			</div>
 		</div>
 	);
 };

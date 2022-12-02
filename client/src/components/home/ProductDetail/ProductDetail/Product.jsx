@@ -6,6 +6,7 @@ import {
 	resetDetail,
 	getAllProducts,
 	getAllCategories,
+	getAllUsers,
 } from '../../../../redux/actions/index';
 import CreateComment from '../CreateComment/CreateComment';
 import s from './Product.module.css';
@@ -36,6 +37,7 @@ const Product = () => {
 		dispatch(resetDetail());
 		dispatch(getAllCategories());
 		dispatch(getAllProducts());
+		dispatch(getAllUsers())
 		dispatch(getProductDetail(id));
 	}, [id, dispatch]);
 	//////////////////////////////////////////////////
