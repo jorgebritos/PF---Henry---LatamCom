@@ -8,6 +8,7 @@
 	color: whitesmoke;
 	background-color: #1b2d33;
 	padding: 20px;
+
 	border-radius: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -76,15 +77,13 @@
 	flex-direction: column;
 	align-items: left;
 	justify-content: center;
-
 	border-radius: 10px;
 	padding-inline-start: 30px;
-
+	margin-bottom: 10px;
 	min-height: 110px;
-
 	color: whitesmoke;
 	background-color: #44565b;
-	box-shadow: 0 0 10px rgba(137, 137, 137, 0.2);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.598);
 }
 
 .parafo {
@@ -102,4 +101,7 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
+}
+.immg {
+	margin: 10px;
 }

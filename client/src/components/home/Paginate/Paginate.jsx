@@ -1,9 +1,14 @@
 import React from 'react';
 import s from './Paginate.module.css';
 
-export default function Paginado({ producPrePage, totalProducts, paginado, page }) {
+export default function Paginado({
+	producPrePage,
+	totalProducts,
+	paginado,
+	page,
+}) {
 	const pageNumbers = [];
-	const numOfPages =Math.ceil(totalProducts / producPrePage)
+	const numOfPages = Math.ceil(totalProducts / producPrePage);
 
 	for (let i = 1; i <= numOfPages; i++) {
 		pageNumbers.push(i);
@@ -12,12 +17,18 @@ export default function Paginado({ producPrePage, totalProducts, paginado, page 
 	return (
 		<nav className={s.nav}>
 			<ul>
-				{page===1?<></>:
-				<li className={s.Paginate}>
-					<button className={s.ButPaginate} key='-1' onClick={()=> paginado('-') }>
-						|◄
-					</button>
-				</li>}
+				{page === 1 ? (
+					<></>
+				) : (
+					<li className={s.Paginate}>
+						<button
+							className={s.ButPaginate}
+							key='-1'
+							onClick={() => paginado('-')}>
+							◄
+						</button>
+					</li>
+				)}
 
 				{pageNumbers &&
 					pageNumbers.map((number) => (
@@ -31,12 +42,18 @@ export default function Paginado({ producPrePage, totalProducts, paginado, page 
 						</li>
 					))}
 
-				{page===numOfPages?<></>:
-				<li className={s.Paginate}>
-					<button className={s.ButPaginate} key='+1' onClick={()=> paginado('+') }>
-					►|
-					</button>
-				</li>}
+				{page === numOfPages ? (
+					<></>
+				) : (
+					<li className={s.Paginate}>
+						<button
+							className={s.ButPaginate}
+							key='+1'
+							onClick={() => paginado('+')}>
+							►
+						</button>
+					</li>
+				)}
 			</ul>
 		</nav>
 	);

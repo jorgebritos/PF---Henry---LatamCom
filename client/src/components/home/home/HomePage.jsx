@@ -17,7 +17,7 @@ export default function HomePage() {
 	const totalProducts = useSelector((state) => state.products);
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [perPage] = useState(8);
+	const [perPage, ] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
 	const currentProducts = totalProducts.slice(
@@ -54,7 +54,7 @@ export default function HomePage() {
 						/>
 					</div>
 					<div className={s.cads}>
-						{currentProducts?.map((p) => {
+						{currentProducts.length > 0?currentProducts.map((p) => {
 							return (
 								<CardProduct
 									key={p.id}
@@ -66,7 +66,7 @@ export default function HomePage() {
 									rating={p.rating}
 								/>
 							);
-						})}
+						}) : ""}
 						{!currentProducts.length ? (
 							<h1>No se han encontrado productos</h1>
 						) : (
