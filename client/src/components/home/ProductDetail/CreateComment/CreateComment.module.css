@@ -65,3 +65,44 @@
 	background-color: #0e7d86;
 	color: whitesmoke;
 }
+
+.h3 {
+	font-size: 1rem;
+	color: #17abda;
+}
+
+.contenComments {
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	justify-content: center;
+
+	border-radius: 10px;
+	padding-inline-start: 30px;
+
+	min-height: 110px;
+
+	color: whitesmoke;
+	background-color: #44565b;
+	box-shadow: 0 0 10px rgba(137, 137, 137, 0.2);
+}
+
+.parafo {
+	font-size: 1.5rem;
+	color: whitesmoke;
+	max-width: 80%;
+}
+.par {
+	font-size: 0.8rem;
+	color: whitesmoke;
+	margin-left: 10px;
+}
+.divrow {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+.immg {
+	margin: 10px;
+}

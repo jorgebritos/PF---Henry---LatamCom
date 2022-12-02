@@ -3,13 +3,17 @@ import {
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,CREATE_USER,
+    GET_ALL_USERS,
+    UPDATE_RATING,
+    LOCALSTORAGE
 } from "../actions"
 
 const initialState = {
     products: [],
     user: {},
     favorites: [],
+    allUsers: {},
     // ESTE ES PARA APLICAR LOS FILTROS, ASÍ NO SE PIERDE EL STATE
     allProducts: [],
     productDetail: {},
@@ -20,6 +24,8 @@ const initialState = {
     filBrands: [],
     filCategory: [],
     pruchase:{},
+    //LOCALSTORAGE
+    localstorage : []
 }
 
 
@@ -40,6 +46,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productComments: action.payload,
             }
+            case GET_ALL_USERS:
+            return {
+                ...state,
+                allUsers: action.payload,
+            }
         case GET_USER:
             return {
                 ...state,
@@ -48,8 +59,7 @@ export default function rootReducer(state = initialState, action) {
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
-                productDetail: action.payload,
-                productComments: [...action.payload.comments]
+                productDetail: action.payload
             }
         case GET_ALL_CATEGORIES:
             return {
@@ -71,11 +81,15 @@ export default function rootReducer(state = initialState, action) {
             return action.payload
         case CREATE_PRODUCT:
             return action.payload
+        case CREATE_USER:
+                return action.payload
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
             return action.payload
         case PP_PURCHASE:
+            return action.payload
+        case UPDATE_RATING:
             return action.payload
         case UPDATE_USER:
             return action.payload
@@ -114,16 +128,20 @@ export default function rootReducer(state = initialState, action) {
             }
 
             if (Number(action.payload.min) === 0 && Number(action.payload.max) === 0) return { ...state, products: allProducts }
+            let marcasPrice = result.map((p) => {
+                return p.brand
+            })
+            marcasPrice = marcasPrice.filter((m) => m != null)
             return {
                 ...state,
-                products: result
+                products: result,
+                filBrands: [...new Set(marcasPrice)]
             }
         case FILTER_BY_CATEGORY:
             result = [];
             if (action.payload === "All") {
                 result = allProducts
             } else {
-                console.log("actualProducts:", allProducts);
                 for (const p of allProducts) {
                     for (const k in p.categories) {
                         if (Object.hasOwnProperty.call(p.categories, k)) {
@@ -137,7 +155,6 @@ export default function rootReducer(state = initialState, action) {
                 return p.brand
             })
             marcas = marcas.filter((m) => m != null)
-            console.log("actualProducts2:", [...new Set(marcas)]);
             return {
                 ...state,
                 products: result,
@@ -170,6 +187,13 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 products: sortProducts
+            }
+        
+        case LOCALSTORAGE:
+            return{
+                ...state,
+                localstorage : [ action.payload ]
+
             }
         default:
             return state;

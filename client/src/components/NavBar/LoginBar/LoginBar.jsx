@@ -1,18 +1,18 @@
 /* eslint-disable no-lone-blocks */
 import React, { useState, useRef, useEffect } from 'react';
-import usericon from '../../asset/usericon.png';
+import usericon from '../../../asset/usericon.png';
 import { useSelector } from 'react-redux';
-import { useAuth0 } from "@auth0/auth0-react";
-import { UserName } from '../../components/login/userName';
-import { useHistory } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
+import { UserName } from '../login/userName';
+import { useHistory } from 'react-router-dom';
 // import { Popover, Transition } from "@headlessui/react";
-import Swal from "sweetalert2"
+import Swal from 'sweetalert2';
 import s from './LoginBar.module.css';
 
 const LoginRegister = () => {
 	// const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+	const { isAuthenticated, logout } = useAuth0();
 	const history = useHistory();
 	const [open, setOpen] = useState(false);
 	let menuRef = useRef();
@@ -66,8 +66,16 @@ const LoginRegister = () => {
 		};
 	});
 
-	// const active = s.active;
-	// const inactive = s.inactive;
+	// let active = s.dropdown_menu.active;
+	// let inactive = s.dropdown_menu.inactive;
+
+	// function open(open) {
+	// 	if (open === true) {
+	// 		return s.active;
+	// 	} else {
+	// 		return s.inactive;
+	// 	}
+	// }
 
 	return (
 		<div className={s.conten} ref={menuRef}>
@@ -78,21 +86,21 @@ const LoginRegister = () => {
 				}}>
 				<img className={s.img} src={usericon} alt='' height='25px' />
 			</div>
-			<UserName>
-				{isAuthenticated ? (
-					<div className={`s.dropdown_menu${open ? '.active' : '.inactive'}`}>
-						<h3 className={s.h3}> {user?.name}</h3>
-						{solutions.map((item) => (
-							<ul key={item.name} onClick={item.href}>
-								<DropdownItem text={item.name} />
-							</ul>
-						))}
-					</div>
-				) : (
-					<p onClick={() => loginWithRedirect()}>Login</p>
-				)}
-				{/* <h3 className={s.h3}>{user.username}</h3> */}
-			</UserName>
+
+			{isAuthenticated ? (
+				<div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
+					<h3> {user?.name}</h3>
+					{solutions.map((item) => (
+						<ul key={item.name} onClick={item.href}>
+							<DropdownItem text={item.name} />
+						</ul>
+					))}
+					<UserName/>
+				</div>
+			) : (
+				<p onClick={() => history.push("/LoginForm")}>Login</p>
+			)}
+			<h3 className={s.h3}>{user.username}</h3>
 		</div>
 	);
 };

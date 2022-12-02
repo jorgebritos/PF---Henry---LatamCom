@@ -82,24 +82,62 @@
 
 /* Product Sended page */
 
-
-.container{
+.container {
 	display: grid;
-	grid-template-columns: repeat(12,1fr);
+	grid-template-columns: repeat(12, 1fr);
 	grid-auto-rows: 30px;
-
 }
 
-.message{
-
+.message {
 	grid-column: 3/11;
 	grid-row: 8/16;
 	display: flex;
-	
-	background-color:#17abda;
+
+	background-color: #17abda;
 	justify-content: center;
 	align-items: center;
 	border-radius: 20px;
-	
 }
 
+/*-----------ckebox-------------*/
+
+.inputC {
+	display: none;
+	position: relative;
+}
+.inputC:checked + .spanC {
+	background-color: #17abda;
+}
+.inputC:before {
+	box-shadow: inset 0 0 0 0.4375em #37b3d9e1;
+}
+.spanC {
+	display: flex;
+	align-items: center;
+	padding: 0.1em 0.7em 0.1em 0.02em;
+	color: whitesmoke;
+	transition: 0.5s ease;
+	font-size: 0.85rem;
+}
+
+.spanC:before {
+	display: flex;
+	content: '';
+	background-color: #fff;
+	width: 1.5em;
+	height: 1.5em;
+
+	margin-right: 0.375em;
+	transition: 0.25s ease;
+	box-shadow: inset 0 0 0 0.125em #17abda;
+}
+.labelC {
+	cursor: pointer;
+	font-weight: 300;
+	font-size: 0.2rem;
+	position: relative;
+	margin-bottom: 0.3em;
+}
+.li {
+	list-style: none;
+}

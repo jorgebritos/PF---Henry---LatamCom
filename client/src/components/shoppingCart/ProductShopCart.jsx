@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import s from './ProductShopCart.module.css';
+import { putLocalstorage } from '../../redux/actions';
 
 const ProductShopCart = () => {
 	const [total, setTotal] = useState(0);
@@ -34,6 +35,7 @@ const ProductShopCart = () => {
 
 		let cant = carrito;
 		totalAccount(cant);
+		dispatch(putLocalstorage())
 	};
 
 	const cleanCart = (e) => {
@@ -42,6 +44,7 @@ const ProductShopCart = () => {
 		localStorage.removeItem('cart');
 		let cant = 0;
 		totalAccount(cant);
+		dispatch(putLocalstorage())
 	};
 
 	const suma = (event) => {

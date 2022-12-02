@@ -36,6 +36,9 @@ const { Category, Comment, Product, Purchase, User } = sequelize.models;
 Product.belongsToMany(User, { as:"favorites", through: "favorites_user" })
 User.belongsToMany(Product, { as:"favorites",through: "favorites_user" })
 
+Product.belongsToMany(User, { as:"cart", through: "cart_user" })
+User.belongsToMany(Product, { as:"cart",through: "user_cart" })
+
 Product.belongsToMany(Comment, { through: "products_comments" })
 Comment.belongsToMany(Product, { through: "products_comments" })
 

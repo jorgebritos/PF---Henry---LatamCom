@@ -4,6 +4,7 @@ import axios from 'axios';
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS"
 export const GET_ALL_COMMENTS = "GET_ALL_COMMENTS"
 export const GET_USER = "GET_USER"
+export const GET_ALL_USERS = "GET_ALL_USERS"
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL"
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES"
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
@@ -11,6 +12,7 @@ export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE" 
+export const CREATE_USER = "CREATE_USER"
 export const CREATE_PRODUCT = "CREATE_PRODUCT"
 export const CREATE_COMMENT = "CREATE_COMMENT"
 export const CREATE_PURCHASE = "CREATE_PURCHASE"
@@ -21,6 +23,7 @@ export const PP_PURCHASE = "PP_PURCHASE"
 export const UPDATE_USER = "UPDATE_USER"
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT"
 export const UPDATE_COMMENT = "UPDATE_COMMENT"
+export const UPDATE_RATING = "UPDATE_RATING"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
@@ -34,6 +37,9 @@ export const ORDER_BY = "ORDER_BY"
 export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
 export const NEW_SEARCH = "NEW_SEARCH"
+
+//LocalStorage
+export const LOCALSTORAGE = "LOCALSTORAGE"
 
 export function getAllProducts() {
     return async function (dispatch) {
@@ -59,8 +65,11 @@ export function getAllComments() {
 
 export function getAllUsers() {
     return async function (dispatch) {
-        const users = await axios.get('http://localhost:3001/users')
-        return users
+        const allUsers = await axios.get('http://localhost:3001/users')
+        dispatch({
+            type: GET_ALL_USERS,
+            payload: allUsers.data
+        })
     }
 }
 
@@ -139,6 +148,16 @@ export function getPurchaseDetail(payload) {
 
 //RUTAS POST
 
+export function createUser(payload) {
+    return async function (dispatch) {
+        const info = await axios.post('http://localhost:3001/users', payload)
+        dispatch({
+            type: CREATE_USER,
+            payload: info.data
+        })
+    }
+}
+
 export function createProduct(payload) {
     return async function (dispatch) {
         const info = await axios.post('http://localhost:3001/products', payload)
@@ -188,6 +207,18 @@ export function updateUser(payload) {
         const info = await axios.put('http://localhost:3001/users', payload)
         dispatch({
             type: UPDATE_USER,
+            payload: info.data
+        })
+    }
+}
+
+export function updateRatingProduct(payload) {
+    console.log(payload)
+    let id = payload.id;
+    return async function(dispatch) {
+        const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
+        dispatch({
+            type: UPDATE_RATING,
             payload: info.data
         })
     }
@@ -308,4 +339,24 @@ export function orderBy(payload) {
         type: ORDER_BY,
         payload
     }
+}
+
+// LocalStorage
+
+export function putLocalstorage(){
+    if (localStorage.getItem('cart')) {
+        let cart = JSON.parse(localStorage.getItem('cart'));
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    else{
+        let cart = []
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    
 }

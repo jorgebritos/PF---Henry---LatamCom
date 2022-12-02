@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createComment, getProductDetail } from '../../redux/actions';
+import {
+	createComment,
+	getAllComments,
+	updateRatingProduct,
+} from '../../../../redux/actions';
 import s from './CreateComment.module.css';
+import star from '../../../../asset/puntajes.png';
 
-const CreateComment = () => {
+const CreateComment = (id) => {
 	const product = useSelector((state) => state.productDetail);
 
 	const [comment, setComment] = useState({
@@ -20,13 +25,18 @@ const CreateComment = () => {
 		return comment;
 	}
 	const comments = useSelector((state) => state.productComments);
+	console.log(comments);
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
-	function sendComment(e) {
+	let ratings = 0;
+	for (const c of productComments) {
+		ratings += c.rating;
+	}
+	ratings /= productComments.length;
+	async function sendComment(e) {
 		e.preventDefault();
 		let idProduct = product.id;
-		console.log(idProduct);
 		if (!idProduct) return console.log('faltan datos');
 		dispatch(
 			createComment({
@@ -36,14 +46,30 @@ const CreateComment = () => {
 			}),
 		);
 		setComment({ ...comment, comment: '' });
-		dispatch(getProductDetail(idProduct));
 	}
 
 	const dispatch = useDispatch();
 	// const user = useSelector((state) => state.user);
+	useEffect(() => {
+		if (ratings && product.id !== undefined) {
+			dispatch(updateRatingProduct({ rating: ratings, id: product.id }));
+		}
+	}, [dispatch, product.id, ratings]);
+
+	useEffect(() => {
+		dispatch(getAllComments());
+	}, [dispatch]);
 
 	return (
 		<div className={s.conten}>
+			{ratings > 0 ? (
+				<label>
+					Rating General del Producto: {ratings.toFixed(1)} (
+					{productComments.length})
+				</label>
+			) : (
+				''
+			)}
 			<div className={s.rating}>
 				<label>Rating:</label>
 				<br />
@@ -73,21 +99,37 @@ const CreateComment = () => {
 					Send Comment
 				</button>
 			</div>
-			{productComments.length ? (
-				<div>
-					Comments:{' '}
-					{productComments.map((c) => {
-						return (
-							<div key={c.id}>
-								<p className={s.parafo}>{c.comment}</p>
-								<p className={s.parafo}>Rating: {c.rating}</p>
-							</div>
-						);
-					})}
-				</div>
-			) : (
-				<p className={s.parafo}>Without comentaries</p>
-			)}
+			<br />
+			<div>
+				{productComments.length ? (
+					<div>
+						<h3 className={s.h3}>Comments:</h3>
+						{productComments.map((c, index) => {
+							return (
+								<div className={s.contenComments} key={index}>
+									<p>{c.users.length ? c.users[0].username : ''}</p>
+									<div className={s.divrow}>
+										<h4 className={s.h3}>Rating:</h4>
+										<div className={s.divrow}>
+											<p className={s.par}>{c.rating}</p>
+											<img
+												src={star}
+												alt=''
+												height={'10px'}
+												className={s.immg}
+											/>
+										</div>
+									</div>
+
+									<p className={s.parafo}>{c.comment}</p>
+								</div>
+							);
+						})}
+					</div>
+				) : (
+					<p className={s.parafo}>Without comentaries</p>
+				)}
+			</div>
 		</div>
 	);
 };

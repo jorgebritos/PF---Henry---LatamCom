@@ -34,6 +34,11 @@ module.exports = (sequelize) => {
       allowNull: true,
       defaultValue: 0
     },
+    rating: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: 0
+    },
     softdelete: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
