@@ -4,7 +4,7 @@ import {
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT,CREATE_USER,
-    GET_ALL_USERS,
+    GET_ALL_USERS,GET_AUTHTOKENROUTERPERF,POST_AUTHTOKENROUTERLOG,
     UPDATE_RATING
 } from "../actions"
 
@@ -21,7 +21,8 @@ const initialState = {
     searchedProducts: [],
     brands: [],
     filBrands: [],
-    filCategory: []
+    filCategory: [],
+    login:[]
 }
 
 
@@ -57,10 +58,15 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productDetail: action.payload
             }
-        case GET_ALL_CATEGORIES:
+            case GET_ALL_CATEGORIES:
             return {
                 ...state,
                 categories: action.payload,
+            }
+        case GET_AUTHTOKENROUTERPERF:
+            return {
+                ...state,
+                allUsers: action.payload,
             }
         case GET_ALL_BRANDS:
             return {
@@ -78,6 +84,11 @@ export default function rootReducer(state = initialState, action) {
             return action.payload
         case CREATE_PURCHASE:
             return action.payload
+        case POST_AUTHTOKENROUTERLOG:
+            return {
+                ...state,
+                login:action.payload
+            }
         case UPDATE_RATING:
             return action.payload
         case UPDATE_USER:

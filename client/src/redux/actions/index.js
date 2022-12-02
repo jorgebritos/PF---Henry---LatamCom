@@ -8,6 +8,9 @@ export const GET_ALL_USERS = "GET_ALL_USERS"
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL"
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES"
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
+export const GET_AUTHTOKENROUTER= "GET_AUTHTOKENROUTER"
+export const GET_AUTHTOKENROUTERPERF= "GET_AUTHTOKENROUTERPERF"
+
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE" 
@@ -15,6 +18,7 @@ export const CREATE_USER = "CREATE_USER"
 export const CREATE_PRODUCT = "CREATE_PRODUCT"
 export const CREATE_COMMENT = "CREATE_COMMENT"
 export const CREATE_PURCHASE = "CREATE_PURCHASE"
+export const POST_AUTHTOKENROUTERLOG= "GET_AUTHTOKENROUTERLOG"
 
 //RUTAS PUT
 export const UPDATE_USER = "UPDATE_USER"
@@ -63,6 +67,16 @@ export function getAllUsers() {
         dispatch({
             type: GET_ALL_USERS,
             payload: allUsers.data
+        })
+    }
+}
+
+export function authTokenRouterPerf() {
+    return async function (dispatch) {
+        const allUsers = await axios.get('http://localhost:3001/profile')
+        dispatch({
+            type: GET_AUTHTOKENROUTERPERF,
+            payload: allUsers.data.token
         })
     }
 }
@@ -131,6 +145,15 @@ export function getProductDetail(id) {
 }
 
 //RUTAS POST
+export function authTokenRouterLog() {
+    return async function (dispatch) {
+        const json = await axios.post('http://localhost:3001/login')
+        dispatch({
+            type: POST_AUTHTOKENROUTERLOG,
+            payload: json
+        })
+    }
+}
 
 export function createUser(payload) {
     return async function (dispatch) {
