@@ -17,11 +17,14 @@ const LoginRegister = () => {
 	const [open, setOpen] = useState(false);
 	let menuRef = useRef();
 
-	const userConfig = () => {
+	const userConfig = (e) => {
+		e.preventDefault()
 		history.push('/profile');
 	};
 
-	const Logout = () => {
+	const Logout = (e) => {
+		e.preventDefault()
+		console.log("entre")
 		Swal.fire({
 			title: 'Sure about loging out?',
 			icon: 'warning',
@@ -31,9 +34,9 @@ const LoginRegister = () => {
 			confirmButtonText: 'Log out!',
 		}).then((result) => {
 			if (result.isConfirmed) {
-				logout();
+				Swal.fire('Log out succesfully!', '', 'success',);
 				history.push('/home');
-				Swal.fire('Log out succesfully!', '', 'success');
+				logout();
 			} else {
 				history.push('/home');
 				Swal.fire('Log out canceled!', '', 'warning');
@@ -66,8 +69,8 @@ const LoginRegister = () => {
 		};
 	});
 
-	// const active = s.active;
-	// const inactive = s.inactive;
+	const active = s.active;
+	const inactive = s.inactive;
 
 	return (
 		<div className={s.conten} ref={menuRef}>

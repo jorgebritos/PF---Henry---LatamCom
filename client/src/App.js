@@ -25,9 +25,8 @@ function App() {
 			<Route path='/create/product' component={CreateProduct} />
 			<Route path='/create/productsended' component={ProductSended} />
 			<Route path='/profile' component={Profile} />
-
-			{location.pathname !== '/' && <FooterBar />}
 			<Route path='/LoginForm' component={LoginForm} />
+			{location.pathname !== '/' && <FooterBar />}
 
 		</div>
 	);
