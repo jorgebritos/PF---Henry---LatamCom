@@ -7,10 +7,6 @@ const ProductShopCart = () => {
 	const [productsSelected, setProductsSelected] = useState([]);
 	let cant = 0;
 
-	useEffect(() => {
-		seeProducts()
-	}, [])
-
 	const seeProducts = () => {
 		let cart = [];
 		if (localStorage.getItem('cart')) {
@@ -21,6 +17,10 @@ const ProductShopCart = () => {
 		let cant = cart;
 		totalAccount(cant);
 	};
+
+	useEffect(() => {
+		seeProducts();
+	}, []);
 
 	const deleteProduct = (e, id) => {
 		e.preventDefault();
@@ -103,7 +103,12 @@ const ProductShopCart = () => {
 						return (
 							<div className={s.producCard} key={producto.id}>
 								<div className={s.cimg}>
-									<img className={s.img} src={producto.image} width='100px' alt='' />
+									<img
+										className={s.img}
+										src={producto.image}
+										width='100px'
+										alt=''
+									/>
 								</div>
 								<div className={s.cname}>
 									<div>
