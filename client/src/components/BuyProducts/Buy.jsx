@@ -1,10 +1,30 @@
 import {useState} from "react"
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { buyShoppingCart, getPurchaseDetail } from '../../redux/actions';
+import s from './Buy.module.css'
+
+
+const structuringProducts = (products)=>{
+	let ppProducts= products.map((p)=>{
+		let pp = {
+			amount:{
+				currency_code:"USD",
+				value:p.price*p.amount,
+			},
+			description: `Purchasing ${p.amount} item(s) of ${p.name}`,
+			reference_id : p.id,
+		}
+		return pp
+	})
+	return ppProducts
+
+}
 
 const Buy = ()=>{
-
-    const [products, setProducts] = useState()
-    const [total, setTotal] = useState()
+	const dispatch = useDispatch()
+    const [products, setProducts] = useState([])
+    const [total, setTotal] = useState(0)
     
     const seeProducts = () => {
 		let cart = [];
@@ -19,32 +39,28 @@ const Buy = ()=>{
         }
         setTotal(price)
 		setProducts(cart);
+        return total
 	};
+    const handleClick = (e,products)=>{
+        e.preventDefault()
+        console.log(products);
+        dispatch(buyShoppingCart(structuringProducts(products)))
+    }
+    
     
     return(
         
-        <div>
-            {!products ? seeProducts() : ""}
-            <div>
+        <div className={s.container}>
+            <div className={s.description}>
                 
                 <div>
-                    {products && products.map((p)=>{
-                        return(
-                            <div key={p.id}>
-                                {p.name}
-                                
-                            </div>
-                        )
-                        
-                    })}
-                </div>
-                
-                <div>
-                    {total}
+                    {!total?seeProducts():<>Total: ${total} USD</>}
                 </div>
                 
             </div>
-            <p>COMPRANDO</p>
+            Pay with
+            <div className={s.paypal}>
+                <button onClick={(e)=>handleClick(e,products)} className={s.paypalbutton}>Pay Now!</button> </div>
         </div>
     )
 }

@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-<<<<<<< HEAD
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'
-=======
-import { useEffect } from 'react';
->>>>>>> e805c1be604a6f69fc214fa6c9b9bada5dfabb96
+import { useDispatch } from 'react-redux';
 import s from './ProductShopCart.module.css';
 
 const ProductShopCart = () => {
 	const [total, setTotal] = useState(0);
 	const [productsSelected, setProductsSelected] = useState([]);
 	const history = useHistory()
+	const dispatch = useDispatch()
 	let cant = 0;
 
 	useEffect(() => {
@@ -103,7 +101,7 @@ const ProductShopCart = () => {
 		event.preventDefault()
 		history.push("/buyproducts")
 		localStorage.setItem("total", JSON.stringify(total))
-
+	
 	}
 
 	return (

@@ -6,14 +6,10 @@ import FooterBar from './components/Footer/FooterBar';
 import Product from './components/ProductDetail/Product';
 import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
-<<<<<<< HEAD
 import ProductSended from "./components/CreateProduct/ProductSended.jsx"
 import Buy from "./components/BuyProducts/Buy.jsx"
 import { Profile } from './components/login/Profile'
-=======
-import ProductSended from './components/CreateProduct/ProductSended.jsx';
-import { Profile } from './components/login/Profile';
->>>>>>> e805c1be604a6f69fc214fa6c9b9bada5dfabb96
+import SuccessedPayment  from './components/CompletePayment/Successedpayment.jsx'
 
 function App() {
 	let location = useLocation();
@@ -30,6 +26,7 @@ function App() {
 			<Route path='/create/productsended' component={ProductSended} />
 			<Route path='/profile' component={Profile} />
 			<Route path="/buyproducts" component={Buy} />
+			<Route path="/SuccessPayment" component={SuccessedPayment}/>
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>

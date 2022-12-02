@@ -7,12 +7,15 @@ export const GET_USER = "GET_USER"
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL"
 export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES"
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
+export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE" 
 export const CREATE_PRODUCT = "CREATE_PRODUCT"
 export const CREATE_COMMENT = "CREATE_COMMENT"
 export const CREATE_PURCHASE = "CREATE_PURCHASE"
+export const PP_PURCHASE = "PP_PURCHASE"
+
 
 //RUTAS PUT
 export const UPDATE_USER = "UPDATE_USER"
@@ -124,6 +127,16 @@ export function getProductDetail(id) {
     }
 }
 
+export function getPurchaseDetail(payload) {
+    return async function (dispatch) {
+        const productDetail = await axios.get(`http://localhost:3001/buyings/acceptpayment${payload}`)
+        dispatch({
+            type: GET_PURCHASE_DETAIL,
+            payload: productDetail
+        })
+    }
+}
+
 //RUTAS POST
 
 export function createProduct(payload) {
@@ -152,6 +165,18 @@ export function createPurchase(payload) {
         dispatch({
             type: CREATE_PURCHASE,
             payload: info.data
+        })
+    }
+}
+
+export function buyShoppingCart(payload) {
+    return async function (dispatch) {
+        const info = await axios.post('http://localhost:3001/buyings/createpayment', payload)
+        console.log(info.data);
+        window.location.href= info.data
+        dispatch({
+            type: PP_PURCHASE,
+            payload: info
         })
     }
 }

@@ -1,0 +1,38 @@
+.container{
+    display: flex;
+    justify-content: center;
+    margin: 9%;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    border-color: black;
+    box-shadow: 10px;
+    background-color: greenyellow;
+    height: 40vh;
+    justify-content: space-evenly;
+    width: 25%;
+}
+
+.topcard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin: 2%;
+
+}
+.img{
+    width: 30%;
+    height: auto;
+}
+
+.buttoncard{
+    display: flex;
+    align-items: center;
+
+    background-color: aliceblue;
+    padding-bottom: 30%;
+    margin: 0%;
+}

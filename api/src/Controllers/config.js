@@ -1,5 +1,5 @@
-const PAYPAL_API_CLIENT = "AYxbQvQmUWpm6RD9gNAh82-9EhmahcB3UvyxbiYSTrEHrkboJa-vWkLYgHF_FcWapjuOm2v1U3mX7SHw"
-const PAYPAL_API_SECRET = "EGQJgcf1lGDHppIqu5j-Ncv-Kng8TiM0vJfKlalRtAeT9_U69MwEZEfSIe_MmoST7nDZYTmQgi0_p0YW"
+const PAYPAL_API_CLIENT = "AfD6aqjJ4XJtomKTro1hYFt5OHZoowFEYJc9Q023Raz1f8Cna2MnIwz1iXL4V8H4HUsViBES_I8kyGk9"
+const PAYPAL_API_SECRET = "EAWjbAbfjwJaLCsTMEtnhul0_ZUt6-ucH-2FKTE0CSH8insxb8SfpD2odbJijHx3kDNY9aS9AL5FcQcm"
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"
 
 module.exports = {
