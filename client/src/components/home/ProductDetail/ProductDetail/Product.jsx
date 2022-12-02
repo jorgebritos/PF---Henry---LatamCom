@@ -9,6 +9,7 @@ import {
 	getAllUsers,
 } from '../../../../redux/actions/index';
 import CreateComment from '../CreateComment/CreateComment';
+import Loading from '../../../loading/Loading';
 import s from './Product.module.css';
 
 const Product = () => {
@@ -37,7 +38,7 @@ const Product = () => {
 		dispatch(resetDetail());
 		dispatch(getAllCategories());
 		dispatch(getAllProducts());
-		dispatch(getAllUsers())
+		dispatch(getAllUsers());
 		dispatch(getProductDetail(id));
 	}, [id, dispatch]);
 	//////////////////////////////////////////////////
@@ -46,8 +47,8 @@ const Product = () => {
 
 	if (!Object.keys(product).length) {
 		return (
-			<div>
-				<h2>Cargando...</h2>
+			<div className={s.loading}>
+				<Loading />
 			</div>
 		);
 	}
@@ -92,7 +93,7 @@ const Product = () => {
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
 					<div>
-						<CreateComment/>
+						<CreateComment />
 					</div>
 				</div>
 			</div>
