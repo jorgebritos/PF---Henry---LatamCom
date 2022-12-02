@@ -54,7 +54,7 @@ export default function HomePage() {
 						/>
 					</div>
 					<div className={s.cads}>
-						{currentProducts?.map((p) => {
+						{currentProducts.length > 0?currentProducts.map((p) => {
 							return (
 								<CardProduct
 									key={p.id}
@@ -66,7 +66,7 @@ export default function HomePage() {
 									rating={p.rating}
 								/>
 							);
-						})}
+						}) : ""}
 						{!currentProducts.length ? (
 							<h1>No se han encontrado productos</h1>
 						) : (

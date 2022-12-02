@@ -40,7 +40,7 @@ function NavBar() {
 				</div>
 
 				<div>
-					<LoginRegister />
+					<LoginRegister items={[{ anchor: 'Configuration', slug: '' }, { anchor: 'Log Out', slug: '', }]} dropdownTitle="USER" />
 				</div>
 
 				<div>
