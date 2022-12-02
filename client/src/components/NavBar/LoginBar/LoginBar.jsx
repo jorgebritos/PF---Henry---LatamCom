@@ -1,68 +1,3 @@
-// /* eslint-disable no-lone-blocks */
-// import React, { useState, useRef, useEffect } from 'react';
-// import usericon from '../../../asset/usericon.png';
-// import { useSelector } from 'react-redux';
-// import { UserName } from '../login/userName';
-// // import { Popover, Transition } from "@headlessui/react";
-// import './LoginBar.module.css';
-// const LoginRegister = () => {
-// 	// const dispatch = useDispatch();
-// 	const user = useSelector((state) => state.user);
-// 	const [open, setOpen] = useState(false);
-// 	let menuRef = useRef();
-
-// 	useEffect(() => {
-// 		let handler = (e) => {
-// 			if (!menuRef.current.contains(e.target)) {
-// 				setOpen(false);
-// 			}
-// 		};
-
-// 		document.addEventListener('mousedown', handler);
-
-// 		return () => {
-// 			document.removeEventListener('mousedown', handler);
-// 		};
-// 	});
-
-// 	return (
-// 		<>
-// 			<div className='conten_menu' ref={menuRef}>
-// 				<div
-// 					className='menu'
-// 					onClick={() => {
-// 						setOpen(!open);
-// 					}}>
-// 					<img className='imgagen' src={usericon} alt='' height='25px' />
-// 					<UserName />
-
-// 					{isAuthenticated ? (
-// 						<>
-// 							<div className={`dropdown_menu${open ? `active` : `inactive`}`}>
-// 								{solutions.map((item) => (
-// 									<ul key={item.name} onClick={item.href}>
-// 										<DropdownItem className='text' text={item.name} />
-// 									</ul>
-// 								))}
-// 							</div>
-// 						</>
-// 					) : (
-// 						<p onClick={() => loginWithRedirect()}>Login</p>
-// 					)}
-// 				</div>
-// 			</div>
-// 		</>
-// 	);
-// };
-
-// function DropdownItem(props) {
-// 	return (
-// 		<li className='li'>
-// 			<a href={' '}>{props.text}</a>
-// 		</li>
-// 	);
-// }
-
 import React, { useState, useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
@@ -80,11 +15,14 @@ function LoginRegister({ items = [] }) {
 	const history = useHistory();
 	const { logout, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
-	const userConfig = () => {
+	const userConfig = (e) => {
+		e.preventDefault()
 		history.push('/profile');
 	};
 
-	const Logout = () => {
+	const Logout = (e) => {
+		e.preventDefault()
+		console.log("entre")
 		Swal.fire({
 			title: 'Sure about loging out?',
 			icon: 'warning',
@@ -94,9 +32,9 @@ function LoginRegister({ items = [] }) {
 			confirmButtonText: 'Log out!',
 		}).then((result) => {
 			if (result.isConfirmed) {
-				logout();
+				Swal.fire('Log out succesfully!', '', 'success',);
 				history.push('/home');
-				Swal.fire('Log out succesfully!', '', 'success');
+				logout();
 			} else {
 				history.push('/home');
 				Swal.fire('Log out canceled!', '', 'warning');
@@ -126,7 +64,7 @@ function LoginRegister({ items = [] }) {
 			) {
 				return;
 			}
-
+     
 			setIsOpen(false);
 		}
 	};
@@ -189,10 +127,6 @@ function LoginRegister({ items = [] }) {
 							);
 						})}
 					</ul>
-				</div>
-			) : (
-				<p onClick={() => loginWithRedirect()}>Login</p>
-			)}
 		</>
 	);
 }

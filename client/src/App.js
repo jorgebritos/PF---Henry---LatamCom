@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { Route, useLocation } from 'react-router-dom';
 import LandingPage from './components/landing/LandingPage';
 import HomePage from './components/home/home/HomePage';
@@ -8,6 +9,7 @@ import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
 import ProductSended from './components/CreateProduct/ProductSended.jsx';
 import Profile from './components/NavBar/login/Profile/Profile';
+import { LoginForm } from './components/NavBar/login/LoginForm';
 
 function App() {
 	let location = useLocation();
@@ -23,8 +25,9 @@ function App() {
 			<Route path='/create/product' component={CreateProduct} />
 			<Route path='/create/productsended' component={ProductSended} />
 			<Route path='/profile' component={Profile} />
-
+			<Route path='/LoginForm' component={LoginForm} />
 			{location.pathname !== '/' && <FooterBar />}
+
 		</div>
 	);
 }
