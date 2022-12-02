@@ -117,7 +117,6 @@ function LoginRegister({ items = [], dropdownTitle }) {
 	};
 
 	const keyHandler = (event) => {
-		// console.log(event);
 		if (event.key === 'Escape' && isOpen) {
 			setIsOpen(false);
 		}
@@ -138,7 +137,6 @@ function LoginRegister({ items = [], dropdownTitle }) {
 
 	useEffect(() => {
 		if (isOpen) {
-			console.log(dropdownListRef.current.querySelector('a'))
 			dropdownListRef.current.querySelector('a').focus();
 			document.addEventListener('mousedown', clickOutsideHandler);
 		} else {
@@ -181,7 +179,6 @@ function LoginRegister({ items = [], dropdownTitle }) {
 				ref={dropdownListRef}
 				className={`${dropdown_item_list} ${isOpen ? active : ''} `}>
 				{items.map((item, index) => {
-					console.log(item.slug)
 					return (
 						<li className={item_list} key={index}>
 							<a onClick={e => item.anchor == "Configuration" ? userConfig(e) : Logout(e)}>{item.anchor}</a>
