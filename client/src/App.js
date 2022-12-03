@@ -6,17 +6,19 @@ import FooterBar from './components/Footer/FooterBar';
 import Product from './components/home/ProductDetail/ProductDetail/Product';
 import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
-import ProductSended from "./components/CreateProduct/ProductSended.jsx"
-import Buy from "./components/BuyProducts/Buy.jsx"
-import SuccessedPayment  from './components/CompletePayment/Successedpayment.jsx'
-import { Profile } from './components/NavBar/login/Profile/Profile'
+import ProductSended from './components/CreateProduct/ProductSended.jsx';
+import Buy from './components/BuyProducts/Buy.jsx';
+import SuccessedPayment from './components/CompletePayment/Successedpayment.jsx';
+import { Profile } from './components/NavBar/login/Profile/Profile';
 import { LoginForm } from './components/NavBar/login/LoginForm';
 
 function App() {
 	let location = useLocation();
 	return (
 		<div className='App'>
-			{location.pathname !== '/' && location.pathname !== '/SuccessPayment' && <NavBar />}
+			{location.pathname !== '/' && location.pathname !== '/SuccessPayment' && (
+				<NavBar />
+			)}
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
@@ -26,12 +28,11 @@ function App() {
 			<Route path='/create/product' component={CreateProduct} />
 			<Route path='/create/productsended' component={ProductSended} />
 			<Route path='/profile' component={Profile} />
-			<Route path="/buyproducts" component={Buy} />
-			<Route path="/SuccessPayment" component={SuccessedPayment}/>
-
-			{location.pathname !== '/' && location.pathname !== '/SuccessPayment' && <FooterBar />}
+			<Route path='/buyproducts' component={Buy} />
+			<Route path='/SuccessPayment' component={SuccessedPayment} />
 			<Route path='/LoginForm' component={LoginForm} />
 
+			{location.pathname !== '/' && <FooterBar />}
 		</div>
 	);
 }

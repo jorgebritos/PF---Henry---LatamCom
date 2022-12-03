@@ -1,59 +1,94 @@
-.container{
-    display: block;
-    flex-direction: column;
-    
+.container {
+	background-color: #142328d5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: calc(100vh - 9.5rem);
 }
 
-.title{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1%;
-    font-size: xx-large;
+.title {
+	color: #17abda;
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	filter: drop-shadow(0 0 2px);
 }
-.content{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin: 12% 0% 14% 0%;
+.content {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	padding: 22px;
+
+	min-width: 600px;
+	min-height: 400px;
 }
 
-.description{
-    display: flex;
-    padding-left: 10%;
+.description {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	padding: 20px;
+	min-height: 300px;
+	width: 200px;
+
+	background-color: #38606dd5;
+	border-radius: 23px;
+	box-shadow: 0 0 13px #000000;
+	backdrop-filter: blur(10px);
 }
 
-.paywith{
-    font-size: larger;
-    display: flex;
-    padding-left: 10%;
-}
-.paypal{
-    display: flex;
-    width: 25%;
-    padding: 0% 10% 0% 10%;
-    height: auto;
-    
+.h3 {
+	color: whitesmoke;
+	font-size: 1.1rem;
+	font-weight: 500;
+	margin-bottom: 1rem;
 }
 
-.paypalimg{
-    width: 10%;
-    margin: 0%;
-    padding: 0%;
+.h2 {
+	color: #17abda;
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	filter: drop-shadow(0 0 2px);
+}
+.metodoP {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	padding: 20px;
+	min-height: 300px;
+	width: 300px;
+	margin-left: 20px;
+
+	background-color: #38606dd5;
+	border-radius: 23px;
+	box-shadow: 0 0 13px #000000;
 }
 
-.paypalbutton{
-    display: flex;
-    width:100% ;
-    border-radius: 30px;
-    background-color: yellow;
-    color: blue;
-    padding: 5% 20% 5% 20%;
-    justify-content: space-around;
-    font-size: large;
+.paypalimg {
+	height: 20px;
 }
 
-.paypalbutton:hover{
-    cursor: pointer;
+.paypalbtn {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 150px;
+	height: 50px;
+	border-radius: 23px;
+	background-color: yellow;
+	border: none;
 }
 
+.paypalbtn:hover {
+	background-color: rgb(108, 176, 255);
+	cursor: pointer;
+}

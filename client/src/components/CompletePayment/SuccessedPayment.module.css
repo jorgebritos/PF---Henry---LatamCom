@@ -1,80 +1,77 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 8%;
-    background-color: cadetblue;
-
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 8%;
+	background-color: cadetblue;
 }
 
-.card{
-    display: flex;
-    flex-direction: column;
-    border-color: black;
-    border-radius: 10px;
-    box-shadow: 10px;
-    background-color: greenyellow;
-    height: 40vh;
-    justify-content: space-evenly;
-    width: 25%;
-    height: auto;
+.card {
+	display: flex;
+	flex-direction: column;
+	border-color: black;
+	border-radius: 10px;
+	box-shadow: 10px;
+	background-color: greenyellow;
+	height: 40vh;
+	justify-content: space-evenly;
+	width: 25%;
+	height: auto;
 }
 
-.topcard{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    margin: 2%;
-    border-radius: 10px;
-
+.topcard {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	margin: 2%;
+	border-radius: 10px;
 }
-.img{
-    width: 70%;
-    height: auto;
-}
-
-.buttoncard{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: aliceblue;
-    padding-bottom: 30%;
-    margin: 0%;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-    
-.messagge{
-    display: flex;
-    flex-direction: column;
+.img {
+	width: 70%;
+	height: auto;
 }
 
-.secondMessagge{
-    font-size: small;
-    margin-top: 5%;
+.buttoncard {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: aliceblue;
+	padding-bottom: 30%;
+	margin: 0%;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
 }
 
-.btndiv{
-    display: flex;
-    justify-content: center;
+.messagge {
+	display: flex;
+	flex-direction: column;
 }
 
-.homebtn{
-    display: flex;
-    justify-content: center;
+.secondMessagge {
+	font-size: small;
+	margin-top: 5%;
 }
 
-.homebtn:hover{
-    cursor: pointer;
+.btndiv {
+	display: flex;
+	justify-content: center;
 }
 
-.homelnk{
-    text-decoration: none;
-       
+.homebtn {
+	display: flex;
+	justify-content: center;
 }
 
-.homelnk:hover{
-    cursor: pointer;
+.homebtn:hover {
+	cursor: pointer;
+}
+
+.homelnk {
+	text-decoration: none;
+}
+
+.homelnk:hover {
+	cursor: pointer;
 }
