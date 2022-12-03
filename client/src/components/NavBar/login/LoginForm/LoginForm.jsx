@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers } from '../../../redux/actions';
+import { getAllUsers } from '../../../../redux/actions';
 import { useHistory } from 'react-router-dom';
 
 export const LoginForm = () => {

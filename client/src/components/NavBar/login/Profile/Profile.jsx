@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import s from './Profile.module.css';
 import Loading from '../../../loading/Loading';
+import usericon from '../../../../asset/usericon.png';
 
 export const Profile = () => {
 	const { user, isAuthenticated, isLoading } = useAuth0();
@@ -19,7 +20,11 @@ export const Profile = () => {
 			<div className={s.conten}>
 				<div className={s.barPerfil}>
 					<div className={s.imgPerfil}>
-						<img src={user.picture} alt={user.name} className={s.img} />
+						{user.picture ? (
+							<img src={usericon} alt={'user icon'} className={s.img} />
+						) : (
+							<img src={user.picture} alt={user.name} className={s.img} />
+						)}
 					</div>
 					<div className={s.infoPerfil}>
 						<h2>{user.name}</h2>
