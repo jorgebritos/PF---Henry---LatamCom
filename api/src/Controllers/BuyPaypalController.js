@@ -90,7 +90,7 @@ const acceptOrder = async (req,res) =>{
 
         res.status(200).send(response.data)
     } catch (error) {
-        res.status(400).send("No funciona")
+        res.status(400).send(error)
     }
 }
 
@@ -98,7 +98,7 @@ const cancelOrder = async (req,res) =>{
     try {
         res.redirect(`${CLIENT_URL}/shoppingcart`)
     } catch (error) {
-        res.status(400).send("No funciona")
+        res.status(400).send(error)
     }
 }
 

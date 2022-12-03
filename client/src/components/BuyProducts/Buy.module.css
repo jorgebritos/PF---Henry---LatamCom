@@ -53,3 +53,7 @@
     font-size: large;
 }
 
+.paypalbutton:hover{
+    cursor: pointer;
+}
+

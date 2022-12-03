@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import s from './SuccessedPayment.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPurchase, getPurchaseDetail } from '../../redux/actions';
+import Counter from './Counter';
 
 const purchaseStruct = (purchase)=>{
     let pStruct={
@@ -25,10 +26,21 @@ const SuccessedPayment = (req)=>{
     const purchased = useSelector((state) => state.purchase)
     const created = useSelector((state) => state.createdPurchase)
     
-    const currentURL= window.location.href
-    try {
+    
         useEffect(()=>{
             dispatch(getPurchaseDetail(search))
+            .catch(() =>{
+                return(
+                    <div className={s.container} >
+                        <div className={s.card}>
+                            <div className={s.topcard}>
+                            <img src='https://cdn-icons-png.flaticon.com/512/42/42901.png' alt='error'/>
+                            </div>
+                            <div className={s.buttoncard}>An error interrupted the transaction, please try later.</div>
+                        </div>
+                    </div>
+                )
+            })
         },[created])    
 
         const handleClick= (e)=>{
@@ -37,13 +49,14 @@ const SuccessedPayment = (req)=>{
             console.log(created);
             localStorage.removeItem('cart')
         }
+        console.log(purchased);
 
         return(
             <div className={s.container} >
                 <div className={s.card}>
                     <div className={s.topcard}>
                         {!purchased?
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831' alt='loading'/>:
+                        <img src='https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831' alt='loading' className={s.img}/>:
                         <img src='https://assets.stickpng.com/images/5aa78e207603fc558cffbf19.png' alt='success'
                         className={s.img}/>
                         }
@@ -54,33 +67,15 @@ const SuccessedPayment = (req)=>{
                         <div className={s.messagge}>
                             <span>Verifiying purchase process...
                             </span>
-                            <span className={s.secondMessagge}>If the verifiying takes more than {currentURL} seconds, please refresh the page or try purchase again
-                            </span>
+                            <Counter/>
                         </div> 
                         }
                     </div>
                 </div>
                 {purchased?
-                <button onClick={(e)=> handleClick(e)}>Return to sparta!!</button>:
+                <button onClick={(e)=> handleClick(e)}>Return to Home</button>:
                 <></>}
             </div>
         )
-    } catch (error) {
-        return(
-            <div className={s.container} >
-                <div className={s.card}>
-                    <div className={s.topcard}>
-                    <img src='https://cdn-icons-png.flaticon.com/512/42/42901.png' alt='error'/>
-                    </div>
-                    <div className={s.buttoncard}>An error interrupted the transaction, please try later.</div>
-                </div>
-            </div>
-        )
-    }
-    
-
-    
-    
-   
 }
 export default SuccessedPayment

@@ -16,7 +16,7 @@ function App() {
 	let location = useLocation();
 	return (
 		<div className='App'>
-			{location.pathname !== '/' && <NavBar />}
+			{location.pathname !== '/' && location.pathname !== '/SuccessPayment' && <NavBar />}
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
@@ -29,7 +29,7 @@ function App() {
 			<Route path="/buyproducts" component={Buy} />
 			<Route path="/SuccessPayment" component={SuccessedPayment}/>
 
-			{location.pathname !== '/' && <FooterBar />}
+			{location.pathname !== '/' && location.pathname !== '/SuccessPayment' && <FooterBar />}
 			<Route path='/LoginForm' component={LoginForm} />
 
 		</div>
