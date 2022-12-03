@@ -134,7 +134,7 @@ function LoginRegister({ items = [] }) {
 			) : (
 				<div className={componet_login}>
 					<img src={usericon} alt='' height={'25px'} />
-					<h6 onClick={() => loginWithRedirect()} className={h4}>
+					<h6 onClick={() => history.push("/LoginForm")} className={h4}>
 						Login
 					</h6>
 				</div>
