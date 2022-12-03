@@ -100,7 +100,6 @@ const LoginRegister = () => {
 			) : (
 				<p onClick={() => history.push("/LoginForm")}>Login</p>
 			)}
-			<h3 className={s.h3}>{user.username}</h3>
 		</div>
 	);
 };

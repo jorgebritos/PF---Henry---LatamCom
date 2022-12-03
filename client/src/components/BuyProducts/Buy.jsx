@@ -51,16 +51,22 @@ const Buy = ()=>{
     return(
         
         <div className={s.container}>
-            <div className={s.description}>
-                
-                <div>
-                    {!total?seeProducts():<>Total: ${total} USD</>}
+                <div className={s.title}>Payment Method</div>
+            <div className={s.content}>
+
+                <div className={s.description}>
+                    <div>
+                        {!total?seeProducts():<>Total: ${total} USD</>}
+                    </div>
+                    
                 </div>
-                
+                <div className={s.paywith}>Pay with</div>
+                <div className={s.paypal}>
+                    <button onClick={(e)=>handleClick(e,products)} className={s.paypalbutton}><img src="https://cdn-icons-png.flaticon.com/512/174/174861.png" alt="paypal" className={s.paypalimg}/>
+                    <span>Pay Now!</span>
+                    </button> 
+                </div>
             </div>
-            Pay with
-            <div className={s.paypal}>
-                <button onClick={(e)=>handleClick(e,products)} className={s.paypalbutton}>Pay Now!</button> </div>
         </div>
     )
 }

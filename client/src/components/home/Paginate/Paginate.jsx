@@ -12,7 +12,7 @@ export default function Paginado({ producPrePage, totalProducts, paginado, page 
 	return (
 		<nav className={s.nav}>
 			<ul>
-				{page===1?<></>:
+				{page===1||!numOfPages?<></>:
 				<li className={s.Paginate}>
 					<button className={s.ButPaginate} key='-1' onClick={()=> paginado('-') }>
 						|◄
@@ -31,7 +31,7 @@ export default function Paginado({ producPrePage, totalProducts, paginado, page 
 						</li>
 					))}
 
-				{page===numOfPages?<></>:
+				{page===numOfPages||!numOfPages?<></>:
 				<li className={s.Paginate}>
 					<button className={s.ButPaginate} key='+1' onClick={()=> paginado('+') }>
 					►|

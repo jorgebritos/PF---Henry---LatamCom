@@ -24,8 +24,9 @@ const initialState = {
     filBrands: [],
     filCategory: [],
     pruchase:{},
+    createdPurchase:{},
     //LOCALSTORAGE
-    localstorage : []
+    localstorage : [],
 }
 
 
@@ -86,7 +87,10 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
-            return action.payload
+            return {
+                ...state,
+                createdPurchase: action.payload,
+            }
         case PP_PURCHASE:
             return action.payload
         case UPDATE_RATING:

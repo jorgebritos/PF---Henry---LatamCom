@@ -1,7 +1,10 @@
 .container{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin: 9%;
+    align-items: center;
+    margin: 8%;
+
 }
 
 .card{
@@ -35,4 +38,14 @@
     background-color: aliceblue;
     padding-bottom: 30%;
     margin: 0%;
+}
+
+.messagge{
+    display: flex;
+    flex-direction: column;
+}
+
+.secondMessagge{
+    font-size: small;
+    margin-top: 5%;
 }
