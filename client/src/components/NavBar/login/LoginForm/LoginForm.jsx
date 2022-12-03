@@ -11,7 +11,7 @@ export const LoginForm = () => {
 	const allUser = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
-		email: "john@gmail.com",
+		email: "",
 		password: ""
 	})
 	const history = useHistory();
@@ -37,6 +37,7 @@ export const LoginForm = () => {
 	function confirmUser(e) {
 		e.preventDefault();
 		dispatch(authTokenRouterLog({...login}))
+		setLogin({email: "", password: ""})
 	}
 
 	return (
@@ -55,7 +56,7 @@ export const LoginForm = () => {
 							onInput={(e) => handleInputChange(e)}
 							type='text'
 							name='password'
-							value={login.pass}
+							value={login.password}
 							placeholder=' Password..'
 						/>
 					</div>
