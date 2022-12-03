@@ -44,13 +44,13 @@ export const LoginForm = () => {
 					<br />
 					<div className={s.from}>
 						<label className={s.label}>Enter your email</label>
-						<input className={s.input} type='text' placeholder='email..' />
+						<input className={s.input} type='text' placeholder=' Email..' />
 						<label className={s.label}>Enter your password</label>
 						<input
 							className={s.input}
 							onChange={(e) => handleInputChange(e)}
 							type='text'
-							placeholder='password..'
+							placeholder=' Password..'
 						/>
 					</div>
 					<br />
