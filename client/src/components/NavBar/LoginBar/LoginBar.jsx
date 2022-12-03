@@ -12,10 +12,13 @@ import {
 	item_list,
 	componet_login,
 } from './LoginBar.module.css';
+import { useSelector } from 'react-redux';
 
 function LoginRegister({ items = [] }) {
 	const history = useHistory();
-	const { logout, isAuthenticated, loginWithRedirect, user } = useAuth0();
+	let { logout, isAuthenticated, loginWithRedirect, user } = useAuth0();
+	const userNow = useSelector((state) => state.user);
+	let functionalUser = {};
 
 	const userConfig = (e) => {
 		e.preventDefault();
@@ -81,7 +84,8 @@ function LoginRegister({ items = [] }) {
 
 	return (
 		<>
-			{isAuthenticated ? (
+			{Object.keys(userNow).length > 0 ? functionalUser = userNow : user}
+			{Object.keys(userNow).length > 0 || isAuthenticated ? (
 				<div className={dropdown_wrapper} onKeyUp={keyHandler}>
 					<button
 						className={dropdown_activator}
@@ -89,7 +93,7 @@ function LoginRegister({ items = [] }) {
 						// aria-controls={dropdownTitle}
 						onClick={clickHandler}
 						ref={activatorRef}>
-						{user.name}{' '}
+						{!functionalUser.name ? functionalUser.username : functionalUser.name}{' '}
 						{isOpen ? (
 							<svg
 								height='24'

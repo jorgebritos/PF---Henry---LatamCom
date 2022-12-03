@@ -11,8 +11,8 @@ export const LoginForm = () => {
 	const allUser = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
-		email: "",
-		password: ""
+		email: "john@gmail.com",
+		password: "m38rmF$"
 	})
 	const history = useHistory();
 

@@ -86,9 +86,11 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_PURCHASE:
             return action.payload
         case POST_AUTHTOKENROUTERLOG:
+            console.log(action.payload.data.user)
             return {
                 ...state,
-                login: action.payload
+                login: action.payload.data.jwt,
+                user: action.payload.data.user
             }
         case SEND_MAIL:
             return action.payload

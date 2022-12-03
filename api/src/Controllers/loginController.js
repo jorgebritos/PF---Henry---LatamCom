@@ -28,7 +28,7 @@ const authTokenRouterLog = async (req, res) => {
       .setExpirationTime("1d")
       .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
 
-    return res.send({ jwt });
+    return res.send({ jwt, user: searchUser.dataValues });
   } catch (err) {
     return res.sendStatus(401);
   }
