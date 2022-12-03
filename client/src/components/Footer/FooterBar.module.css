@@ -1,11 +1,12 @@
 body {
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	min-height: calc(100vh - 9.5rem);
 }
 .container {
 	background-color: black;
-	color: aqua;
+	color: #17abda;
+	padding: 7px;
 }
 
 .footer {
@@ -13,4 +14,9 @@ body {
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
+}
+.a {
+	text-decoration: none;
+	color: #17abda;
+	cursor: pointer;
 }

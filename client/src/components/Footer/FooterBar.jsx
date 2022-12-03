@@ -9,7 +9,9 @@ export default function FooterBar() {
 				<div>
 					<img src={logoS} alt='' height={'55px'} />
 				</div>
-				<a href='/contact'>Contact</a>
+				<a className={s.a} href='/contact'>
+					Contact
+				</a>
 				<div>
 					<p>&copy; 2022 LatamCom, Inc</p>
 				</div>

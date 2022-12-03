@@ -1,0 +1,85 @@
+.back_ground {
+	background-color: #142328d5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: calc(100vh - 9.5rem);
+}
+.conten_form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	background-color: #38606dd5;
+	border-radius: 23px;
+	box-shadow: 0 0 13px #000000;
+
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	padding: 1rem;
+	height: 450px;
+	width: 550px;
+}
+
+.label {
+	color: whitesmoke;
+	font-size: 1rem;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+}
+
+.input {
+	text-align: center;
+	width: 270px;
+	height: 20px;
+	border-radius: 13px;
+	color: whitesmoke;
+	background-color: #17addac5;
+	backdrop-filter: blur(4px);
+	margin-bottom: 10px;
+}
+.input:hover {
+	background-color: #d9d9d9;
+	color: rgb(0, 0, 0);
+}
+
+.select {
+	width: 245px;
+	height: 20px;
+	border-radius: 13px;
+	background-color: #17addac5;
+	color: whitesmoke;
+	backdrop-filter: blur(4px);
+}
+
+.textarea {
+	border: 1px solid black;
+	border-radius: 13px;
+	background-color: #bde2ed;
+	width: 30rem;
+	padding: 0.5rem;
+	min-height: 3rem;
+	color: black;
+}
+.textarea:empty::before {
+	position: absolute;
+	content: 'Escribe aquí...';
+}
+
+.btn {
+	width: 140px;
+	height: 25px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+}
+
+.btn:hover {
+	color: whitesmoke;
+}
+
+.btn:disabled {
+	background-color: #4b4f50;
+}
