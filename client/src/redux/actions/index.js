@@ -19,6 +19,7 @@ export const CREATE_PRODUCT = "CREATE_PRODUCT"
 export const CREATE_COMMENT = "CREATE_COMMENT"
 export const CREATE_PURCHASE = "CREATE_PURCHASE"
 export const POST_AUTHTOKENROUTERLOG= "GET_AUTHTOKENROUTERLOG"
+export const SEND_MAIL = "SEND_MAIL"
 
 //RUTAS PUT
 export const UPDATE_USER = "UPDATE_USER"
@@ -190,6 +191,16 @@ export function createPurchase(payload) {
         const info = await axios.post('http://localhost:3001/purchase', payload)
         dispatch({
             type: CREATE_PURCHASE,
+            payload: info.data
+        })
+    }
+}
+
+export function sendMail(payload) {
+    return async function (dispatch) {
+        const info = await axios.post('http://localhost:3001/send-mail', payload)
+        dispatch({
+            type: SEND_MAIL,
             payload: info.data
         })
     }

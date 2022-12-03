@@ -3,9 +3,10 @@ import {
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
-    DELETE_COMMENT,CREATE_USER,
-    GET_ALL_USERS,GET_AUTHTOKENROUTERPERF,POST_AUTHTOKENROUTERLOG,
-    UPDATE_RATING
+    DELETE_COMMENT, CREATE_USER,
+    GET_ALL_USERS, GET_AUTHTOKENROUTERPERF, POST_AUTHTOKENROUTERLOG,
+    UPDATE_RATING,
+    SEND_MAIL
 } from "../actions"
 
 const initialState = {
@@ -22,7 +23,7 @@ const initialState = {
     brands: [],
     filBrands: [],
     filCategory: [],
-    login:[]
+    login: []
 }
 
 
@@ -43,7 +44,7 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productComments: action.payload,
             }
-            case GET_ALL_USERS:
+        case GET_ALL_USERS:
             return {
                 ...state,
                 allUsers: action.payload,
@@ -58,7 +59,7 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productDetail: action.payload
             }
-            case GET_ALL_CATEGORIES:
+        case GET_ALL_CATEGORIES:
             return {
                 ...state,
                 categories: action.payload,
@@ -79,7 +80,7 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_PRODUCT:
             return action.payload
         case CREATE_USER:
-                return action.payload
+            return action.payload
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
@@ -87,8 +88,10 @@ export default function rootReducer(state = initialState, action) {
         case POST_AUTHTOKENROUTERLOG:
             return {
                 ...state,
-                login:action.payload
+                login: action.payload
             }
+        case SEND_MAIL:
+            return action.payload
         case UPDATE_RATING:
             return action.payload
         case UPDATE_USER:

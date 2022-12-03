@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+	sendMail
+} from '../../../redux/actions/index';
 
 export default function Contact() {
+
+    const dispatch = useDispatch();
+
     const [mail, setMail] = useState({
-        title: "",
-        emailTo: "",
-        body: "",
+        from: "",
+        subject: "",
+        to: "",
+        text: "",
     })
 
     function handleMail(e) {
@@ -16,12 +24,16 @@ export default function Contact() {
         handleButton()
     }
 
-    function sendMail(e) {
-        console.log(mail)
+    function sendMails(e) {
+        e.preventDefault();
+
+        let { from, to, subject, text } = mail
+
+        dispatch(sendMail({ from, to, subject, text }))
     }
 
     function handleButton() {
-        return !mail.title || !mail.emailTo || !mail.body
+        return !mail.subject || !mail.to || !mail.from || !mail.text
     }
 
     //AGREGUEN LOS SUYOS
@@ -29,11 +41,14 @@ export default function Contact() {
 
     return (
         <div>
-            <label htmlFor='title'>Title Mail:</label>
-            <input name='title' onInput={e => handleMail(e)} value={mail.title}></input>
+            <label htmlFor='subject'>subject Mail:</label>
+            <input name='subject' onInput={e => handleMail(e)} value={mail.subject}></input>
             <br />
-            <label htmlFor='emailTo'>Send To:</label>
-            <select name='emailTo' onChange={e => handleMail(e)}>
+            <label htmlFor='from'>Your Email:</label>
+            <input name='from' onInput={e => handleMail(e)} value={mail.from}></input>
+            <br />
+            <label htmlFor='to'>Send To:</label>
+            <select name='to' onChange={e => handleMail(e)}>
                 <option value=''>Select Mail</option>
                 {
                     ourMails.map((m) => {
@@ -44,9 +59,9 @@ export default function Contact() {
                 }
             </select>
             <br />
-            <textarea name='body' rows={10} cols={50} value={mail.body} onInput={e => handleMail(e)} />
+            <textarea name='text' rows={10} cols={50} value={mail.text} onInput={e => handleMail(e)} />
             <br />
-            <button onClick={e => sendMail(e)} disabled={handleButton()}>Send Mail</button>
+            <button onClick={e => sendMails(e)} disabled={handleButton()}>Send Mail</button>
         </div>
     );
 }
