@@ -1,25 +1,27 @@
-const  User =require("../db.js");
+const  {User} = require("../db");
 
 
-const authByEmailPwd = async (email, password) => {
-
-  const user = User.find((u) => u.email === email);
+const authByEmailPwd = (email, password) => {
+  const user = /*User.find((u) => u.email === email);*/ false
 
   if (!user) {
     try {
         let users = require("../JSON/users.json")
-        users = users.map((u) => {
-            console.log(users)
-        return {
-            email: u.email,
-            password: u.password,
-        };
-            });
+        let userfil = users.filter((u) => {
+          if(u.email === email) return {email:u.email,id:u.id,password:u.password}
+        }
+      );
+      if(password === userfil[0].password){ 
+        return userfil[0].id 
+      }else{return false}
+
+
+     
     } catch (error) {
-        res.status(404).send(error);
+        return false
     }
 
-  if (user.password !== password) throw new Error("wrong pass");
+  /* if (user.password !== req.body.password) res.status(400).send("wrong pass"); */
 
   return user;
 };

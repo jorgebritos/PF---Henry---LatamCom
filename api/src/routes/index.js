@@ -7,6 +7,7 @@ const usersRoute = require("./users.js")
 const commentsRoute = require("./comments.js")
 const purchaseRoute = require("./purchase.js")
 const favoritesRoute = require("./favorites.js")
+const loginRoute = require("./login.js")
 const mailRoute = require("./mail.js")
 
 const router = Router();
@@ -20,6 +21,7 @@ router.use('/users', usersRoute)
 router.use('/comments', commentsRoute)
 router.use('/purchase', purchaseRoute)
 router.use('/favorites', favoritesRoute)
+router.use("/login", loginRoute)
 router.use('/send-mail', mailRoute)
 
 module.exports = router;

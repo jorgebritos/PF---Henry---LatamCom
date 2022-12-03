@@ -1,25 +1,26 @@
 const Router = require("express");
 const {jwtVerify, SignJWT} =require("jose");
-const User= require("../db.js");
+const {User}= require("../db.js");
 
 // import validateLoginDTO from "../dto/validate_login_dto.js";
-const authByEmailPwd = require("../helpers/auth-by-email-pwd.js");
+const {authByEmailPwd} = require("../helpers/auth-by-email-pwd.js");
 
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
-  const { email, password } = req.body;
 
+  const { email, password } = req.body;
   try {
-    const { id } = authByEmailPwd(email, password);
+    const  id  = /* authByEmailPwd(email, password) */ 1;
 
     //GENERAR TOKEN Y DEVOLVER TOKEN
-    const jwtConstructor = new SignJWT({ id });
+    const jwtConstructor = new SignJWT({id});
+
 
     const encoder = new TextEncoder();
     const jwt = await jwtConstructor
       .setProtectedHeader({ alg: "HS256", typ: "JWT" })
       .setIssuedAt()
-      .setExpirationTime("1h")
+      .setExpirationTime("1d")
       .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
 
     return res.send({ jwt });
@@ -33,16 +34,19 @@ const authTokenRouterPerf = async (req, res) => {
   const { authorization } = req.headers;
 
   if (!authorization) return res.sendStatus(401);
-
+  console.log(authorization);
   try {
     const encoder = new TextEncoder();
     const { payload } = await jwtVerify(
+      
       authorization,
       encoder.encode(process.env.JWT_PRIVATE_KEY)
     );
-
-    const user = User.find((user) => user.id === payload.id);
-    
+    console.log(payload.id);
+    console.log("user antes..");
+    const user = await User.findOne({where: {id:payload.id}});
+    console.log("user dice...");
+    console.log(user);
     if (!user) {return res.sendStatus(401);
 }
     delete user.password;
