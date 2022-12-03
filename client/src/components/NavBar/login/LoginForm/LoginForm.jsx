@@ -10,14 +10,17 @@ export const LoginForm = () => {
 	const { user, isLoading, loginWithRedirect } = useAuth0();
 	const allUser = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
-	const [name, setName] = useState('');
+	const [login, setLogin] = useState({
+		email: "john@gmail.com",
+		password: ""
+	})
 	const history = useHistory();
 
 	const usuario = user && allUser.find((u) => u.email === user.email);
 
 	useEffect(() => {
-		dispatch(getAllUsers(name));
-	}, [name, dispatch]);
+		dispatch(getAllUsers());
+	}, [dispatch]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -25,13 +28,15 @@ export const LoginForm = () => {
 
 	function handleInputChange(e) {
 		e.preventDefault();
-		setName(e.target.value);
-		console.log(name);
+		setLogin({
+			...login,
+			[e.target.name]: e.target.value
+		})
 	}
 
 	function confirmUser(e) {
 		e.preventDefault();
-		dispatch(authTokenRouterLog())
+		dispatch(authTokenRouterLog({...login}))
 	}
 
 	return (
@@ -43,12 +48,14 @@ export const LoginForm = () => {
 					<br />
 					<div className={s.from}>
 						<label className={s.label}>Enter your email</label>
-						<input className={s.input} type='text' placeholder=' Email..' />
+						<input className={s.input} name="email" type='text' value={login.email} onInput={e => handleInputChange(e)} placeholder=' Email..' />
 						<label className={s.label}>Enter your password</label>
 						<input
 							className={s.input}
-							onChange={(e) => handleInputChange(e)}
+							onInput={(e) => handleInputChange(e)}
 							type='text'
+							name='password'
+							value={login.pass}
 							placeholder=' Password..'
 						/>
 					</div>
