@@ -148,7 +148,8 @@ export function getProductDetail(id) {
 //RUTAS POST
 export function authTokenRouterLog() {
     return async function (dispatch) {
-        const json = await axios.post('http://localhost:3001/login')
+        const json = await axios.post('http://localhost:3001/login/loginForm')
+        console.log(json);
         dispatch({
             type: POST_AUTHTOKENROUTERLOG,
             payload: json

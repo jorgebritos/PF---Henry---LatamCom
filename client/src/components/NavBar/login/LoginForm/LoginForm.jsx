@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers } from '../../../../redux/actions';
+import { getAllUsers, authTokenRouterLog } from '../../../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import logoSimbolo from '../../../../asset/logoS.png';
 import s from './LoginForm.module.css';
@@ -31,8 +31,7 @@ export const LoginForm = () => {
 
 	function confirmUser(e) {
 		e.preventDefault();
-		if (usuario) {
-		}
+		dispatch(authTokenRouterLog())
 	}
 
 	return (
