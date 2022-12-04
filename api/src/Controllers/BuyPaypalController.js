@@ -44,7 +44,7 @@ const createOrder = async (req,res)=>{
                 brand_name: "LatamCom", // nombre de la empresa que cobra
                 landing_page: "LOGIN",  // pagina que redirije el link emitido
                 user_action: "PAY_NOW", 
-                return_url: "http://localhost:3000/SuccessPayment", // si acepta el pago va a este link
+                return_url: `${CLIENT_URL}/SuccessPayment`, // si acepta el pago va a este link
                 cancel_url: "http://localhost:3001/buyings/cancelpayment" // si rechaza el pago va a este link
             }
         };

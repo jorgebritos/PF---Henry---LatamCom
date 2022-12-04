@@ -23,8 +23,8 @@ export default function Paginado({ producPrePage, totalProducts, paginado, page 
 					pageNumbers.map((number) => (
 						<li className={s.Paginate} key={number}>
 							<button
-								// className={number === value ? s.actual : s.ButPaginate}
-								className={s.ButPaginate}
+								 className={number === page ? s.actual : s.ButPaginate}
+								//className={s.ButPaginate}
 								onClick={() => paginado(number)}>
 								{number}
 							</button>

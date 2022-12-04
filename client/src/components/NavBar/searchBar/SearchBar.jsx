@@ -13,8 +13,8 @@ function SearchBar() {
 	let [currentURL, setCurrentURL] = useState(window.location.href)
 
 	useEffect(() => {
-		dispatch(searchByName(productName));
-	}, [productName, currentURL, dispatch]);
+		dispatch(searchByName(productName, "SEARCH_BY_NAME"));
+	}, [showList, currentURL]);
 
 	function search(e) {
 		dispatch(newSearch(productName))
@@ -22,7 +22,7 @@ function SearchBar() {
 
 	if (showList) {
 		if (products.length > 5) {
-			predictionProduct = [...products.slice(0, 5)];
+			predictionProduct = [...products.slice(0, 5), ...[{id:-2, name:'More results'}]];
 		} else if (products.length === 0) {
 			predictionProduct = [...[{ id: -1, name: 'Producto no encontrado' }]]
 		}
@@ -40,7 +40,7 @@ function SearchBar() {
 	function handleSubmit(e) {
 		e.preventDefault();
 		setproductName('');
-		setShowList(true)
+		setShowList(false)
 
 	}
 
@@ -91,16 +91,23 @@ function SearchBar() {
 					{showList ? (
 						<ul className={s.ul} >
 							{predictionProduct.map((sp) =>
-								sp.id !== -1 ?
+								sp.id === -1 ?
+									<li className={s.li} key={sp.id} title={sp.name} >
+										{sp.name.slice(0, 18) + "..."}
+									</li>:
+									sp.id!== -2?
 									<Link to={`/product/${sp.id}`} className={s.ilink} onClick={(e) => handleClick(e)} key={sp.id} >
 										<li className={s.li} key={sp.id} title={sp.name} >
 											{sp.name.slice(0, 18) + "..."}
 										</li>
 									</Link> :
+									<Link to={`/home?search=${productName}`} onClick={e => search(e)} className={s.ilink}>
+										<li className={s.li} key={sp.id} title={sp.name}>
+											{sp.name}
+										</li>
+									</Link>
 
-									<li className={s.li} key={sp.id} title={sp.name} >
-										{sp.name.slice(0, 18) + "..."}
-									</li>
+									
 
 
 							)}

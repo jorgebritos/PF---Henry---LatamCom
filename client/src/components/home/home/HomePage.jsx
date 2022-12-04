@@ -5,6 +5,7 @@ import {
 	getAllCategories,
 	getAllProducts,
 	getAllUsers,
+	searchByName,
 } from '../../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
@@ -15,15 +16,16 @@ export default function HomePage() {
 	const dispatch = useDispatch();
 	// const allCategories = useSelector((state) => state.categories);
 	const totalProducts = useSelector((state) => state.products);
-
+	const searchProducts = useSelector((state)=> state.searchedProducts2)
+	const search= window.location.search
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, ] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
-	const currentProducts = totalProducts.slice(
+	const currentProducts = !search.split('=')[1]?totalProducts.slice(
 		indexOfFirstProduct,
 		indexOfLastProduct,
-	);
+	):searchProducts.slice(indexOfFirstProduct,indexOfLastProduct,);
 	const paginado = (pageNumber) => {
 		if (typeof pageNumber === 'number') setCurrentPage(pageNumber);
 		else if (pageNumber === '-') setCurrentPage(currentPage - 1);
@@ -36,8 +38,10 @@ export default function HomePage() {
 		dispatch(getAllCategories());
 		dispatch(getAllUsers());
 		dispatch(getAllProducts());
-	}, [dispatch]);
-
+		dispatch(searchByName(search.split('=')[1], "SEARCH_BY_NAME2"))
+	}, [search.split('=')[1]]);
+	//console.log(search.split('=')[1]);
+	console.log(searchProducts);
 	return (
 		<div>
 			<div className={s.cont}>

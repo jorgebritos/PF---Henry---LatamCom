@@ -6,15 +6,22 @@ import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import { newSearch } from '../../../redux/actions/index'
 
 function NavBar() {
+	const dispatch= useDispatch()
+	const products = useSelector((state) => state.searchedProducts)
 	let cart = '';
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
 
 	const local = useSelector((state)=>state.localstorage)
+
+	function search(e) {
+		dispatch(newSearch(''))
+	}
 
 	return (
 		<div className={s.navBar}>
@@ -27,7 +34,7 @@ function NavBar() {
 				<div>
 					<ul className={s.ul}>
 						<li className={s.li}>
-							<Link to={'/home'} className={s.Link}>
+							<Link to={'/home'} className={s.Link} onClick={(e) => search(e)}>
 								<h3>Home</h3>
 							</Link>
 						</li>

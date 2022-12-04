@@ -33,6 +33,7 @@ export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
 export const FILTER_BY_PRICE = "FILTER_BY_PRICE"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY"
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
+export const SEARCH_BY_NAME2 = "SEARCH_BY_NAME2"
 export const ORDER_BY = "ORDER_BY"
 export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
@@ -43,13 +44,14 @@ export const LOCALSTORAGE = "LOCALSTORAGE"
 
 export function getAllProducts() {
     return async function (dispatch) {
-        const productsInfo = await axios.get('http://localhost:3001/products')
+        const productsInfo = await axios.get(`http://localhost:3001/products`)
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: productsInfo.data
         })
     }
 }
+
 
 //RUTAS GET
 
@@ -308,14 +310,14 @@ export function newSearch(productName) {
     }
 }
 
-export function searchByName(productName) {
+export function searchByName(productName, typeR) {
     return async function (dispatch) {
-        const productsInfo = await axios.get('http://localhost:3001/products')
+        const productsInfo = await axios.get(`http://localhost:3001/products`)
 
-        if (productsInfo.data !== "Please Create Categories First") {
+        if (productsInfo.data !== "Please Create Categories First"&& productName) {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
             dispatch({
-                type: SEARCH_BY_NAME,
+                type: typeR,
                 payload: searchedProducts
             })
         } else {
