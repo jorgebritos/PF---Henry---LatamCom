@@ -14,8 +14,6 @@ const authTokenRouterLog = async (req, res) => {
     const searchUser = await User.findOne({
       where: { email: email }
   })
-  console.log(searchUser);
-
   //En caso de usuario registrado
   if(!searchUser) return res.status(401).send("Unregistered user");
 
