@@ -229,19 +229,6 @@ const CreateUser = () => {
 
 					<br />
 
-					<div className={s.contsp}>
-						<label className={s.label}>P. Brand: </label>
-						<input
-							className={s.input}
-							name='brand'
-							value={input.brand}
-							onChange={introduceData}
-							autoComplete='off'></input>
-							{errors.brand && <p>{errors.brand}</p>}
-					</div>
-
-					<br />
-
 					{/* <div className={s.contsp}>
 						{categories.length && (
 							<div>
