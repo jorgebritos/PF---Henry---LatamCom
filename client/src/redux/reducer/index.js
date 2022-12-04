@@ -88,7 +88,10 @@ export default function rootReducer(state = initialState, action) {
                 purchase: action.payload,
             }
         case ADD_FAVORITE:
-            return action.payload
+            return {
+                ...state,
+                favorites: action.payload.favorites
+            }
         case CREATE_PRODUCT:
             return action.payload
         case CREATE_USER:
