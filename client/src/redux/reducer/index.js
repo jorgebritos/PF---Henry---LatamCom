@@ -1,12 +1,13 @@
 import {
-    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS,
+    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
-    CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
+    CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT, CREATE_USER,
     GET_ALL_USERS, GET_AUTHTOKENROUTERPERF, POST_AUTHTOKENROUTERLOG,
     UPDATE_RATING,
-    SEND_MAIL
+    SEND_MAIL,
+    LOCALSTORAGE
 } from "../actions"
 
 const initialState = {
@@ -23,7 +24,10 @@ const initialState = {
     brands: [],
     filBrands: [],
     filCategory: [],
-    login: []
+    login: [],
+    pruchase:{},
+    //LOCALSTORAGE
+    localstorage : []
 }
 
 
@@ -75,6 +79,11 @@ export default function rootReducer(state = initialState, action) {
                 brands: action.payload,
                 filBrands: action.payload
             }
+        case GET_PURCHASE_DETAIL:
+            return {
+                ...state,
+                purchase: action.payload,
+            }
         case ADD_FAVORITE:
             return action.payload
         case CREATE_PRODUCT:
@@ -94,6 +103,8 @@ export default function rootReducer(state = initialState, action) {
                 user: {username: user.username, picture: user.profile_image, name: name, email: user.email}
             }
         case SEND_MAIL:
+            return action.payload
+        case PP_PURCHASE:
             return action.payload
         case UPDATE_RATING:
             return action.payload
@@ -193,6 +204,13 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 products: sortProducts
+            }
+        
+        case LOCALSTORAGE:
+            return{
+                ...state,
+                localstorage : [ action.payload ]
+
             }
         default:
             return state;

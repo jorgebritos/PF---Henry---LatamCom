@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 15% 0% 15% 0%;
+}
+
+.description{
+    display: flex;
+    
+}
+
+.paypal{
+    width: 10%;
+    padding: 0% 10% 0% 10%;
+}
+
+.paypalbutton{
+    width:100% ;
+    border-radius: 20px;
+    background-color: blue;
+    color: yellow;
+}

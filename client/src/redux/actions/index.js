@@ -11,6 +11,7 @@ export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
 export const GET_AUTHTOKENROUTER = "GET_AUTHTOKENROUTER"
 export const GET_AUTHTOKENROUTERPERF = "GET_AUTHTOKENROUTERPERF"
 
+export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE"
@@ -20,6 +21,8 @@ export const CREATE_COMMENT = "CREATE_COMMENT"
 export const CREATE_PURCHASE = "CREATE_PURCHASE"
 export const POST_AUTHTOKENROUTERLOG = "GET_AUTHTOKENROUTERLOG"
 export const SEND_MAIL = "SEND_MAIL"
+export const PP_PURCHASE = "PP_PURCHASE"
+
 
 //RUTAS PUT
 export const UPDATE_USER = "UPDATE_USER"
@@ -39,6 +42,9 @@ export const ORDER_BY = "ORDER_BY"
 export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
 export const NEW_SEARCH = "NEW_SEARCH"
+
+//LocalStorage
+export const LOCALSTORAGE = "LOCALSTORAGE"
 
 export function getAllProducts() {
     return async function (dispatch) {
@@ -145,6 +151,16 @@ export function getProductDetail(id) {
     }
 }
 
+export function getPurchaseDetail(payload) {
+    return async function (dispatch) {
+        const productDetail = await axios.get(`http://localhost:3001/buyings/acceptpayment${payload}`)
+        dispatch({
+            type: GET_PURCHASE_DETAIL,
+            payload: productDetail
+        })
+    }
+}
+
 //RUTAS POST
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
@@ -202,6 +218,18 @@ export function sendMail(payload) {
         dispatch({
             type: SEND_MAIL,
             payload: info.data
+        })
+    }
+}
+
+export function buyShoppingCart(payload) {
+    return async function (dispatch) {
+        const info = await axios.post('http://localhost:3001/buyings/createpayment', payload)
+        console.log(info.data);
+        window.location.href= info.data
+        dispatch({
+            type: PP_PURCHASE,
+            payload: info
         })
     }
 }
@@ -345,4 +373,24 @@ export function orderBy(payload) {
         type: ORDER_BY,
         payload
     }
+}
+
+// LocalStorage
+
+export function putLocalstorage(){
+    if (localStorage.getItem('cart')) {
+        let cart = JSON.parse(localStorage.getItem('cart'));
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    else{
+        let cart = []
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    
 }

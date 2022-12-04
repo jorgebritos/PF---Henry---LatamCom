@@ -17,18 +17,12 @@ export default function Paginado({
 	return (
 		<nav className={s.nav}>
 			<ul>
-				{page === 1 ? (
-					<></>
-				) : (
-					<li className={s.Paginate}>
-						<button
-							className={s.ButPaginate}
-							key='-1'
-							onClick={() => paginado('-')}>
-							◄
-						</button>
-					</li>
-				)}
+				{page===1||!numOfPages?<></>:
+				<li className={s.Paginate}>
+					<button className={s.ButPaginate} key='-1' onClick={()=> paginado('-') }>
+						|◄
+					</button>
+				</li>}
 
 				{pageNumbers &&
 					pageNumbers.map((number) => (
@@ -42,18 +36,12 @@ export default function Paginado({
 						</li>
 					))}
 
-				{page === numOfPages ? (
-					<></>
-				) : (
-					<li className={s.Paginate}>
-						<button
-							className={s.ButPaginate}
-							key='+1'
-							onClick={() => paginado('+')}>
-							►
-						</button>
-					</li>
-				)}
+				{page===numOfPages||!numOfPages?<></>:
+				<li className={s.Paginate}>
+					<button className={s.ButPaginate} key='+1' onClick={()=> paginado('+') }>
+					►|
+					</button>
+				</li>}
 			</ul>
 		</nav>
 	);
