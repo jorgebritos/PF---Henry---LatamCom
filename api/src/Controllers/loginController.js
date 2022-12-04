@@ -8,17 +8,20 @@ const {authByEmailPwd} = require("../helpers/auth-by-email-pwd.js");
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password) return res.status(401)
-  try {
-    
-    const searchUser = await User.findOne({
-      where: { email: email, password: password }
-  })
-  console.log(searchUser.dataValues)
-  let id = searchUser.id
+  if (!email || !password) return res.status(401).send("FormIncomplet")
   
-  //GENERAR TOKEN Y DEVOLVER TOKEN
-  const jwtConstructor = new SignJWT({id});
+  try {
+    const searchUser = await User.findOne({
+      where: { email: email}
+    })
+    console.log(searchUser.dataValues)
+
+    if (searchUser.password !== password) return res.status(401).send("IncorrectPassword");
+
+    let id = searchUser.id
+    
+    //GENERAR TOKEN Y DEVOLVER TOKEN
+    const jwtConstructor = new SignJWT({id});
   
   
     const encoder = new TextEncoder();

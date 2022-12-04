@@ -30,8 +30,8 @@ export const LoginForm = ({location}) => {
 	const allUser = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
-		email: "john@gmail.com",
-		password: "m38rmF$"
+		email: "",
+		password: ""
 	})
 	const history = useHistory();
 
@@ -76,8 +76,10 @@ export const LoginForm = ({location}) => {
 
 	function confirmUser(e) {
 		e.preventDefault();
-		dispatch(authTokenRouterLog({...login}))
+	  dispatch(authTokenRouterLog({...login}))
+		
 		setLogin({email: "", password: ""})
+
 		history.push("/home")
 	}
 
