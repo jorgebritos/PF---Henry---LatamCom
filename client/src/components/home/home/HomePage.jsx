@@ -26,7 +26,8 @@ export default function HomePage() {
 		indexOfFirstProduct,
 		indexOfLastProduct,
 	):searchProducts.slice(indexOfFirstProduct,indexOfLastProduct,);
-	const paginado = (pageNumber) => {
+
+	let paginado = (pageNumber) => {
 		if (typeof pageNumber === 'number') setCurrentPage(pageNumber);
 		else if (pageNumber === '-') setCurrentPage(currentPage - 1);
 		else setCurrentPage(currentPage + 1);
@@ -41,7 +42,6 @@ export default function HomePage() {
 		dispatch(searchByName(search.split('=')[1], "SEARCH_BY_NAME2"))
 	}, [search.split('=')[1]]);
 	//console.log(search.split('=')[1]);
-	console.log(searchProducts);
 	return (
 		<div>
 			<div className={s.cont}>
@@ -52,7 +52,8 @@ export default function HomePage() {
 					<div className={s.pag}>
 						<Paginate
 							producPrePage={perPage}
-							totalProducts={totalProducts.length}
+							totalProducts={search?currentProducts.length:
+							totalProducts.length}
 							paginado={paginado}
 							page={currentPage}
 						/>
@@ -81,7 +82,8 @@ export default function HomePage() {
 					<div className={s.pag}>
 						<Paginate
 							producPrePage={perPage}
-							totalProducts={totalProducts.length}
+							totalProducts={search?currentProducts.length:
+								totalProducts.length}
 							paginado={paginado}
 							page={currentPage}
 						/>
