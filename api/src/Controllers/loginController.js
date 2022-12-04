@@ -14,7 +14,7 @@ const authTokenRouterLog = async (req, res) => {
     const searchUser = await User.findOne({
       where: { email: email, password: password }
   })
-  
+  console.log(searchUser.dataValues)
   let id = searchUser.id
   
   //GENERAR TOKEN Y DEVOLVER TOKEN

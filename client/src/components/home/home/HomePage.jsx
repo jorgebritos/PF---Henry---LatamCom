@@ -20,10 +20,10 @@ export default function HomePage() {
 	const [perPage, ] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
 	const indexOfFirstProduct = indexOfLastProduct - perPage; //0
-	const currentProducts = totalProducts.slice(
+	const currentProducts = totalProducts.length > 0 ?totalProducts.slice(
 		indexOfFirstProduct,
 		indexOfLastProduct,
-	);
+	) : [];
 	const paginado = (pageNumber) => {
 		if (typeof pageNumber === 'number') setCurrentPage(pageNumber);
 		else if (pageNumber === '-') setCurrentPage(currentPage - 1);
