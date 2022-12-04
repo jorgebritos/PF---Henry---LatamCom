@@ -32,6 +32,7 @@ export const DELETE_COMMENT = "DELETE_COMMENT"
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
 export const FILTER_BY_PRICE = "FILTER_BY_PRICE"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY"
+export const FILTER_BY_RATING = "FILTER_BY_RATING"
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
 export const SEARCH_BY_NAME2 = "SEARCH_BY_NAME2"
 export const ORDER_BY = "ORDER_BY"
@@ -285,6 +286,13 @@ export function filterByCategory(payload) {
     return {
         type: FILTER_BY_CATEGORY,
         payload
+    }
+}
+
+export function filterByRating(payload) {
+    return {
+        type: FILTER_BY_RATING,
+        payload,
     }
 }
 

@@ -34,3 +34,9 @@
 .Link {
 	text-decoration: none;
 }
+
+.carrusel{
+	display: flex;
+	width: 15%;
+	align-items: center;
+}
