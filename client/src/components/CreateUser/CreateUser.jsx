@@ -44,7 +44,7 @@ const validateInput = (input) => {
 };
 ///////////////////////////////////////////////
 
-const CreateProduct = () => {
+const CreateUser = () => {
 
 	//Hooks and states ///////////////////////
 	const dispatch = useDispatch();
@@ -127,11 +127,11 @@ const CreateProduct = () => {
 	const submitData = async (event) => {
 		event.preventDefault();
 		try {
-			await dispatch(createUser(input)).then(history.push("/create/usersended"))
+			await dispatch(createUser(input)).then(history.push("/createUser/usersended"))
 			
 		} catch (error) {
 			alert(
-				'Chosen name already belongs to another product, please select again.',
+				'Chosen name already belongs to another user, please select again.',
 			);
 		}
 		
@@ -286,4 +286,4 @@ const CreateProduct = () => {
 	);
 };
 
-export default CreateProduct;
+export default CreateUser;
