@@ -7,8 +7,11 @@ import Product from './components/home/ProductDetail/ProductDetail/Product';
 import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
 import ProductSended from './components/CreateProduct/ProductSended.jsx';
-import { Profile } from './components/NavBar/login/Profile.jsx';
-import { LoginForm } from './components/NavBar/login/LoginForm';
+import { Profile } from './components/NavBar/login/Profile/Profile';
+import { LoginForm } from './components/NavBar/login/LoginForm/LoginForm';
+import Contact from './components/Footer/Contact/Contact'
+import Buy from './components/BuyProducts/Buy'
+import SuccessedPayment from './components/CompletePayment/Successedpayment'
 
 function App() {
 	let location = useLocation();
