@@ -46,6 +46,7 @@ export const LoginForm = ({location}) => {
 	}
 
 	const log= async ()=>{
+		loginWithRedirect();
 		// const domain = 'dev-g1jtn0qvoq0x04y4.us.auth0.com';
     	// const audience = 'https://www.PF---Henry---LatamCom.com';
     	// const scope = "read:PF-Henry";
@@ -117,7 +118,7 @@ export const LoginForm = ({location}) => {
 							src='https://img.icons8.com/fluency/16/null/google-logo.png'
 							alt=''
 						/>
-						<p className={s.p} onClick={()=>loginWithRedirect()}>Google</p>
+						<p className={s.p}>Google</p>
 					</button>
 				</div>
 			</div>
