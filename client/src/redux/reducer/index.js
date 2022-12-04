@@ -26,8 +26,9 @@ const initialState = {
     filCategory: [],
     login: [],
     pruchase:{},
+    createdPurchase:{},
     //LOCALSTORAGE
-    localstorage : []
+    localstorage : [],
 }
 
 
@@ -93,7 +94,10 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
-            return action.payload
+            return {
+                ...state,
+                createdPurchase: action.payload,
+            }
         case POST_AUTHTOKENROUTERLOG:
             let user = action.payload.data.user
             let name = user.firstname + " " + user.lastname;

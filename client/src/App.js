@@ -17,7 +17,9 @@ function App() {
 	let location = useLocation();
 	return (
 		<div className='App'>
-			{location.pathname !== '/' && <NavBar />}
+			{location.pathname !== '/' && location.pathname !== '/SuccessPayment' && (
+				<NavBar />
+			)}
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
