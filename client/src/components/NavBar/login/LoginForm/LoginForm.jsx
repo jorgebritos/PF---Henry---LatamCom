@@ -46,6 +46,7 @@ export const LoginForm = ({location}) => {
 	}
 
 	const log= async ()=>{
+		loginWithRedirect();
 		// const domain = 'dev-g1jtn0qvoq0x04y4.us.auth0.com';
     	// const audience = 'https://www.PF---Henry---LatamCom.com';
     	// const scope = "read:PF-Henry";
