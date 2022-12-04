@@ -8,11 +8,13 @@ import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { newSearch } from '../../../redux/actions/index';
+import { useSelector } from 'react-redux';
 
 function NavBar() {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.searchedProducts);
 	let cart = '';
+	let favorites = useSelector((state) => state.favorites)
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
@@ -72,6 +74,7 @@ function NavBar() {
 
 				<div className={s.favorites}>
 					<img src={star} alt='estrella de favoritos' height='25px' />
+					{favorites.length}
 				</div>
 			</nav>
 		</div>
