@@ -14,7 +14,21 @@ const postFavorite = async (req, res) => {
     
     await user.addFavorites(product)
 
-    res.status(201);
+
+    user = await User.findOne({
+		where: {
+			id: idUser
+		},
+		include: {
+			model: Product,
+			as: "favorites",
+			attributes: ["id", "name", "price", "image"],
+			through: {
+				attributes: []
+			}
+		}
+	})
+    res.send(user);
 }
 
 module.exports = {

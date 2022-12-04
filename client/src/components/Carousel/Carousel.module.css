@@ -1,0 +1,10 @@
+carousel.module.css
+
+.container img {
+    transition: 1s;
+    opacity: 0;
+}
+
+.container .loaded {
+    opacity: 1;
+}
