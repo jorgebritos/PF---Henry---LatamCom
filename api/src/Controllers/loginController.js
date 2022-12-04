@@ -8,13 +8,20 @@ const {authByEmailPwd} = require("../helpers/auth-by-email-pwd.js");
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
   const { email, password } = req.body;
-  if (!email || !password) return res.status(401)
-  try {
-    
-    const searchUser = await User.findOne({
-      where: { email: email, password: password }
-  })
   
+  if (!email || !password) return res.status(401).send("Incomplete loginForm credentials")
+  try {
+    const searchUser = await User.findOne({
+      where: { email: email }
+  })
+  console.log(searchUser);
+
+  //En caso de usuario registrado
+  if(!searchUser) return res.status(401).send("Unregistered user");
+
+  //En caso de password incorrecto
+  if(searchUser !== password) return res.status(401).send("Incorrect password");
+
   let id = searchUser.id
   
   //GENERAR TOKEN Y DEVOLVER TOKEN
