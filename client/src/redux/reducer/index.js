@@ -7,7 +7,8 @@ import {
     GET_ALL_USERS, GET_AUTHTOKENROUTERPERF, POST_AUTHTOKENROUTERLOG,
     UPDATE_RATING,
     SEND_MAIL,
-    LOCALSTORAGE
+    LOCALSTORAGE,
+    DELETE_PRODUCT
 } from "../actions"
 
 const initialState = {
@@ -120,6 +121,8 @@ export default function rootReducer(state = initialState, action) {
         case UPDATE_COMMENT:
             return action.payload
         case DELETE_COMMENT:
+            return action.payload
+        case DELETE_PRODUCT:
             return action.payload
         case RESET_DETAIL:
             return {
