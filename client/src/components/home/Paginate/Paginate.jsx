@@ -17,18 +17,24 @@ export default function Paginado({
 	return (
 		<nav className={s.nav}>
 			<ul>
-				{page===1||!numOfPages?<></>:
-				<li className={s.Paginate}>
-					<button className={s.ButPaginate} key='-1' onClick={()=> paginado('-') }>
-						|◄
-					</button>
-				</li>}
+				{page === 1 || !numOfPages ? (
+					<></>
+				) : (
+					<li className={s.Paginate}>
+						<button
+							className={s.ButPaginate}
+							key='-1'
+							onClick={() => paginado('-')}>
+							◄
+						</button>
+					</li>
+				)}
 
 				{pageNumbers &&
 					pageNumbers.map((number) => (
 						<li className={s.Paginate} key={number}>
 							<button
-								 className={number === page ? s.actual : s.ButPaginate}
+								className={number === page ? s.actual : s.ButPaginate}
 								//className={s.ButPaginate}
 								onClick={() => paginado(number)}>
 								{number}
@@ -36,12 +42,18 @@ export default function Paginado({
 						</li>
 					))}
 
-				{page===numOfPages||!numOfPages?<></>:
-				<li className={s.Paginate}>
-					<button className={s.ButPaginate} key='+1' onClick={()=> paginado('+') }>
-					►|
-					</button>
-				</li>}
+				{page === numOfPages || !numOfPages ? (
+					<></>
+				) : (
+					<li className={s.Paginate}>
+						<button
+							className={s.ButPaginate}
+							key='+1'
+							onClick={() => paginado('+')}>
+							►
+						</button>
+					</li>
+				)}
 			</ul>
 		</nav>
 	);
