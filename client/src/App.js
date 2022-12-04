@@ -14,6 +14,7 @@ import Buy from './components/BuyProducts/Buy'
 import SuccessedPayment from './components/CompletePayment/Successedpayment'
 import UserSended from './components/CreateUser/UserSended';
 import CreateUser from './components/CreateUser/CreateUser';
+import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
 
 function App() {
 	let location = useLocation();
@@ -36,7 +37,8 @@ function App() {
 			<Route path='/LoginForm' component={LoginForm} />
 			<Route path='/contact' component={Contact} />
 			<Route path="/buyproducts" component={Buy} />
-			<Route path="/SuccessPayment" component={SuccessedPayment}/>
+			<Route path="/SuccessPayment" component={SuccessedPayment} />
+			<Route path="/favorites" component={ShowFavorites} />
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>
