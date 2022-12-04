@@ -117,7 +117,7 @@ export const LoginForm = ({location}) => {
 							src='https://img.icons8.com/fluency/16/null/google-logo.png'
 							alt=''
 						/>
-						<p className={s.p}>Google</p>
+						<p className={s.p} onClick={()=>loginWithRedirect()}>Google</p>
 					</button>
 				</div>
 			</div>
