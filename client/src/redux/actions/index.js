@@ -149,7 +149,6 @@ export function getProductDetail(id) {
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
         const json = await axios.post('http://localhost:3001/login/loginForm', payload)
-        console.log(json)
         dispatch({
             type: POST_AUTHTOKENROUTERLOG,
             payload: json
