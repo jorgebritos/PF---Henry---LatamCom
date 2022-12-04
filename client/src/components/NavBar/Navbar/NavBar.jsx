@@ -6,21 +6,21 @@ import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
-import {useDispatch, useSelector} from "react-redux"
-import { newSearch } from '../../../redux/actions/index'
+import { useDispatch, useSelector } from 'react-redux';
+import { newSearch } from '../../../redux/actions/index';
 
 function NavBar() {
-	const dispatch= useDispatch()
-	const products = useSelector((state) => state.searchedProducts)
+	const dispatch = useDispatch();
+	const products = useSelector((state) => state.searchedProducts);
 	let cart = '';
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
 
-	const local = useSelector((state)=>state.localstorage)
+	const local = useSelector((state) => state.localstorage);
 
 	function search(e) {
-		dispatch(newSearch(''))
+		dispatch(newSearch(''));
 	}
 
 	return (
@@ -50,7 +50,13 @@ function NavBar() {
 				</div>
 
 				<div>
-					<LoginRegister items={[{ anchor: 'Configuration', slug: '' }, { anchor: 'Log Out', slug: '', }]} dropdownTitle="USER" />
+					<LoginRegister
+						items={[
+							{ anchor: 'Configuration', slug: '' },
+							{ anchor: 'Log Out', slug: '' },
+						]}
+						dropdownTitle='USER'
+					/>
 				</div>
 
 				<div>
@@ -63,7 +69,7 @@ function NavBar() {
 						)}
 					</Link>
 				</div>
-				<div></div>
+
 				<div className={s.favorites}>
 					<img src={star} alt='estrella de favoritos' height='25px' />
 				</div>

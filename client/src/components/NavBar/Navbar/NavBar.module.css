@@ -1,5 +1,6 @@
 .navBar {
 	background-color: black;
+	padding: 0px 12px;
 }
 
 .navbar {
@@ -42,12 +43,20 @@
 .cart {
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	justify-items: center;
+	align-content: center;
+	text-decoration: none;
 }
 
-.CarritoCantidad{
+.CarritoCantidad {
 	color: rgb(255, 255, 255);
 	border-radius: 50px;
 	width: 25px;
 	height: 25px;
 	text-align: center;
+	margin-top: 10px;
+	font-size: medium;
+	font-weight: 400;
 }
