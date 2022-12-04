@@ -84,7 +84,7 @@ function LoginRegister({ items = [] }) {
 
 	return (
 		<>
-			{/* {Object.keys(userNow).length > 0 ? functionalUser = userNow : user} */}
+			{Object.keys(userNow).length > 0 ? functionalUser = userNow.username : user ? functionalUser = user.name : ""}
 			{Object.keys(userNow).length > 0 || isAuthenticated ? (
 				<div className={dropdown_wrapper} onKeyUp={keyHandler}>
 					<button
@@ -93,7 +93,7 @@ function LoginRegister({ items = [] }) {
 						// aria-controls={dropdownTitle}
 						onClick={clickHandler}
 						ref={activatorRef}>
-						{!user.name ? user.username : user.name}{' '}
+						{functionalUser}
 						{isOpen ? (
 							<svg
 								height='24'
