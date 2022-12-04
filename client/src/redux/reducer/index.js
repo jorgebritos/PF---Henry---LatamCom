@@ -1,6 +1,6 @@
 import {
     GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
-    FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
+    FILTER_BY_CATEGORY, SEARCH_BY_NAME,SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT, CREATE_USER,
@@ -21,6 +21,7 @@ const initialState = {
     productComments: [],
     categories: [],
     searchedProducts: [],
+    searchedProducts2: [],
     brands: [],
     filBrands: [],
     filCategory: [],
@@ -192,6 +193,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 searchedProducts: action.payload
             }
+        case SEARCH_BY_NAME2:
+                return {
+                    ...state,
+                    searchedProducts2: action.payload
+                }
         case NEW_SEARCH:
             return {
                 ...state,
