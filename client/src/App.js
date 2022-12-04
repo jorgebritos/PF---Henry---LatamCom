@@ -12,6 +12,7 @@ import { LoginForm } from './components/NavBar/login/LoginForm/LoginForm';
 import Contact from './components/Footer/Contact/Contact'
 import Buy from './components/BuyProducts/Buy'
 import SuccessedPayment from './components/CompletePayment/Successedpayment'
+import UpdateProduct from './components/UpdateProduct/UpdateProduct';
 
 function App() {
 	let location = useLocation();
@@ -33,6 +34,7 @@ function App() {
 			<Route path='/contact' component={Contact} />
 			<Route path="/buyproducts" component={Buy} />
 			<Route path="/SuccessPayment" component={SuccessedPayment}/>
+			<Route path='/update' component={UpdateProduct} />
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>

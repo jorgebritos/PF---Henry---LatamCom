@@ -32,7 +32,8 @@ const getProduct = async (req, res) => {
                     description: p.description,
                     image: p.image,
                     price: p.price,
-                    brand: p.brand ? p.brand : null
+                    brand: p.brand ? p.brand : null,
+                    category: p.category
                 };
             });
 
