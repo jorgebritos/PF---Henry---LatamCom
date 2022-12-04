@@ -113,7 +113,8 @@ export const LoginForm = ({location}) => {
 					<br />
 					<hr width='150px' />
 					<h5>Or...</h5>
-					<button className={s.btnG} onClick={() => log()}>{/*challengesData*/} 
+					{/* <div>{challengesData}</div> */}
+					<button className={s.btnG} onClick={() => log()}>
 						<img
 							src='https://img.icons8.com/fluency/16/null/google-logo.png'
 							alt=''

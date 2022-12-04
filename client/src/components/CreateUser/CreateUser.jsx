@@ -22,15 +22,6 @@ const validateInput = (input) => {
     }else if (!(regexURL.test(input.profile_image))) {
 		errors.profile_image = 'Introduce an image';
 	}
-    // else if (!input.price) {
-	// 	errors.price = 'Introduce a price';
-	// }else if ((expreg.test(input.price))) {
-	// 	errors.price = 'Introduce a valid price';
-	// }else if ((expreg.test(input.brand))) {
-	// 	errors.brand = 'Introduce a valid brand';
-	// }else if (!input.categories.length) {
-	// 	errors.categories = 'Category is required!';
-	// }
 	const sendButton = document.getElementById('sendButtom');
 
 	if (Object.entries(errors).length) {
