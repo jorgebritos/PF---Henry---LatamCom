@@ -17,6 +17,7 @@ import messageSended from './components/Footer/Contact/MessageSended';
 import UserSended from './components/CreateUser/UserSended';
 import CreateUser from './components/CreateUser/CreateUser';
 import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
+import CancelPayment from './components/BuyProducts/CancelPayment';
 
 function App() {
 	let location = useLocation();
@@ -43,6 +44,7 @@ function App() {
 			<Route path="/SuccessPayment" component={SuccessedPayment} />
 			<Route path="/favorites" component={ShowFavorites} />
 			<Route path='/update' component={UpdateProduct} />
+			<Route path='/cancelpayment' component={CancelPayment} />
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>
