@@ -117,11 +117,11 @@ const CreateUser = () => {
 		if(event.target.value.length < 4){
       return "Solo se admite un min. de 3 caracteres"
     } 
-    if (event.target.value.length > 120) {
-      return "Solo se permite un max. de 120 caracteres";
+    if (event.target.value.length > 30) {
+      return "Solo se permite un max. de 30 caracteres";
     }
-    if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
-      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+    if(!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
+      return "Solo se permiten letras"
     }
     return "";
   }
@@ -130,21 +130,48 @@ const CreateUser = () => {
 		if(event.target.value.length < 5){
       return "Solo se admite un min. de 4 caracteres"
     } 
-    if (event.target.value.length > 120) {
-      return "Solo se permite un max. de 120 caracteres";
+    if (event.target.value.length > 30) {
+      return "Solo se permite un max. de 30 caracteres";
+    }
+		if(!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
+      return "Solo se permiten letras"
+    }
+    return "";
+  }
+
+
+	function controllerFormEmail(event) {
+		if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(event.target.value)) {
+			return "Esto no es un email";
+		}
+		return "";
+	}
+
+	function controllerFormUsername(event){
+		if(event.target.value.length < 3){
+      return "Solo se admite un min. de 3 caracteres"
+    } 
+    if (event.target.value.length > 30) {
+      return "Solo se permite un max. de 30 caracteres";
+    }
+    if(!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(event.target.value)){
+      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+    }
+    return "";
+  }
+
+	function controllerFormPassword(event){
+		if(event.target.value.length < 8){
+      return "Solo se admite un min. de 4 caracteres"
+    } 
+    if (event.target.value.length > 20) {
+      return "Solo se permite un max. de 20 caracteres";
     }
     if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
       return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
     }
     return "";
   }
-
-
-/* 	function controllerFormEmail(event) {
-		if (condition) {
-			
-		}
-	} */
 
 	
 
@@ -176,13 +203,73 @@ const CreateUser = () => {
 				}
 
 				break;
+
 			case "lastname":
+				console.log("err ", event.target.value);
+				setErrors({
+					...errors,
+					[event.target.name]:""
+				})
+
+				setInput({
+					...input,
+					lastname: event.target.value
+				})
+
+				console.log("erm",controllerFormLastname(event));
+				if(controllerFormLastname(event).length>0){
+					setErrors({
+						...errors,
+						lastname: controllerFormLastname(event)
+					})
+				}
+
 				break;
 			case "email":
+				console.log("err ", event.target.value);
+				setErrors({
+					...errors,
+					[event.target.name]:""
+				})
+
+				setInput({
+					...input,
+					email: event.target.value
+				})
+
+				console.log("erm",controllerFormEmail(event));
+				if(controllerFormEmail(event).length>0){
+					setErrors({
+						...errors,
+						email: controllerFormEmail(event)
+					})
+				}
+
+
+
 				break;
 			case "file":
+				
 				break;
-			case "usename":
+			case "username":
+				setErrors({
+					...errors,
+					[event.target.name]:""
+				})
+
+				setInput({
+					...input,
+					username: event.target.value
+				})
+
+				console.log("erm",controllerFormUsername(event));
+				if(controllerFormUsername(event).length>0){
+					setErrors({
+						...errors,
+						username: controllerFormUsername(event)
+					})
+				}
+
 				break;
 			case "password":
 				break;
