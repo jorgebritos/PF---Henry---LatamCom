@@ -41,22 +41,14 @@
 	backdrop-filter: blur(4px);
 }
 
-/* .btn:hover {
+.btn:hover {
 	background-color: #0e7d86;
 	color: whitesmoke;
-} */
-.btnd {
-	margin-left: 10px;
-	width: 150px;
-	height: 30px;
-	border-radius: 13px;
-	background-color: #17abda;
-	backdrop-filter: blur(4px);
 }
 
-.btnd:hover {
-	background-color: #0e7d86;
-	color: whitesmoke;
+.btn:disabled {
+	background-color: #23292b;
+	color: rgb(77, 77, 77);
 }
 
 .h1 {
@@ -82,24 +74,19 @@
 
 /* Product Sended page */
 
-
-.container{
+.container {
 	display: grid;
-	grid-template-columns: repeat(12,1fr);
+	grid-template-columns: repeat(12, 1fr);
 	grid-auto-rows: 30px;
-
 }
 
-.message{
-
+.message {
 	grid-column: 3/11;
 	grid-row: 8/16;
 	display: flex;
-	
-	background-color:#17abda;
+
+	background-color: #17abda;
 	justify-content: center;
 	align-items: center;
 	border-radius: 20px;
-	
 }
-
