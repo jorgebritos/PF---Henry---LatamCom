@@ -7,18 +7,23 @@ const {authByEmailPwd} = require("../helpers/auth-by-email-pwd.js");
 
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) return res.status(401)
-  try {
-    
-    const searchUser = await User.findOne({
-      where: { email: email, password: password }
-  })
-  console.log(searchUser.dataValues)
-  let id = searchUser.id
+  console.log("En la party");
+  const { email, password, confirm } = req.body;
+  if (!email || !password) return res.send("FormIncomplet")
   
-  //GENERAR TOKEN Y DEVOLVER TOKEN
-  const jwtConstructor = new SignJWT({id});
+  try {
+    const searchUser = await User.findOne({
+      where: { email: email}
+    })
+    console.log(searchUser.dataValues)
+    console.log("veamos la password")
+    if (searchUser.password !== password) return res.send("IncorrectPassword");
+    console.log("me pasé bro");
+    let id = searchUser.id
+    
+   
+    //GENERAR TOKEN Y DEVOLVER TOKEN
+    const jwtConstructor = new SignJWT({id});
   
   
     const encoder = new TextEncoder();
@@ -27,9 +32,9 @@ const authTokenRouterLog = async (req, res) => {
       .setIssuedAt()
       .setExpirationTime("1d")
       .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-      
+   if(confirm){    
     return res.send({ jwt, user: searchUser.dataValues });
-  } catch (err) {
+  } }catch (err) {
     return res.sendStatus(401);
   }
 };
