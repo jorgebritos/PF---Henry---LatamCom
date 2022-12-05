@@ -10,6 +10,7 @@ export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES"
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
 export const GET_AUTHTOKENROUTER = "GET_AUTHTOKENROUTER"
 export const GET_AUTHTOKENROUTERPERF = "GET_AUTHTOKENROUTERPERF"
+export const GET_FAVORITES = "GET_FAVORITES"
 
 export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 
@@ -32,6 +33,7 @@ export const UPDATE_RATING = "UPDATE_RATING"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
+export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
 
 //FILTRADOS
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
@@ -96,6 +98,16 @@ export function getUser(id) {
         dispatch({
             type: GET_USER,
             payload: user.data
+        })
+    }
+}
+
+export function getFavorites(id) {
+    return async function (dispatch) {
+        const favorites = await axios.get(`http://localhost:3001/favorites/${id}`)
+        dispatch({
+            type: GET_FAVORITES,
+            payload: favorites.data
         })
     }
 }
@@ -287,6 +299,26 @@ export function deleteComment(id) {
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
+        })
+    }
+}
+
+export function removeFavorite(id, idProduct) {
+    return async function (dispatch) {
+        const deletedFavorite = await axios.delete(`http://localhost:3001/favorites/${id}`, idProduct)
+        dispatch({
+            type: REMOVE_FAVORITE,
+            payload: deletedFavorite.data
+        })
+    }
+}
+
+export function removeAllFavorites(id) {
+    return async function (dispatch) {
+        const noFavorites = await axios.delete(`http://localhost:3001/favorites/${id}`)
+        dispatch({
+            type: REMOVE_FAVORITE,
+            payload: noFavorites.data
         })
     }
 }

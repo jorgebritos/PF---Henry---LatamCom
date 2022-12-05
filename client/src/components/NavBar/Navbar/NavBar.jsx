@@ -72,8 +72,10 @@ function NavBar() {
 				</div>
 
 				<div className={s.favorites}>
-					<img src={star} alt='estrella de favoritos' height='25px' />
-					{favorites.length}
+					<Link to='/favorites' className={s.cart}>
+						<img src={star} alt='estrella de favoritos' height='25px' />
+						{favorites.length}
+					</Link>
 				</div>
 			</nav>
 		</div>

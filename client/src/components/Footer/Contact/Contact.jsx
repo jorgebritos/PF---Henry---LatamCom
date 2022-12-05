@@ -35,7 +35,8 @@ export default function Contact() {
 	}
 
 	//AGREGUEN LOS SUYOS
-	const ourMails = ['britosj30@gmail.com'];
+	const ourMails = ['britosj30@gmail.com', 'matthewgallar2112@outlook.com'];
+	
 
 	return (
 		<div className={s.back_ground}>

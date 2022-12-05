@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './LandingPage.module.css';
 import Carrusel from '../Carousel/Carousel';
-
 export default function LandingPage() {
 	return (
 		<div className={s.back}>
