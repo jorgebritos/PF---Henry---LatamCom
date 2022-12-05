@@ -28,10 +28,11 @@ export const LoginForm = ({location}) => {
 
 	const { user, isLoading, loginWithRedirect } = useAuth0();
 	const allUser = useSelector((state) => state.allUsers);
+	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
-		email: "john@gmail.com",
-		password: "m38rmF$"
+		email: "",
+		password: ""
 	})
 	const history = useHistory();
 
@@ -40,6 +41,11 @@ export const LoginForm = ({location}) => {
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
+
+	useEffect(()=>{
+		dispatch(authTokenRouterLog({...login}))
+	},[login,dispatch]
+)
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -69,17 +75,40 @@ export const LoginForm = ({location}) => {
 
 	function handleInputChange(e) {
 		e.preventDefault();
+		console.log(e);
 		setLogin({
 			...login,
 			[e.target.name]: e.target.value
 		})
 	}
 
+
+
+/* 	const [input, setInput] = useState({email:"", password:""});
+	const [error, setErrors] = useState({email:"", password:""}); */
+	
+/* 	const validateInput = (input) => {
+		let errors = {};
+		let expreg = /[.*+\-?^${}()|[\]\\/]/;
+	} */
 	function confirmUser(e) {
 		e.preventDefault();
-		dispatch(authTokenRouterLog({...login}))
+		let confirm = true
+/* 		const value = e.target.value;
+		const property = e.target.name; */
+
+/* 		setInput({ ...input, [property]: value });
+		setErrors(validateInput({ ...input, [property]: value })); */
+
+	  dispatch(authTokenRouterLog({...login, confirm}))
+		console.log(`logg: ${logg}`);
+		if (logg == "IncorrectPassword") {
+			alert("La contraseña es incorrecta")
+		}else{
 		setLogin({email: "", password: ""})
+
 		history.push("/home")
+		}
 	}
 
 	return (
@@ -103,7 +132,7 @@ export const LoginForm = ({location}) => {
 						/>
 					</div>
 					<br />
-					<button className={s.btn} onClick={(e) => confirmUser(e)}>
+					<button className={s.btn} id="confirm" onClick={(e) => confirmUser(e)}>
 						Let`s get started
 					</button>
 					<br />
