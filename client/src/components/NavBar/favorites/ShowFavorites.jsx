@@ -26,7 +26,7 @@ const ShowFavorites = () => {
 
 	return (
 		<div>
-			<h1>SHOPPING CART</h1>
+			<h1>FAVORITES</h1>
 			<div>
 				<div>
 					{favorites.map((producto) => {
