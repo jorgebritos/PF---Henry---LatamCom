@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { filterByRating, getAllProducts } from '../../redux/actions';
 import Carrusel from './CarruselLanding';
 import s from './LandingPage.module.css';
-import Carrusel from '../Carousel/Carousel';
 export default function LandingPage() {
 	// const dispatch = useDispatch()
 	// const product = useSelector((state)=> state.allProducts)

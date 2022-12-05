@@ -27,7 +27,7 @@ export const LoginForm = ({location}) => {
   
 
 	const { isLoading, loginWithRedirect } = useAuth0();
-	// const allUser = useSelector((state) => state.allUsers);
+	const allUser = useSelector((state) => state.allUsers);
 	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
@@ -36,7 +36,7 @@ export const LoginForm = ({location}) => {
 	})
 	const history = useHistory();
 
-	const usuario = user && allUser.find((u) => u.email === user.email);
+	// const usuario = user && allUser.find((u) => u.email === user.email);
 	console.log(allUser);
 	useEffect(() => {
 		dispatch(getAllUsers());

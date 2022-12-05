@@ -32,6 +32,7 @@ function NavBar() {
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
+	const local = useSelector((state) => state.localstorage);
 
 	function search(e) {
 		dispatch(newSearch(''));
