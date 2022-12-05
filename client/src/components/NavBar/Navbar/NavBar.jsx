@@ -6,7 +6,8 @@ import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useDispatch, useSelector } from 'react-redux';
+import { newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers, authTokenRouterLog } from '../../../redux/actions';
 import { useEffect, useState } from 'react';
@@ -36,17 +37,20 @@ function NavBar() {
 	},[login,dispatch]
 	)
 
+	const dispatch = useDispatch();
+	const products = useSelector((state) => state.searchedProducts);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites)
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
-	
-	// const usuario = allUser? allUser.filter((u) => u.email === user.email): false;
-	// console.log(usuario)
-	
-	// const isAdmin = usuario.admin
-	
+
+	const local = useSelector((state) => state.localstorage);
+
+	function search(e) {
+		dispatch(newSearch(''));
+	}
+
 	return (
 		<div className={s.navBar}>
 			<nav className={s.navbar}>
@@ -58,7 +62,7 @@ function NavBar() {
 				<div>
 					<ul className={s.ul}>
 						<li className={s.li}>
-							<Link to={'/home'} className={s.Link}>
+							<Link to={'/home'} className={s.Link} onClick={(e) => search(e)}>
 								<h3>Home</h3>
 							</Link>
 						</li>
@@ -78,7 +82,13 @@ function NavBar() {
 				</div>
 
 				<div>
-					<LoginRegister items={[{ anchor: 'Configuration', slug: '' }, { anchor: 'Log Out', slug: '', }]} dropdownTitle="USER" />
+					<LoginRegister
+						items={[
+							{ anchor: 'Configuration', slug: '' },
+							{ anchor: 'Log Out', slug: '' },
+						]}
+						dropdownTitle='USER'
+					/>
 				</div>
 
 				<div>
@@ -91,10 +101,12 @@ function NavBar() {
 						)}
 					</Link>
 				</div>
-				<div></div>
+
 				<div className={s.favorites}>
-					<img src={star} alt='estrella de favoritos' height='25px' />
-					{favorites.length}
+					<Link to='/favorites' className={s.cart}>
+						<img src={star} alt='estrella de favoritos' height='25px' />
+						{favorites.length}
+					</Link>
 				</div>
 			</nav>
 		</div>

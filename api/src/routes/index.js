@@ -9,6 +9,8 @@ const purchaseRoute = require("./purchase.js")
 const favoritesRoute = require("./favorites.js")
 const loginRoute = require("./login.js")
 const mailRoute = require("./mail.js")
+const buyPaypalRoute = require("./buyPaypal.js")
+const cartRoute = require("./cart.js")
 
 const router = Router();
 
@@ -23,5 +25,7 @@ router.use('/purchase', purchaseRoute)
 router.use('/favorites', favoritesRoute)
 router.use("/login", loginRoute)
 router.use('/send-mail', mailRoute)
+router.use('/buyings', buyPaypalRoute)
+router.use('/cart', cartRoute)
 
 module.exports = router;

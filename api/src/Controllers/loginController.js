@@ -9,7 +9,7 @@ const {authByEmailPwd} = require("../helpers/auth-by-email-pwd.js");
 const authTokenRouterLog = async (req, res) => {
   console.log("En la party");
   const { email, password, confirm } = req.body;
-  if (!email || !password) return res.send("FormIncomplet")
+  if (!email || !password) return res.send("FormIncomplet").send("Incomplete loginForm credentials")
   
   try {
     const searchUser = await User.findOne({

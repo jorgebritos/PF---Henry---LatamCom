@@ -6,21 +6,29 @@
 	justify-content: center;
 	min-height: calc(100vh - 9.5rem);
 }
+.divf {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	justify-items: center;
+}
 .conten_form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	align-content: center;
 	justify-content: center;
+	justify-items: center;
 
 	background-color: #38606dd5;
 	border-radius: 23px;
 	box-shadow: 0 0 13px #000000;
 
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-	padding: 1rem;
+	padding: 0.5rem 1rem;
 	height: 450px;
-	width: 550px;
+	width: 450px;
 }
 
 .label {
@@ -39,6 +47,7 @@
 	background-color: #17addac5;
 	backdrop-filter: blur(4px);
 	margin-bottom: 10px;
+	border: none;
 }
 .input:hover {
 	background-color: #d9d9d9;
@@ -58,7 +67,8 @@
 	border: 1px solid black;
 	border-radius: 13px;
 	background-color: #bde2ed;
-	width: 30rem;
+	width: 400px;
+	height: 100px;
 	padding: 0.5rem;
 	min-height: 3rem;
 	color: black;
@@ -69,6 +79,7 @@
 }
 
 .btn {
+	border: none;
 	width: 140px;
 	height: 25px;
 	border-radius: 13px;
