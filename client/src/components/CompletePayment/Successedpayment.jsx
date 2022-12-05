@@ -22,7 +22,7 @@ const SuccessedPayment = (req) => {
 	const dispatch = useDispatch();
 	const purchased = useSelector((state) => state.purchase);
 	const created = useSelector((state) => state.createdPurchase);
-
+	console.log(window.location.origin);
 	useEffect(() => {
 		dispatch(getPurchaseDetail(search)).catch(() => {
 			return (
@@ -78,7 +78,7 @@ const SuccessedPayment = (req) => {
 						<span className={s.messagge}>
 							Your purchase was successfully complete!
 							{created.hasOwnProperty('id')
-								? (window.location.href = 'http://localhost:3000/home')
+								? (window.location.href = `${window.location.origin}/home`)
 								: ''}
 						</span>
 					) : (
