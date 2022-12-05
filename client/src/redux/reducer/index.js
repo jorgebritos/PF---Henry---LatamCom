@@ -115,8 +115,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: action.payload.data.jwt,
-                user: { username: user.username, picture: user.profile_image, name: name, email: user.email },
-                favorites: user.favorites? user.favorites : []
+                user: { username: user.username, picture: user.profile_image, name: name, email: user.email }
             }
         case SEND_MAIL:
             return action.payload
