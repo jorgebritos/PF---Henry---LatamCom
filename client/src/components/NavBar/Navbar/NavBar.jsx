@@ -8,9 +8,35 @@ import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { newSearch } from '../../../redux/actions/index';
+import { useAuth0 } from '@auth0/auth0-react';
+import { getAllUsers, authTokenRouterLog } from '../../../redux/actions';
+import { useEffect, useState } from 'react';
+
 
 function NavBar() {
 	const dispatch = useDispatch();
+	
+	const { user, isAuthenticated } = useAuth0();
+	const userNow = useSelector((state) => state.user)
+	
+	const [login, setLogin] = useState({
+		email: "",
+		password: "",
+		admin:""
+	})
+
+	useEffect(() => {
+        dispatch(getAllUsers())
+    }, [dispatch]);
+
+	
+	const allUser = useSelector((state) => state.allUsers);
+	
+	// useEffect(()=>{
+	// 	dispatch(authTokenRouterLog({...login}))
+	// },[login,dispatch]
+	// )
+
 	const products = useSelector((state) => state.searchedProducts);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites)
@@ -39,11 +65,15 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
+						{(isAuthenticated || userNow.admin)?
+						
 						<li className={s.li}>
 							<Link to={'/create/product'} className={s.Link}>
 								<h3>Create-Product</h3>
 							</Link>
 						</li>
+						:(<p></p>
+					)}
 					</ul>
 				</div>
 				<div>
@@ -72,8 +102,10 @@ function NavBar() {
 				</div>
 
 				<div className={s.favorites}>
-					<img src={star} alt='estrella de favoritos' height='25px' />
-					{favorites.length}
+					<Link to='/favorites' className={s.cart}>
+						<img src={star} alt='estrella de favoritos' height='25px' />
+						{favorites.length}
+					</Link>
 				</div>
 			</nav>
 		</div>

@@ -28,10 +28,11 @@ export const LoginForm = ({location}) => {
 
 	const { user, isLoading, loginWithRedirect } = useAuth0();
 	const allUser = useSelector((state) => state.allUsers);
+	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
-		email: "john@gmail.com",
-		password: "m38rmF$"
+		email: "",
+		password: ""
 	})
 	const history = useHistory();
 
@@ -41,11 +42,17 @@ export const LoginForm = ({location}) => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
+	useEffect(()=>{
+		dispatch(authTokenRouterLog({...login}))
+	},[login,dispatch]
+)
+
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 
 	const log= async ()=>{
+		loginWithRedirect();
 		// const domain = 'dev-g1jtn0qvoq0x04y4.us.auth0.com';
     	// const audience = 'https://www.PF---Henry---LatamCom.com';
     	// const scope = "read:PF-Henry";
@@ -72,13 +79,37 @@ export const LoginForm = ({location}) => {
 			...login,
 			[e.target.name]: e.target.value
 		})
+		return login
 	}
 
+
+
+/* 	const [input, setInput] = useState({email:"", password:""});
+	const [error, setErrors] = useState({email:"", password:""}); */
+	
+/* 	const validateInput = (input) => {
+		let errors = {};
+		let expreg = /[.*+\-?^${}()|[\]\\/]/;
+	} */
 	function confirmUser(e) {
 		e.preventDefault();
-		dispatch(authTokenRouterLog({...login}))
-		setLogin({email: "", password: ""})
+		// let confirm = true
+		console.log(login)
+/* 		const value = e.target.value;
+		const property = e.target.name; */
+
+/* 		setInput({ ...input, [property]: value });
+		setErrors(validateInput({ ...input, [property]: value })); */
+
+	  dispatch(authTokenRouterLog({...login, confirm: true}))
+		console.log(`logg: ${logg}`);
+		if (logg == "IncorrectPassword") {
+			alert("La contraseña es incorrecta")
+		}else{
+		setLogin({email: "", password: "", admin:""})
+
 		history.push("/home")
+		}
 	}
 
 	return (
@@ -102,7 +133,7 @@ export const LoginForm = ({location}) => {
 						/>
 					</div>
 					<br />
-					<button className={s.btn} onClick={(e) => confirmUser(e)}>
+					<button className={s.btn} id="confirm" onClick={(e) => confirmUser(e)}>
 						Let`s get started
 					</button>
 					<br />
@@ -112,7 +143,8 @@ export const LoginForm = ({location}) => {
 					<br />
 					<hr width='150px' />
 					<h5>Or...</h5>
-					<button className={s.btnG} onClick={() => log()}>{/*challengesData*/} 
+					{/* <div>{challengesData}</div> */}
+					<button className={s.btnG} onClick={() => log()}>
 						<img
 							src='https://img.icons8.com/fluency/16/null/google-logo.png'
 							alt=''
