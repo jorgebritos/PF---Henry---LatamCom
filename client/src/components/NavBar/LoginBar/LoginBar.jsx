@@ -133,6 +133,7 @@ function LoginRegister({ items = [] }) {
 							return (
 								<li className={item_list} key={index}>
 									<a
+										href=' '
 										onClick={(e) =>
 											item.anchor === 'Configuration'
 												? userConfig(e)

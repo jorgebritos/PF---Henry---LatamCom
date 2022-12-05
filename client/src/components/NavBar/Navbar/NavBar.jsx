@@ -6,18 +6,37 @@ import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
+import { getAllUsers } from '../../../redux/actions';
+import { useEffect } from 'react';
 
 
 function NavBar() {
+	const dispatch = useDispatch();
+
+	const { isAuthenticated } = useAuth0();
+	const userNow = useSelector((state) => state.user)
+
+	useEffect(() => {
+		dispatch(getAllUsers())
+	}, [dispatch]);
+
+	// useEffect(()=>{
+	// 	dispatch(authTokenRouterLog({...login}))
+	// },[login,dispatch]
+	// )
+
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites)
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
-	
-	const { user, isLoading, isAuthenticated } = useAuth0();
+
+	function search(e) {
+		dispatch(newSearch(''));
+	}
 
 	return (
 		<div className={s.navBar}>
@@ -30,19 +49,27 @@ function NavBar() {
 				<div>
 					<ul className={s.ul}>
 						<li className={s.li}>
-							<Link to={'/home'} className={s.Link}>
+							<Link to={'/home'} className={s.Link} onClick={(e) => search(e)}>
 								<h3>Home</h3>
 							</Link>
 						</li>
-						{isAuthenticated? (
-						
-						<li className={s.li}>
-							<Link to={'/create/product'} className={s.Link}>
-								<h3>Create-Product</h3>
-							</Link>
-						</li>
-						):(<p></p>
-					)}
+						{(isAuthenticated || userNow.admin) ?
+
+							<li className={s.li}>
+								<Link to={'/create/product'} className={s.Link}>
+									<h3>Create-Product</h3>
+								</Link>
+							</li>
+							: (<p></p>)
+						}
+						{(isAuthenticated || userNow.admin) ?
+							<li className={s.li}>
+								<Link to={'/update'} className={s.Link}>
+									<h3>Update-Product</h3>
+								</Link>
+							</li>
+							: (<p></p>)
+						}
 					</ul>
 				</div>
 				<div>
@@ -50,7 +77,13 @@ function NavBar() {
 				</div>
 
 				<div>
-					<LoginRegister items={[{ anchor: 'Configuration', slug: '' }, { anchor: 'Log Out', slug: '', }]} dropdownTitle="USER" />
+					<LoginRegister
+						items={[
+							{ anchor: 'Configuration', slug: '' },
+							{ anchor: 'Log Out', slug: '' },
+						]}
+						dropdownTitle='USER'
+					/>
 				</div>
 
 				<div>
@@ -63,10 +96,12 @@ function NavBar() {
 						)}
 					</Link>
 				</div>
-				<div></div>
+
 				<div className={s.favorites}>
-					<img src={star} alt='estrella de favoritos' height='25px' />
-					{favorites.length}
+					<Link to='/favorites' className={s.cart}>
+						<img src={star} alt='estrella de favoritos' height='25px' />
+						{favorites.length}
+					</Link>
 				</div>
 			</nav>
 		</div>

@@ -3,17 +3,20 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const {
-  DB_USER, DB_PASSWORD, DB_HOST,
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME,DB_DEPLOY
 } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/latamcom`, {
+// const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
+//   logging: false, // set to console.log to see the raw SQL queries
+//   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+// });
+const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
-
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
 fs.readdirSync(path.join(__dirname, '/models'))
   .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
@@ -34,7 +37,10 @@ const { Category, Comment, Product, Purchase, User } = sequelize.models;
 
 // Aca vendrian las relaciones
 Product.belongsToMany(User, { as:"favorites", through: "favorites_user" })
-User.belongsToMany(Product, { as:"favorites",through: "user_favorites" })
+User.belongsToMany(Product, { as:"favorites",through: "favorites_user" })
+
+Product.belongsToMany(User, { as:"cart", through: "cart_user" })
+User.belongsToMany(Product, { as:"cart",through: "user_cart" })
 
 Product.belongsToMany(Comment, { through: "products_comments" })
 Comment.belongsToMany(Product, { through: "products_comments" })

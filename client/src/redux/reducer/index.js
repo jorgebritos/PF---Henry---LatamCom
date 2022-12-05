@@ -1,29 +1,38 @@
 import {
-    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS,
-    FILTER_BY_CATEGORY, SEARCH_BY_NAME, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
-    CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, ADD_FAVORITE,
+    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
+    FILTER_BY_CATEGORY, SEARCH_BY_NAME, SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
+    CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT, CREATE_USER,
     GET_ALL_USERS, GET_AUTHTOKENROUTERPERF, POST_AUTHTOKENROUTERLOG,
     UPDATE_RATING,
-    SEND_MAIL
+    SEND_MAIL,
+    LOCALSTORAGE,
+    GET_FAVORITES,
+    REMOVE_FAVORITE,
+    DELETE_PRODUCT
 } from "../actions"
 
 const initialState = {
     products: [],
     user: {},
     favorites: [],
-    allUsers: {},
+    allUsers: [],
     // ESTE ES PARA APLICAR LOS FILTROS, ASÍ NO SE PIERDE EL STATE
     allProducts: [],
     productDetail: {},
     productComments: [],
     categories: [],
     searchedProducts: [],
+    searchedProducts2: [],
     brands: [],
     filBrands: [],
     filCategory: [],
-    login: []
+    login: [],
+    pruchase: {},
+    createdPurchase: {},
+    //LOCALSTORAGE
+    localstorage: [],
 }
 
 
@@ -54,6 +63,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 user: action.payload,
             }
+        case GET_FAVORITES:
+            return {
+                ...state,
+                favorites: action.payload,
+            }
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
@@ -75,6 +89,11 @@ export default function rootReducer(state = initialState, action) {
                 brands: action.payload,
                 filBrands: action.payload
             }
+        case GET_PURCHASE_DETAIL:
+            return {
+                ...state,
+                purchase: action.payload,
+            }
         case ADD_FAVORITE:
             return {
                 ...state,
@@ -87,7 +106,10 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
-            return action.payload
+            return {
+                ...state,
+                createdPurchase: action.payload,
+            }
         case POST_AUTHTOKENROUTERLOG:
             let user = action.payload.data.user 
             let logueo = action.payload.data.jwt || action.payload.data
@@ -99,7 +121,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: logueo ,
-                user: {username: user.username, picture: user.profile_image, name: name, email: user.email}
+                user: {username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin}
             }
             }else{
                 return {
@@ -108,6 +130,8 @@ export default function rootReducer(state = initialState, action) {
                 }
             }
         case SEND_MAIL:
+            return action.payload
+        case PP_PURCHASE:
             return action.payload
         case UPDATE_RATING:
             return action.payload
@@ -118,6 +142,10 @@ export default function rootReducer(state = initialState, action) {
         case UPDATE_COMMENT:
             return action.payload
         case DELETE_COMMENT:
+            return action.payload
+        case DELETE_PRODUCT:
+            return action.payload
+        case REMOVE_FAVORITE:
             return action.payload
         case RESET_DETAIL:
             return {
@@ -191,6 +219,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 searchedProducts: action.payload
             }
+        case SEARCH_BY_NAME2:
+            return {
+                ...state,
+                searchedProducts2: action.payload
+            }
         case NEW_SEARCH:
             return {
                 ...state,
@@ -207,6 +240,13 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 products: sortProducts
+            }
+
+        case LOCALSTORAGE:
+            return {
+                ...state,
+                localstorage: [action.payload]
+
             }
         default:
             return state;

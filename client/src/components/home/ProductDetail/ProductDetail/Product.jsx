@@ -7,12 +7,16 @@ import {
 	getAllProducts,
 	getAllCategories,
 	getAllUsers,
+	putLocalstorage,
 } from '../../../../redux/actions/index';
+
 import CreateComment from '../CreateComment/CreateComment';
 import Loading from '../../../loading/Loading';
 import s from './Product.module.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Product = () => {
+	const { isAuthenticated } = useAuth0();
 	const addProduct = async (event) => {
 		event.preventDefault();
 		let cart = [];
@@ -25,12 +29,14 @@ const Product = () => {
 		}
 		cart.push({ ...product, amount: 1 });
 		localStorage.setItem('cart', JSON.stringify(cart));
+		dispatch(putLocalstorage());
 	};
 
 	// Hooks y estados ////////////////////////////////
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const product = useSelector((state) => state.productDetail);
+	const user = useSelector((state) => state.user);
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////
@@ -92,9 +98,15 @@ const Product = () => {
 				</div>
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
-					<div>
-						<CreateComment />
-					</div>
+					<>
+						{isAuthenticated || user.admin ? (
+							<div>
+								<CreateComment />
+							</div>
+						) : (
+							<p className={s.parafo}>Must Log in to make a comment!</p>
+						)}
+					</>
 				</div>
 			</div>
 		);

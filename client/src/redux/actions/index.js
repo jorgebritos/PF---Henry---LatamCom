@@ -10,7 +10,9 @@ export const GET_ALL_CATEGORIES = "GET_ALL_CATEGORIES"
 export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
 export const GET_AUTHTOKENROUTER = "GET_AUTHTOKENROUTER"
 export const GET_AUTHTOKENROUTERPERF = "GET_AUTHTOKENROUTERPERF"
+export const GET_FAVORITES = "GET_FAVORITES"
 
+export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE"
@@ -20,6 +22,8 @@ export const CREATE_COMMENT = "CREATE_COMMENT"
 export const CREATE_PURCHASE = "CREATE_PURCHASE"
 export const POST_AUTHTOKENROUTERLOG = "GET_AUTHTOKENROUTERLOG"
 export const SEND_MAIL = "SEND_MAIL"
+export const PP_PURCHASE = "PP_PURCHASE"
+
 
 //RUTAS PUT
 export const UPDATE_USER = "UPDATE_USER"
@@ -29,26 +33,33 @@ export const UPDATE_RATING = "UPDATE_RATING"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
+export const DELETE_PRODUCT = "DELETE_PRODUCT"
+export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
 
 //FILTRADOS
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
 export const FILTER_BY_PRICE = "FILTER_BY_PRICE"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY"
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
+export const SEARCH_BY_NAME2 = "SEARCH_BY_NAME2"
 export const ORDER_BY = "ORDER_BY"
 export const RESET_DETAIL = "RESET_DETAIL"
 export const REMOVE_ALL_FILTERS = "REMOVE_ALL_FILTERS"
 export const NEW_SEARCH = "NEW_SEARCH"
 
+//LocalStorage
+export const LOCALSTORAGE = "LOCALSTORAGE"
+
 export function getAllProducts() {
     return async function (dispatch) {
-        const productsInfo = await axios.get('http://localhost:3001/products')
+        const productsInfo = await axios.get(`http://localhost:3001/products`)
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: productsInfo.data
         })
     }
 }
+
 
 //RUTAS GET
 
@@ -88,6 +99,16 @@ export function getUser(id) {
         dispatch({
             type: GET_USER,
             payload: user.data
+        })
+    }
+}
+
+export function getFavorites(id) {
+    return async function (dispatch) {
+        const favorites = await axios.get(`http://localhost:3001/favorites/${id}`)
+        dispatch({
+            type: GET_FAVORITES,
+            payload: favorites.data
         })
     }
 }
@@ -141,6 +162,16 @@ export function getProductDetail(id) {
         dispatch({
             type: GET_PRODUCT_DETAIL,
             payload: productDetail.data
+        })
+    }
+}
+
+export function getPurchaseDetail(payload) {
+    return async function (dispatch) {
+        const productDetail = await axios.get(`http://localhost:3001/buyings/acceptpayment${payload}`)
+        dispatch({
+            type: GET_PURCHASE_DETAIL,
+            payload: productDetail
         })
     }
 }
@@ -207,6 +238,18 @@ export function sendMail(payload) {
     }
 }
 
+export function buyShoppingCart(payload) {
+    return async function (dispatch) {
+        const info = await axios.post('http://localhost:3001/buyings/createpayment', payload)
+        console.log(info.data);
+        window.location.href= info.data
+        dispatch({
+            type: PP_PURCHASE,
+            payload: info
+        })
+    }
+}
+
 //RUTAS PUT
 
 export function updateUser(payload) {
@@ -232,8 +275,9 @@ export function updateRatingProduct(payload) {
 }
 
 export function updateProduct(payload) {
+    let id = payload.id;
     return async function (dispatch) {
-        const info = await axios.put('http://localhost:3001/products', payload)
+        const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
         dispatch({
             type: UPDATE_PRODUCT,
             payload: info.data
@@ -258,6 +302,36 @@ export function deleteComment(id) {
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
+        })
+    }
+}
+
+export function deleteProduct(id) {
+    return async function (dispatch) {
+        const deletedProduct = await axios.delete(`http://localhost:3001/products/${id}`)
+        dispatch({
+            type: DELETE_PRODUCT,
+            payload: deletedProduct.data
+        })
+    }
+}
+
+export function removeFavorite(id, idProduct) {
+    return async function (dispatch) {
+        const deletedFavorite = await axios.delete(`http://localhost:3001/favorites/${id}`, idProduct)
+        dispatch({
+            type: REMOVE_FAVORITE,
+            payload: deletedFavorite.data
+        })
+    }
+}
+
+export function removeAllFavorites(id) {
+    return async function (dispatch) {
+        const noFavorites = await axios.delete(`http://localhost:3001/favorites/${id}`)
+        dispatch({
+            type: REMOVE_FAVORITE,
+            payload: noFavorites.data
         })
     }
 }
@@ -315,14 +389,14 @@ export function newSearch(productName) {
     }
 }
 
-export function searchByName(productName) {
+export function searchByName(productName, typeR) {
     return async function (dispatch) {
-        const productsInfo = await axios.get('http://localhost:3001/products')
+        const productsInfo = await axios.get(`http://localhost:3001/products`)
 
-        if (productsInfo.data !== "Please Create Categories First") {
+        if (productsInfo.data !== "Please Create Categories First"&& productName) {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
             dispatch({
-                type: SEARCH_BY_NAME,
+                type: typeR,
                 payload: searchedProducts
             })
         } else {
@@ -346,4 +420,24 @@ export function orderBy(payload) {
         type: ORDER_BY,
         payload
     }
+}
+
+// LocalStorage
+
+export function putLocalstorage(){
+    if (localStorage.getItem('cart')) {
+        let cart = JSON.parse(localStorage.getItem('cart'));
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    else{
+        let cart = []
+        return{
+            type: LOCALSTORAGE,
+            payload: cart
+        }
+    }
+    
 }

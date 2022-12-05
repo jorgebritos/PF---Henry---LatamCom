@@ -1,10 +1,5 @@
-carousel.module.css
-
-.container img {
-    transition: 1s;
-    opacity: 0;
-}
-
-.container .loaded {
-    opacity: 1;
+.carrusel {
+	display: flex;
+	width: 100%;
+	align-items: center;
 }

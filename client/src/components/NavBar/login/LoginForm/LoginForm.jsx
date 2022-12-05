@@ -26,8 +26,8 @@ export const LoginForm = ({location}) => {
 	// }, [code]);
   
 
-	const { user, isLoading, loginWithRedirect } = useAuth0();
-	const allUser = useSelector((state) => state.allUsers);
+	const { isLoading, loginWithRedirect } = useAuth0();
+	// const allUser = useSelector((state) => state.allUsers);
 	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
@@ -36,8 +36,13 @@ export const LoginForm = ({location}) => {
 	})
 	const history = useHistory();
 
+<<<<<<< HEAD
 	const usuario = user && allUser.find((u) => u.email === user.email);
 	console.log(allUser);
+=======
+	// const usuario = user && allUser.find((u) => u.email === user.email);
+
+>>>>>>> b2b1e3fd5627f81db17004e5ed6031210160a004
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
@@ -75,11 +80,11 @@ export const LoginForm = ({location}) => {
 
 	function handleInputChange(e) {
 		e.preventDefault();
-		console.log(e);
 		setLogin({
 			...login,
 			[e.target.name]: e.target.value
 		})
+		return login
 	}
 
 
@@ -93,19 +98,20 @@ export const LoginForm = ({location}) => {
 	} */
 	function confirmUser(e) {
 		e.preventDefault();
-		let confirm = true
+		// let confirm = true
+		console.log(login)
 /* 		const value = e.target.value;
 		const property = e.target.name; */
 
 /* 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value })); */
 
-	  dispatch(authTokenRouterLog({...login, confirm}))
+	  dispatch(authTokenRouterLog({...login, confirm: true}))
 		console.log(`logg: ${logg}`);
-		if (logg == "IncorrectPassword") {
+		if (logg === "IncorrectPassword") {
 			alert("La contraseña es incorrecta")
 		}else{
-		setLogin({email: "", password: ""})
+		setLogin({email: "", password: "", admin:""})
 
 		history.push("/home")
 		}
