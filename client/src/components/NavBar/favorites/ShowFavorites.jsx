@@ -11,7 +11,7 @@ const ShowFavorites = () => {
 
 	const deleteProduct = (e, idProduct, idUser) => {
 		e.preventDefault();
-		favorites = favorites.filter((p) => p.id !== id);
+		favorites = favorites.filter((p) => p.id !== idProduct);
 		if (user.id) {
 			dispatch(removeFavorite(idUser, idProduct));
 		}
