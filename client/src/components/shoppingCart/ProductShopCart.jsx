@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
 import s from './ProductShopCart.module.css';
+import { putLocalstorage } from '../../redux/actions';
 
 const ProductShopCart = () => {
 	const [total, setTotal] = useState(0);
 	const [productsSelected, setProductsSelected] = useState([]);
+	const history = useHistory()
+	const dispatch = useDispatch()
 	let cant = 0;
-
-	useEffect(() => {
-		seeProducts();
-	}, []);
 
 	const seeProducts = () => {
 		let cart = [];
-
 		if (localStorage.getItem('cart')) {
 			cart = JSON.parse(localStorage.getItem('cart'));
 		}
@@ -23,6 +21,10 @@ const ProductShopCart = () => {
 		let cant = cart;
 		totalAccount(cant);
 	};
+
+	useEffect(() => {
+		seeProducts();
+	}, []);
 
 	const deleteProduct = (e, id) => {
 		e.preventDefault();
@@ -33,6 +35,7 @@ const ProductShopCart = () => {
 
 		let cant = carrito;
 		totalAccount(cant);
+		dispatch(putLocalstorage())
 	};
 
 	const cleanCart = (e) => {
@@ -41,6 +44,7 @@ const ProductShopCart = () => {
 		localStorage.removeItem('cart');
 		let cant = 0;
 		totalAccount(cant);
+		dispatch(putLocalstorage())
 	};
 
 	const suma = (event) => {
@@ -48,7 +52,7 @@ const ProductShopCart = () => {
 		const name = event.target.name;
 
 		const increase = productsSelected.map((p) => {
-			if (p.id == name) {
+			if (p.id === Number(name)) {
 				return {
 					...p,
 					amount: p.amount + 1,
@@ -66,7 +70,7 @@ const ProductShopCart = () => {
 		event.preventDefault();
 		const name = event.target.name;
 		const decrease = productsSelected.map((p) => {
-			if (p.id == name && p.amount !== 1) {
+			if (p.id === Number(name) && p.amount !== 1) {
 				return {
 					...p,
 					amount: p.amount - 1,
@@ -96,6 +100,13 @@ const ProductShopCart = () => {
 		}
 	};
 
+	const buyItems = (event) =>{
+		event.preventDefault()
+		history.push("/buyproducts")
+		localStorage.setItem("total", JSON.stringify(total))
+	
+	}
+
 	return (
 		<div className={s.cont}>
 			<h1>SHOPPING CART</h1>
@@ -105,7 +116,12 @@ const ProductShopCart = () => {
 						return (
 							<div className={s.producCard} key={producto.id}>
 								<div className={s.cimg}>
-									<img className={s.img} src={producto.image} width='100px' />
+									<img
+										className={s.img}
+										src={producto.image}
+										width='100px'
+										alt=''
+									/>
 								</div>
 								<div className={s.cname}>
 									<div>
@@ -166,7 +182,7 @@ const ProductShopCart = () => {
 									CLEAN CART
 								</button>
 								<br />
-								<button className={s.btnB}>BUY</button>
+								<button className={s.btnB} onClick={buyItems} >BUY</button>
 							</div>
 						</div>
 					</div>

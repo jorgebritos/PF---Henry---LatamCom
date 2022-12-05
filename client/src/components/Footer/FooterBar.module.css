@@ -1,0 +1,22 @@
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 9.5rem);
+}
+.container {
+	background-color: black;
+	color: #17abda;
+	padding: 7px;
+}
+
+.footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+.a {
+	text-decoration: none;
+	color: #17abda;
+	cursor: pointer;
+}

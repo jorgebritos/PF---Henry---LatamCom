@@ -1,21 +1,31 @@
-import { useAuth0 } from '@auth0/auth0-react';
-
 import { Route, useLocation } from 'react-router-dom';
-
 import LandingPage from './components/landing/LandingPage';
-import HomePage from './components/home/HomePage.jsx';
-import NavBar from './components/NavBar/NavBar.jsx';
-import Product from './components/ProductDetail/Product';
-import ProductShopCart from "./components/shoppingCart/ProductShopCart.jsx"
+import HomePage from './components/home/home/HomePage';
+import NavBar from './components/NavBar/Navbar/NavBar.jsx';
+import FooterBar from './components/Footer/FooterBar';
+import Product from './components/home/ProductDetail/ProductDetail/Product';
+import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/CreateProduct/CreateProduct';
-import ProductSended from "./components/CreateProduct/ProductSended.jsx"
-import { Profile } from './components/login/Profile'
+import ProductSended from './components/CreateProduct/ProductSended.jsx';
+import { Profile } from './components/NavBar/login/Profile/Profile';
+import { LoginForm } from './components/NavBar/login/LoginForm/LoginForm';
+import Buy from './components/BuyProducts/Buy'
+import SuccessedPayment from './components/CompletePayment/Successedpayment'
+import UpdateProduct from './components/UpdateProduct/UpdateProduct';
+import {ContactUs} from "./components/Footer/Contact/ContactEmailJS"
+import messageSended from './components/Footer/Contact/MessageSended';
+import UserSended from './components/CreateUser/UserSended';
+import CreateUser from './components/CreateUser/CreateUser';
+import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
 
 function App() {
 	let location = useLocation();
 	return (
 		<div className='App'>
-			{location.pathname !== '/' && <NavBar />}
+			{location.pathname !== '/' && location.pathname !== '/SuccessPayment' && (
+				<NavBar />
+			)}
+
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
 			<Route path='/SearchResults' exact component={HomePage} />
@@ -23,8 +33,18 @@ function App() {
 			<Route path='/shoppingcart' component={ProductShopCart} />
 			<Route path='/create/product' component={CreateProduct} />
 			<Route path='/create/productsended' component={ProductSended} />
+			<Route path='/CreateUser' component={CreateUser} />
+			<Route path='/createUser/usersended' component={UserSended} />
 			<Route path='/profile' component={Profile} />
+			<Route path='/LoginForm' component={LoginForm} />
+			<Route exact path='/contact' component={ContactUs} />
+			<Route path='/contact/messagesended' component={messageSended} />
+			<Route path="/buyproducts" component={Buy} />
+			<Route path="/SuccessPayment" component={SuccessedPayment} />
+			<Route path="/favorites" component={ShowFavorites} />
+			<Route path='/update' component={UpdateProduct} />
 
+			{location.pathname !== '/' && <FooterBar />}
 		</div>
 	);
 }

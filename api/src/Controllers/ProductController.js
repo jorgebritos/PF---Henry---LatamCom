@@ -1,16 +1,16 @@
-const { Product, Category } = require("../db.js");
+const { Product, Category} = require("../db.js");
 const { Op } = require("sequelize");
 
 const getProduct = async (req, res) => {
     const { name } = req.query;
     let productTable = await Product.findAll({
-        include: {
+        include: [{
             model: Category,
             attributes: ["name"],
             through: {
                 attributes: []
             }
-        },
+        }],
         order: [
             ['id', 'ASC']
         ]
@@ -19,12 +19,12 @@ const getProduct = async (req, res) => {
     if (productTable.length > 1) res.send(productTable);
 
     let categoryTable = await Category.findAll({});
-
     if (categoryTable.length === 0) return res.send("Please Create Categories First");
 
     if (productTable.length === 0 && categoryTable.length > 1) {
         try {
             let products = require("../JSON/products.json");
+
 
             let Bulkproducts = products.map(p => {
                 return {
@@ -32,7 +32,8 @@ const getProduct = async (req, res) => {
                     description: p.description,
                     image: p.image,
                     price: p.price,
-                    brand: p.brand ? p.brand : null
+                    brand: p.brand ? p.brand : null,
+                    category: p.category
                 };
             });
 
@@ -56,7 +57,7 @@ const getProduct = async (req, res) => {
             for (let i = 0; i < info.length; i++) {
                 let product = info[i];
                 let data = await productTable.find(r => r.id == product.id);
-                let category = await categoryTable.find(c => c.name == product.category);
+                let category = await categoryTable.find(c => c.name == product.category.name);
                 data.addCategory(category);
             };
 
@@ -109,9 +110,9 @@ const putProduct = async (req, res) => {
 
         await selectedProduct.save();
 
-        res.sendStatus(200);
+        res.status(200);
     } else {
-        res.sendStatus(404);
+        res.status(404);
     };
 };
 
@@ -120,13 +121,13 @@ const getProductByID = async (req, res) => {
         where: {
             id: req.params.id
         },
-        include: {
+        include: [{
             model: Category,
             attributes: ["name"],
             through: {
                 attributes: []
             }
-        }
+        }]
     });
     if (selectedProduct) {
         res.status(200).send(selectedProduct);
@@ -148,10 +149,10 @@ const postProduct = async (req, res) => {
     } = req.body;
 
     let exists = await Product.findOne({
-        where: {name: name}
+        where: { name: name }
     })
 
-    if(exists) return res.status(406).send("El producto ya existe")
+    if (exists) return res.status(406).send("El producto ya existe")
 
     let productCreate = await Product.create({
         name,
@@ -181,7 +182,7 @@ const deleteProduct = async (req, res) => {
         if (!deletedProduct) return 0;
         await Product.destroy({ where: { id: id } });
 
-        return res.status(200).json("Product deleted");
+        return res.status(200);
     }
     catch (err) {
         return res.status(500).send(`Product could not be deleted (${err})`);

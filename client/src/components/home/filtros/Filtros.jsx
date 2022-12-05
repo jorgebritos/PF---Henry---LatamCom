@@ -5,29 +5,31 @@ import {
 	filterByCategory,
 	filterByPrice,
 	getAllBrands,
-	getAllCategories,
-	getAllProducts,
 	orderBy,
 	removeFilters,
-} from '../../redux/actions';
+} from '../../../redux/actions';
 import s from './Filtros.module.css';
+import FiltroCategory from './FiltroCategory';
+import FiltroBrand from './FiltroBrand';
 
 export default function Filtros({ setCurrentPage, setOrder }) {
 	const dispatch = useDispatch();
 	const categories = useSelector((state) => state.categories);
-	const products = useSelector((state) => state.products);
-	const brands = useSelector((state) => state.brands);
+	const brands = useSelector((state) => state.filBrands);
 
-	useEffect(async () => {
-		await dispatch(getAllCategories());
-		await dispatch(getAllProducts());
-		dispatch(getAllBrands([]));
-	}, []);
-
+	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
+	const [isChecked, setIsChecked] = useState([]);
+	const [categoryFilter, setCategoryFilter] = useState('All');
 	const [priceFilter, setPriceFilter] = useState({
-		minPrice: 0,
-		maxPrice: 0,
-	});
+			minPrice: 0,
+			maxPrice: 0,
+		});
+
+	useEffect(() => {
+		dispatch(getAllBrands([]));
+	}, [dispatch]);
+
+	
 
 	function handlePriceFilter(e) {
 		if (e.target.checkValidity()) {
@@ -52,31 +54,33 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		let min = priceFilter.minPrice;
 		let max = priceFilter.maxPrice;
 
-		if (Number(min) > Number(max))
-			return alert('El minimo no puede ser mayor al maximo');
-		dispatch(
-			filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }),
-		);
-		dispatch(getAllBrands(products));
+		if (Number(min) > Number(max)) return alert('El minimo no puede ser mayor al maximo');
+		setCheckedState(new Array(15).fill(false));
+		dispatch(filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }));
+		setIsChecked([]);
+		// dispatch(getAllBrands(products));
 		setCurrentPage(1);
 	};
 
-	const [categoryFilter, setCategoryFilter] = useState('All');
+	
 
 	function handleCategoryFilter(category) {
 		setCategoryFilter(category);
 	}
 
-	const filterCategory = function (e) {
+	const filterCategory = async function (e) {
 		e.preventDefault();
+		setCheckedState(new Array(15).fill(false));
 		dispatch(filterByCategory(categoryFilter));
-		dispatch(getAllBrands(products));
+		setIsChecked([]);		
 		setCurrentPage(1);
 	};
+	// const distBrands =  function (products){
+	// 	console.log(`Es productos: ${products}`);
+	// 	dispatch(getAllBrands(products));
+	// }
 
-	const [checkedState, setCheckedState] = useState(new Array(15).fill(false));
 
-	const [isChecked, setIsChecked] = useState([]);
 
 	const handleOnChange = (position, e) => {
 		//SETEAR CAMPOS QUE ESTAN CHECKED
@@ -115,18 +119,20 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		for (const r of radios) {
 			r.checked = false;
 		}
+
 		setPriceFilter({ minPrice: 0, maxPrice: 0 });
 		setCheckedState(new Array(15).fill(false));
 		setIsChecked([]);
 		setCategoryFilter('All');
+		dispatch(filterByCategory('All'));
 	};
 
 	return (
 		<div className={s.div}>
 			<div className={s.cont}>
-				<div>
-					Ordenamientos
-					<select onChange={(e) => sort(e)}>
+				<div className={s.filtro}>
+					<h3 className={s.h4}>Order by:</h3>
+					<select className={s.select} onChange={(e) => sort(e)}>
 						<option>Select Order</option>
 						<optgroup label='Alphabetically'>
 							<option value={'asc'}>A-Z</option>
@@ -176,7 +182,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						</div>
 					</div>
 
-					<div className={s.filtro}>
+					{/* <div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Category</h4>
 						<ul>
 							{categories?.map((c) => {
@@ -189,7 +195,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 												value={c.name}
 												name={'category'}
 												id='categoria'
-												onInput={(e) => handleCategoryFilter(c.name)}
+												onClick={(e) => handleCategoryFilter(c.name)}
 											/>
 											<span className={s.span}>{c.name}</span>
 										</label>
@@ -200,33 +206,41 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						<button className={s.btn} onClick={(e) => filterCategory(e)}>
 							Filter
 						</button>
-					</div>
-					<div className={s.filtro}>
+					</div> */}
+{/* Ejemplar de como se modulariza en front React usen el código comentado de arriba *solo* para comparar
+	  Una vez resueltas las dudas borren el código comentado de arriba*/}
+					<FiltroCategory s={s} categories={categories} handleCategoryFilter={handleCategoryFilter} filterCategory={filterCategory} />
+
+{/* 					<div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Brand</h4>
 						<ul>
-							{brands.length > 0
-								? brands.map((b, index) => {
-										return (
-											<li className={s.li} key={b}>
-												<label className={s.label}>
-													<input
-														className={s.input}
-														type={'checkbox'}
-														checked={checkedState[index]}
-														value={b}
-														onChange={(e) => handleOnChange(index, e)}
-													/>
-													<span className={s.spanC}>{b}</span>
-												</label>
-											</li>
-										);
-								  })
+							{filBrands.length > 0
+								? filBrands.map((b, index) => {
+									return (
+										<li className={s.li} key={b}>
+											<label className={s.label}>
+												<input
+													className={s.input}
+													type={'checkbox'}
+													checked={checkedState[index]}
+													value={b}
+													onChange={(e) => handleOnChange(index, e)}
+												/>
+												<span className={s.spanC}>{b}</span>
+											</label>
+										</li>
+									);
+								})
 								: null}
 						</ul>
 						<button className={s.btn} onClick={(e) => filterBrands(e)}>
 							Filter
 						</button>
-					</div>
+					</div> */}
+{/* Ejemplar de como se modulariza en front React usen el código comentado de arriba *solo* para comparar
+	  Una vez resueltas las dudas borren el código comentado de arriba*/}
+					<FiltroBrand s={s} brands={brands} filterBrands={filterBrands} handleOnChange={handleOnChange} checkedState={checkedState} />
+
 					<br />
 					<div className={s.contBtn}>
 						<button className={s.btnC} onClick={(e) => quitarFiltros(e)}>

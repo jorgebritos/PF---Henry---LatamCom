@@ -3,86 +3,46 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const morgan = require('morgan');
 const routes = require('./routes/index.js');
-
+require('dotenv').config();
 require('./db.js');
 
+// const { expressjwt: jwt } = require('express-jwt');
+// const jwks = require('jwks-rsa');
+// const guard = require('express-jwt-permissions')();
+
 const server = express();
-
-const jwt = require('jsonwebtoken');
-const keys = require('./settings/keys');
-
-
-
 server.name = 'API';
 
-server.set('key', keys.key)
+// const jwtCheck = jwt({
+//   secret: jwks.expressJwtSecret({
+//       cache: true,
+//       rateLimit: true,
+//       jwksRequestsPerMinute: 5,
+//       jwksUri: 'https://dev-g1jtn0qvoq0x04y4.us.auth0.com/.well-known/jwks.json'
+// }),
+// audience: 'https://www.PF---Henry---LatamCom.com',
+// issuer: 'https://dev-g1jtn0qvoq0x04y4.us.auth0.com/',
+// algorithms: ['RS256']
+// });
+
+// server.use(jwtCheck);
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 // server.use(cookieParser());
 // server.use(morgan('dev'));
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
 
+// server.get('/authorized', guard.check(['read:PF-Henry']), function (req, res) {
+//   res.json({PFHenry:"this is the first PFHenry", PFHenry2:"this onther PFHenry"});
+// });
+
 server.use('/', routes);
-// server.get('/', (req,res)=>{
-//   res.send('Hola Mundo')
-// })
-
-server.post('/login',(req,res)=>{
-  if(req.body.user == 'admin' && req.body.pass =='12345'){
-    const payload = {
-      check:true
-    };
-    const token = jwt.sign(payload, server.get('key'),{
-      expiresIn:'3d'
-    });
-    res.json({
-      message:'Log in Succesful!',
-      token:token
-    });
-  }else{
-    res.json({
-      message:'Incorrect user or password, check your credentials!'
-    })
-  }
-});
-//Middleware
-const verification = express.Router();
-
-verification.use((req, res, next)=>{
-  let token = req.headers['x-access-token'] || req.headers['authorization'];
-  // console.log(token);
-  if(!token){
-    res.status(404).send({
-      error:'Authentification token is required!'
-    })
-    return
-  }
-  if(token.startsWith('Bearer ')){
-    token= token.slice(7,token.length);
-    console.log(token)
-  }
-  if(token){
-    jwt.verify(token, server.get('key'), (error,decoded)=>{
-      if(error){
-        return res.json({
-          message:'Invalid Token!'
-        });
-      }else{
-        req.decoded = decoded;
-        next();
-      }
-    })
-  }
-})
-server.get('/data', verification,(req,res)=>{
-  res.json('Important information delivered');
-})
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
@@ -91,5 +51,7 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
   res.status(status).send(message);
 });
+
+// server.listen(3030)
 
 module.exports = server;

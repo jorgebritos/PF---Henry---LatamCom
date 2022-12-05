@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { Op } = require("sequelize");
-const { User } = require("../db.js");
+const { User, Product } = require("../db.js");
 
 const getUser = async (req, res) => {
 	const { name } = req.query;
@@ -18,6 +18,7 @@ const getUser = async (req, res) => {
 					email: u.email,
 					username: u.username,
 					password: u.password,
+					admin: u.admin? u.admin : false
 				};
 			});
 			await User.bulkCreate(users);
@@ -49,7 +50,23 @@ const getUserByID = async (req, res) => {
 	const selectedUser = await User.findOne({
 		where: {
 			id: req.params.id
-		}
+		},
+		include: [{
+			model: Product,
+			as: "favorites",
+			attributes: ["id", "name", "price", "image"],
+			through: {
+				attributes: []
+			}
+		},
+		{
+			model: Product,
+			as: "cart",
+			attributes: ["id", "name", "price", "image"],
+			through: {
+				attributes: []
+			}
+		}]
 	})
 	if (selectedUser) {
 		res.status(200).send(selectedUser)
