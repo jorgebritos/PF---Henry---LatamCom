@@ -25,7 +25,6 @@ const CreateComment = (id) => {
 		return comment;
 	}
 	const comments = useSelector((state) => state.productComments);
-	console.log(comments);
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});

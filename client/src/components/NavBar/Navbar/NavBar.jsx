@@ -6,7 +6,7 @@ import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
-import { useDispatch, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers, authTokenRouterLog } from '../../../redux/actions';
@@ -17,6 +17,7 @@ function NavBar() {
 	const dispatch = useDispatch();
 	
 	const { user, isAuthenticated } = useAuth0();
+	const userNow = useSelector((state) => state.user)
 	
 	const [login, setLogin] = useState({
 		email: "",
@@ -30,14 +31,12 @@ function NavBar() {
 
 	
 	const allUser = useSelector((state) => state.allUsers);
-	console.log(allUser)	
 	
-	useEffect(()=>{
-		dispatch(authTokenRouterLog({...login}))
-	},[login,dispatch]
-	)
+	// useEffect(()=>{
+	// 	dispatch(authTokenRouterLog({...login}))
+	// },[login,dispatch]
+	// )
 
-	const dispatch = useDispatch();
 	const products = useSelector((state) => state.searchedProducts);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites)
@@ -66,7 +65,7 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
-						{(isAuthenticated /*|| isAdmin*/)?
+						{(isAuthenticated || userNow.admin)?
 						
 						<li className={s.li}>
 							<Link to={'/create/product'} className={s.Link}>

@@ -75,11 +75,11 @@ export const LoginForm = ({location}) => {
 
 	function handleInputChange(e) {
 		e.preventDefault();
-		console.log(e);
 		setLogin({
 			...login,
 			[e.target.name]: e.target.value
 		})
+		return login
 	}
 
 
@@ -93,14 +93,15 @@ export const LoginForm = ({location}) => {
 	} */
 	function confirmUser(e) {
 		e.preventDefault();
-		let confirm = true
+		// let confirm = true
+		console.log(login)
 /* 		const value = e.target.value;
 		const property = e.target.name; */
 
 /* 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value })); */
 
-	  dispatch(authTokenRouterLog({...login, confirm}))
+	  dispatch(authTokenRouterLog({...login, confirm: true}))
 		console.log(`logg: ${logg}`);
 		if (logg == "IncorrectPassword") {
 			alert("La contraseña es incorrecta")
