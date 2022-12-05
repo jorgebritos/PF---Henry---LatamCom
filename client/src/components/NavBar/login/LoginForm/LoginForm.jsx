@@ -36,13 +36,8 @@ export const LoginForm = ({location}) => {
 	})
 	const history = useHistory();
 
-<<<<<<< HEAD
 	const usuario = user && allUser.find((u) => u.email === user.email);
 	console.log(allUser);
-=======
-	// const usuario = user && allUser.find((u) => u.email === user.email);
-
->>>>>>> b2b1e3fd5627f81db17004e5ed6031210160a004
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
