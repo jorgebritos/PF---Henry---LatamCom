@@ -15,23 +15,23 @@ import { useEffect, useState } from 'react';
 
 function NavBar() {
 	const dispatch = useDispatch();
-	
+
 	const { user, isAuthenticated } = useAuth0();
 	const userNow = useSelector((state) => state.user)
-	
+
 	const [login, setLogin] = useState({
 		email: "",
 		password: "",
-		admin:""
+		admin: ""
 	})
 
 	useEffect(() => {
-        dispatch(getAllUsers())
-    }, [dispatch]);
+		dispatch(getAllUsers())
+	}, [dispatch]);
 
-	
+
 	const allUser = useSelector((state) => state.allUsers);
-	
+
 	// useEffect(()=>{
 	// 	dispatch(authTokenRouterLog({...login}))
 	// },[login,dispatch]
@@ -65,15 +65,24 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
-						{(isAuthenticated || userNow.admin)?
-						
-						<li className={s.li}>
-							<Link to={'/create/product'} className={s.Link}>
-								<h3>Create-Product</h3>
-							</Link>
-						</li>
-						:(<p></p>
-					)}
+						{(isAuthenticated || userNow.admin) ?
+
+							<li className={s.li}>
+								<Link to={'/create/product'} className={s.Link}>
+									<h3>Create-Product</h3>
+								</Link>
+							</li>
+							: (<p></p>)
+						}
+						{(isAuthenticated || userNow.admin) ?
+
+							<li className={s.li}>
+								<Link to={'/update'} className={s.Link}>
+									<h3>Update-Product</h3>
+								</Link>
+							</li>
+							: (<p></p>)
+						}
 					</ul>
 				</div>
 				<div>
