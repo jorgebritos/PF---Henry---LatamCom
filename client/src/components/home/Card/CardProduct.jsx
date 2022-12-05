@@ -7,9 +7,10 @@ import star from '../../../asset/puntajes.png';
 
 export default function CardProduct({ id, name, price, image, rating }) {
 	const favorites = useSelector((state) => state.favorites);
+	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
-	const addFavorite = async (event) => {
+	const addFavorite = async (event, idUser) => {
 		event.preventDefault();
 
 		let product = {
@@ -21,11 +22,9 @@ export default function CardProduct({ id, name, price, image, rating }) {
 
 		let exists = await favorites.find((f) => f.id === Number(id));
 
-		if (exists) {
-			return alert('Este objeto ya es de tus favoritos');
-		} else {
-			dispatch(addFavorites({ idProduct: product.id, idUser: 1 }));
-		}
+		if (exists) return alert('Este objeto ya es de tus favoritos');
+		if (!idUser) return alert('Debes estar logueado para realizar esta acción')
+		dispatch(addFavorites({ idProduct: product.id, idUser }));
 	};
 
 	return (
@@ -42,14 +41,14 @@ export default function CardProduct({ id, name, price, image, rating }) {
 							{rating ? (
 								<label>
 									<span>{rating.toFixed(1)}</span>{' '}
-									<img className={s.star} src={star} height={'15px'} alt=''/>
+									<img className={s.star} src={star} height={'15px'} alt='' />
 								</label>
 							) : (
 								''
 							)}
 						</p>
 						<div>
-							<button className={s.btn} onClick={(e) => addFavorite(e)}>
+							<button className={s.btn} onClick={(e) => addFavorite(e, user.id)}>
 								ADD FAVORITE
 							</button>
 						</div>

@@ -9,11 +9,11 @@ const ShowFavorites = () => {
 	let favorites = useSelector((state) => state.favorites);
 	const user = useSelector((state) => state.user);
 
-	const deleteProduct = (e, id) => {
+	const deleteProduct = (e, idProduct, idUser) => {
 		e.preventDefault();
 		favorites = favorites.filter((p) => p.id !== id);
 		if (user.id) {
-			dispatch(removeFavorite(user.id, id));
+			dispatch(removeFavorite(idUser, idProduct));
 		}
 	};
 
@@ -47,7 +47,7 @@ const ShowFavorites = () => {
 											</div>
 											<button
 												className={s.btn}
-												onClick={(e) => deleteProduct(e, producto.id)}>
+												onClick={(e) => deleteProduct(e, user.id, producto.id)}>
 												REMOVE ITEM
 											</button>
 										</div>

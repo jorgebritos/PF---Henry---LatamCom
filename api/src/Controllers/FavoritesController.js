@@ -58,7 +58,7 @@ const postFavorite = async (req, res) => {
 	res.send(user);
 }
 
-const deleteComment = async (req, res) => {
+const removeFavorite = async (req, res) => {
 	const { id } = req.params;
 	const {idProduct} = req.body;
 	try {
@@ -68,10 +68,10 @@ const deleteComment = async (req, res) => {
 			}
 		})
 		if (!user) return 0;
-		await User.removeFavorite({ where: { id: idProduct } });
-		// await User.removeFavorites({ where: { id: idProduct } });
+		// await User.removeFavorite({ where: { id: idProduct } });
+		await User.removeFavorites({ where: { id: idProduct } });
 
-		return res.status(200).json("Favorite removed");
+		return res.status(200).send("Favorite removed");
 	}
 	catch (err) {
 		return res.status(500).send(`Favorite could not be removed (${err})`);
@@ -79,5 +79,6 @@ const deleteComment = async (req, res) => {
 }
 
 module.exports = {
-	postFavorite
+	postFavorite,
+	removeFavorite
 }
