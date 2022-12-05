@@ -1,43 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import s from '../Carousel/Carousel.module.css';
+import React, { Component } from 'react';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useEffect } from 'react';
+// import { filterByRating } from '../../redux/actions';
+import { Carousel } from 'react-responsive-carousel';
+import s from './Carousel.module.css';
+import img1 from '../../asset/carruselLanding/1.jpg';
+import img2 from '../../asset/carruselLanding/2.jpg';
+import img3 from '../../asset/carruselLanding/3.jpg';
 
-
-export default function Carousel(props) {
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const [selectedImage, setSelectedImage] = useState(props.images[0]);
-    const [loaded, setLoaded] = useState(false);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            selectNewImage(selectedIndex, props.images);
-        }, 5000);
-        return () => clearInterval(interval);
-    });
-
-    const selectNewImage = (index, images, next = true) => {
-        setLoaded(false);
-        setTimeout(() => {
-            const condition = next ? selectedIndex < images.length - 1 : selectedIndex > 0;
-            const nextIndex = next ? (condition ? selectedIndex + 1 : 0) : condition ? selectedIndex - 1 : images.length - 1;
-            setSelectedImage(images[nextIndex]);
-            setSelectedIndex(nextIndex);
-        }, 500);
-    }
-
-    // const prev = () => {
-    //     selectNewImage(selectedIndex, props.images, false)
-    // }
-
-    // const next = () => {
-    //     selectNewImage(selectedIndex, props.images)
-    // }
-
-    return (
-        <>
-            <div className={s.container}>
-                <img src={require(`${selectedImage}`)} alt='carouselimg' onLoad={() => setLoaded(true)} className={loaded ? s.loaded : ''} width='100%' height='500px' />
-            </div>
-        </>
-
-    )
+export default function Carrusel() {
+	return (
+		<div className={s.carrusel}>
+			<Carousel
+				showThumbs={false}
+				showArrows={true}
+				showStatus={true}
+				showIndicators={true}
+				infiniteLoop={true}
+				useKeyboardArrows={true}
+				autoPlay={true}
+				stopOnHover={true}
+				swipeable={true}
+				dynamicHeight={true}
+				emulateTouch={true}
+				autoFocus={false}>
+				<div>
+					<img src={img1} alt='logo' />
+				</div>
+				<div>
+					<img src={img2} alt='logoS' />
+				</div>
+				<div>
+					<img src={img3} alt='logoS' />
+				</div>
+			</Carousel>
+		</div>
+	);
 }
