@@ -9,7 +9,8 @@ import {
     SEND_MAIL,
     LOCALSTORAGE,
     GET_FAVORITES,
-    REMOVE_FAVORITE
+    REMOVE_FAVORITE,
+    DELETE_PRODUCT
 } from "../actions"
 
 const initialState = {
@@ -141,6 +142,8 @@ export default function rootReducer(state = initialState, action) {
         case UPDATE_COMMENT:
             return action.payload
         case DELETE_COMMENT:
+            return action.payload
+        case DELETE_PRODUCT:
             return action.payload
         case REMOVE_FAVORITE:
             return action.payload

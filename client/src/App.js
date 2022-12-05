@@ -11,6 +11,7 @@ import { Profile } from './components/NavBar/login/Profile/Profile';
 import { LoginForm } from './components/NavBar/login/LoginForm/LoginForm';
 import Buy from './components/BuyProducts/Buy'
 import SuccessedPayment from './components/CompletePayment/Successedpayment'
+import UpdateProduct from './components/UpdateProduct/UpdateProduct';
 import {ContactUs} from "./components/Footer/Contact/ContactEmailJS"
 import messageSended from './components/Footer/Contact/MessageSended';
 import UserSended from './components/CreateUser/UserSended';
@@ -41,6 +42,7 @@ function App() {
 			<Route path="/buyproducts" component={Buy} />
 			<Route path="/SuccessPayment" component={SuccessedPayment} />
 			<Route path="/favorites" component={ShowFavorites} />
+			<Route path='/update' component={UpdateProduct} />
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>

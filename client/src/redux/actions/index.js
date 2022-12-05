@@ -33,6 +33,7 @@ export const UPDATE_RATING = "UPDATE_RATING"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
+export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
 
 //FILTRADOS
@@ -274,8 +275,9 @@ export function updateRatingProduct(payload) {
 }
 
 export function updateProduct(payload) {
+    let id = payload.id;
     return async function (dispatch) {
-        const info = await axios.put('http://localhost:3001/products', payload)
+        const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
         dispatch({
             type: UPDATE_PRODUCT,
             payload: info.data
@@ -300,6 +302,16 @@ export function deleteComment(id) {
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
+        })
+    }
+}
+
+export function deleteProduct(id) {
+    return async function (dispatch) {
+        const deletedProduct = await axios.delete(`http://localhost:3001/products/${id}`)
+        dispatch({
+            type: DELETE_PRODUCT,
+            payload: deletedProduct.data
         })
     }
 }
