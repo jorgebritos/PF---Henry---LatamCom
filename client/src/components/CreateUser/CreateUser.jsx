@@ -13,24 +13,24 @@ const validateInput = (input) => {
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
 	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
-	if (!input.firstname || input.firstname?.trim() >= 1 ) {
+	if (!input.firstname || input.firstname?.trim() <= 3 ) {
 		errors.firstname = 'Introduce a name!';
 	}else if((expreg.test(input.firstname))){
-        errors.firstname = "Name your product properly!"
+        errors.firstname = "Use a proper Name!"
+	}else if  (!input.lastname || input.lastname?.trim() <= 4 ) {
+		errors.lastname = 'Introduce a name!';
 	}else if((expreg.test(input.lastname))) {
-			errors.lastname = 'Introduce a valid description!';
-    }else if (!(regexURL.test(input.profile_image))) {
+			errors.lastname = 'Introduce a proper lastname!';
+    }else if(!input.email || input.email?.trim() <= 1 ) {
+			errors.email = 'Introduce a email!';
+		}else if(!(regexURL.test(input.profile_image))) {
 		errors.profile_image = 'Introduce an image';
+	}else if (!input.username || input.username?.trim() <= 3 ) {
+		errors.username = 'Introduce a username!';
+	}else if(!input.password || input.password?.trim() <= 8 ) {
+		errors.password = 'Demasiado corto!';
 	}
-    // else if (!input.price) {
-	// 	errors.price = 'Introduce a price';
-	// }else if ((expreg.test(input.price))) {
-	// 	errors.price = 'Introduce a valid price';
-	// }else if ((expreg.test(input.brand))) {
-	// 	errors.brand = 'Introduce a valid brand';
-	// }else if (!input.categories.length) {
-	// 	errors.categories = 'Category is required!';
-	// }
+
 	const sendButton = document.getElementById('sendButtom');
 
 	if (Object.entries(errors).length) {
@@ -48,7 +48,7 @@ const CreateUser = () => {
 
 	//Hooks and states ///////////////////////
 	const dispatch = useDispatch();
-	// const categories = useSelector((state) => state.categories);
+
 	const history = useHistory();
 
 	const [input, setInput] = useState({
@@ -104,22 +104,13 @@ const CreateUser = () => {
 		event.preventDefault();
 		const value = event.target.value;
 		const property = event.target.name;
-
+		console.log(property);
 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value }));
 	};
 	/////////////////////////////////////////////
 
-	// Functions of Categories ///////////////////////////
-	// const introduceUsers = (event) => {
-	// 	event.preventDefault();
-	// 	const catSelected = event.target.value;
 
-	// 	if (!input.categories.includes(catSelected) && catSelected !== '') {
-	// 		setInput({ ...input, categories: [...input.categories, catSelected] });
-	// 		setErrors(validateInput({ ...input, categories: catSelected }));
-	// 	}
-	// };
 
 	///////////////////////////////////////////////////////
 
@@ -148,7 +139,7 @@ const CreateUser = () => {
 						<label className={s.label}>*U. Firstname: </label>
 						<input
 							className={s.input}
-							name='firsname'
+							name='firstname'
 							value={input.firstname}
 							onChange={introduceData}
 							autoComplete='off'></input>
@@ -219,7 +210,7 @@ const CreateUser = () => {
 						<label className={s.label}>*P. Password: </label>
 						<input
 							className={s.input}
-							name='stock'
+							name='password'
 							value={input.password}
 							onChange={introduceData}
 							autoComplete='off'
@@ -228,36 +219,6 @@ const CreateUser = () => {
 					</div>
 
 					<br />
-
-					{/* <div className={s.contsp}>
-						{categories.length && (
-							<div>
-								<select
-									className={s.select}
-									name='categories'
-									onChange={introduceUsers}>
-									<option value=''>Chose yours categories...</option>
-									{categories.map((cat) => {
-										return <option key={cat.name}>{cat.name}</option>;
-									})}
-								</select>
-							</div>
-						)}
-					</div>
-
-					<br />
-
-					<div className={s.contsp}>
-						
-						<label className={s.label}>*Categories Selected</label>
-						<input
-							className={s.input}
-							value={input.categories}
-							disabled>
-						</input>
-						{errors.categories && <p>{errors.categories}</p>}
-
-					</div> */}
 
 					<br />
 
