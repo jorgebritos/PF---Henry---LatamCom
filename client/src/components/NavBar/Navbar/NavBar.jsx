@@ -12,15 +12,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers } from '../../../redux/actions';
 import { useEffect } from 'react';
 
-
 function NavBar() {
 	const dispatch = useDispatch();
 
 	const { isAuthenticated } = useAuth0();
-	const userNow = useSelector((state) => state.user)
+	const userNow = useSelector((state) => state.user);
 
 	useEffect(() => {
-		dispatch(getAllUsers())
+		dispatch(getAllUsers());
 	}, [dispatch]);
 
 	// useEffect(()=>{
@@ -29,7 +28,7 @@ function NavBar() {
 	// )
 
 	let cart = '';
-	let favorites = useSelector((state) => state.favorites)
+	let favorites = useSelector((state) => state.favorites);
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
@@ -53,23 +52,24 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
-						{(isAuthenticated || userNow.admin) ?
-
+						{isAuthenticated || userNow.admin ? (
 							<li className={s.li}>
 								<Link to={'/create/product'} className={s.Link}>
 									<h3>Create-Product</h3>
 								</Link>
 							</li>
-							: (<p></p>)
-						}
-						{(isAuthenticated || userNow.admin) ?
+						) : (
+							<p></p>
+						)}
+						{isAuthenticated || userNow.admin ? (
 							<li className={s.li}>
 								<Link to={'/update'} className={s.Link}>
 									<h3>Update-Product</h3>
 								</Link>
 							</li>
-							: (<p></p>)
-						}
+						) : (
+							<p></p>
+						)}
 					</ul>
 				</div>
 				<div>
@@ -100,7 +100,7 @@ function NavBar() {
 				<div className={s.favorites}>
 					<Link to='/favorites' className={s.cart}>
 						<img src={star} alt='estrella de favoritos' height='25px' />
-						{favorites.length}
+						<p className={s.favoritoCantidad}>{favorites.length}</p>
 					</Link>
 				</div>
 			</nav>
