@@ -58,7 +58,6 @@ const getProduct = async (req, res) => {
                 let product = info[i];
                 let data = await productTable.find(r => r.id == product.id);
                 let category = await categoryTable.find(c => c.name == product.category.name);
-                console.log(category)
                 data.addCategory(category);
             };
 

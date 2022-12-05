@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-	getFavorites,
-	removeAllFavorites,
-	removeFavorite,
-} from '../../../redux/actions';
-import s from './ShowFavorites.module.css';
+import { getFavorites, removeFavorite } from '../../../redux/actions';
 
 const ShowFavorites = () => {
-	const [productsSelected, setProductsSelected] = useState([]);
-	const history = useHistory();
 	const dispatch = useDispatch();
 	let favorites = useSelector((state) => state.favorites);
 	const user = useSelector((state) => state.user);
@@ -27,7 +20,7 @@ const ShowFavorites = () => {
 		if (user.id) {
 			dispatch(getFavorites(user.id));
 		}
-	}, [dispatch, favorites]);
+	}, [dispatch, favorites, user.id]);
 
 	return (
 		<div className={s.backg}>
