@@ -5,13 +5,13 @@ import { createUser, getAllUsers } from '../../redux/actions/index';
 import s from './CreateUser.module.css';
 
 // Input Validate /////////////////////////////
-const validateInput = (input) => {
-	let errors = {};
+/* const validateInput = (input) => {
+	//let errors = {};
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
 	let regexURL =
 		/((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
-	if (!input.firstname || input.firstname?.trim() <= 3 ) {
+ 	if (!input.firstname || input.firstname?.trim() <= 3 ) {
 		errors.firstname = 'Introduce a name!';
 	}else if((expreg.test(input.firstname))){
         errors.firstname = "Use a proper Name!"
@@ -27,7 +27,7 @@ const validateInput = (input) => {
 		errors.username = 'Introduce a username!';
 	}else if(!input.password || input.password?.trim() <= 8 ) {
 		errors.password = 'Demasiado corto!';
-	}
+	} 
 	const sendButton = document.getElementById('sendButtom');
 
 	if (Object.entries(errors).length) {
@@ -38,7 +38,7 @@ const validateInput = (input) => {
 	//////////////////////////////////////////////////////////
 
 	return errors;
-};
+}; */
 ///////////////////////////////////////////////
 
 const CreateUser = () => {
@@ -90,21 +90,100 @@ const CreateUser = () => {
 		const file = await res.json();
 		setInput({ ...input, image: file.secure_url });
 		setLoading(false);
-		setErrors(validateInput({ ...input, image: file.secure_url }));
+		/* setErrors(validateInput({ ...input, image: file.secure_url })); */
 	};
 
 	///////////////////////////////////////////////////////////////////////
 
-	// Change Local States //////////////////////
+	//------------------------------Controllers Form---------------------------------
+	function controllerFormFirstname(event){
+		if(event.target.value.length < 4){
+      return "Solo se admite un min. de 3 caracteres"
+    } 
+    if (event.target.value.length > 120) {
+      return "Solo se permite un max. de 120 caracteres";
+    }
+    if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
+      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+    }
+    return "";
+  }
+
+	function controllerFormLastname(event){
+		if(event.target.value.length < 5){
+      return "Solo se admite un min. de 4 caracteres"
+    } 
+    if (event.target.value.length > 120) {
+      return "Solo se permite un max. de 120 caracteres";
+    }
+    if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
+      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+    }
+    return "";
+  }
+
+
+/* 	function controllerFormEmail(event) {
+		if (condition) {
+			
+		}
+	} */
+
+	
+
+	//-------------------------------------------------------------------------------
+
+	//---------------------------------- Change Local States -------------------------
 	const introduceData = (event) => {
+		event.preventDefault()
+		
+		switch (event.target.name) {
+			case "firstname":
+				console.log("err ", event.target.value);
+				setErrors({
+					...errors,
+					[event.target.name]:""
+				})
+
+				setInput({
+					...input,
+					firstname: event.target.value
+				})
+
+				console.log("erm",controllerFormFirstname(event));
+				if(controllerFormFirstname(event).length>0){
+					setErrors({
+						...errors,
+						firstname: controllerFormFirstname(event)
+					})
+				}
+
+				break;
+			case "lastname":
+				break;
+			case "email":
+				break;
+			case "file":
+				break;
+			case "usename":
+				break;
+			case "password":
+				break;
+
+		
+			default:
+				break;
+		}
+
+
 		event.preventDefault();
 		const value = event.target.value;
 		const property = event.target.name;
 		console.log(property);
 		setInput({ ...input, [property]: value });
-		setErrors(validateInput({ ...input, [property]: value }));
+		/* setErrors(validateInput({ ...input, [property]: value })) */;
 	};
-	/////////////////////////////////////////////
+	//-----------------------------------------------------------------------------------
 
 
 
@@ -124,7 +203,7 @@ const CreateUser = () => {
 		}
 	};
 	/////////////////////////////////////////////
-
+//---------------------------Render--------------------------------
 	return (
 		<div className={s.cont}>
 			<div className={s.contF}>
@@ -137,9 +216,9 @@ const CreateUser = () => {
 							className={s.input}
 							name='firstname'
 							value={input.firstname}
-							onChange={introduceData}
+							onChange={(event)=> introduceData(event)}
 							autoComplete='off'></input>
-						{errors.firstname && <p>{errors.firstname}</p>}
+						{errors.firstname&&<p>{errors.firstname}</p>}
 					</div>
 
 					<br />
