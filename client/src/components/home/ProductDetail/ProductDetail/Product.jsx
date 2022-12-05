@@ -11,8 +11,10 @@ import {
 import CreateComment from '../CreateComment/CreateComment';
 import Loading from '../../../loading/Loading';
 import s from './Product.module.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Product = () => {
+	const {isAuthenticated } = useAuth0();
 	const addProduct = async (event) => {
 		event.preventDefault();
 		let cart = [];
@@ -92,9 +94,11 @@ const Product = () => {
 				</div>
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
+					{isAuthenticated? (
 					<div>
 						<CreateComment />
-					</div>
+					</div>):(<p>Must Log in to make a comment!</p>
+					)}
 				</div>
 			</div>
 		);

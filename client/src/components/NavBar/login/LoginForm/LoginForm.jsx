@@ -105,7 +105,7 @@ export const LoginForm = ({location}) => {
 		if (logg == "IncorrectPassword") {
 			alert("La contraseña es incorrecta")
 		}else{
-		setLogin({email: "", password: ""})
+		setLogin({email: "", password: "", admin:""})
 
 		history.push("/home")
 		}
