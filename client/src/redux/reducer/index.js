@@ -13,7 +13,7 @@ const initialState = {
     products: [],
     user: {},
     favorites: [],
-    allUsers: {},
+    allUsers: [],
     // ESTE ES PARA APLICAR LOS FILTROS, ASÍ NO SE PIERDE EL STATE
     allProducts: [],
     productDetail: {},
