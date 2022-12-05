@@ -60,3 +60,13 @@
 	font-size: medium;
 	font-weight: 400;
 }
+.favoritoCantidad {
+	color: rgb(255, 255, 255);
+	border-radius: 50px;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+	margin-top: 22px;
+	font-size: medium;
+	font-weight: 400;
+}
