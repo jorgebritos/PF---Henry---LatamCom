@@ -7,7 +7,7 @@ import {
 	getAllProducts,
 	getAllCategories,
 	getAllUsers,
-	putLocalstorage
+	putLocalstorage,
 } from '../../../../redux/actions/index';
 
 import CreateComment from '../CreateComment/CreateComment';
@@ -29,14 +29,14 @@ const Product = () => {
 		}
 		cart.push({ ...product, amount: 1 });
 		localStorage.setItem('cart', JSON.stringify(cart));
-		dispatch(putLocalstorage())
+		dispatch(putLocalstorage());
 	};
 
 	// Hooks y estados ////////////////////////////////
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const product = useSelector((state) => state.productDetail);
-	const user = useSelector((state) => state.user)
+	const user = useSelector((state) => state.user);
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////
@@ -99,11 +99,13 @@ const Product = () => {
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
 					<>
-						{(isAuthenticated || user.admin) ?(
+						{isAuthenticated || user.admin ? (
 							<div>
 								<CreateComment />
-							</div>):(<p>Must Log in to make a comment!</p>
-					)}
+							</div>
+						) : (
+							<p className={s.parafo}>Must Log in to make a comment!</p>
+						)}
 					</>
 				</div>
 			</div>
