@@ -9,42 +9,30 @@ import LoginRegister from '../LoginBar/LoginBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getAllUsers, authTokenRouterLog } from '../../../redux/actions';
-import { useEffect, useState } from 'react';
+import { getAllUsers } from '../../../redux/actions';
+import { useEffect } from 'react';
 
 
 function NavBar() {
 	const dispatch = useDispatch();
 
-	const { user, isAuthenticated } = useAuth0();
+	const { isAuthenticated } = useAuth0();
 	const userNow = useSelector((state) => state.user)
-
-	const [login, setLogin] = useState({
-		email: "",
-		password: "",
-		admin: ""
-	})
 
 	useEffect(() => {
 		dispatch(getAllUsers())
 	}, [dispatch]);
-
-
-	const allUser = useSelector((state) => state.allUsers);
 
 	// useEffect(()=>{
 	// 	dispatch(authTokenRouterLog({...login}))
 	// },[login,dispatch]
 	// )
 
-	const products = useSelector((state) => state.searchedProducts);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites)
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
-
-	const local = useSelector((state) => state.localstorage);
 
 	function search(e) {
 		dispatch(newSearch(''));

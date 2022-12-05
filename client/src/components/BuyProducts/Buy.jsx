@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { buyShoppingCart, getPurchaseDetail } from '../../redux/actions';
+import { buyShoppingCart } from '../../redux/actions';
 import s from './Buy.module.css';
 
 const structuringProducts = (products) => {

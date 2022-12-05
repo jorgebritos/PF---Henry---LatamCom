@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { useEffect } from 'react';
 import s from './SuccessedPayment.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,7 +42,7 @@ const SuccessedPayment = (req) => {
 				</div>
 			);
 		});
-	}, [created]);
+	}, [created, dispatch, search]);
 
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -59,6 +58,7 @@ const SuccessedPayment = (req) => {
 				<div className={s.topcard}>
 					{!purchased ? (
 						<iframe
+							title=' '
 							src='https://giphy.com/embed/NEmoHeRrWFvdO4sNaY'
 							width='150px'
 							height='150px'
@@ -98,7 +98,7 @@ const SuccessedPayment = (req) => {
 			</div>
 
 			<div>
-				<a target='_blank' href='https://icons8.com/icon/21068/comprobado'></a>
+				<a target='_blank' href='https://icons8.com/icon/21068/comprobado'rel='noreferrer'></a>
 			</div>
 		</div>
 	);
