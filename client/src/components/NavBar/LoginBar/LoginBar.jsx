@@ -25,8 +25,18 @@ function LoginRegister({ items = [] }) {
 		history.push('/profile');
 	};
 
-	const Logout = (e) => {
+	const Logout = /*async*/ (e) => {
 		e.preventDefault();
+		// const domain = "dev-g1jtn0qvoq0x04y4.us.auth0.com";
+		// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
+		// const returnTo = "http://localhost:3000";
+	
+		// const response = await fetch(
+		//   `https://${domain}/logout?client_id=${clientId}&returnTo=${returnTo}`,
+		//   { redirect: "manual" }
+		// );
+		// window.location.replace(response.url);
+
 		console.log('entre');
 		Swal.fire({
 			title: 'Sure about loging out?',

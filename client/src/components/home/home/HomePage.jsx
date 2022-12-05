@@ -11,8 +11,15 @@ import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
 import s from './HomePage.module.css';
+// import Carousel from '../Carousel/Carousel.jsx';
+// import trabajos1 from './trabajos1.jpg';
+// import trabajos2 from './trabajos2.jpg';
+// import trabajos3 from './trabajos3.jpeg';
+
+// const images = [trabajos1, trabajos2, trabajos3];
 
 export default function HomePage() {
+
 	const dispatch = useDispatch();
 	// const allCategories = useSelector((state) => state.categories);
 	const totalProducts = useSelector((state) => state.products);
@@ -45,6 +52,7 @@ export default function HomePage() {
 	return (
 		<div>
 			<div className={s.cont}>
+			{/* <Carousel images={images} /> */}
 				<div className={s.filter}>
 					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} />
 				</div>

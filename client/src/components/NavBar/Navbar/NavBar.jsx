@@ -13,6 +13,7 @@ function NavBar() {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state.searchedProducts);
 	let cart = '';
+	let favorites = useSelector((state) => state.favorites)
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
@@ -71,7 +72,10 @@ function NavBar() {
 				</div>
 
 				<div className={s.favorites}>
-					<img src={star} alt='estrella de favoritos' height='25px' />
+					<Link to='/favorites' className={s.cart}>
+						<img src={star} alt='estrella de favoritos' height='25px' />
+						{favorites.length}
+					</Link>
 				</div>
 			</nav>
 		</div>

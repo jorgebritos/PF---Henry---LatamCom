@@ -1,13 +1,15 @@
 import {
     GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
-    FILTER_BY_CATEGORY, SEARCH_BY_NAME,SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
+    FILTER_BY_CATEGORY, SEARCH_BY_NAME, SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT, CREATE_USER,
     GET_ALL_USERS, GET_AUTHTOKENROUTERPERF, POST_AUTHTOKENROUTERLOG,
     UPDATE_RATING,
     SEND_MAIL,
-    LOCALSTORAGE
+    LOCALSTORAGE,
+    GET_FAVORITES,
+    REMOVE_FAVORITE
 } from "../actions"
 
 const initialState = {
@@ -26,10 +28,10 @@ const initialState = {
     filBrands: [],
     filCategory: [],
     login: [],
-    pruchase:{},
-    createdPurchase:{},
+    pruchase: {},
+    createdPurchase: {},
     //LOCALSTORAGE
-    localstorage : [],
+    localstorage: [],
 }
 
 
@@ -60,6 +62,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 user: action.payload,
             }
+        case GET_FAVORITES:
+            return {
+                ...state,
+                favorites: action.payload,
+            }
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
@@ -87,7 +94,10 @@ export default function rootReducer(state = initialState, action) {
                 purchase: action.payload,
             }
         case ADD_FAVORITE:
-            return action.payload
+            return {
+                ...state,
+                favorites: action.payload.favorites
+            }
         case CREATE_PRODUCT:
             return action.payload
         case CREATE_USER:
@@ -105,7 +115,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: action.payload.data.jwt,
-                user: {username: user.username, picture: user.profile_image, name: name, email: user.email}
+                user: { username: user.username, picture: user.profile_image, name: name, email: user.email }
             }
         case SEND_MAIL:
             return action.payload
@@ -120,6 +130,8 @@ export default function rootReducer(state = initialState, action) {
         case UPDATE_COMMENT:
             return action.payload
         case DELETE_COMMENT:
+            return action.payload
+        case REMOVE_FAVORITE:
             return action.payload
         case RESET_DETAIL:
             return {
@@ -194,10 +206,10 @@ export default function rootReducer(state = initialState, action) {
                 searchedProducts: action.payload
             }
         case SEARCH_BY_NAME2:
-                return {
-                    ...state,
-                    searchedProducts2: action.payload
-                }
+            return {
+                ...state,
+                searchedProducts2: action.payload
+            }
         case NEW_SEARCH:
             return {
                 ...state,
@@ -215,11 +227,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 products: sortProducts
             }
-        
+
         case LOCALSTORAGE:
-            return{
+            return {
                 ...state,
-                localstorage : [ action.payload ]
+                localstorage: [action.payload]
 
             }
         default:

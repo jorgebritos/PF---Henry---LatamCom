@@ -8,31 +8,29 @@ const {authByEmailPwd} = require("../helpers/auth-by-email-pwd.js");
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
   const { email, password } = req.body;
-  
   if (!email || !password) return res.status(401).send("Incomplete loginForm credentials")
   try {
     const searchUser = await User.findOne({
       where: { email: email }
-  })
+    })
   //En caso de usuario registrado
   if(!searchUser) return res.status(401).send("Unregistered user");
 
   //En caso de password incorrecto
-  if(searchUser !== password) return res.status(401).send("Incorrect password");
+  if(searchUser.password !== password) return res.status(401).send("Incorrect password");
 
   let id = searchUser.id
   
   //GENERAR TOKEN Y DEVOLVER TOKEN
   const jwtConstructor = new SignJWT({id});
   
+  const encoder = new TextEncoder();
+  const jwt = await jwtConstructor
+  .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+  .setIssuedAt()
+  .setExpirationTime("1d")
+  .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
   
-    const encoder = new TextEncoder();
-    const jwt = await jwtConstructor
-      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-      .setIssuedAt()
-      .setExpirationTime("1d")
-      .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-
     return res.send({ jwt, user: searchUser.dataValues });
   } catch (err) {
     return res.sendStatus(401);
