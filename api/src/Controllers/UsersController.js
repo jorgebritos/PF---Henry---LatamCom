@@ -18,6 +18,7 @@ const getUser = async (req, res) => {
 					email: u.email,
 					username: u.username,
 					password: u.password,
+					admin: u.admin? u.admin : false
 				};
 			});
 			await User.bulkCreate(users);
