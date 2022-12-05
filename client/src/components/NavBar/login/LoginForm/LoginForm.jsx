@@ -26,8 +26,8 @@ export const LoginForm = ({location}) => {
 	// }, [code]);
   
 
-	const { user, isLoading, loginWithRedirect } = useAuth0();
-	const allUser = useSelector((state) => state.allUsers);
+	const { isLoading, loginWithRedirect } = useAuth0();
+	// const allUser = useSelector((state) => state.allUsers);
 	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
@@ -36,7 +36,7 @@ export const LoginForm = ({location}) => {
 	})
 	const history = useHistory();
 
-	const usuario = user && allUser.find((u) => u.email === user.email);
+	// const usuario = user && allUser.find((u) => u.email === user.email);
 
 	useEffect(() => {
 		dispatch(getAllUsers());
@@ -103,7 +103,7 @@ export const LoginForm = ({location}) => {
 
 	  dispatch(authTokenRouterLog({...login, confirm: true}))
 		console.log(`logg: ${logg}`);
-		if (logg == "IncorrectPassword") {
+		if (logg === "IncorrectPassword") {
 			alert("La contraseña es incorrecta")
 		}else{
 		setLogin({email: "", password: "", admin:""})

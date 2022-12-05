@@ -47,7 +47,7 @@ export default function HomePage() {
 		dispatch(getAllUsers());
 		dispatch(getAllProducts());
 		dispatch(searchByName(search.split('=')[1], "SEARCH_BY_NAME2"))
-	}, [search.split('=')[1]]);
+	}, [search.split('=')[1], dispatch, search]);
 	//console.log(search.split('=')[1]);
 	return (
 		<div>

@@ -13,7 +13,7 @@ import {
 import CreateComment from '../CreateComment/CreateComment';
 import Loading from '../../../loading/Loading';
 import s from './Product.module.css';
-import { useAuth0, User } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Product = () => {
 	const { isAuthenticated } = useAuth0();

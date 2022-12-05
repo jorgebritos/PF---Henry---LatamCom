@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
 	createUser,
@@ -14,27 +14,27 @@ import s from './CreateUser.module.css';
 	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
 <<<<<<< HEAD
- 	if (!input.firstname || input.firstname?.trim() <= 3 ) {
+	  if (!input.firstname || input.firstname?.trim() <= 3 ) {
 =======
 <<<<<<< HEAD
 	if (!input.firstname || input.firstname?.trim() >= 1 ) {
 		errors.firstname = 'Introduce a name!';
 	}else if((expreg.test(input.firstname))){
-        errors.firstname = "Name your product properly!"
+		errors.firstname = "Name your product properly!"
 	}else if((expreg.test(input.lastname))) {
 			errors.lastname = 'Introduce a valid description!';
-    }else if (!(regexURL.test(input.profile_image))) {
+	}else if (!(regexURL.test(input.profile_image))) {
 =======
 	if (!input.firstname || input.firstname?.trim() <= 3 ) {
 >>>>>>> c686b44aea14045a89210373325b1acd0b51e212
 		errors.firstname = 'Introduce a name!';
 	}else if((expreg.test(input.firstname))){
-        errors.firstname = "Use a proper Name!"
+		errors.firstname = "Use a proper Name!"
 	}else if  (!input.lastname || input.lastname?.trim() <= 4 ) {
 		errors.lastname = 'Introduce a name!';
 	}else if((expreg.test(input.lastname))) {
 			errors.lastname = 'Introduce a proper lastname!';
-    }else if(!input.email || input.email?.trim() <= 1 ) {
+	}else if(!input.email || input.email?.trim() <= 1 ) {
 			errors.email = 'Introduce a email!';
 		}else if(!(regexURL.test(input.profile_image))) {
 >>>>>>> 3d23e29c950becf23eacf495b1a470368b2104f4
@@ -113,53 +113,53 @@ const CreateUser = () => {
 	///////////////////////////////////////////////////////////////////////
 
 	//------------------------------Controllers Form---------------------------------
-	function controllerFormFirstname(event){
-		if(event.target.value.length < 4){
-      return "Solo se admite un min. de 3 caracteres"
-    } 
-    if (event.target.value.length > 120) {
-      return "Solo se permite un max. de 120 caracteres";
-    }
-    if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
-      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
-    }
-    return "";
-  }
-
-	function controllerFormLastname(event){
-		if(event.target.value.length < 5){
-      return "Solo se admite un min. de 4 caracteres"
-    } 
-    if (event.target.value.length > 120) {
-      return "Solo se permite un max. de 120 caracteres";
-    }
-    if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
-      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
-    }
-    return "";
-  }
-
-
-/* 	function controllerFormEmail(event) {
-		if (condition) {
-			
+	function controllerFormFirstname(event) {
+		if (event.target.value.length < 4) {
+			return "Solo se admite un min. de 3 caracteres"
 		}
-	} */
+		if (event.target.value.length > 120) {
+			return "Solo se permite un max. de 120 caracteres";
+		}
+		if (!/^[A-Z  \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
+			return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+		}
+		return "";
+	}
 
-	
+	// function controllerFormLastname(event) {
+	// 	if (event.target.value.length < 5) {
+	// 		return "Solo se admite un min. de 4 caracteres"
+	// 	}
+	// 	if (event.target.value.length > 120) {
+	// 		return "Solo se permite un max. de 120 caracteres";
+	// 	}
+	// 	if (!/^[A-Z \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
+	// 		return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+	// 	}
+	// 	return "";
+	// }
+
+
+	/* 	function controllerFormEmail(event) {
+			if (condition) {
+				
+			}
+		} */
+
+
 
 	//-------------------------------------------------------------------------------
 
 	//---------------------------------- Change Local States -------------------------
 	const introduceData = (event) => {
 		event.preventDefault()
-		
+
 		switch (event.target.name) {
 			case "firstname":
 				console.log("err ", event.target.value);
 				setErrors({
 					...errors,
-					[event.target.name]:""
+					[event.target.name]: ""
 				})
 
 				setInput({
@@ -167,8 +167,8 @@ const CreateUser = () => {
 					firstname: event.target.value
 				})
 
-				console.log("erm",controllerFormFirstname(event));
-				if(controllerFormFirstname(event).length>0){
+				console.log("erm", controllerFormFirstname(event));
+				if (controllerFormFirstname(event).length > 0) {
 					setErrors({
 						...errors,
 						firstname: controllerFormFirstname(event)
@@ -187,7 +187,7 @@ const CreateUser = () => {
 			case "password":
 				break;
 
-		
+
 			default:
 				break;
 		}
@@ -211,21 +211,21 @@ const CreateUser = () => {
 		event.preventDefault();
 		try {
 			await dispatch(createUser(input)).then(history.push("/createUser/usersended"))
-			
+
 		} catch (error) {
 			alert(
 				'Chosen name already belongs to another user, please select again.',
 			);
 		}
-		
+
 	};
 	/////////////////////////////////////////////
-//---------------------------Render--------------------------------
+	//---------------------------Render--------------------------------
 	return (
 		<div className={s.cont}>
 			<div className={s.contF}>
 				<h1 className={s.h1}>CREATE USER</h1>
-				
+
 				<form onSubmit={(e) => submitData(e)}>
 					<div className={s.contsp}>
 						<label className={s.label}>*U. Firstname: </label>
@@ -233,9 +233,9 @@ const CreateUser = () => {
 							className={s.input}
 							name='firstname'
 							value={input.firstname}
-							onChange={(event)=> introduceData(event)}
+							onChange={(event) => introduceData(event)}
 							autoComplete='off'></input>
-						{errors.firstname&&<p>{errors.firstname}</p>}
+						{errors.firstname && <p>{errors.firstname}</p>}
 					</div>
 
 					<br />
@@ -248,11 +248,11 @@ const CreateUser = () => {
 							value={input.lastname}
 							onChange={introduceData}
 							autoComplete='off'></input>
-							{errors.lastname && <p>{errors.lastname}</p>}
+						{errors.lastname && <p>{errors.lastname}</p>}
 					</div>
 
 					<br />
-                   
+
 
 					<div className={s.contsp}>
 						<label className={s.label}>*U. Email: </label>
@@ -262,9 +262,9 @@ const CreateUser = () => {
 							value={input.email}
 							onChange={introduceData}
 							autoComplete='off'></input>
-							{errors.email && <p>{errors.email}</p>}
+						{errors.email && <p>{errors.email}</p>}
 					</div>
-                    <br />
+					<br />
 
 					<div className={s.contsp}>
 						<label className={s.label}>*P. Image: </label>
@@ -292,7 +292,7 @@ const CreateUser = () => {
 							value={input.username}
 							onChange={introduceData}
 							autoComplete='off'
-				            ></input>
+						></input>
 						{errors.username && <p>{errors.username}</p>}
 					</div>
 
@@ -307,7 +307,7 @@ const CreateUser = () => {
 							onChange={introduceData}
 							autoComplete='off'
 						></input>
-							{errors.password && <p>{errors.password}</p>}
+						{errors.password && <p>{errors.password}</p>}
 					</div>
 
 					<br />
