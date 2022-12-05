@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { createUser, getAllUsers } from '../../redux/actions/index';
+import {
+	createUser,
+	getAllUsers
+} from '../../redux/actions/index';
 import s from './CreateUser.module.css';
 
 // Input Validate /////////////////////////////
 /* const validateInput = (input) => {
 	//let errors = {};
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
-	let regexURL =
-		/((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
+	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
+<<<<<<< HEAD
  	if (!input.firstname || input.firstname?.trim() <= 3 ) {
+=======
+<<<<<<< HEAD
+	if (!input.firstname || input.firstname?.trim() >= 1 ) {
+		errors.firstname = 'Introduce a name!';
+	}else if((expreg.test(input.firstname))){
+        errors.firstname = "Name your product properly!"
+	}else if((expreg.test(input.lastname))) {
+			errors.lastname = 'Introduce a valid description!';
+    }else if (!(regexURL.test(input.profile_image))) {
+=======
+	if (!input.firstname || input.firstname?.trim() <= 3 ) {
+>>>>>>> c686b44aea14045a89210373325b1acd0b51e212
 		errors.firstname = 'Introduce a name!';
 	}else if((expreg.test(input.firstname))){
         errors.firstname = "Use a proper Name!"
@@ -22,6 +37,7 @@ import s from './CreateUser.module.css';
     }else if(!input.email || input.email?.trim() <= 1 ) {
 			errors.email = 'Introduce a email!';
 		}else if(!(regexURL.test(input.profile_image))) {
+>>>>>>> 3d23e29c950becf23eacf495b1a470368b2104f4
 		errors.profile_image = 'Introduce an image';
 	}else if (!input.username || input.username?.trim() <= 3 ) {
 		errors.username = 'Introduce a username!';
@@ -42,6 +58,7 @@ import s from './CreateUser.module.css';
 ///////////////////////////////////////////////
 
 const CreateUser = () => {
+
 	//Hooks and states ///////////////////////
 	const dispatch = useDispatch();
 
@@ -52,7 +69,7 @@ const CreateUser = () => {
 		lastname: '',
 		email: '',
 		profile_image: '',
-		username: '',
+		username: "",
 		password: '',
 	});
 
@@ -61,7 +78,7 @@ const CreateUser = () => {
 		lastname: '',
 		email: '',
 		profile_image: '',
-		username: '',
+		username: "",
 		password: '',
 	});
 
@@ -193,14 +210,14 @@ const CreateUser = () => {
 	const submitData = async (event) => {
 		event.preventDefault();
 		try {
-			await dispatch(createUser(input)).then(
-				history.push('/createUser/usersended'),
-			);
+			await dispatch(createUser(input)).then(history.push("/createUser/usersended"))
+			
 		} catch (error) {
 			alert(
 				'Chosen name already belongs to another user, please select again.',
 			);
 		}
+		
 	};
 	/////////////////////////////////////////////
 //---------------------------Render--------------------------------
@@ -208,7 +225,7 @@ const CreateUser = () => {
 		<div className={s.cont}>
 			<div className={s.contF}>
 				<h1 className={s.h1}>CREATE USER</h1>
-
+				
 				<form onSubmit={(e) => submitData(e)}>
 					<div className={s.contsp}>
 						<label className={s.label}>*U. Firstname: </label>
@@ -231,10 +248,11 @@ const CreateUser = () => {
 							value={input.lastname}
 							onChange={introduceData}
 							autoComplete='off'></input>
-						{errors.lastname && <p>{errors.lastname}</p>}
+							{errors.lastname && <p>{errors.lastname}</p>}
 					</div>
 
 					<br />
+                   
 
 					<div className={s.contsp}>
 						<label className={s.label}>*U. Email: </label>
@@ -244,9 +262,9 @@ const CreateUser = () => {
 							value={input.email}
 							onChange={introduceData}
 							autoComplete='off'></input>
-						{errors.email && <p>{errors.email}</p>}
+							{errors.email && <p>{errors.email}</p>}
 					</div>
-					<br />
+                    <br />
 
 					<div className={s.contsp}>
 						<label className={s.label}>*P. Image: </label>
@@ -260,10 +278,7 @@ const CreateUser = () => {
 						{loading ? (
 							<h4>Uploading image...</h4>
 						) : (
-							<img
-								src={input.profile_image}
-								style={{ width: '300px' }}
-								alt=''></img>
+							<img src={input.profile_image} style={{ width: '300px' }} alt=''></img>
 						)}
 					</div>
 
@@ -276,7 +291,8 @@ const CreateUser = () => {
 							name='username'
 							value={input.username}
 							onChange={introduceData}
-							autoComplete='off'></input>
+							autoComplete='off'
+				            ></input>
 						{errors.username && <p>{errors.username}</p>}
 					</div>
 
@@ -289,13 +305,15 @@ const CreateUser = () => {
 							name='password'
 							value={input.password}
 							onChange={introduceData}
-							autoComplete='off'></input>
-						{errors.password && <p>{errors.password}</p>}
+							autoComplete='off'
+						></input>
+							{errors.password && <p>{errors.password}</p>}
 					</div>
 
 					<br />
 
 					<br />
+
 
 					<br />
 

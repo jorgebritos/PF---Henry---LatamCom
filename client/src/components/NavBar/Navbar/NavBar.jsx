@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
 import { useSelector } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 function NavBar() {
 	let cart = '';
@@ -14,6 +16,8 @@ function NavBar() {
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
+	
+	const { user, isLoading, isAuthenticated } = useAuth0();
 
 	return (
 		<div className={s.navBar}>
@@ -30,11 +34,15 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
+						{isAuthenticated? (
+						
 						<li className={s.li}>
 							<Link to={'/create/product'} className={s.Link}>
 								<h3>Create-Product</h3>
 							</Link>
 						</li>
+						):(<p></p>
+					)}
 					</ul>
 				</div>
 				<div>

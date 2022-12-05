@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 
 function LoginRegister({ items = [] }) {
 	const history = useHistory();
-	let { logout, isAuthenticated, loginWithRedirect, user } = useAuth0();
+	let { logout, isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
 	let functionalUser = {};
 
@@ -29,7 +29,7 @@ function LoginRegister({ items = [] }) {
 		e.preventDefault();
 		// const domain = "dev-g1jtn0qvoq0x04y4.us.auth0.com";
 		// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
-		// const returnTo = "http://localhost:3000";
+		// const returnTo =  "http://localhost:3000";
 	
 		// const response = await fetch(
 		//   `https://${domain}/logout?client_id=${clientId}&returnTo=${returnTo}`,
@@ -48,8 +48,8 @@ function LoginRegister({ items = [] }) {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				Swal.fire('Log out succesfully!', '', 'success');
-				history.push('/home');
 				logout();
+				history.push('/home');
 			} else {
 				history.push('/home');
 				Swal.fire('Log out canceled!', '', 'warning');
