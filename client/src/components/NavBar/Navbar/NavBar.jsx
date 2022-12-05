@@ -63,7 +63,6 @@ function NavBar() {
 							: (<p></p>)
 						}
 						{(isAuthenticated || userNow.admin) ?
-
 							<li className={s.li}>
 								<Link to={'/update'} className={s.Link}>
 									<h3>Update-Product</h3>

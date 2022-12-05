@@ -6,6 +6,7 @@ import './UpdateProduct.css'
 //Material UI
 import {Table, TableContainer, TableHead, TableBody, TableCell, TableRow, Modal, Button, TextField} from '@mui/material';
 import {Edit, Delete} from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 
 function UpdateProduct() {
@@ -145,9 +146,6 @@ function UpdateProduct() {
   return (
 
     <div>UpdateProduct
-        <br />
-        <Button onClick={abrirCerrarModalInsertar}>Crear Producto</Button>
-        <br /><br />
         <TableContainer>
             <Table>
                 <TableHead>
