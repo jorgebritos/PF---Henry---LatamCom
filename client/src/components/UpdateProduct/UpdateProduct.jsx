@@ -122,7 +122,7 @@ function UpdateProduct() {
             <br />
             <TextField name='amountSold' className='inputMaterial' label='Unidades Vendidas' onChange={handleChange} value={productoSeleccionado&&productoSeleccionado.amountSold}/>
             <br />
-            <TextField name='categories' className='inputMaterial' label='Categorias' onChange={handleChange} value={productoSeleccionado&&productoSeleccionado.categories}/>
+            <TextField name='categories' className='inputMaterial' label='Categorias' onChange={handleChange} value={productoSeleccionado.categories ? productoSeleccionado.categories[0].name : ""}/>
             <br /><br />
             <div align='rigth'>
                 <Button color = 'primary' onClick={()=> handleSubmit()}>Editar</Button>
@@ -174,7 +174,7 @@ function UpdateProduct() {
                             <TableCell>{e.price}</TableCell>
                             <TableCell>{e.stock}</TableCell>
                             <TableCell>{e.amountSold}</TableCell>
-                            <TableCell>{e.categories}</TableCell>
+                            <TableCell>{e.categories[0].name}</TableCell>
                             <Edit className='iconos' onClick={() => seleccionarProducto(e, 'Editar')}/>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <Delete className='iconos' onClick={()=>seleccionarProducto(e, 'Eliminar')}/>
