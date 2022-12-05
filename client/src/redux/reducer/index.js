@@ -1,6 +1,6 @@
 import {
     GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
-    FILTER_BY_CATEGORY, SEARCH_BY_NAME, SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, REMOVE_ALL_FILTERS, NEW_SEARCH,
+    FILTER_BY_CATEGORY, SEARCH_BY_NAME,SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, FILTER_BY_RATING, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT, CREATE_USER,
@@ -28,9 +28,10 @@ const initialState = {
     brands: [],
     filBrands: [],
     filCategory: [],
-    login: [],
+    filRating:[],
     pruchase: {},
     createdPurchase: {},
+    login: [],
     //LOCALSTORAGE
     localstorage: [],
 }
@@ -40,6 +41,7 @@ export default function rootReducer(state = initialState, action) {
     const allProducts = state.allProducts;
     let actualProducts = state.products;
     let result = [];
+    let ratingResults=[]
 
     switch (action.type) {
         case GET_ALL_PRODUCTS:
@@ -208,6 +210,14 @@ export default function rootReducer(state = initialState, action) {
                 products: result,
                 filCategory: result,
                 filBrands: [...new Set(marcas)]
+            }
+        case FILTER_BY_RATING:
+            ratingResults = [];
+                ratingResults = action.payload.sort((a,b)=> a.rating - b.rating)
+            console.log(action.payload);
+            return {
+                ...state,
+                filRating: ratingResults,
             }
         case REMOVE_ALL_FILTERS:
             return {
