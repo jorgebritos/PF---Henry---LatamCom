@@ -68,6 +68,7 @@ const CreateComment = (id) => {
 
 	async function editComment(e, idUser) {
 		e.preventDefault()
+		setFlag(!flag);
 		let idProduct = product.id;
 		dispatch(updateComment({
 			...comment,
