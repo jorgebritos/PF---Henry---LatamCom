@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import s from './ProductShopCart.module.css';
 import { putLocalstorage } from '../../redux/actions';
@@ -7,8 +7,8 @@ import { putLocalstorage } from '../../redux/actions';
 const ProductShopCart = () => {
 	const [total, setTotal] = useState(0);
 	const [productsSelected, setProductsSelected] = useState([]);
-	const history = useHistory()
-	const dispatch = useDispatch()
+	const history = useHistory();
+	const dispatch = useDispatch();
 	let cant = 0;
 
 	// Traer productos del localStorage ///
@@ -25,7 +25,6 @@ const ProductShopCart = () => {
 
 	useEffect(() => {
 		seeProducts();
-		
 	}, []);
 	///////////////////////////////////////
 
@@ -39,7 +38,7 @@ const ProductShopCart = () => {
 
 		let cant = carrito;
 		totalAccount(cant);
-		dispatch(putLocalstorage())
+		dispatch(putLocalstorage());
 	};
 	///////////////////////////////////////
 
@@ -50,7 +49,7 @@ const ProductShopCart = () => {
 		localStorage.removeItem('cart');
 		let cant = 0;
 		totalAccount(cant);
-		dispatch(putLocalstorage())
+		dispatch(putLocalstorage());
 	};
 	///////////////////////////////////////
 
@@ -95,11 +94,14 @@ const ProductShopCart = () => {
 
 	// Cuenta total: agregado de condicionales para cambiar los valores del localStorage
 	const totalAccount = (cant) => {
-		console.log(cant)
+		console.log(cant);
 		if (cant.length) {
 			if (cant.length === 1) {
 				setTotal(cant[0].price * cant[0].amount);
-				localStorage.setItem("total", JSON.stringify(cant[0].price * cant[0].amount))
+				localStorage.setItem(
+					'total',
+					JSON.stringify(cant[0].price * cant[0].amount),
+				);
 			}
 
 			if (cant.length > 1) {
@@ -107,31 +109,32 @@ const ProductShopCart = () => {
 				cant.forEach((p) => {
 					account += p.price * p.amount;
 					setTotal(account.toFixed(2));
-					localStorage.setItem("total", JSON.stringify(account))
+					localStorage.setItem('total', JSON.stringify(account));
 				});
 			}
 		}
-		if(cant === 0 || cant.length === 0){
-			setTotal(0)
-			localStorage.setItem("total", JSON.stringify(0))
+		if (cant === 0 || cant.length === 0) {
+			setTotal(0);
+			localStorage.setItem('total', JSON.stringify(0));
 		}
-		
 	};
 	///////////////////////////////////////
 
-	// Comprar items: agregado localStorage 
-	const buyItems = (event) =>{
-		event.preventDefault()
-		localStorage.setItem("total", JSON.stringify(total))
-		history.push("/buyproducts")
-	}
+	// Comprar items: agregado localStorage
+	const buyItems = (event) => {
+		event.preventDefault();
+		localStorage.setItem('total', JSON.stringify(total));
+		history.push('/buyproducts');
+	};
 	///////////////////////////////////////
 
 	// Buttom /////////////////////////////
 	const sendButton = document.getElementById('sendButtom');
 
-	if(sendButton){
-		productsSelected.length ? sendButton.disabled = false : sendButton.disabled = true
+	if (sendButton) {
+		productsSelected.length
+			? (sendButton.disabled = false)
+			: (sendButton.disabled = true);
 	}
 	///////////////////////////////////////
 
@@ -140,7 +143,6 @@ const ProductShopCart = () => {
 			<h1>SHOPPING CART</h1>
 			<div className={s.contentP}>
 				<div className={s.contG}>
-					
 					{productsSelected.map((producto) => {
 						return (
 							<div className={s.producCard} key={producto.id}>
@@ -211,7 +213,9 @@ const ProductShopCart = () => {
 									CLEAN CART
 								</button>
 								<br />
-								<button className={s.btnB} onClick={buyItems} id="sendButtom" >BUY</button>
+								<button className={s.btnB} onClick={buyItems}>
+									BUY
+								</button>
 							</div>
 						</div>
 					</div>
