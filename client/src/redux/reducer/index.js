@@ -119,7 +119,6 @@ export default function rootReducer(state = initialState, action) {
             let name;
             if(user) {
             name = user.firstname + " " + user.lastname;
-            console.log(action.payload);
             return {
                 ...state,
                 login: logueo ,
@@ -145,11 +144,13 @@ export default function rootReducer(state = initialState, action) {
         case UPDATE_COMMENT:
             return action.payload
         case DELETE_COMMENT:
-            return action.payload
+            return {
+                ...state,
+                productComments: action.payload
+            }
         case DELETE_PRODUCT:
             return action.payload
         case REMOVE_FAVORITE:
-            console.log(action.payload)
             return {
                 ...state,
                 favorites: action.payload
@@ -219,7 +220,6 @@ export default function rootReducer(state = initialState, action) {
         case FILTER_BY_RATING:
             ratingResults = [];
                 ratingResults = action.payload.sort((a,b)=> a.rating - b.rating)
-            console.log(action.payload);
             return {
                 ...state,
                 filRating: ratingResults,

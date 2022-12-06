@@ -6,13 +6,14 @@ const getComment = async (req, res) => {
         include: [
             {
                 model: User,
-                attributes: ["username"],
+                attributes: ["id", "username"],
                 through: {
                     attributes: []
                 }
             },
             {
                 model: Product,
+                where : {id: req.params.id},
                 attributes: ["id", "name"],
                 through: {
                     attributes: []
@@ -79,17 +80,31 @@ const putComment = async (req, res) => {
 }
 
 const deleteComment = async (req, res) => {
-    const { id } = req.params;
+    const { idProduct, idUser } = req.params;
     try {
-        const deletedComment = await Comment.findOne({
-            where: {
-                id: req.params.id
+        let product = await Product.findOne({
+            where: { id: idProduct },
+            include: {
+                model: Comment,
+                attributes: ["id", "rating", "comment"],
+                through: {
+                    attributes: [],
+                },
+                include: {
+                    model: User,
+                    attributes: ["id", "username"],
+                    through: {
+                        attributes: []
+                    }
+                }
             }
         })
-        if (!deletedComment) return 0;
-        await Comment.destroy({where: { id: id }});
 
-        return res.status(200).json("Comment deleted");
+        let newComm = product.comments.filter((c) => c.users[0].id !== Number(idUser));
+        let deleted = product.comments.filter((c) => c.users[0].id === Number(idUser));
+        product.removeComments(deleted)
+
+        return res.send(newComm);
     }
     catch (err) {
         return res.status(500).send(`Comment could not be deleted (${err})`);
