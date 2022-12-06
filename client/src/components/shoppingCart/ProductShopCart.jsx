@@ -11,6 +11,7 @@ const ProductShopCart = () => {
 	const dispatch = useDispatch()
 	let cant = 0;
 
+	// Traer productos del localStorage ///
 	const seeProducts = () => {
 		let cart = [];
 		if (localStorage.getItem('cart')) {
@@ -24,8 +25,11 @@ const ProductShopCart = () => {
 
 	useEffect(() => {
 		seeProducts();
+		
 	}, []);
+	///////////////////////////////////////
 
+	// Eliminar 1 producto del carrito ////
 	const deleteProduct = (e, id) => {
 		e.preventDefault();
 		let carrito = productsSelected.filter((p) => p.id !== id);
@@ -37,7 +41,9 @@ const ProductShopCart = () => {
 		totalAccount(cant);
 		dispatch(putLocalstorage())
 	};
+	///////////////////////////////////////
 
+	// Eliminar todos los productos del carrito
 	const cleanCart = (e) => {
 		e.preventDefault();
 		setProductsSelected([]);
@@ -46,7 +52,9 @@ const ProductShopCart = () => {
 		totalAccount(cant);
 		dispatch(putLocalstorage())
 	};
+	///////////////////////////////////////
 
+	// Aumentar o disminuir cantidades
 	const suma = (event) => {
 		event.preventDefault();
 		const name = event.target.name;
@@ -83,11 +91,15 @@ const ProductShopCart = () => {
 		cant = decrease;
 		totalAccount(cant);
 	};
+	////////////////////////////////////////
 
+	// Cuenta total: agregado de condicionales para cambiar los valores del localStorage
 	const totalAccount = (cant) => {
+		console.log(cant)
 		if (cant.length) {
 			if (cant.length === 1) {
 				setTotal(cant[0].price * cant[0].amount);
+				localStorage.setItem("total", JSON.stringify(cant[0].price * cant[0].amount))
 			}
 
 			if (cant.length > 1) {
@@ -95,23 +107,40 @@ const ProductShopCart = () => {
 				cant.forEach((p) => {
 					account += p.price * p.amount;
 					setTotal(account.toFixed(2));
+					localStorage.setItem("total", JSON.stringify(account))
 				});
 			}
 		}
+		if(cant === 0 || cant.length === 0){
+			setTotal(0)
+			localStorage.setItem("total", JSON.stringify(0))
+		}
+		
 	};
+	///////////////////////////////////////
 
+	// Comprar items: agregado localStorage 
 	const buyItems = (event) =>{
 		event.preventDefault()
-		history.push("/buyproducts")
 		localStorage.setItem("total", JSON.stringify(total))
-	
+		history.push("/buyproducts")
 	}
+	///////////////////////////////////////
+
+	// Buttom /////////////////////////////
+	const sendButton = document.getElementById('sendButtom');
+
+	if(sendButton){
+		productsSelected.length ? sendButton.disabled = false : sendButton.disabled = true
+	}
+	///////////////////////////////////////
 
 	return (
 		<div className={s.cont}>
 			<h1>SHOPPING CART</h1>
 			<div className={s.contentP}>
 				<div className={s.contG}>
+					
 					{productsSelected.map((producto) => {
 						return (
 							<div className={s.producCard} key={producto.id}>
@@ -182,7 +211,7 @@ const ProductShopCart = () => {
 									CLEAN CART
 								</button>
 								<br />
-								<button className={s.btnB} onClick={buyItems} >BUY</button>
+								<button className={s.btnB} onClick={buyItems} id="sendButtom" >BUY</button>
 							</div>
 						</div>
 					</div>

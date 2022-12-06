@@ -1,14 +1,13 @@
 import s from './CreateProduct.module.css';
 
-const ProductSended = ()=>{
+const ProductSended = () => {
+	return (
+		<div className={s.divC}>
+			<div className={s.container}>
+				<h2 className={s.message}>The product was successfully created</h2>
+			</div>
+		</div>
+	);
+};
 
-    return(
-        <div className={s.container}>
-            <h2 className={s.message}>
-                The product was successfully created
-            </h2>
-        </div>
-    )
-}
-
-export default ProductSended
+export default ProductSended;

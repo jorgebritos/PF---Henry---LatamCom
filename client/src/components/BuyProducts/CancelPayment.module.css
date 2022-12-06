@@ -42,6 +42,7 @@
 	align-items: center;
 	justify-content: center;
 	align-content: center;
+	width: 200px;
 }
 
 .messagge {
@@ -80,8 +81,8 @@
 
 .homebtn {
 	margin-left: 10px;
-	width: 130px;
-	height: 30px;
+	width: 170px;
+	height: 35px;
 	border-radius: 23px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
