@@ -319,7 +319,7 @@ export function deleteProduct(id) {
 
 export function removeFavorite(id, idProduct) {
     return async function (dispatch) {
-        const deletedFavorite = await axios.delete(`http://localhost:3001/favorites/${id}`, idProduct)
+        const deletedFavorite = await axios.delete(`http://localhost:3001/favorites/${id}/${idProduct}`)
         dispatch({
             type: REMOVE_FAVORITE,
             payload: deletedFavorite.data

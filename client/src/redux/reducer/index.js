@@ -123,7 +123,8 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: logueo ,
-                user: {id: user.id, username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin}
+                user: {id: user.id, username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin},
+                favorites: action.payload.data.favorites
             }
             }else{
                 return {
@@ -148,7 +149,11 @@ export default function rootReducer(state = initialState, action) {
         case DELETE_PRODUCT:
             return action.payload
         case REMOVE_FAVORITE:
-            return action.payload
+            console.log(action.payload)
+            return {
+                ...state,
+                favorites: action.payload
+            }
         case RESET_DETAIL:
             return {
                 ...state,

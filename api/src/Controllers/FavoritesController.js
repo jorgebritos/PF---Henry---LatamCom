@@ -59,19 +59,28 @@ const postFavorite = async (req, res) => {
 }
 
 const removeFavorite = async (req, res) => {
-	const { id } = req.params.id;
-	const {idProduct} = req.body;
+	const { product, id  } = req.params;
 	try {
 		const user = await User.findOne({
 			where: {
-				id: id
+				id: product
+			},
+			include: {
+				model: Product,
+				as: "favorites",
+				attributes: ["id", "name", "price", "image"],
+				through: {
+					attributes: []
+				}
 			}
 		})
 		if (!user) return 0;
-		// await User.removeFavorite({ where: { id: idProduct } });
-		await User.removeFavorites({ where: { id: idProduct } });
+		let newFav = user.favorites.filter((f) => f.id != id)
+		let removed = user.favorites.filter((f) => f.id === Number(id))
 
-		return res.status(200).send("Favorite removed");
+		await user.removeFavorites(removed);
+
+		return res.send(newFav);
 	}
 	catch (err) {
 		return res.status(500).send(`Favorite could not be removed (${err})`);
