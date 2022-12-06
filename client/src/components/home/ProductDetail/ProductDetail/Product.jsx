@@ -98,15 +98,7 @@ const Product = () => {
 				</div>
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
-					<>
-						{isAuthenticated || user.admin ? (
-							<div>
-								<CreateComment />
-							</div>
-						) : (
-							<p className={s.parafo}>Must Log in to make a comment!</p>
-						)}
-					</>
+					<CreateComment />
 				</div>
 			</div>
 		);

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
 import {
 	createComment,
 	getAllComments,
@@ -9,7 +10,9 @@ import s from './CreateComment.module.css';
 import star from '../../../../asset/puntajes.png';
 
 const CreateComment = (id) => {
+	const { isAuthenticated } = useAuth0();
 	const product = useSelector((state) => state.productDetail);
+	const user = useSelector((state) => state.user);
 
 	const [comment, setComment] = useState({
 		comment: '',
@@ -33,14 +36,15 @@ const CreateComment = (id) => {
 		ratings += c.rating;
 	}
 	ratings /= productComments.length;
-	async function sendComment(e) {
+
+	async function sendComment(e, idUser) {
 		e.preventDefault();
 		let idProduct = product.id;
-		if (!idProduct) return console.log('faltan datos');
+		if (!idUser) return alert("Debes loguearte para realizar esta acción");
 		dispatch(
 			createComment({
 				...comment,
-				idUser: 1,
+				idUser,
 				idProduct,
 			}),
 		);
@@ -69,36 +73,44 @@ const CreateComment = (id) => {
 			) : (
 				''
 			)}
-			<div className={s.rating}>
-				<label>Rating:</label>
-				<br />
-				<select
-					className={s.select}
-					name='rating'
-					onChange={(e) => handleComment(e)}>
-					<option value='1'>1</option>
-					<option value='2'>2</option>
-					<option value='3'>3</option>
-					<option value='4'>4</option>
-					<option value='5'>5</option>
-				</select>
-				<br />
-			</div>
-			<div className={s.comment}>
-				<textarea
-					className={s.textarea}
-					cols={50}
-					name='comment'
-					rows={10}
-					placeholder={'Please, write a comment'}
-					value={comment.comment}
-					onChange={(e) => handleComment(e)}
-				/>
-				<button className={s.btn} onClick={(e) => sendComment(e)}>
-					Send Comment
-				</button>
-			</div>
-			<br />
+			<>
+				{isAuthenticated || user.username ? (
+					<div>
+						<div className={s.rating}>
+							<label>Rating:</label>
+							<br />
+							<select
+								className={s.select}
+								name='rating'
+								onChange={(e) => handleComment(e)}>
+								<option value='1'>1</option>
+								<option value='2'>2</option>
+								<option value='3'>3</option>
+								<option value='4'>4</option>
+								<option value='5'>5</option>
+							</select>
+							<br />
+						</div>
+						<div className={s.comment}>
+							<textarea
+								className={s.textarea}
+								cols={50}
+								name='comment'
+								rows={10}
+								placeholder={'Please, write a comment'}
+								value={comment.comment}
+								onChange={(e) => handleComment(e)}
+							/>
+							<button className={s.btn} onClick={(e) => sendComment(e, user.id)}>
+								Send Comment
+							</button>
+						</div>
+					</div>
+				) : (
+					<p className={s.parafo}>Must Log in to make a comment!</p>
+				)}
+			</>
+
 			<div>
 				{productComments.length ? (
 					<div>

@@ -9,7 +9,7 @@ import s from './LoginForm.module.css';
 
 
 
-export const LoginForm = ({location}) => {
+export const LoginForm = ({ location }) => {
 	// const {code} =queryString.parse(location.search);
 	// const [challengesData, setChallengesData] = useState("none");
 
@@ -24,7 +24,7 @@ export const LoginForm = ({location}) => {
 	//   .then(res => res.json())
 	//   .then(res => setChallengesData(JSON.stringify(res)))
 	// }, [code]);
-  
+
 
 	const { isLoading, loginWithRedirect } = useAuth0();
 	const allUser = useSelector((state) => state.allUsers);
@@ -37,28 +37,23 @@ export const LoginForm = ({location}) => {
 	const history = useHistory();
 
 	// const usuario = user && allUser.find((u) => u.email === user.email);
-	console.log(allUser);
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
-	useEffect(()=>{
-		dispatch(authTokenRouterLog({...login}))
-	},[login,dispatch]
-)
 
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 
-	const log= async ()=>{
+	const log = async () => {
 		loginWithRedirect();
 		// const domain = 'dev-g1jtn0qvoq0x04y4.us.auth0.com';
-    	// const audience = 'https://www.PF---Henry---LatamCom.com';
-    	// const scope = "read:PF-Henry";
-    	// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
-    	// const responseType = "code";
-    	// const redirectUri = "http://localhost:3000/home";
+		// const audience = 'https://www.PF---Henry---LatamCom.com';
+		// const scope = "read:PF-Henry";
+		// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
+		// const responseType = "code";
+		// const redirectUri = "http://localhost:3000/home";
 
 		// const response = await fetch(
 		// 	`https://${domain}/authorize?` + 
@@ -84,31 +79,31 @@ export const LoginForm = ({location}) => {
 
 
 
-/* 	const [input, setInput] = useState({email:"", password:""});
-	const [error, setErrors] = useState({email:"", password:""}); */
-	
-/* 	const validateInput = (input) => {
-		let errors = {};
-		let expreg = /[.*+\-?^${}()|[\]\\/]/;
-	} */
+	/* 	const [input, setInput] = useState({email:"", password:""});
+		const [error, setErrors] = useState({email:"", password:""}); */
+
+	/* 	const validateInput = (input) => {
+			let errors = {};
+			let expreg = /[.*+\-?^${}()|[\]\\/]/;
+		} */
 	function confirmUser(e) {
 		e.preventDefault();
 		// let confirm = true
 		console.log(login)
-/* 		const value = e.target.value;
-		const property = e.target.name; */
+		/* 		const value = e.target.value;
+				const property = e.target.name; */
 
-/* 		setInput({ ...input, [property]: value });
-		setErrors(validateInput({ ...input, [property]: value })); */
+		/* 		setInput({ ...input, [property]: value });
+				setErrors(validateInput({ ...input, [property]: value })); */
 
-	  dispatch(authTokenRouterLog({...login, confirm: true}))
+		dispatch(authTokenRouterLog({ ...login, confirm: true }))
 		console.log(`logg: ${logg}`);
 		if (logg === "IncorrectPassword") {
 			alert("La contraseña es incorrecta")
-		}else{
-		setLogin({email: "", password: "", admin:""})
+		} else {
+			setLogin({ email: "", password: "", admin: "" })
 
-		history.push("/home")
+			history.push("/home")
 		}
 	}
 

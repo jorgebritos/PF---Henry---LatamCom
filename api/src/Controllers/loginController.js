@@ -8,6 +8,7 @@ const { authByEmailPwd } = require("../helpers/auth-by-email-pwd.js");
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
   const { email, password, confirm } = req.body;
+  console.log(req.body)
   if (!email || !password) return res.status(400)
 
   try {
