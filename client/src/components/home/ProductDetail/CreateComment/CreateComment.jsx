@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
 	createComment,
+	deleteComment,
 	getAllComments,
 	updateRatingProduct,
 } from '../../../../redux/actions';
@@ -30,7 +31,7 @@ const CreateComment = (id) => {
 	}
 	const comments = useSelector((state) => state.productComments);
 	const productComments = comments.filter((c) => {
-		return c.products[0].name === product.name;
+		return c.products.length ? c.products[0].name === product.name : "";
 	});
 	const userComment = productComments.filter((c) => {
 		return c.users[0].username === user.username
@@ -45,7 +46,6 @@ const CreateComment = (id) => {
 		e.preventDefault();
 		setFlag(!flag)
 		let idProduct = product.id;
-		if (!idUser) return alert("Debes loguearte para realizar esta acción");
 		dispatch(
 			createComment({
 				...comment,
@@ -54,6 +54,14 @@ const CreateComment = (id) => {
 			}),
 		);
 		setComment({ ...comment, comment: '' });
+	}
+
+	async function deleteComments(e, idUser) {
+		e.preventDefault()
+		setFlag(!flag);
+		let idProduct = product.id;
+		dispatch(deleteComment(idUser, idProduct))
+		dispatch(getAllComments(idProduct))
 	}
 
 	const dispatch = useDispatch();
@@ -65,8 +73,8 @@ const CreateComment = (id) => {
 	}, [dispatch, product.id, ratings]);
 
 	useEffect(() => {
-		dispatch(getAllComments());
-	}, [dispatch]);
+		if (product.id) dispatch(getAllComments(product.id));
+	}, [dispatch, comments.length]);
 
 	return (
 		<div className={s.conten}>
@@ -112,7 +120,10 @@ const CreateComment = (id) => {
 						</div>
 					</div>
 				) : (
-					<p className={s.parafo}>You Already made a comment!</p>
+					<div>
+						<p className={s.parafo}>You Already made a comment!</p>
+						<button onClick={e => deleteComments(e, user.id)}>Delete Comment</button>
+					</div>
 				) : (
 					<p className={s.parafo}>Must Log in to make a comment!</p>
 				)}

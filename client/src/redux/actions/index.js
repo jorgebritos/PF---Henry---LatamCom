@@ -64,9 +64,9 @@ export function getAllProducts() {
 
 //RUTAS GET
 
-export function getAllComments() {
+export function getAllComments(id) {
     return async function (dispatch) {
-        const commentsInfo = await axios.get('http://localhost:3001/comments')
+        const commentsInfo = await axios.get(`http://localhost:3001/comments/${id}`)
         dispatch({
             type: GET_ALL_COMMENTS,
             payload: commentsInfo.data
@@ -135,8 +135,6 @@ export function getAllBrands(payload) {
 
             brands = new Set(brands)
             brands = [...brands]
-            console.log(products)
-            console.log(brands)
             await dispatch({
                 type: GET_ALL_BRANDS,
                 payload: brands
@@ -296,9 +294,9 @@ export function updateComment(payload) {
 }
 
 //RUTAS DELETE
-export function deleteComment(id) {
+export function deleteComment(idUser, idProduct) {
     return async function (dispatch) {
-        const deletedComment = await axios.delete(`http://localhost:3001/comments/${id}`)
+        const deletedComment = await axios.delete(`http://localhost:3001/comments/${idUser}/${idProduct}`)
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
