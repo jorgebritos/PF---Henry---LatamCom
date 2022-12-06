@@ -13,6 +13,7 @@ const CreateComment = (id) => {
 	const { isAuthenticated } = useAuth0();
 	const product = useSelector((state) => state.productDetail);
 	const user = useSelector((state) => state.user);
+	const [flag, setFlag] = useState(true)
 
 	const [comment, setComment] = useState({
 		comment: '',
@@ -31,6 +32,9 @@ const CreateComment = (id) => {
 	const productComments = comments.filter((c) => {
 		return c.products[0].name === product.name;
 	});
+	const userComment = productComments.filter((c) => {
+		return c.users[0].username === user.username
+	})
 	let ratings = 0;
 	for (const c of productComments) {
 		ratings += c.rating;
@@ -39,6 +43,7 @@ const CreateComment = (id) => {
 
 	async function sendComment(e, idUser) {
 		e.preventDefault();
+		setFlag(!flag)
 		let idProduct = product.id;
 		if (!idUser) return alert("Debes loguearte para realizar esta acción");
 		dispatch(
@@ -74,7 +79,7 @@ const CreateComment = (id) => {
 				''
 			)}
 			<>
-				{isAuthenticated || user.username ? (
+				{(isAuthenticated || user.username) ? (userComment.length === 0 && flag) ? (
 					<div>
 						<div className={s.rating}>
 							<label>Rating:</label>
@@ -106,6 +111,8 @@ const CreateComment = (id) => {
 							</button>
 						</div>
 					</div>
+				) : (
+					<p className={s.parafo}>You Already made a comment!</p>
 				) : (
 					<p className={s.parafo}>Must Log in to make a comment!</p>
 				)}
