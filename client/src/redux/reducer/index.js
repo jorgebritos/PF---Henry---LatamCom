@@ -123,7 +123,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: logueo ,
-                user: {username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin}
+                user: {id: user.id, username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin}
             }
             }else{
                 return {

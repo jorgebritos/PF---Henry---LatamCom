@@ -59,7 +59,7 @@ const postFavorite = async (req, res) => {
 }
 
 const removeFavorite = async (req, res) => {
-	const { id } = req.params;
+	const { id } = req.params.id;
 	const {idProduct} = req.body;
 	try {
 		const user = await User.findOne({

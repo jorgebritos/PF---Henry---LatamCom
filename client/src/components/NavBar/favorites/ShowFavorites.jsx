@@ -19,7 +19,7 @@ const ShowFavorites = () => {
 
 	useEffect(() => {
 		if (user.id) {
-			dispatch(getFavorites(user.id));
+			// dispatch(getFavorites(user.id));
 		}
 	}, [dispatch, favorites, user.id]);
 
