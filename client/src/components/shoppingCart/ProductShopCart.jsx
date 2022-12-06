@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import s from './ProductShopCart.module.css';
 import { putLocalstorage } from '../../redux/actions';
@@ -7,8 +7,8 @@ import { putLocalstorage } from '../../redux/actions';
 const ProductShopCart = () => {
 	const [total, setTotal] = useState(0);
 	const [productsSelected, setProductsSelected] = useState([]);
-	const history = useHistory()
-	const dispatch = useDispatch()
+	const history = useHistory();
+	const dispatch = useDispatch();
 	let cant = 0;
 
 	const seeProducts = () => {
@@ -35,7 +35,7 @@ const ProductShopCart = () => {
 
 		let cant = carrito;
 		totalAccount(cant);
-		dispatch(putLocalstorage())
+		dispatch(putLocalstorage());
 	};
 
 	const cleanCart = (e) => {
@@ -44,7 +44,7 @@ const ProductShopCart = () => {
 		localStorage.removeItem('cart');
 		let cant = 0;
 		totalAccount(cant);
-		dispatch(putLocalstorage())
+		dispatch(putLocalstorage());
 	};
 
 	const suma = (event) => {
@@ -100,12 +100,11 @@ const ProductShopCart = () => {
 		}
 	};
 
-	const buyItems = (event) =>{
-		event.preventDefault()
-		history.push("/buyproducts")
-		localStorage.setItem("total", JSON.stringify(total))
-	
-	}
+	const buyItems = (event) => {
+		event.preventDefault();
+		history.push('/buyproducts');
+		localStorage.setItem('total', JSON.stringify(total));
+	};
 
 	return (
 		<div className={s.cont}>
@@ -182,7 +181,9 @@ const ProductShopCart = () => {
 									CLEAN CART
 								</button>
 								<br />
-								<button className={s.btnB} onClick={buyItems} >BUY</button>
+								<button className={s.btnB} onClick={buyItems}>
+									BUY
+								</button>
 							</div>
 						</div>
 					</div>
