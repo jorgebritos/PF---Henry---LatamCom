@@ -3,7 +3,7 @@
 	flex-direction: column;
 	/* justify-content: center; */
 	align-items: center;
-	min-height: calc(100vh - 145px);
+	min-height: calc(100vh - 50px);
 }
 .contG {
 	display: flex;
@@ -34,7 +34,7 @@
 	height: 200px;
 	padding: 23px;
 	border-radius: 23px;
-	cursor: pointer;
+	/* cursor: pointer; */
 	box-shadow: 2px 2px 15px #142328cc;
 }
 .cimg {
@@ -77,6 +77,8 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
+	cursor: pointer;
 }
 
 .btn:hover {
@@ -90,6 +92,8 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
+	cursor: pointer;
 }
 
 .btnM:hover {
@@ -144,6 +148,8 @@
 	border-radius: 13px;
 	background-color: #17dac8;
 	backdrop-filter: blur(4px);
+	border: none;
+	cursor: pointer;
 }
 
 .btnB:hover {
