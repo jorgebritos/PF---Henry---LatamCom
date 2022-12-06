@@ -5,6 +5,7 @@ import {
 	createComment,
 	deleteComment,
 	getAllComments,
+	updateComment,
 	updateRatingProduct,
 } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
@@ -29,8 +30,8 @@ const CreateComment = (id) => {
 		});
 		return comment;
 	}
-	const comments = useSelector((state) => state.productComments);
-	const productComments = comments.filter((c) => {
+	let comments = useSelector((state) => state.productComments);
+	let productComments = comments.filter((c) => {
 		return c.products.length ? c.products[0].name === product.name : "";
 	});
 	const userComment = productComments.filter((c) => {
@@ -62,11 +63,25 @@ const CreateComment = (id) => {
 		let idProduct = product.id;
 		dispatch(deleteComment(idUser, idProduct))
 		dispatch(getAllComments(idProduct))
+		setComment({ ...comment, comment: '' });
+	}
+
+	async function editComment(e, idUser) {
+		e.preventDefault()
+		let idProduct = product.id;
+		dispatch(updateComment({
+			...comment,
+			idUser,
+			idProduct,
+		}))
+		dispatch(getAllComments(idProduct))
+		setComment({ ...comment, comment: '' });
 	}
 
 	const dispatch = useDispatch();
 	// const user = useSelector((state) => state.user);
 	useEffect(() => {
+
 		if (ratings && product.id !== undefined) {
 			dispatch(updateRatingProduct({ rating: ratings, id: product.id }));
 		}
@@ -122,7 +137,38 @@ const CreateComment = (id) => {
 				) : (
 					<div>
 						<p className={s.parafo}>You Already made a comment!</p>
-						<button onClick={e => deleteComments(e, user.id)}>Delete Comment</button>
+						<div style={{ visibility: !flag }}>
+							<div className={s.rating}>
+								<label>Rating:</label>
+								<br />
+								<select
+									className={s.select}
+									name='rating'
+									onChange={(e) => handleComment(e)}>
+									<option value='1'>1</option>
+									<option value='2'>2</option>
+									<option value='3'>3</option>
+									<option value='4'>4</option>
+									<option value='5'>5</option>
+								</select>
+								<br />
+							</div>
+							<div className={s.comment}>
+								<textarea
+									className={s.textarea}
+									cols={50}
+									name='comment'
+									rows={10}
+									placeholder={'Please, write a comment'}
+									value={comment.comment}
+									onChange={(e) => handleComment(e)}
+								/>
+								<button className={s.btn} onClick={(e) => editComment(e, user.id)}>
+									Edit Comment
+								</button>
+							</div>
+						</div>
+						<button className={s.btn} onClick={e => deleteComments(e, user.id)}>Delete Comment</button>
 					</div>
 				) : (
 					<p className={s.parafo}>Must Log in to make a comment!</p>
