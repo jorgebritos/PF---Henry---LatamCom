@@ -5,7 +5,7 @@ import { addFavorites } from '../../../redux/actions/index.js';
 import { useDispatch, useSelector } from 'react-redux';
 import star from '../../../asset/puntajes.png';
 
-export default function CardProduct({ id, name, price, image, rating }) {
+export default function CardProduct({ id, name, price, image, rating, stock }) {
 	const favorites = useSelector((state) => state.favorites);
 	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
@@ -47,6 +47,7 @@ export default function CardProduct({ id, name, price, image, rating }) {
 								''
 							)}
 						</p>
+						{stock > 0 ? <p>Stock: {stock}</p> : <p>OUT OF STOCK</p>}
 						<div>
 							<button className={s.btn} onClick={(e) => addFavorite(e, user.id)}>
 								ADD FAVORITE

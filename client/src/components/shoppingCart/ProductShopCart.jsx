@@ -59,7 +59,7 @@ const ProductShopCart = () => {
 		const name = event.target.name;
 
 		const increase = productsSelected.map((p) => {
-			if (p.id === Number(name)) {
+			if (p.id === Number(name) && (p.amount + 1) <= p.stock) {
 				return {
 					...p,
 					amount: p.amount + 1,
@@ -82,6 +82,8 @@ const ProductShopCart = () => {
 					...p,
 					amount: p.amount - 1,
 				};
+			} else {
+				console.log("llegaste al maximo stock posible")
 			}
 			return p;
 		});
@@ -94,7 +96,6 @@ const ProductShopCart = () => {
 
 	// Cuenta total: agregado de condicionales para cambiar los valores del localStorage
 	const totalAccount = (cant) => {
-		console.log(cant);
 		if (cant.length) {
 			if (cant.length === 1) {
 				setTotal(cant[0].price * cant[0].amount);
