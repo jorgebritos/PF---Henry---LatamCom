@@ -179,6 +179,11 @@ export default function rootReducer(state = initialState, action) {
                     ...state,
                     products: result
                 }
+            }else{
+                return{
+                    ...state,
+                    products: fillCategory
+                }
             }
             return state
         case FILTER_BY_PRICE:
