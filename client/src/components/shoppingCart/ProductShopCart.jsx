@@ -214,7 +214,7 @@ const ProductShopCart = () => {
 									CLEAN CART
 								</button>
 								<br />
-								<button className={s.btnB} onClick={buyItems}>
+								<button className={s.btnB} onClick={buyItems} id="sendButtom">
 									BUY
 								</button>
 							</div>
