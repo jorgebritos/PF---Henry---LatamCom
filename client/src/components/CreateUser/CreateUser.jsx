@@ -73,14 +73,7 @@ const CreateUser = () => {
 		password: '',
 	});
 
-	const [errors, setErrors] = useState({
-		firstname: '',
-		lastname: '',
-		email: '',
-		profile_image: '',
-		username: "",
-		password: '',
-	});
+	const [errors, setErrors] = useState({profile_image: ''});
 
 	const [loading, setLoading] = useState(false);
 
@@ -93,20 +86,39 @@ const CreateUser = () => {
 
 	const uploadImage = async (e) => {
 		const files = e.target.files;
-		const data = new FormData();
-		data.append('file', files[0]);
-		data.append('upload_preset', 'LatamCom');
-		setLoading(true);
-		const res = await fetch(
-			'https://api.cloudinary.com/v1_1/drruxw6zi/image/upload',
-			{
-				method: 'POST',
-				body: data,
-			},
-		);
-		const file = await res.json();
-		setInput({ ...input, image: file.secure_url });
-		setLoading(false);
+		console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: ""
+		})
+		if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(files[0].name)) {
+			console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: "Debes usar un formato de imagen válido"
+		})
+		}else{
+			console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: ""
+		})
+			const data = new FormData();
+			data.append('file', files[0]);
+			data.append('upload_preset', 'LatamCom');
+			setLoading(true);
+			const res = await fetch(
+				'https://api.cloudinary.com/v1_1/drruxw6zi/image/upload',
+				{
+					method: 'POST',
+					body: data,
+				},
+			);
+			const file = await res.json();
+			setInput({ ...input, image: file.secure_url });
+			setLoading(false);	
+		}
+
 		/* setErrors(validateInput({ ...input, image: file.secure_url })); */
 	};
 
@@ -155,26 +167,23 @@ const CreateUser = () => {
     if (event.target.value.length > 30) {
       return "Solo se permite un max. de 30 caracteres";
     }
-    if(!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(event.target.value)){
-      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+    if(event.target.value.indexOf(" ") !== event.target.value.lastIndexOf(" ") ){
+      return "No se permite usar mas de un espacio"
     }
     return "";
   }
 
 	function controllerFormPassword(event){
 		if(event.target.value.length < 8){
-      return "Solo se admite un min. de 4 caracteres"
+      return "Mínimo de 8 carácteres"
     } 
-    if (event.target.value.length > 20) {
-      return "Solo se permite un max. de 20 caracteres";
-    }
-    if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
-      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+    if(!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/i.test(event.target.value)){
+      return "Debes incluir mínimo: mayúscula, minúscla, número"
     }
     return "";
   }
 
-	function controllerFormFirstname(event) {
+/* 	function controllerFormFirstname(event) {
 		if (event.target.value.length < 4) {
 			return "Solo se admite un min. de 3 caracteres"
 		}
@@ -185,7 +194,7 @@ const CreateUser = () => {
 			return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
 		}
 		return "";
-	}
+	} */
 
 	// function controllerFormLastname(event) {
 	// 	if (event.target.value.length < 5) {
@@ -307,9 +316,27 @@ const CreateUser = () => {
 
 				break;
 			case "password":
-				break;
-
-
+				
+				case "username":
+					setErrors({
+						...errors,
+						[event.target.name]:""
+					})
+	
+					setInput({
+						...input,
+						password: event.target.value
+					})
+	
+					console.log("erm",controllerFormPassword(event));
+					if(controllerFormPassword(event).length>0){
+						setErrors({
+							...errors,
+							password: controllerFormPassword(event)
+						})
+					}
+					break;
+					
 			default:
 				break;
 		}
@@ -332,7 +359,23 @@ const CreateUser = () => {
 	const submitData = async (event) => {
 		event.preventDefault();
 		try {
-			await dispatch(createUser(input)).then(history.push("/createUser/usersended"))
+
+			let checkErrors=[]
+			for (let key in errors) {
+				if(errors[key].length == 0){
+					checkErrors.push(key)
+				}
+			}
+
+			if (Object.keys(errors).length == 6 && checkErrors.length == 6) {
+				await dispatch(createUser(input)).then(history.push("/createUser/usersended"))
+				alert("Usuario creado")
+			}else if(Object.keys(errors).length < 6){
+				console.log(checkErrors);
+				alert("El formulario está incompleto")
+			}else{
+				alert("Hay errores en el formulario")
+			}
 
 		} catch (error) {
 			alert(
@@ -392,7 +435,7 @@ const CreateUser = () => {
 						<label className={s.label}>*P. Image: </label>
 						<input
 							className={s.input}
-							name='file'
+							name='profile_image'
 							onChange={uploadImage}
 							autoComplete='off'
 							type='file'></input>
@@ -438,10 +481,11 @@ const CreateUser = () => {
 
 
 					<br />
-
-					<button className={s.btn} id='sendButtom' type='submit' disabled>
-						SEND
-					</button>
+					
+						<button className={s.btn} id='sendButtom' type='submit' >
+							SEND
+						</button>
+					
 				</form>
 			</div>
 		</div>
