@@ -17,6 +17,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const Product = () => {
 	const { isAuthenticated } = useAuth0();
+
 	const addProduct = async (event) => {
 		event.preventDefault();
 		let cart = [];
@@ -80,6 +81,7 @@ const Product = () => {
 					<div className={s.contInfo}>
 						<h1 className={s.name}>{product.name} </h1>
 						<h2 className={s.price}>${product.price} USD</h2>
+						{product.stock > 0 ? <h3>Stock: {product.stock}</h3> : <h3>OUT OF STOCK</h3>}
 						<h4 className={s.h4}>Description:</h4>
 						<p className={s.parafo}>{product.description}</p>
 						<h4 className={s.h4}>Categories:</h4>
@@ -90,10 +92,8 @@ const Product = () => {
 								</div>
 							);
 						})}
-
-						<button className={s.btn} onClick={addProduct}>
-							ADD TO CART
-						</button>
+						{product.stock > 0 ? <button className={s.btn} onClick={addProduct}>ADD TO CART</button> :
+						<button className={s.btn} disabled={true}>OUT OF STOCK</button>}
 					</div>
 				</div>
 				<div className={s.contInfoComent}>

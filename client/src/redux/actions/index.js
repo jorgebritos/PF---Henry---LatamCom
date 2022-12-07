@@ -11,8 +11,9 @@ export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
 export const GET_AUTHTOKENROUTER = "GET_AUTHTOKENROUTER"
 export const GET_AUTHTOKENROUTERPERF = "GET_AUTHTOKENROUTERPERF"
 export const GET_FAVORITES = "GET_FAVORITES"
-
 export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
+export const GET_ALL_PURCHASES = "GET_ALL_PURCHASES"
+export const GET_USER_PURCHASES = "GET_USER_PURCHASES"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE"
@@ -51,6 +52,27 @@ export const NEW_SEARCH = "NEW_SEARCH"
 //LocalStorage
 export const LOCALSTORAGE = "LOCALSTORAGE"
 
+//RUTAS GET
+export function getAllPurchases() {
+    return async function (dispatch) {
+        const purchasesInfo = await axios.get(`http://localhost:3001/purchase`)
+        dispatch({
+            type: GET_ALL_PURCHASES,
+            payload: purchasesInfo.data
+        })
+    }
+}
+
+export function getUserPurchases(id) {
+    return async function (dispatch) {
+        const purchasesInfo = await axios.get(`http://localhost:3001/purchase/${id}`)
+        dispatch({
+            type: GET_USER_PURCHASES,
+            payload: purchasesInfo.data
+        })
+    }
+}
+
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get(`http://localhost:3001/products`)
@@ -60,8 +82,6 @@ export function getAllProducts() {
         })
     }
 }
-
-//RUTAS GET
 
 export function getAllComments(id) {
     return async function (dispatch) {

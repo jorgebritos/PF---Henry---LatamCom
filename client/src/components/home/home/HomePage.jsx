@@ -79,6 +79,7 @@ export default function HomePage() {
 									categories={p.categories}
 									price={p.price}
 									rating={p.rating}
+									stock={p.stock}
 								/>
 							);
 						}) : ""}
