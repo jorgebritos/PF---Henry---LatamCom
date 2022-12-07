@@ -1,6 +1,6 @@
 import {
     GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
-    FILTER_BY_CATEGORY, SEARCH_BY_NAME,SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, FILTER_BY_RATING, REMOVE_ALL_FILTERS, NEW_SEARCH,
+    FILTER_BY_CATEGORY, SEARCH_BY_NAME, SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, FILTER_BY_RATING, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT, CREATE_USER,
@@ -28,7 +28,7 @@ const initialState = {
     brands: [],
     filBrands: [],
     filCategory: [],
-    filRating:[],
+    filRating: [],
     pruchase: {},
     createdPurchase: {},
     login: [],
@@ -40,8 +40,9 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
     const allProducts = state.allProducts;
     let actualProducts = state.products;
+    let fillCategory = state.filCategory
     let result = [];
-    let ratingResults=[]
+    let ratingResults = []
 
     switch (action.type) {
         case GET_ALL_PRODUCTS:
@@ -113,19 +114,19 @@ export default function rootReducer(state = initialState, action) {
                 createdPurchase: action.payload,
             }
         case POST_AUTHTOKENROUTERLOG:
-            let user = action.payload.data.user 
+            let user = action.payload.data.user
             let logueo = action.payload.data.jwt || action.payload.data
             console.log(logueo);
             let name;
-            if(user) {
-            name = user.firstname + " " + user.lastname;
-            return {
-                ...state,
-                login: logueo ,
-                user: {id: user.id, username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin},
-                favorites: action.payload.data.favorites
-            }
-            }else{
+            if (user) {
+                name = user.firstname + " " + user.lastname;
+                return {
+                    ...state,
+                    login: logueo,
+                    user: { id: user.id, username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin },
+                    favorites: action.payload.data.favorites
+                }
+            } else {
                 return {
                     ...state,
                     login: logueo
@@ -142,7 +143,10 @@ export default function rootReducer(state = initialState, action) {
         case UPDATE_PRODUCT:
             return action.payload
         case UPDATE_COMMENT:
-            return action.payload
+            return {
+                ...state,
+                productComments: action.payload
+            }
         case DELETE_COMMENT:
             return {
                 ...state,
@@ -164,8 +168,8 @@ export default function rootReducer(state = initialState, action) {
         case FILTER_BY_BRAND:
             result = [];
             if (action.payload.length > 0) {
-                for (let i = 0; i < actualProducts.length; i++) {
-                    let product = actualProducts[i];
+                for (let i = 0; i < fillCategory.length; i++) {
+                    let product = fillCategory[i];
                     for (let b = 0; b < action.payload.length; b++) {
                         let brand = action.payload[b];
                         if (product.brand === brand) result.push(product);
@@ -174,6 +178,11 @@ export default function rootReducer(state = initialState, action) {
                 return {
                     ...state,
                     products: result
+                }
+            }else{
+                return{
+                    ...state,
+                    products: fillCategory
                 }
             }
             return state
@@ -219,7 +228,7 @@ export default function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_RATING:
             ratingResults = [];
-                ratingResults = action.payload.sort((a,b)=> a.rating - b.rating)
+            ratingResults = action.payload.sort((a, b) => a.rating - b.rating)
             return {
                 ...state,
                 filRating: ratingResults,

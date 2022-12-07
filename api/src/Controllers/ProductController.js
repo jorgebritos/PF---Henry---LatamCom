@@ -94,6 +94,7 @@ const getProduct = async (req, res) => {
 };
 
 const putProduct = async (req, res) => {
+    // console.log(req.body)
     const selectedProduct = await Product.findOne({
         where: {
             id: req.params.id

@@ -7,7 +7,7 @@ router.get('/:id', commentController.getComment)
 
 router.post('/', commentController.postComment)
 
-router.put('/:id', commentController.putComment)
+router.put('/', commentController.putComment)
 
 router.delete('/:idUser/:idProduct', commentController.deleteComment);
 

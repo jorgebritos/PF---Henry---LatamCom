@@ -13,7 +13,7 @@ const getComment = async (req, res) => {
             },
             {
                 model: Product,
-                where : {id: req.params.id},
+                where: { id: req.params.id },
                 attributes: ["id", "name"],
                 through: {
                     attributes: []
@@ -57,25 +57,63 @@ const postComment = async (req, res) => {
 }
 
 const putComment = async (req, res) => {
-    const selectedComment = await Comment.findOne({
-        where: {
-            id: req.params.id
+    let { idUser, idProduct } = req.body
+
+    let product = await Product.findOne({
+        where: { id: idProduct },
+        include: {
+            model: Comment,
+            attributes: ["id", "rating", "comment"],
+            through: {
+                attributes: [],
+            },
+            include: {
+                model: User,
+                attributes: ["id", "username"],
+                through: {
+                    attributes: []
+                }
+            }
         }
-    });
-    if (selectedComment) {
-        let data = { ...req.body }
+    })
+
+    let selected = product.comments.filter((c) => c.users[0].id === Number(idUser));
+
+    selected = selected[0];
+    if (selected) {
+        let { comment, rating } = req.body;
+        let data = { comment, rating }
 
         let keys = Object.keys(data);
 
         keys.forEach(k => {
-            selectedComment[k] = data[k]
+            selected[k] = data[k]
         });
 
-        await selectedComment.save()
+        await selected.save()
+        await product.save()
 
-        res.sendStatus(200)
+        product = await Product.findOne({
+            where: { id: idProduct },
+            include: {
+                model: Comment,
+                attributes: ["id", "rating", "comment"],
+                through: {
+                    attributes: [],
+                },
+                include: {
+                    model: User,
+                    attributes: ["id", "username"],
+                    through: {
+                        attributes: []
+                    }
+                }
+            }
+        })
+
+        res.send(product.comments)
     } else {
-        res.sendStatus(404)
+        res.status(404)
     }
 }
 
@@ -102,6 +140,7 @@ const deleteComment = async (req, res) => {
 
         let newComm = product.comments.filter((c) => c.users[0].id !== Number(idUser));
         let deleted = product.comments.filter((c) => c.users[0].id === Number(idUser));
+        Comment.destroy({ where: { id: deleted[0].id } })
         product.removeComments(deleted)
 
         return res.send(newComm);
