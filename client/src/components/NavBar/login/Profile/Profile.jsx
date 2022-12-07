@@ -4,11 +4,13 @@ import s from './Profile.module.css';
 import Loading from '../../../loading/Loading';
 import { useSelector } from 'react-redux';
 import usericon from '../../../../asset/usericon.png';
+import { useHistory } from 'react-router-dom';
 
 export const Profile = () => {
 	const { user, isAuthenticated, isLoading } = useAuth0();
-
+	const history = useHistory()
 	const userNow = useSelector((state) => state.user);
+	console.log(userNow)
 
 	if (isLoading) {
 		return (
@@ -44,6 +46,9 @@ export const Profile = () => {
 						<div className={s.conCompra}>
 							<h2>Consola de Compras</h2>
 							<div></div>
+						</div>
+						<div>
+							<button onClick={()=>history.push(`/profile/changedata/${userNow.id}`)}>Edit information</button>
 						</div>
 					</div>
 				) : (<h1>Inicie Sesión</h1>)}

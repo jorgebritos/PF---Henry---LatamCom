@@ -61,3 +61,23 @@
 	padding: 25px;
 	width: 50%;
 }
+
+/* Success  */
+
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-auto-rows: 30px;
+}
+
+.message {
+	grid-column: 3/11;
+	grid-row: 8/16;
+	display: flex;
+
+	background-color: #17abda;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px;
+}
