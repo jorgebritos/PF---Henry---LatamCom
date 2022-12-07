@@ -40,6 +40,7 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
     const allProducts = state.allProducts;
     let actualProducts = state.products;
+    let fillCategory = state.filCategory
     let result = [];
     let ratingResults = []
 
@@ -167,8 +168,8 @@ export default function rootReducer(state = initialState, action) {
         case FILTER_BY_BRAND:
             result = [];
             if (action.payload.length > 0) {
-                for (let i = 0; i < actualProducts.length; i++) {
-                    let product = actualProducts[i];
+                for (let i = 0; i < fillCategory.length; i++) {
+                    let product = fillCategory[i];
                     for (let b = 0; b < action.payload.length; b++) {
                         let brand = action.payload[b];
                         if (product.brand === brand) result.push(product);
