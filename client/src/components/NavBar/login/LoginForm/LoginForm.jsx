@@ -7,8 +7,6 @@ import logoSimbolo from '../../../../asset/logoS.png';
 import s from './LoginForm.module.css';
 // import queryString from 'query-string';
 
-
-
 export const LoginForm = ({ location }) => {
 	// const {code} =queryString.parse(location.search);
 	// const [challengesData, setChallengesData] = useState("none");
@@ -25,22 +23,20 @@ export const LoginForm = ({ location }) => {
 	//   .then(res => setChallengesData(JSON.stringify(res)))
 	// }, [code]);
 
-
 	const { isLoading, loginWithRedirect } = useAuth0();
 	const allUser = useSelector((state) => state.allUsers);
-	const logg = useSelector((state) => state.login)
+	const logg = useSelector((state) => state.login);
 	const dispatch = useDispatch();
 	const [login, setLogin] = useState({
-		email: "",
-		password: ""
-	})
+		email: '',
+		password: '',
+	});
 	const history = useHistory();
 
 	// const usuario = user && allUser.find((u) => u.email === user.email);
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
-
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -56,8 +52,8 @@ export const LoginForm = ({ location }) => {
 		// const redirectUri = "http://localhost:3000/home";
 
 		// const response = await fetch(
-		// 	`https://${domain}/authorize?` + 
-		// 	`audience=${audience}&` + 
+		// 	`https://${domain}/authorize?` +
+		// 	`audience=${audience}&` +
 		// 	`scope=${scope}&` +
 		// 	`response_type=${responseType}&` +
 		// 	`client_id=${clientId}&` +
@@ -66,18 +62,16 @@ export const LoginForm = ({ location }) => {
 		// 	}
 		//   );
 		//   window.location.replace(response.url);
-	}
+	};
 
 	function handleInputChange(e) {
 		e.preventDefault();
 		setLogin({
 			...login,
-			[e.target.name]: e.target.value
-		})
-		return login
+			[e.target.name]: e.target.value,
+		});
+		return login;
 	}
-
-
 
 	/* 	const [input, setInput] = useState({email:"", password:""});
 		const [error, setErrors] = useState({email:"", password:""}); */
@@ -89,21 +83,21 @@ export const LoginForm = ({ location }) => {
 	function confirmUser(e) {
 		e.preventDefault();
 		// let confirm = true
-		console.log(login)
+		console.log(login);
 		/* 		const value = e.target.value;
 				const property = e.target.name; */
 
 		/* 		setInput({ ...input, [property]: value });
 				setErrors(validateInput({ ...input, [property]: value })); */
 
-		dispatch(authTokenRouterLog({ ...login, confirm: true }))
+		dispatch(authTokenRouterLog({ ...login, confirm: true }));
 		console.log(`logg: ${logg}`);
-		if (logg === "IncorrectPassword") {
-			alert("La contraseña es incorrecta")
+		if (logg === 'IncorrectPassword') {
+			alert('La contraseña es incorrecta');
 		} else {
-			setLogin({ email: "", password: "", admin: "" })
+			setLogin({ email: '', password: '', admin: '' });
 
-			history.push("/home")
+			history.push('/home');
 		}
 	}
 
@@ -116,7 +110,14 @@ export const LoginForm = ({ location }) => {
 					<br />
 					<div className={s.from}>
 						<label className={s.label}>Enter your email</label>
-						<input className={s.input} name="email" type='text' value={login.email} onInput={e => handleInputChange(e)} placeholder=' Email..' />
+						<input
+							className={s.input}
+							name='email'
+							type='text'
+							value={login.email}
+							onInput={(e) => handleInputChange(e)}
+							placeholder=' Email..'
+						/>
 						<label className={s.label}>Enter your password</label>
 						<input
 							className={s.input}
@@ -128,7 +129,10 @@ export const LoginForm = ({ location }) => {
 						/>
 					</div>
 					<br />
-					<button className={s.btn} id="confirm" onClick={(e) => confirmUser(e)}>
+					<button
+						className={s.btn}
+						id='confirm'
+						onClick={(e) => confirmUser(e)}>
 						Let`s get started
 					</button>
 					<br />
@@ -141,7 +145,7 @@ export const LoginForm = ({ location }) => {
 					{/* <div>{challengesData}</div> */}
 					<button className={s.btnG} onClick={() => log()}>
 						<img
-							src='https://img.icons8.com/fluency/16/null/google-logo.png'
+							src='https://img.icons8.com/fluency/25/null/google-logo.png'
 							alt=''
 						/>
 						<p className={s.p}>Google</p>

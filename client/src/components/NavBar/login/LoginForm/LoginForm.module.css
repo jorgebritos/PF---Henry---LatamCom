@@ -61,6 +61,7 @@
 	background-color: #17addac5;
 	backdrop-filter: blur(4px);
 	margin-bottom: 10px;
+	border: none;
 }
 .input:hover {
 	background-color: #d9d9d9;
@@ -73,6 +74,7 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 
 .btn:hover {
@@ -80,9 +82,9 @@
 }
 
 .btnG {
-	width: 140px;
-	height: 30px;
-	border-radius: 13px;
+	width: 150px;
+	height: 40px;
+	border-radius: 23px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -90,12 +92,13 @@
 	padding: 5px;
 	margin-bottom: 1rem;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 
 .btnG:hover {
 	color: whitesmoke;
 }
 .p {
-	margin-left: 5px;
-	font-size: small;
+	margin-left: 10px;
+	font-size: medium;
 }
