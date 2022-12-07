@@ -91,6 +91,7 @@ const putComment = async (req, res) => {
         });
 
         await selected.save()
+        await product.save()
 
         product = await Product.findOne({
             where: { id: idProduct },
@@ -110,9 +111,9 @@ const putComment = async (req, res) => {
             }
         })
 
-        res.status(product.comments)
+        res.send(product.comments)
     } else {
-        res.sendStatus(404)
+        res.status(404)
     }
 }
 

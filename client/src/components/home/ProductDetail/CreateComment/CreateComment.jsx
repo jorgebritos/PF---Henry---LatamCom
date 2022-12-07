@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
-import {
-	createComment,
-	deleteComment,
-	getAllComments,
-	updateComment,
-	updateRatingProduct,
-} from '../../../../redux/actions';
+import { createComment, deleteComment, getAllComments, updateComment, updateRatingProduct, } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
 import star from '../../../../asset/puntajes.png';
 
-const CreateComment = (id) => {
+const CreateComment = () => {
 	const { isAuthenticated } = useAuth0();
-	const product = useSelector((state) => state.productDetail);
-	const user = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 	const [flag, setFlag] = useState(true)
+
+	const product = useSelector((state) => state.productDetail);
+	let comments = useSelector((state) => state.productComments);
+	const user = useSelector((state) => state.user);
+	const ratings = useSelector((state) => state.productDetail.rating);
+
+	const userComment = comments.filter((c) => {
+		return c.users[0].username === user.username
+	})
 
 	const [comment, setComment] = useState({
 		comment: '',
@@ -30,18 +32,19 @@ const CreateComment = (id) => {
 		});
 		return comment;
 	}
-	let comments = useSelector((state) => state.productComments);
-	let productComments = comments.filter((c) => {
-		return c.products.length ? c.products[0].name === product.name : "";
-	});
-	const userComment = productComments.filter((c) => {
-		return c.users[0].username === user.username
-	})
-	let ratings = 0;
-	for (const c of productComments) {
-		ratings += c.rating;
+
+	function calculateRating() {
+		let newRating = 0;
+		for (const c of comments) {
+			newRating += c.rating;
+		}
+		newRating /= comments.length;
+		if (newRating > 0) {
+			dispatch(updateRatingProduct({ rating: newRating, id: product.id }));
+			dispatch(getAllComments(product.id))
+		}
+		return newRating
 	}
-	ratings /= productComments.length;
 
 	async function sendComment(e, idUser) {
 		e.preventDefault();
@@ -55,6 +58,7 @@ const CreateComment = (id) => {
 			}),
 		);
 		setComment({ ...comment, comment: '' });
+		calculateRating()
 	}
 
 	async function deleteComments(e, idUser) {
@@ -64,6 +68,7 @@ const CreateComment = (id) => {
 		dispatch(deleteComment(idUser, idProduct))
 		dispatch(getAllComments(idProduct))
 		setComment({ ...comment, comment: '' });
+		calculateRating()
 	}
 
 	async function editComment(e, idUser) {
@@ -77,19 +82,14 @@ const CreateComment = (id) => {
 		}))
 		dispatch(getAllComments(idProduct))
 		setComment({ ...comment, comment: '' });
+		calculateRating()
 	}
 
-	const dispatch = useDispatch();
-	// const user = useSelector((state) => state.user);
 	useEffect(() => {
-
-		if (ratings && product.id !== undefined) {
-			dispatch(updateRatingProduct({ rating: ratings, id: product.id }));
-		}
-	}, [dispatch, product.id, ratings]);
-
-	useEffect(() => {
-		if (product.id) dispatch(getAllComments(product.id));
+		if (product.id) {
+			dispatch(getAllComments(product.id))
+			calculateRating()
+		};
 	}, [dispatch, comments.length]);
 
 	return (
@@ -97,7 +97,7 @@ const CreateComment = (id) => {
 			{ratings > 0 ? (
 				<label>
 					Rating General del Producto: {ratings.toFixed(1)} (
-					{productComments.length})
+					{comments.length})
 				</label>
 			) : (
 				''
@@ -177,10 +177,10 @@ const CreateComment = (id) => {
 			</>
 
 			<div>
-				{productComments.length ? (
+				{comments.length ? (
 					<div>
 						<h3 className={s.h3}>Comments:</h3>
-						{productComments.map((c, index) => {
+						{comments.map((c, index) => {
 							return (
 								<div className={s.contenComments} key={index}>
 									<p>{c.users.length ? c.users[0].username : ''}</p>

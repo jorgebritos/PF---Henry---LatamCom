@@ -61,7 +61,6 @@ export function getAllProducts() {
     }
 }
 
-
 //RUTAS GET
 
 export function getAllComments(id) {
