@@ -27,7 +27,7 @@ export const LoginForm = ({location}) => {
   
 
 	const { isLoading, loginWithRedirect } = useAuth0();
-	// const allUser = useSelector((state) => state.allUsers);
+	const allUser = useSelector((state) => state.allUsers);
 	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
 	const user1 = useSelector((state)=> state.user)
