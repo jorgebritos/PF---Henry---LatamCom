@@ -49,6 +49,7 @@ export const NEW_SEARCH = "NEW_SEARCH"
 
 //LocalStorage
 export const LOCALSTORAGE = "LOCALSTORAGE"
+export const LOCALSTORAGEUSERINFO= "LOCALSTORAGEUSERINFO"
 
 export function getAllProducts() {
     return async function (dispatch) {
@@ -441,3 +442,20 @@ export function putLocalstorage(){
     }
     
 }
+// export function getLocalstorage(){
+//     if (localStorage.getItem('email','password' )) {
+//         let info = JSON.parse(localStorage.getItem('email','password'));
+//         return{
+//             type: LOCALSTORAGEUSERINFO,
+//             payload: info
+//         }
+//     }
+//     else{
+//         let info = []
+//         return{
+//             type: LOCALSTORAGEUSERINFO,
+//             payload: info
+//         }
+//     }
+    
+// }

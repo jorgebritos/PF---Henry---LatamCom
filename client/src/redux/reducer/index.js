@@ -11,6 +11,7 @@ import {
     GET_FAVORITES,
     REMOVE_FAVORITE,
     DELETE_PRODUCT
+    // LOCALSTORAGEUSERINFO
 } from "../actions"
 
 const initialState = {
@@ -113,11 +114,13 @@ export default function rootReducer(state = initialState, action) {
         case POST_AUTHTOKENROUTERLOG:
             let user = action.payload.data.user 
             let logueo = action.payload.data.jwt || action.payload.data
+            console.log(user);
             console.log(logueo);
             let name;
             if(user) {
             name = user.firstname + " " + user.lastname;
             console.log(action.payload);
+            console.log(user);
             return {
                 ...state,
                 login: logueo ,
@@ -248,6 +251,12 @@ export default function rootReducer(state = initialState, action) {
                 localstorage: [action.payload]
 
             }
+            // case LOCALSTORAGEUSERINFO:
+            // return {
+            //     ...state,
+            //     localstorage: [action.payload]
+
+            // }
         default:
             return state;
     }

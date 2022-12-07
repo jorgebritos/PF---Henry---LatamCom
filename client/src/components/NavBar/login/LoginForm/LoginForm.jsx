@@ -30,22 +30,19 @@ export const LoginForm = ({location}) => {
 	// const allUser = useSelector((state) => state.allUsers);
 	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
-	const [login, setLogin] = useState({
+	const user1 = useSelector((state)=> state.user)
+	const [token, setToken] = useState(null)
+	const [logged, setLogin] = useState({
 		email: "",
 		password: ""
 	})
 	const history = useHistory();
 
-	const usuario = user && allUser.find((u) => u.email === user.email);
-	console.log(allUser);
-	useEffect(() => {
-		dispatch(getAllUsers());
-	}, [dispatch]);
-
-	useEffect(()=>{
-		dispatch(authTokenRouterLog({...login}))
-	},[login,dispatch]
-)
+	// const usuario = user && allUser.find((u) => u.email === user.email);
+	// console.log(allUser);
+	// useEffect(() => {
+	// 	dispatch(getAllUsers());
+	// }, [dispatch]);
 
 	if (isLoading) {
 		return <div>Loading...</div>;
@@ -71,19 +68,20 @@ export const LoginForm = ({location}) => {
 		// 	}
 		//   );
 		//   window.location.replace(response.url);
+
 	}
 
 	function handleInputChange(e) {
 		e.preventDefault();
 		setLogin({
-			...login,
+			...logged,
 			[e.target.name]: e.target.value
 		})
-		return login
+		return logged
 	}
+	console.log(`user1 antes del dispatch: ${user1}`);
 
-
-
+	console.log(`logg antes del dispatch: ${logg}`);
 /* 	const [input, setInput] = useState({email:"", password:""});
 	const [error, setErrors] = useState({email:"", password:""}); */
 	
@@ -94,21 +92,24 @@ export const LoginForm = ({location}) => {
 	function confirmUser(e) {
 		e.preventDefault();
 		// let confirm = true
-		console.log(login)
+		// console.log(login)
 /* 		const value = e.target.value;
 		const property = e.target.name; */
 
 /* 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value })); */
 
-	  dispatch(authTokenRouterLog({...login, confirm: true}))
-		console.log(`logg: ${logg}`);
+	   dispatch(authTokenRouterLog({...logged, confirm: true,}))
+	//   console.log(a)
+	  window.localStorage.setItem("loggedUser", JSON.stringify(logged))
+		// console.log(`logg despues del dispatch: ${logg}`);
+		// console.log(`user1: ${user1}`);
 		if (logg === "IncorrectPassword") {
 			alert("La contraseña es incorrecta")
 		}else{
 		setLogin({email: "", password: "", admin:""})
 
-		history.push("/home")
+		// history.push("/home")
 		}
 	}
 
@@ -121,14 +122,14 @@ export const LoginForm = ({location}) => {
 					<br />
 					<div className={s.from}>
 						<label className={s.label}>Enter your email</label>
-						<input className={s.input} name="email" type='text' value={login.email} onInput={e => handleInputChange(e)} placeholder=' Email..' />
+						<input className={s.input} name="email" type='text' value={logged.email} onInput={e => handleInputChange(e)} placeholder=' Email..' />
 						<label className={s.label}>Enter your password</label>
 						<input
 							className={s.input}
 							onInput={(e) => handleInputChange(e)}
-							type='text'
+							type='password'
 							name='password'
-							value={login.password}
+							value={logged.password}
 							placeholder=' Password..'
 						/>
 					</div>
