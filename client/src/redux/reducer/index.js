@@ -188,11 +188,12 @@ export default function rootReducer(state = initialState, action) {
             return state
         case FILTER_BY_PRICE:
             result = [];
-            for (const p of actualProducts) {
+            let theProducts = fillCategory.length == 0 ? allProducts: fillCategory
+            for (const p of theProducts) {
                 if (p.price > action.payload.min && p.price < action.payload.max) result.push(p)
             }
 
-            if (Number(action.payload.min) === 0 && Number(action.payload.max) === 0) return { ...state, products: allProducts }
+            if (Number(action.payload.min) === 0 && Number(action.payload.max) === 0) return { ...state, filCategory:[] }
             let marcasPrice = result.map((p) => {
                 return p.brand
             })
@@ -200,12 +201,27 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 products: result,
+                filCategory: result,
                 filBrands: [...new Set(marcasPrice)]
             }
         case FILTER_BY_CATEGORY:
             result = [];
+            let marcas;
+
             if (action.payload === "All") {
                 result = allProducts
+                 marcas = result.map((p) => {
+                    return p.brand
+                })
+
+                marcas = marcas.filter((m) => m != null)
+
+                return {
+                    ...state,
+                products: result,
+                filCategory: result,
+                filBrands: [...new Set(marcas)]
+                }
             } else {
                 for (const p of allProducts) {
                     for (const k in p.categories) {
@@ -216,7 +232,7 @@ export default function rootReducer(state = initialState, action) {
                     }
                 }
             }
-            let marcas = result.map((p) => {
+            marcas = result.map((p) => {
                 return p.brand
             })
             marcas = marcas.filter((m) => m != null)

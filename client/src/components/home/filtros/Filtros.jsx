@@ -74,6 +74,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		dispatch(filterByCategory(categoryFilter));
 		setIsChecked([]);		
 		setCurrentPage(1);
+		setPriceFilter({minPrice: 0, maxPrice: 0});
 	};
 	// const distBrands =  function (products){
 	// 	console.log(`Es productos: ${products}`);
@@ -182,33 +183,6 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 						</div>
 					</div>
 
-					{/* <div className={s.filtro}>
-						<h4 className={s.h4}>Filter By Category</h4>
-						<ul>
-							{categories?.map((c) => {
-								return (
-									<li className={s.li} key={c.name}>
-										<label className={s.label}>
-											<input
-												className={s.input}
-												type={'radio'}
-												value={c.name}
-												name={'category'}
-												id='categoria'
-												onClick={(e) => handleCategoryFilter(c.name)}
-											/>
-											<span className={s.span}>{c.name}</span>
-										</label>
-									</li>
-								);
-							})}
-						</ul>
-						<button className={s.btn} onClick={(e) => filterCategory(e)}>
-							Filter
-						</button>
-					</div> */}
-{/* Ejemplar de como se modulariza en front React usen el código comentado de arriba *solo* para comparar
-	  Una vez resueltas las dudas borren el código comentado de arriba*/}
 					<FiltroCategory s={s} categories={categories} handleCategoryFilter={handleCategoryFilter} filterCategory={filterCategory} />
 
 {/* 					<div className={s.filtro}>
