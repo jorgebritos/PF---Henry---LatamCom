@@ -10,7 +10,9 @@ import {
     LOCALSTORAGE,
     GET_FAVORITES,
     REMOVE_FAVORITE,
-    DELETE_PRODUCT
+    DELETE_PRODUCT,
+    GET_ALL_PURCHASES,
+    GET_USER_PURCHASES
 } from "../actions"
 
 const initialState = {
@@ -18,6 +20,7 @@ const initialState = {
     user: {},
     favorites: [],
     allUsers: [],
+    allPurchases: [],
     // ESTE ES PARA APLICAR LOS FILTROS, ASÍ NO SE PIERDE EL STATE
     allProducts: [],
     productDetail: {},
@@ -32,6 +35,7 @@ const initialState = {
     pruchase: {},
     createdPurchase: {},
     login: [],
+    userPurchases: [],
     //LOCALSTORAGE
     localstorage: [],
 }
@@ -61,10 +65,21 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allUsers: action.payload,
             }
+        case GET_ALL_PURCHASES: {
+            return {
+                ...state,
+                allPurchases: action.payload
+            }
+        }
         case GET_USER:
             return {
                 ...state,
                 user: action.payload,
+            }
+        case GET_USER_PURCHASES:
+            return {
+                ...state,
+                userPurchases: action.payload
             }
         case GET_FAVORITES:
             return {
@@ -179,8 +194,8 @@ export default function rootReducer(state = initialState, action) {
                     ...state,
                     products: result
                 }
-            }else{
-                return{
+            } else {
+                return {
                     ...state,
                     products: fillCategory
                 }

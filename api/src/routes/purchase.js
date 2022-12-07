@@ -5,7 +5,9 @@ const router = Router();
 
 router.post("/", purchaseController.postPurchase)
 
-router.get('/', purchaseController.getPurchase)
+router.get('/', purchaseController.getPurchaseAll)
+
+router.get('/:id', purchaseController.getPurchaseId)
 
 
 module.exports = router
