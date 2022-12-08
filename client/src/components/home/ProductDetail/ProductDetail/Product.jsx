@@ -81,7 +81,11 @@ const Product = () => {
 					<div className={s.contInfo}>
 						<h1 className={s.name}>{product.name} </h1>
 						<h2 className={s.price}>${product.price} USD</h2>
-						{product.stock > 0 ? <h3>Stock: {product.stock}</h3> : <h3>OUT OF STOCK</h3>}
+						{product.stock > 0 ? (
+							<h3 className={s.h4}>Stock: {product.stock}</h3>
+						) : (
+							<h3 className={s.h4}>OUT OF STOCK</h3>
+						)}
 						<h4 className={s.h4}>Description:</h4>
 						<p className={s.parafo}>{product.description}</p>
 						<h4 className={s.h4}>Categories:</h4>
@@ -92,8 +96,15 @@ const Product = () => {
 								</div>
 							);
 						})}
-						{product.stock > 0 ? <button className={s.btn} onClick={addProduct}>ADD TO CART</button> :
-						<button className={s.btn} disabled={true}>OUT OF STOCK</button>}
+						{product.stock > 0 ? (
+							<button className={s.btn} onClick={addProduct}>
+								ADD TO CART
+							</button>
+						) : (
+							<button className={s.btn} disabled={true}>
+								OUT OF STOCK
+							</button>
+						)}
 					</div>
 				</div>
 				<div className={s.contInfoComent}>

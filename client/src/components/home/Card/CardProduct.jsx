@@ -23,7 +23,7 @@ export default function CardProduct({ id, name, price, image, rating, stock }) {
 		let exists = await favorites.find((f) => f.id === Number(id));
 
 		if (exists) return alert('Este objeto ya es de tus favoritos');
-		if (!idUser) return alert('Debes estar logueado para realizar esta acción')
+		if (!idUser) return alert('Debes estar logueado para realizar esta acción');
 		dispatch(addFavorites({ idProduct: product.id, idUser }));
 	};
 
@@ -47,9 +47,11 @@ export default function CardProduct({ id, name, price, image, rating, stock }) {
 								''
 							)}
 						</p>
-						{stock > 0 ? <p>Stock: {stock}</p> : <p>OUT OF STOCK</p>}
+						{/* {stock > 0 ? <p>Stock: {stock}</p> : <p>OUT OF STOCK</p>} */}
 						<div>
-							<button className={s.btn} onClick={(e) => addFavorite(e, user.id)}>
+							<button
+								className={s.btn}
+								onClick={(e) => addFavorite(e, user.id)}>
 								ADD FAVORITE
 							</button>
 						</div>
