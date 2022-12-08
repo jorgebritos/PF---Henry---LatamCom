@@ -76,6 +76,7 @@ export function getUserPurchases(id) {
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get(`http://localhost:3001/products`)
+        console.log(productsInfo)
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: productsInfo.data
@@ -260,7 +261,7 @@ export function buyShoppingCart(payload) {
     return async function (dispatch) {
         const info = await axios.post('http://localhost:3001/buyings/createpayment', payload)
         console.log(info.data);
-        window.location.href= info.data
+        window.location.href = info.data
         dispatch({
             type: PP_PURCHASE,
             payload: info
@@ -371,6 +372,8 @@ export function filterByBrand(payload) {
 }
 
 export function filterByPrice(payload) {
+    if (!payload.min) payload.min = 0
+    if (!payload.max) payload.max = 0
     return {
         type: FILTER_BY_PRICE,
         payload
@@ -417,7 +420,7 @@ export function searchByName(productName, typeR) {
     return async function (dispatch) {
         const productsInfo = await axios.get(`http://localhost:3001/products`)
 
-        if (productsInfo.data !== "Please Create Categories First"&& productName) {
+        if (productsInfo.data !== "Please Create Categories First" && productName) {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
             dispatch({
                 type: typeR,
@@ -448,20 +451,20 @@ export function orderBy(payload) {
 
 // LocalStorage
 
-export function putLocalstorage(){
+export function putLocalstorage() {
     if (localStorage.getItem('cart')) {
         let cart = JSON.parse(localStorage.getItem('cart'));
-        return{
+        return {
             type: LOCALSTORAGE,
             payload: cart
         }
     }
-    else{
+    else {
         let cart = []
-        return{
+        return {
             type: LOCALSTORAGE,
             payload: cart
         }
     }
-    
+
 }

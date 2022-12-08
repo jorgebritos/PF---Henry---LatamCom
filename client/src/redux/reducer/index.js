@@ -44,7 +44,8 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
     const allProducts = state.allProducts;
     let actualProducts = state.products;
-    let fillCategory = state.filCategory
+    let fillCategory = state.filCategory;
+    let filBrands = state.filBrands;
     let result = [];
     let ratingResults = []
 
@@ -53,7 +54,8 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 products: action.payload,
-                allProducts: action.payload
+                allProducts: action.payload,
+                filCategory: action.payload
             }
         case GET_ALL_COMMENTS:
             return {
@@ -192,31 +194,68 @@ export default function rootReducer(state = initialState, action) {
                 }
                 return {
                     ...state,
-                    products: result
+                    products: result,
+                    filBrands: action.payload
                 }
             } else {
                 return {
                     ...state,
-                    products: fillCategory
+                    filBrands: []
                 }
             }
-            return state
         case FILTER_BY_PRICE:
             result = [];
-            let theProducts = fillCategory.length == 0 ? allProducts: fillCategory
-            for (const p of theProducts) {
-                if (p.price > action.payload.min && p.price < action.payload.max) result.push(p)
+            let theProducts = fillCategory.length == 0 ? allProducts : fillCategory
+            let { min, max } = action.payload
+            if (min < max && min !== 0) {
+                for (const p of theProducts) {
+                    if (p.price >= min && p.price <= max) result.push(p)
+                }
+            } else if (min > 0 && max === 0) {
+                for (const p of theProducts) {
+                    if (p.price >= min) result.push(p)
+                }
+            } else if (max > 0 && min === 0) {
+                for (const p of theProducts) {
+                    if (p.price <= max) {
+                        result.push(p)
+                    }
+                }
+            } else {
+                result = theProducts;
             }
 
-            if (Number(action.payload.min) === 0 && Number(action.payload.max) === 0) return { ...state, filCategory:[] }
             let marcasPrice = result.map((p) => {
                 return p.brand
             })
+
+            if (filBrands.length > 0) {
+                let newResult = [];
+                for (const p of result) {
+                    for (const b of filBrands) {
+                        if (p.brand === b) {
+                            newResult.push(p)
+                        }
+                    }
+                }
+                result = newResult;
+            }
+
+
+
+            // if (filBrands.length > 0 && filBrands == marcasPrice) {
+            //     for (const p of result) {
+            //         for (const b of filBrands) {
+            //             if (p.brand === b) newResult.push(p)
+            //         }
+            //     }
+
+            // }
             marcasPrice = marcasPrice.filter((m) => m != null)
+
             return {
                 ...state,
                 products: result,
-                filCategory: result,
                 filBrands: [...new Set(marcasPrice)]
             }
         case FILTER_BY_CATEGORY:
@@ -225,7 +264,7 @@ export default function rootReducer(state = initialState, action) {
 
             if (action.payload === "All") {
                 result = allProducts
-                 marcas = result.map((p) => {
+                marcas = result.map((p) => {
                     return p.brand
                 })
 
@@ -233,9 +272,9 @@ export default function rootReducer(state = initialState, action) {
 
                 return {
                     ...state,
-                products: result,
-                filCategory: result,
-                filBrands: [...new Set(marcas)]
+                    products: result,
+                    filCategory: result,
+                    filBrands: [...new Set(marcas)]
                 }
             } else {
                 for (const p of allProducts) {

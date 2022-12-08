@@ -21,15 +21,15 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const [isChecked, setIsChecked] = useState([]);
 	const [categoryFilter, setCategoryFilter] = useState('All');
 	const [priceFilter, setPriceFilter] = useState({
-			minPrice: 0,
-			maxPrice: 0,
-		});
+		minPrice: 0,
+		maxPrice: 0,
+	});
 
 	useEffect(() => {
 		dispatch(getAllBrands([]));
 	}, [dispatch]);
 
-	
+
 
 	function handlePriceFilter(e) {
 		if (e.target.checkValidity()) {
@@ -38,31 +38,27 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 				...priceFilter,
 				[e.target.name]: e.target.value,
 			});
-			return priceFilter;
-		} else {
-			e.preventDefault();
-			setPriceFilter({
-				...setPriceFilter,
-				[e.target.name]: e.target.min,
-			});
-			return priceFilter;
 		}
+		return priceFilter;
 	}
+
 
 	const filterPrice = function (e) {
 		e.preventDefault();
 		let min = priceFilter.minPrice;
 		let max = priceFilter.maxPrice;
 
-		if (Number(min) > Number(max)) return alert('El minimo no puede ser mayor al maximo');
 		setCheckedState(new Array(15).fill(false));
-		dispatch(filterByPrice({ min: priceFilter.minPrice, max: priceFilter.maxPrice }));
+		dispatch(filterByPrice({ min: min, max: max }));
 		setIsChecked([]);
+		if (!min && !max) setPriceFilter({ minPrice: 0, maxPrice: 0 })
+		if (!min && max) setPriceFilter({ ...priceFilter, minPrice: 0 })
+		if (!max && min) setPriceFilter({ ...priceFilter, maxPrice: 0 })
 		// dispatch(getAllBrands(products));
 		setCurrentPage(1);
 	};
 
-	
+
 
 	function handleCategoryFilter(category) {
 		setCategoryFilter(category);
@@ -72,9 +68,10 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		e.preventDefault();
 		setCheckedState(new Array(15).fill(false));
 		dispatch(filterByCategory(categoryFilter));
-		setIsChecked([]);		
+		setIsChecked([]);
+		filterPrice(e)
 		setCurrentPage(1);
-		setPriceFilter({minPrice: 0, maxPrice: 0});
+		// setPriceFilter({ minPrice: 0, maxPrice: 0 });
 	};
 	// const distBrands =  function (products){
 	// 	console.log(`Es productos: ${products}`);
@@ -103,6 +100,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const filterBrands = function (e) {
 		e.preventDefault();
 		dispatch(filterByBrand([...isChecked]));
+		filterPrice(e)
 		setCurrentPage(1);
 	};
 
@@ -159,6 +157,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 								value={priceFilter.minPrice}
 								min={0}
 								minLength={1}
+								onClick={e => e.target.select()}
 								onInput={(e) => handlePriceFilter(e)}></input>
 						</div>
 						<br />
@@ -173,6 +172,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 								value={priceFilter.maxPrice}
 								min={0}
 								minLength={1}
+								onClick={e => e.target.select()}
 								onInput={(e) => handlePriceFilter(e)}></input>
 						</div>
 						<br />
@@ -185,7 +185,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 
 					<FiltroCategory s={s} categories={categories} handleCategoryFilter={handleCategoryFilter} filterCategory={filterCategory} />
 
-{/* 					<div className={s.filtro}>
+					{/* 					<div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Brand</h4>
 						<ul>
 							{filBrands.length > 0
@@ -211,7 +211,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 							Filter
 						</button>
 					</div> */}
-{/* Ejemplar de como se modulariza en front React usen el código comentado de arriba *solo* para comparar
+					{/* Ejemplar de como se modulariza en front React usen el código comentado de arriba *solo* para comparar
 	  Una vez resueltas las dudas borren el código comentado de arriba*/}
 					<FiltroBrand s={s} brands={brands} filterBrands={filterBrands} handleOnChange={handleOnChange} checkedState={checkedState} />
 
