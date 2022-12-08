@@ -18,6 +18,8 @@ import UserSended from './components/CreateUser/UserSended';
 import CreateUser from './components/CreateUser/CreateUser';
 import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
 import CancelPayment from './components/BuyProducts/CancelPayment';
+import UpdateProfile from './components/NavBar/login/Profile/UpdateProfile';
+import Success from './components/NavBar/login/Profile/Success';
 
 function App() {
 	let location = useLocation();
@@ -36,7 +38,7 @@ function App() {
 			<Route path='/create/productsended' component={ProductSended} />
 			<Route path='/CreateUser' component={CreateUser} />
 			<Route path='/createUser/usersended' component={UserSended} />
-			<Route path='/profile' component={Profile} />
+			<Route exact path='/profile' component={Profile} />
 			<Route path='/LoginForm' component={LoginForm} />
 			<Route exact path='/contact' component={ContactUs} />
 			<Route path='/contact/messagesended' component={messageSended} />
@@ -45,6 +47,8 @@ function App() {
 			<Route path="/favorites" component={ShowFavorites} />
 			<Route path='/update' component={UpdateProduct} />
 			<Route path='/cancelpayment' component={CancelPayment} />
+			<Route exact path="/profile/changedata/:id" component={UpdateProfile} />
+			<Route path="/profile/success" component={Success} />
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>

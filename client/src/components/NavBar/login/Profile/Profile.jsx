@@ -5,10 +5,11 @@ import Loading from '../../../loading/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import usericon from '../../../../asset/usericon.png';
 import { getUserPurchases } from '../../../../redux/actions';
+import { useHistory } from 'react-router-dom';
 
 export const Profile = () => {
 	const { user, isAuthenticated, isLoading } = useAuth0();
-
+	const history = useHistory()
 	const dispatch = useDispatch();
 
 	const userNow = useSelector((state) => state.user);
@@ -59,6 +60,9 @@ export const Profile = () => {
 								}) : ""
 							}
 							<div></div>
+						</div>
+						<div>
+							<button onClick={()=>history.push(`/profile/changedata/${userNow.id}`)}>Edit information</button>
 						</div>
 					</div>
 				) : (<h1>Inicie Sesión</h1>)}
