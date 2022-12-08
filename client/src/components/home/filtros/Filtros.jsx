@@ -69,6 +69,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 		setCheckedState(new Array(15).fill(false));
 		dispatch(filterByCategory(categoryFilter));
 		setIsChecked([]);
+		filterPrice(e)
 		setCurrentPage(1);
 		// setPriceFilter({ minPrice: 0, maxPrice: 0 });
 	};
@@ -99,6 +100,7 @@ export default function Filtros({ setCurrentPage, setOrder }) {
 	const filterBrands = function (e) {
 		e.preventDefault();
 		dispatch(filterByBrand([...isChecked]));
+		filterPrice(e)
 		setCurrentPage(1);
 	};
 

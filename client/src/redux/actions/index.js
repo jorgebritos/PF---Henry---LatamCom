@@ -76,6 +76,7 @@ export function getUserPurchases(id) {
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get(`http://localhost:3001/products`)
+        console.log(productsInfo)
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: productsInfo.data
