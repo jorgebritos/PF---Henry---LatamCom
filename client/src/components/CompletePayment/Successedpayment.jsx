@@ -6,12 +6,13 @@ import { createPurchase, getPurchaseDetail } from '../../redux/actions';
 import Counter from './Counter';
 
 const purchaseStruct = (purchase) => {
+	let id = localStorage.getItem("idUser")
 	let pStruct = {
 		products: purchase.data.purchase_units.map((p) => {
 			return p.reference_id;
 		}),
 		totalPrice: JSON.parse(localStorage.getItem('total')),
-		idUser: '1',
+		idUser: `${id}`,
 	};
 
 	return pStruct;
@@ -22,7 +23,6 @@ const SuccessedPayment = (req) => {
 	const dispatch = useDispatch();
 	const purchased = useSelector((state) => state.purchase);
 	const created = useSelector((state) => state.createdPurchase);
-	console.log(window.location.origin);
 	useEffect(() => {
 		dispatch(getPurchaseDetail(search)).catch(() => {
 			return (
@@ -47,10 +47,9 @@ const SuccessedPayment = (req) => {
 	const handleClick = (e) => {
 		e.preventDefault();
 		dispatch(createPurchase(purchaseStruct(purchased)));
-		console.log(created);
 		localStorage.removeItem('cart');
+		localStorage.removeItem("idUser")
 	};
-	console.log(purchased);
 
 	return (
 		<div className={s.container}>
@@ -98,7 +97,7 @@ const SuccessedPayment = (req) => {
 			</div>
 
 			<div>
-				<a target='_blank' href='https://icons8.com/icon/21068/comprobado'rel='noreferrer'></a>
+				<a target='_blank' href='https://icons8.com/icon/21068/comprobado' rel='noreferrer'></a>
 			</div>
 		</div>
 	);
