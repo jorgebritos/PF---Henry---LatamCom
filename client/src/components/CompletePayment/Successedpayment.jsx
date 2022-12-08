@@ -46,9 +46,14 @@ const SuccessedPayment = (req) => {
 
 	const handleClick = (e) => {
 		e.preventDefault();
-		dispatch(createPurchase(purchaseStruct(purchased)));
-		localStorage.removeItem('cart');
-		localStorage.removeItem("idUser")
+		let products = JSON.parse(localStorage.getItem("cart"))
+		let amounts = []
+		for (const p of products) {
+			amounts.push(p.amount)
+		}
+		dispatch(createPurchase({ purchase: purchaseStruct(purchased), amounts }));
+		// localStorage.removeItem('cart');
+		// localStorage.removeItem("idUser")
 	};
 
 	return (

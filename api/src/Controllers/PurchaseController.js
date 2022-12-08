@@ -25,56 +25,51 @@ const getPurchaseAll = async (req, res) => {
 
 
 const postPurchase = async (req, res) => {
-
     try {
-        const { products, totalPrice, idUser } = req.body
-
-        let realProducts = []
+        const { products, totalPrice, idUser } = req.body.purchase
+        const { amounts } = req.body
+        let allData = []
 
         for (let i = 0; i < products.length; i++) {
             let id = products[i];
             let product = await Product.findOne({
-                where: { id: id }
+                where: { id: id },
+                attributes: ["id", "name", "price", "image", "stock"],
+                through: {
+                    attributes: []
+                }
             })
-            realProducts.push(product)
+            product.stock -= Number(amounts[i])
+            await product.save()
+            allData.push(product)
         }
-
+        let newTry = []
+        for (let i = 0; i < allData.length; i++) {
+            let product = allData[i];
+            let { id, name, price, image } = product
+            let amount = amounts[i]
+            let newObj = {
+                id,
+                name,
+                price,
+                image,
+                amount
+            }
+            newTry.push(newObj)
+        }
         const newPurchase = await Purchase.create({
-            products: realProducts,
+            products: newTry,
             totalPrice
         })
         const searchUser = await User.findOne({
             where: { id: idUser }
         })
-        let id = newPurchase.id;
-
         if (searchUser) {
             await newPurchase.addUser(searchUser)
         } else {
             return res.send("Missing Id")
         }
-
-        let purchaseTable = await Purchase.findAll({
-            where: { id: id },
-            include: [
-                {
-                    model: User,
-                    attributes: ["id", "username"],
-                    through: {
-                        attributes: []
-                    }
-                },
-            ],
-
-            order: [
-                ['id', 'ASC']
-            ]
-        })
-
         res.status(200).send(newPurchase)
-
-
-
     } catch (error) {
         res.sendStatus(404)
     }
