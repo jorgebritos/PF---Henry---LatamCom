@@ -11,6 +11,7 @@ import { newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers } from '../../../redux/actions';
 import { useEffect } from 'react';
+import Dropdown from '../dropdown/Dropdown';
 
 function NavBar() {
 	const dispatch = useDispatch();
@@ -54,32 +55,15 @@ function NavBar() {
 							</Link>
 						</li>
 						{isAuthenticated || userNow.admin ? (
-							<li className={s.li}>
-								<Link to={'/create/product'} className={s.Link}>
-									<h3>Create-Product</h3>
-								</Link>
-							</li>
-						) : (
-							<p></p>
-						)}
-						{isAuthenticated || userNow.admin ? (
-							<li className={s.li}>
-								<Link to={'/update'} className={s.Link}>
-									<h3>Update-Product</h3>
-								</Link>
-							</li>
-						) : (
-							<p></p>
-						)}
-						{isAuthenticated || userNow.admin ? (
-							<li className={s.li}>
-								<Link to={'/dashboard'} className={s.Link}>
-									<h3>Dashboard</h3>
-								</Link>
-							</li>
-						) : (
-							<p></p>
-						)}
+							<Dropdown
+								items={[
+									{ anchor: 'Create Product', slug: '/create/product' },
+									{ anchor: 'Update Product', slug: '/update' },
+									{ anchor: 'Purchases', slug: '/dashboard' },
+								]}
+								dropdownTitle='DASHBOARD'
+							/>
+						) : <p></p>}
 					</ul>
 				</div>
 				<div>
