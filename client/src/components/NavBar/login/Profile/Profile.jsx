@@ -56,7 +56,24 @@ export const Profile = () => {
 							<h2>Consola de Compras</h2>
 							{
 								userPurchases.length > 0? userPurchases.map((p) => {
-									console.log(p)
+									return(
+										<div key={p.id}>
+											<p> Purchase made at: {p.createdAt.split("T",1).join()}</p>
+											{p.products.map((producto)=>{
+												return(
+												<div key={p.id}>
+													<p>{producto.name}</p>
+													<p>Amount: {producto.amount}</p>
+													<img src={producto.image} alt="product_image"></img>
+													<p>Price: {producto.price}</p>
+												</div>
+												
+												)
+											})}
+											<p>Total Price: {p.totalPrice}</p>
+										</div>
+									)
+									
 								}) : ""
 							}
 							<div></div>
@@ -64,6 +81,7 @@ export const Profile = () => {
 						<div>
 							<button onClick={()=>history.push(`/profile/changedata/${userNow.id}`)}>Edit information</button>
 						</div>
+						
 					</div>
 				) : (<h1>Inicie Sesión</h1>)}
 		</>

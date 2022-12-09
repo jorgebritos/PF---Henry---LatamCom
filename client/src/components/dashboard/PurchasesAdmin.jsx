@@ -57,7 +57,7 @@ export default function PurchasesAdmin() {
                                             <img src={p.image} alt={`${p.name} image`}></img>
                                             <h4>{p.name}</h4>
                                             <h5>Unit Price: {p.price}</h5>
-                                            <h6>{`Amount of Items Purchased: {p.amount} item(s)`}</h6>
+                                            <h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
                                         </li>
                                     )
                                 })}
