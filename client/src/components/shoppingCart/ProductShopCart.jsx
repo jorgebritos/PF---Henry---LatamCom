@@ -57,7 +57,6 @@ const ProductShopCart = () => {
 	const suma = (event) => {
 		event.preventDefault();
 		const name = event.target.name;
-
 		const increase = productsSelected.map((p) => {
 			if (p.id === Number(name) && (p.amount + 1) <= p.stock) {
 				return {
@@ -69,13 +68,14 @@ const ProductShopCart = () => {
 		});
 
 		setProductsSelected(increase);
-		cant = increase;
-		totalAccount(cant);
+
+		localStorage.setItem("cart", JSON.stringify(increase))
 	};
 
 	const resta = (event) => {
 		event.preventDefault();
 		const name = event.target.name;
+		
 		const decrease = productsSelected.map((p) => {
 			if (p.id === Number(name) && p.amount !== 1) {
 				return {
@@ -91,6 +91,7 @@ const ProductShopCart = () => {
 		setProductsSelected(decrease);
 		cant = decrease;
 		totalAccount(cant);
+		localStorage.setItem("cart", JSON.stringify(decrease))
 	};
 	////////////////////////////////////////
 
