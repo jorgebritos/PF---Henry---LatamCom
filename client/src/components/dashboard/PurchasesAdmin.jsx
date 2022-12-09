@@ -10,23 +10,34 @@ export default function PurchasesAdmin() {
         dispatch(getAllPurchases())
     }, [])
 
+    let totalIncome = () => {
+        if (allPurchases.length > 0) {
+            let total = 0;
+            for (const p of allPurchases) {
+                total += p.totalPrice;
+            }
+            return total
+        }
+    }
+
     return (
         <div>
-            <h1>ALL USERS PURCHASES</h1>
+            <h1>Total Income: ${totalIncome()} USD</h1>
+            <h2>ALL USERS PURCHASES</h2>
             {
                 allPurchases.length > 0 ? allPurchases.map((i) => {
                     return (
                         <div key={i.id}>
                             <p>User: {i.users[0].username}</p>
-                            <h2>ITEMS:</h2>
+                            <h3>ITEMS:</h3>
                             <ul>
                                 {i.products.map((p) => {
                                     return (
                                         <li key={p.id}>
                                             <img src={p.image} alt={`${p.name} image`}></img>
-                                            <h3>{p.name}</h3>
-                                            <h4>Unit Price: {p.price}</h4>
-                                            <h5>{`Amount of Items Purchased: {p.amount} item(s)`}</h5>
+                                            <h4>{p.name}</h4>
+                                            <h5>Unit Price: {p.price}</h5>
+                                            <h6>{`Amount of Items Purchased: {p.amount} item(s)`}</h6>
                                         </li>
                                     )
                                 })}
