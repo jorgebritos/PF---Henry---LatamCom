@@ -3,8 +3,8 @@ const PAYPAL_API_SECRET = "EAWjbAbfjwJaLCsTMEtnhul0_ZUt6-ucH-2FKTE0CSH8insxb8Sfp
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"
 
 //Cuenta de prueba de PayPal 
-// Cuenta: sb-fmmus22784482@personal.example.com 
-// Pass: ^nD$A47>
+// Cuenta: arg-3@gmail.com
+// Pass: messirve
 
 // Agregar al .env 
 // DB_NAME= latamcom

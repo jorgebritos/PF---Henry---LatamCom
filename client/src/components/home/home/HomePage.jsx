@@ -11,6 +11,7 @@ import {
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
+import ChatBot from '../ChatBot/ChatBot.jsx';
 import s from './HomePage.module.css';
 // import Carousel from '../Carousel/Carousel.jsx';
 // import trabajos1 from './trabajos1.jpg';
