@@ -20,6 +20,7 @@ import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
 import CancelPayment from './components/BuyProducts/CancelPayment';
 import UpdateProfile from './components/NavBar/login/Profile/UpdateProfile';
 import Success from './components/NavBar/login/Profile/Success';
+import Chat_Bot from './components/home/ChatBot/ChatBot.jsx';
 
 function App() {
 	let location = useLocation();
@@ -51,6 +52,7 @@ function App() {
 			<Route path="/profile/success" component={Success} />
 
 			{location.pathname !== '/' && <FooterBar />}
+			{location.pathname === '/home' && <Chat_Bot/>}
 		</div>
 	);
 }
