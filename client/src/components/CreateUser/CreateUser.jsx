@@ -166,7 +166,6 @@ const CreateUser = () => {
 		return '';
 	}
 
-<<<<<<< HEAD
 	function controllerFormUsername(event) {
 		if (event.target.value.length < 3) {
 			return 'Solo se admite un min. de 3 caracteres';
