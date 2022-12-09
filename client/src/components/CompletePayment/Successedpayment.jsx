@@ -52,8 +52,8 @@ const SuccessedPayment = (req) => {
 			amounts.push(p.amount)
 		}
 		dispatch(createPurchase({ purchase: purchaseStruct(purchased), amounts }));
-		// localStorage.removeItem('cart');
-		// localStorage.removeItem("idUser")
+		localStorage.removeItem('cart');
+		localStorage.removeItem("idUser")
 	};
 
 	return (

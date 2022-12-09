@@ -5,14 +5,14 @@ import NavBar from './components/NavBar/Navbar/NavBar.jsx';
 import FooterBar from './components/Footer/FooterBar';
 import Product from './components/home/ProductDetail/ProductDetail/Product';
 import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
-import CreateProduct from './components/CreateProduct/CreateProduct';
-import ProductSended from './components/CreateProduct/ProductSended.jsx';
+import CreateProduct from './components/dashboard/CreateProduct/CreateProduct';
+import ProductSended from './components/dashboard/CreateProduct/ProductSended.jsx';
 import { Profile } from './components/NavBar/login/Profile/Profile';
 import { LoginForm } from './components/NavBar/login/LoginForm/LoginForm';
 import Buy from './components/BuyProducts/Buy'
 import SuccessedPayment from './components/CompletePayment/Successedpayment'
-import UpdateProduct from './components/UpdateProduct/UpdateProduct';
-import {ContactUs} from "./components/Footer/Contact/ContactEmailJS"
+import UpdateProduct from './components/dashboard/UpdateProduct/UpdateProduct';
+import { ContactUs } from "./components/Footer/Contact/ContactEmailJS"
 import messageSended from './components/Footer/Contact/MessageSended';
 import UserSended from './components/CreateUser/UserSended';
 import CreateUser from './components/CreateUser/CreateUser';
@@ -20,6 +20,7 @@ import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
 import CancelPayment from './components/BuyProducts/CancelPayment';
 import UpdateProfile from './components/NavBar/login/Profile/UpdateProfile';
 import Success from './components/NavBar/login/Profile/Success';
+import PurchasesAdmin from './components/dashboard/PurchasesAdmin';
 
 function App() {
 	let location = useLocation();
@@ -49,6 +50,7 @@ function App() {
 			<Route path='/cancelpayment' component={CancelPayment} />
 			<Route exact path="/profile/changedata/:id" component={UpdateProfile} />
 			<Route path="/profile/success" component={Success} />
+			<Route path="/dashboard" component={PurchasesAdmin} />
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>
