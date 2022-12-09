@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { buyShoppingCart } from '../../redux/actions';
 import s from './Buy.module.css';
 
@@ -19,6 +19,7 @@ const structuringProducts = (products) => {
 };
 
 const Buy = () => {
+	const user = useSelector((state) => state.user)
 	const dispatch = useDispatch();
 	const [products, setProducts] = useState([]);
 	const [total, setTotal] = useState(0);
@@ -40,7 +41,7 @@ const Buy = () => {
 	};
 	const handleClick = (e, products) => {
 		e.preventDefault();
-		console.log(products);
+		localStorage.setItem("idUser", user.id)
 		dispatch(buyShoppingCart(structuringProducts(products)));
 	};
 

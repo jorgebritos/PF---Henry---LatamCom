@@ -20,7 +20,6 @@ const initialState = {
     user: {},
     favorites: [],
     allUsers: [],
-    allPurchases: [],
     // ESTE ES PARA APLICAR LOS FILTROS, ASÍ NO SE PIERDE EL STATE
     allProducts: [],
     productDetail: {},
@@ -38,6 +37,9 @@ const initialState = {
     userPurchases: [],
     //LOCALSTORAGE
     localstorage: [],
+
+    // ADMIN
+    purchasesAdmin: []
 }
 
 
@@ -70,7 +72,7 @@ export default function rootReducer(state = initialState, action) {
         case GET_ALL_PURCHASES: {
             return {
                 ...state,
-                allPurchases: action.payload
+                purchasesAdmin: action.payload
             }
         }
         case GET_USER:

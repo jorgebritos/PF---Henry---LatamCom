@@ -1,0 +1,58 @@
+.contenedor {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.modal {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	width: 400px;
+	background-color: #a4bbc2;
+	border: none;
+	border-radius: 23px;
+	box-shadow: 2px 2px 15px #142328cc;
+	padding: 20px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.iconos {
+	color: #17abda;
+	cursor: pointer;
+}
+
+.inputmaterial {
+	width: 90%;
+	text-decoration-color: #09576e;
+}
+
+.color1 {
+	color: #17abda;
+}
+.color2 {
+	background-color: #ac271a;
+	color: #ac271a;
+}
+.h1 {
+	color: #17abda;
+	text-align: center;
+}
+.h3 {
+	color: #09576e;
+	text-align: center;
+}
+
+.table {
+	background-color: #1423283b;
+}
+
+.thead {
+	color: #17abda;
+	background-color: #17abda;
+}

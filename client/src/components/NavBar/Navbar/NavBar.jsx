@@ -71,6 +71,15 @@ function NavBar() {
 						) : (
 							<p></p>
 						)}
+						{isAuthenticated || userNow.admin ? (
+							<li className={s.li}>
+								<Link to={'/dashboard'} className={s.Link}>
+									<h3>Dashboard</h3>
+								</Link>
+							</li>
+						) : (
+							<p></p>
+						)}
 					</ul>
 				</div>
 				<div>

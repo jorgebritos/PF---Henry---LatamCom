@@ -76,7 +76,6 @@ export function getUserPurchases(id) {
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get(`http://localhost:3001/products`)
-        console.log(productsInfo)
         dispatch({
             type: GET_ALL_PRODUCTS,
             payload: productsInfo.data
@@ -273,7 +272,7 @@ export function buyShoppingCart(payload) {
 
 export function updateUser(payload) {
     return async function (dispatch) {
-        const info = await axios.put('http://localhost:3001/users', payload)
+        const info = await axios.put(`http://localhost:3001/users/${payload.id}`, payload)
         dispatch({
             type: UPDATE_USER,
             payload: info.data

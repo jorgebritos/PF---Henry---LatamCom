@@ -1,4 +1,4 @@
-const { Purchase, User } = require("../db.js");
+const { Purchase, User, Product } = require("../db.js");
 
 
 
@@ -8,7 +8,7 @@ const getPurchaseAll = async (req, res) => {
         include: [
             {
                 model: User,
-                attributes: ["username"],
+                attributes: ["id", "username"],
                 through: {
                     attributes: []
                 }
@@ -25,28 +25,51 @@ const getPurchaseAll = async (req, res) => {
 
 
 const postPurchase = async (req, res) => {
-
     try {
+        const { products, totalPrice, idUser } = req.body.purchase
+        const { amounts } = req.body
+        let allData = []
 
-        const { products, totalPrice, idUser } = req.body
-
+        for (let i = 0; i < products.length; i++) {
+            let id = products[i];
+            let product = await Product.findOne({
+                where: { id: id },
+                attributes: ["id", "name", "price", "image", "stock"],
+                through: {
+                    attributes: []
+                }
+            })
+            product.stock -= Number(amounts[i])
+            await product.save()
+            allData.push(product)
+        }
+        let newTry = []
+        for (let i = 0; i < allData.length; i++) {
+            let product = allData[i];
+            let { id, name, price, image } = product
+            let amount = amounts[i]
+            let newObj = {
+                id,
+                name,
+                price,
+                image,
+                amount
+            }
+            newTry.push(newObj)
+        }
         const newPurchase = await Purchase.create({
-            products,
+            products: newTry,
             totalPrice
         })
-
         const searchUser = await User.findOne({
             where: { id: idUser }
         })
-
         if (searchUser) {
-            newPurchase.addUser(searchUser)
-            res.status(200).send(newPurchase)
+            await newPurchase.addUser(searchUser)
         } else {
-            res.send("Missing Id")
+            return res.send("Missing Id")
         }
-
-
+        res.status(200).send(newPurchase)
     } catch (error) {
         res.sendStatus(404)
     }
@@ -57,10 +80,10 @@ const getPurchaseId = async (req, res) => {
     let { id } = req.params
 
     let purchaseTable = await Purchase.findAll({
-        where: { id: id },
         include: [
             {
                 model: User,
+                where: { id: id },
                 attributes: ["username"],
                 through: {
                     attributes: []
