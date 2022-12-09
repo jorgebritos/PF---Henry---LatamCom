@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import usericon from '../../../asset/usericon.png';
-import {authTokenRouterLog, setUserData } from '../../../redux/actions';
+import { authTokenRouterLog, setUserData } from '../../../redux/actions';
 import {
 	dropdown_wrapper,
 	dropdown_activator,
@@ -14,7 +14,7 @@ import {
 	item_list,
 	componet_login,
 } from './LoginBar.module.css';
-import { useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 function LoginRegister({ items = [] }) {
 	const dispatch = useDispatch();
@@ -23,10 +23,10 @@ function LoginRegister({ items = [] }) {
 	const userNow = useSelector((state) => state.user);
 	let functionalUser;
 	const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-	const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
+	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	// const [usuario, setUsuario]=useState([]);
-	
+
 
 	// console.log(loggedUserJWT)
 	// console.log(loggedUser)
@@ -35,18 +35,18 @@ function LoginRegister({ items = [] }) {
 		e.preventDefault();
 		history.push('/profile');
 	};
-	
+
 	// useEffect(()=>{
 
 	// 	console.log(userInfo.username)
 	// })
-	
+
 	const Logout = /*async*/ (e) => {
 		e.preventDefault();
 		// const domain = "dev-g1jtn0qvoq0x04y4.us.auth0.com";
 		// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
 		// const returnTo =  "http://localhost:3000";
-	
+
 		// const response = await fetch(
 		//   `https://${domain}/logout?client_id=${clientId}&returnTo=${returnTo}`,
 		//   { redirect: "manual" }
@@ -109,39 +109,39 @@ function LoginRegister({ items = [] }) {
 			document.addEventListener('mousedown', clickOutsideHandler);
 		}
 	}, [isOpen]);
-	
+
 	useEffect(() => {
 		const autenticarUsuario = async () => {
-		
-		//   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-		//   if (!loggedUser) {
-		// 	history.push("/loginForm");
-		// 	return;
-		//   }
 
-		//   const loggedUserJWT = JSON.parse(localStorage.getItem("loggedUserJWT"));
-		//   if (!loggedUserJWT) {
-		// 	history.push("/loginForm");
-		// 	return;
-		//   }
+			//   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+			//   if (!loggedUser) {
+			// 	history.push("/loginForm");
+			// 	return;
+			//   }
 
-		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-		  console.log("userInfo", userInfo)
-		  if(loggedUser) {
-			dispatch(setUserData({
-				id: userInfo.id,
-				username: userInfo.username,
-				picture: userInfo.picture,
-				name: userInfo.name,
-				email: userInfo.email,
-				admin: userInfo.admin,
-				jwt: loggedUserJWT
-			}))
-		  }
+			//   const loggedUserJWT = JSON.parse(localStorage.getItem("loggedUserJWT"));
+			//   if (!loggedUserJWT) {
+			// 	history.push("/loginForm");
+			// 	return;
+			//   }
+
+			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+			console.log("userInfo", userInfo)
+			if (loggedUser) {
+				dispatch(setUserData({
+					id: userInfo.id,
+					username: userInfo.username,
+					profile_image: userInfo.picture,
+					name: userInfo.name,
+					email: userInfo.email,
+					admin: userInfo.admin,
+					jwt: loggedUserJWT
+				}))
+			}
 		};
 
 		autenticarUsuario();
-	  }, []);
+	}, []);
 	//   console.log(user)
 	// let JWT;
 	// 	if (localStorage.getItem('loggedUserJWT')) {
@@ -158,14 +158,14 @@ function LoginRegister({ items = [] }) {
 	// 	setUsuario({...userNow, email:userR.email, password:userR.password, JWT:JWT})
 	// }
 	// console.log(userR)
-	
+
 
 
 	return (
-		<> 
-		{/* { console.log("USERNOW:: ", userNow) } */}
-		{/* {loggedUser? userNow.email= loggedUser.email : null } */}
-			{Object.keys(userNow).length > 0 ? functionalUser = userNow.username : user ? functionalUser = user.name :""}	
+		<>
+			{/* { console.log("USERNOW:: ", userNow) } */}
+			{/* {loggedUser? userNow.email= loggedUser.email : null } */}
+			{Object.keys(userNow).length > 0 ? functionalUser = userNow.username : user ? functionalUser = user.name : ""}
 			{Object.keys(userNow).length > 0 || isAuthenticated ? (
 				<div className={dropdown_wrapper} onKeyUp={keyHandler}>
 					<button
