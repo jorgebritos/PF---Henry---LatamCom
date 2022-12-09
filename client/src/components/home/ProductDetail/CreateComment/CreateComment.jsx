@@ -89,7 +89,7 @@ const CreateComment = () => {
 		if (product.id) {
 			dispatch(getAllComments(product.id))
 			
-		};
+		};// eslint-disable-next-line
 	}, [dispatch]);
 
 	return (
