@@ -20,15 +20,16 @@ export default function PurchasesAdmin() {
             for (const p of allPurchases) {
                 total += p.totalPrice;
             }
-            return total
+            return total.toFixed(2)
         }
     }
 
     return (
         <div>
             <h1>Total Income: ${totalIncome()} USD</h1>
+            <h2>ITEMS OUT OF STOCK</h2>
             <ul>
-                {outOfStock.length > 0 ? (<h2>ITEMS OUT OF STOCK</h2>,
+                {outOfStock.length > 0 ? (
                     outOfStock.map((p) => {
                         return (
                             <Link to={'/update'} key={p.id}>
@@ -48,7 +49,7 @@ export default function PurchasesAdmin() {
                 allPurchases.length > 0 ? allPurchases.map((i) => {
                     return (
                         <div key={i.id}>
-                            <p>User: {i.users[0].username}</p>
+                            <p>User: {i.users.length > 0 ? i.users[0].username : ""}</p>
                             <h3>ITEMS:</h3>
                             <ul>
                                 {i.products.map((p) => {

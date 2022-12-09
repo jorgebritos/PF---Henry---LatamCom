@@ -11,7 +11,7 @@ import {
     GET_FAVORITES,
     REMOVE_FAVORITE,
     DELETE_PRODUCT,
-    SET_USER_DATA
+    SET_USER_DATA,
     // LOCALSTORAGEUSERINFO,
     GET_ALL_PURCHASES,
     GET_USER_PURCHASES
@@ -59,7 +59,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: action.payload.jwt,
-                user: { username: action.payload.username, picture: action.payload.profile_image, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
+                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.profile_image, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
             }
         case GET_ALL_PRODUCTS:
             return {
