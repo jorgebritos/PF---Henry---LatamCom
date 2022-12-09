@@ -31,6 +31,7 @@ export const UPDATE_USER = "UPDATE_USER"
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT"
 export const UPDATE_COMMENT = "UPDATE_COMMENT"
 export const UPDATE_RATING = "UPDATE_RATING"
+export const SET_USER_DATA = "SET_USER_DATA"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
@@ -51,6 +52,7 @@ export const NEW_SEARCH = "NEW_SEARCH"
 
 //LocalStorage
 export const LOCALSTORAGE = "LOCALSTORAGE"
+export const LOCALSTORAGEUSERINFO= "LOCALSTORAGEUSERINFO"
 
 //RUTAS GET
 export function getAllPurchases() {
@@ -106,9 +108,20 @@ export function getAllUsers() {
 export function authTokenRouterPerf() {
     return async function (dispatch) {
         const allUsers = await axios.get('http://localhost:3001/profile')
+        console.log("soy perf"+ allUsers.data.token)
         dispatch({
             type: GET_AUTHTOKENROUTERPERF,
             payload: allUsers.data.token
+        })
+    }
+}
+
+export function setUserData(payload) {
+    return async function (dispatch) {
+        console.log("payload actions: ", payload)
+        dispatch({
+            type: SET_USER_DATA,
+            payload
         })
     }
 }
@@ -198,7 +211,7 @@ export function getPurchaseDetail(payload) {
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
         const json = await axios.post('http://localhost:3001/login/loginForm', payload)
-        console.log(json);
+        // console.log(json);
         dispatch({
             type: POST_AUTHTOKENROUTERLOG,
             payload: json
@@ -467,3 +480,20 @@ export function putLocalstorage() {
     }
 
 }
+// export function getLocalstorage(){
+//     if (localStorage.getItem('email','password' )) {
+//         let info = JSON.parse(localStorage.getItem('email','password'));
+//         return{
+//             type: LOCALSTORAGEUSERINFO,
+//             payload: info
+//         }
+//     }
+//     else{
+//         let info = []
+//         return{
+//             type: LOCALSTORAGEUSERINFO,
+//             payload: info
+//         }
+//     }
+    
+// }

@@ -3,7 +3,7 @@ const { jwtVerify, SignJWT } = require("jose");
 const { User, Product } = require("../db.js");
 
 // import validateLoginDTO from "../dto/validate_login_dto.js";
-const { authByEmailPwd } = require("../helpers/auth-by-email-pwd.js");
+// const { authByEmailPwd } = require("../helpers/auth-by-email-pwd.js");
 
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
@@ -65,7 +65,7 @@ const authTokenRouterPerf = async (req, res) => {
     if (!user) {
       return res.sendStatus(401);
     }
-    delete user.password;
+    // delete user.password;
 
     return res.send(user);
   } catch (err) {

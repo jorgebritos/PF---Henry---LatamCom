@@ -89,20 +89,39 @@ const CreateUser = () => {
 
 	const uploadImage = async (e) => {
 		const files = e.target.files;
-		const data = new FormData();
-		data.append('file', files[0]);
-		data.append('upload_preset', 'LatamCom');
-		setLoading(true);
-		const res = await fetch(
-			'https://api.cloudinary.com/v1_1/drruxw6zi/image/upload',
-			{
-				method: 'POST',
-				body: data,
-			},
-		);
-		const file = await res.json();
-		setInput({ ...input, image: file.secure_url });
-		setLoading(false);
+		console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: ""
+		})
+		if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(files[0].name)) {
+			console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: "Debes usar un formato de imagen válido"
+		})
+		}else{
+			console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: ""
+		})
+			const data = new FormData();
+			data.append('file', files[0]);
+			data.append('upload_preset', 'LatamCom');
+			setLoading(true);
+			const res = await fetch(
+				'https://api.cloudinary.com/v1_1/drruxw6zi/image/upload',
+				{
+					method: 'POST',
+					body: data,
+				},
+			);
+			const file = await res.json();
+			setInput({ ...input, image: file.secure_url });
+			setLoading(false);	
+		}
+
 		/* setErrors(validateInput({ ...input, image: file.secure_url })); */
 	};
 
@@ -147,6 +166,24 @@ const CreateUser = () => {
 		return '';
 	}
 
+<<<<<<< HEAD
+	function controllerFormUsername(event) {
+		if (event.target.value.length < 3) {
+			return 'Solo se admite un min. de 3 caracteres';
+		}
+		if (event.target.value.length > 30) {
+			return 'Solo se permite un max. de 30 caracteres';
+		}
+		if (
+			!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(
+				event.target.value,
+			)
+		) {
+			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
+		}
+		return '';
+	}
+
 	function controllerFormUsername(event) {
 		if (event.target.value.length < 3) {
 			return 'Solo se admite un min. de 3 caracteres';
@@ -177,7 +214,7 @@ const CreateUser = () => {
 		return '';
 	}
 
-	function controllerFormFirstname(event) {
+/* 	function controllerFormFirstname(event) {
 		if (event.target.value.length < 4) {
 			return 'Solo se admite un min. de 3 caracteres';
 		}
@@ -188,7 +225,7 @@ const CreateUser = () => {
 			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
 		}
 		return '';
-	}
+	} */
 
 	// function controllerFormLastname(event) {
 	// 	if (event.target.value.length < 5) {
@@ -383,7 +420,7 @@ const CreateUser = () => {
 						<label className={s.label}>*P. Image: </label>
 						<input
 							className={s.input}
-							name='file'
+							name='profile_image'
 							onChange={uploadImage}
 							autoComplete='off'
 							type='file'></input>
@@ -429,10 +466,11 @@ const CreateUser = () => {
 					<br />
 
 					<br />
-
-					<button className={s.btn} id='sendButtom' type='submit' disabled>
-						SEND
-					</button>
+					
+						<button className={s.btn} id='sendButtom' type='submit' >
+							SEND
+						</button>
+					
 				</form>
 			</div>
 		</div>

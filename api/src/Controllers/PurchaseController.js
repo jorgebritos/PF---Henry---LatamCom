@@ -28,6 +28,7 @@ const postPurchase = async (req, res) => {
     try {
         const { products, totalPrice, idUser } = req.body.purchase
         const { amounts } = req.body
+
         let allData = []
 
         for (let i = 0; i < products.length; i++) {

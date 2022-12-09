@@ -11,6 +11,8 @@ import {
     GET_FAVORITES,
     REMOVE_FAVORITE,
     DELETE_PRODUCT,
+    SET_USER_DATA,
+    // LOCALSTORAGEUSERINFO,
     GET_ALL_PURCHASES,
     GET_USER_PURCHASES
 } from "../actions"
@@ -52,6 +54,13 @@ export default function rootReducer(state = initialState, action) {
     let ratingResults = []
 
     switch (action.type) {
+        case SET_USER_DATA:
+            console.log("action", action    )
+            return {
+                ...state,
+                login: action.payload.jwt,
+                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.profile_image, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
+            }
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
@@ -135,7 +144,8 @@ export default function rootReducer(state = initialState, action) {
         case POST_AUTHTOKENROUTERLOG:
             let user = action.payload.data.user
             let logueo = action.payload.data.jwt || action.payload.data
-            console.log(logueo);
+            // console.log(user);
+            // console.log(logueo);
             let name;
             if (user) {
                 name = user.firstname + " " + user.lastname;
@@ -344,6 +354,12 @@ export default function rootReducer(state = initialState, action) {
                 localstorage: [action.payload]
 
             }
+            // case LOCALSTORAGEUSERINFO:
+            // return {
+            //     ...state,
+            //     localstorage: [action.payload]
+
+            // }
         default:
             return state;
     }
