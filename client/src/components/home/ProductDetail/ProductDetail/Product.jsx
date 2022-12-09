@@ -47,6 +47,7 @@ const Product = () => {
 		dispatch(getAllProducts());
 		dispatch(getAllUsers());
 		dispatch(getProductDetail(id));
+		window.scrollTo(0,0)
 	}, [id, dispatch]);
 	//////////////////////////////////////////////////
 

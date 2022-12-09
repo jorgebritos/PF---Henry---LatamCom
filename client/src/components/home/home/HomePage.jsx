@@ -41,6 +41,7 @@ export default function HomePage() {
 		if (typeof pageNumber === 'number') setCurrentPage(pageNumber);
 		else if (pageNumber === '-') setCurrentPage(currentPage - 1);
 		else setCurrentPage(currentPage + 1);
+		window.scrollTo(0,0)
 	};
 
 	const [, setOrder] = useState('');
