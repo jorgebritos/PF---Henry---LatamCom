@@ -48,7 +48,7 @@ function App() {
 			<Route path="/favorites" component={ShowFavorites} />
 			<Route path='/update' component={UpdateProduct} />
 			<Route path='/cancelpayment' component={CancelPayment} />
-			<Route exact path="/profile/changedata/:id" component={UpdateProfile} />
+			<Route exact path="/profile/changedata" component={UpdateProfile} />
 			<Route path="/profile/success" component={Success} />
 			<Route path="/dashboard" component={PurchasesAdmin} />
 

@@ -79,7 +79,7 @@ export const Profile = () => {
 							<div></div>
 						</div>
 						<div>
-							<button onClick={()=>history.push(`/profile/changedata/${userNow.id}`)}>Edit information</button>
+							<button onClick={()=>history.push(`/profile/changedata`)}>Edit information</button>
 						</div>
 						
 					</div>

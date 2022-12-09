@@ -40,10 +40,6 @@ const Validate = (input)=>{
 		errors.email = 'Introduce your email properly!';
 	}
 
-    else if(!regexURL.test(input.profile_image)){
-        errors.profile_image = "Introduce a profile image"
-    }
-
     else if(!input.username){
         errors.username = "Introduce an username"
     }
@@ -65,20 +61,20 @@ const Validate = (input)=>{
 const UpdateProfile = (props)=>{
 
     
-    const users = useSelector((state)=>state.allUsers)
+    // const users = useSelector((state)=>state.allUsers)
+    const userNow =  useSelector((state)=>state.user)
     const dispatch = useDispatch()
     const history = useHistory()
     
-
-    console.log(users)
+    console.log(userNow)
     const [input, setInput] = useState({
-        firstname:"",
-        lastname:"",
+        firstname:userNow.name.split(" ",1).join(),
+        lastname:userNow.name.split(" ",).slice(1).join(),
         password:"",
         confirm_password:"",
-        email:"",
+        email:userNow.email,
         profile_image:"",
-        username:""
+        username: userNow.username
     })
     const [errors, setErrors] = useState({
         firstname:"",
@@ -120,9 +116,15 @@ const UpdateProfile = (props)=>{
 		setLoading(false);
 		setErrors(Validate({ ...input, profile_image: file.secure_url }));
 	};
-
-    
 	///////////////////////////////////////////////////////////////////////
+
+    //Delete New Image /////////////////////
+
+    const deleteNewImage = (e)=>{
+        e.preventDefault()
+        setInput({...input, profile_image:userNow.picture})
+    }
+    ////////////////////////////////////////
 
     // Uptade User //////////////////////////////
 	const submitData = async (event) => {
@@ -135,7 +137,7 @@ const UpdateProfile = (props)=>{
                 email:input.email,
                 profile_image:input.profile_image,
                 username:input.username,
-                id: props.match.params.id
+                id: userNow.id
             }
             
 			await dispatch(updateUser(newDates)).then(
@@ -148,7 +150,7 @@ const UpdateProfile = (props)=>{
 		}
 	};
 	/////////////////////////////////////////////
-
+   
     return(
         <div>
             <p>
@@ -207,19 +209,39 @@ const UpdateProfile = (props)=>{
                         {errors.email && <p>{errors.email}</p> }
                     </div>
 
+                    {userNow.picture? (
+                        <div>
+                            <p>Actual image</p>
+                            <img src={userNow.picture} style={{ width: '300px' }} alt="img" />
+                        </div>
+                    ) : (
+                        <div>
+                            <p>No current image</p>
+                        </div>
+                    )}
+
                     <div>
-                        <label>Profile_image</label>
+                        <label>Profile Image</label>
+                        <p>(this will replace the current image)</p>
                         <input 
                             type="file" 
                             name="file" 
                             autoComplete='off'
                             onChange={uploadImage}  />
-                        {errors.profile_image && <p>{errors.profile_image}</p> }
                         {loading ? (
                                 <h4>Uploading image...</h4>
                             ) : (
-                                <img src={input.profile_image} style={{ width: '300px' }} alt=''></img>
+                                userNow.picture === input.profile_image.toString()? (
+                                    <div>
+                                        <p>You will keep the same picture</p>
+                                    </div>
+                                ) : <img src={input.profile_image} style={{ width: '300px' }} alt=''></img>
+                                
                             )}
+                    </div>
+
+                    <div>
+                        <button onClick={deleteNewImage}>Delete new image</button>
                     </div>
 
                     <div>
@@ -233,7 +255,7 @@ const UpdateProfile = (props)=>{
                     </div>
 
                     <div>
-                        <button type="submit" id='sendButtom'>SEND</button>
+                        <button type="submit" id='sendButtom' disabled>SEND</button>
                     </div>
                 </form>
             </div>
