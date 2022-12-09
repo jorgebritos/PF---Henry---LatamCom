@@ -47,7 +47,7 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
     const allProducts = state.allProducts;
-    let actualProducts = state.products;
+    //let actualProducts = state.products;
     let fillCategory = state.filCategory;
     let filBrands = state.filBrands;
     let result = [];
@@ -55,7 +55,7 @@ export default function rootReducer(state = initialState, action) {
 
     switch (action.type) {
         case SET_USER_DATA:
-            console.log("action", action    )
+           // console.log("action", action    )
             return {
                 ...state,
                 login: action.payload.jwt,
@@ -217,7 +217,7 @@ export default function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_PRICE:
             result = [];
-            let theProducts = fillCategory.length == 0 ? allProducts : fillCategory
+            let theProducts = fillCategory.length === 0 ? allProducts : fillCategory
             let { min, max } = action.payload
             if (min < max && min !== 0) {
                 for (const p of theProducts) {
@@ -225,7 +225,7 @@ export default function rootReducer(state = initialState, action) {
                 }
             } else if (min > 0 && max === 0) {
                 for (const p of theProducts) {
-                    if (p.price >= min) result.push(p)
+                    if ( min <= p.price) result.push(p)
                 }
             } else if (max > 0 && min === 0) {
                 for (const p of theProducts) {

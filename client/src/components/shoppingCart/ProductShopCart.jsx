@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import s from './ProductShopCart.module.css';
@@ -12,7 +12,7 @@ const ProductShopCart = () => {
 	let cant = 0;
 
 	// Traer productos del localStorage ///
-	const seeProducts = () => {
+	const seeProducts =useCallback( () => {
 		let cart = [];
 		if (localStorage.getItem('cart')) {
 			cart = JSON.parse(localStorage.getItem('cart'));
@@ -21,11 +21,11 @@ const ProductShopCart = () => {
 		setProductsSelected(cart);
 		let cant = cart;
 		totalAccount(cant);
-	};
+	},[]);
 
 	useEffect(() => {
 		seeProducts();
-	}, []);
+	}, [seeProducts]);
 	///////////////////////////////////////
 
 	// Eliminar 1 producto del carrito ////
@@ -61,12 +61,11 @@ const ProductShopCart = () => {
 			if (p.id === Number(name) && (p.amount + 1) <= p.stock) {
 				return {
 					...p,
-					amount: p.amount + 1,
+					amount: (p.amount + 1),
 				};
 			}
 			return p;
 		});
-
 		setProductsSelected(increase);
 
 		localStorage.setItem("cart", JSON.stringify(increase))
@@ -84,6 +83,7 @@ const ProductShopCart = () => {
 				};
 			} else {
 				console.log("llegaste al maximo stock posible")
+				alert("The total of items by product cannot be less than 1")
 			}
 			return p;
 		});

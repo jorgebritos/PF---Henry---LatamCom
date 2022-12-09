@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts, getAllPurchases } from '../../../redux/actions';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,7 @@ export default function PurchasesAdmin() {
 	useEffect(() => {
 		dispatch(getAllPurchases());
 		dispatch(getAllProducts());
-	}, []);
+	}, [dispatch]);
 
 	let totalIncome = () => {
 		if (allPurchases.length > 0) {
@@ -49,7 +49,7 @@ export default function PurchasesAdmin() {
 													<img
 														className={s.img}
 														src={p.image}
-														alt={`${p.name} image`}
+														alt={`${p.name}_image`}
 													/>
 												</div>
 												<div className={s.contenT}>
@@ -81,7 +81,7 @@ export default function PurchasesAdmin() {
 											{i.products.map((p) => {
 												return (
 													<li key={p.id}>
-														<img src={p.image} alt={`${p.name} image`}></img>
+														<img src={p.image} alt={`${p.name}_image`}></img>
 														<h4>{p.name}</h4>
 														<h5>Unit Price: {p.price}</h5>
 														<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>

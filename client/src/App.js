@@ -20,7 +20,7 @@ import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
 import CancelPayment from './components/BuyProducts/CancelPayment';
 import UpdateProfile from './components/NavBar/login/Profile/UpdateProfile';
 import Success from './components/NavBar/login/Profile/Success';
-import Chat_Bot from './components/home/ChatBot/ChatBot.jsx';
+import MyChatBot from './components/home/ChatBot/ChatBot.jsx';
 import PurchasesAdmin from './components/dashboard/PurchasesAdmin/PurchasesAdmin';
 
 function App() {
@@ -52,9 +52,10 @@ function App() {
 			<Route exact path='/profile/changedata' component={UpdateProfile} />
 			<Route path='/profile/success' component={Success} />
 			<Route path='/dashboard' component={PurchasesAdmin} />
-
+			
+			{location.pathname === '/home' && <MyChatBot/>}
 			{location.pathname !== '/' && <FooterBar />}
-			{location.pathname === '/home' && <Chat_Bot/>}
+			
 		</div>
 	);
 }

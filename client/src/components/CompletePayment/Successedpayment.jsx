@@ -67,7 +67,7 @@ const SuccessedPayment = (req) => {
 							width='150px'
 							height='150px'
 							frameBorder='0'
-							class='giphy-embed'
+							className='giphy-embed'
 							allowFullScreen></iframe>
 					) : (
 						<img
@@ -102,7 +102,7 @@ const SuccessedPayment = (req) => {
 			</div>
 
 			<div>
-				<a target='_blank' href='https://icons8.com/icon/21068/comprobado' rel='noreferrer'></a>
+				<a target='_blank' href='https://icons8.com/icon/21068/comprobado' rel='noreferrer'>{''}</a>
 			</div>
 		</div>
 	);

@@ -26,7 +26,7 @@ const CancelPayment = (req) => {
 				<a
 					target='_blank'
 					href='https://icons8.com/icon/21068/comprobado'
-					rel='noreferrer'></a>
+					rel='noreferrer'>{''}</a>
 			</div>
 		</div>
 	);

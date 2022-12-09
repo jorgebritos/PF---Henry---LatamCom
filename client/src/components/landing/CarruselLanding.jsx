@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { filterByRating } from '../../redux/actions';
 import { Carousel } from 'react-responsive-carousel';
 import s from './LandingPage.module.css';
 import img1 from '../../asset/carruselLanding/1.jpg';

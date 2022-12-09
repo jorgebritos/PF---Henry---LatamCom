@@ -38,6 +38,7 @@ export const LoginForm = ({ location }) => {
 		localStorage.removeItem("loggedUserJWT");
 		localStorage.removeItem("loggedUser");
 		localStorage.removeItem("userInfo");
+		// eslint-disable-next-line
 	  },[]);
 	useEffect (()=>{
 		if(logg.length>1){
@@ -45,7 +46,8 @@ export const LoginForm = ({ location }) => {
 			window.localStorage.setItem("userInfo", JSON.stringify(user1))
 			history.push("/home")
 		}
-	})
+		// eslint-disable-next-line
+	},[])
 	// const [userA, setUserA]=useState({
 	// 	prop1:"",
 	// 	prop2:""

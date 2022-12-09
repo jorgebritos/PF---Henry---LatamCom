@@ -174,7 +174,7 @@ const CreateUser = () => {
 			return 'Solo se permite un max. de 30 caracteres';
 		}
 		if (
-			!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(
+			!/^([A-Z()_ÁÉÍÓÚÑ0-9-]* [A-Z()_ÁÉÍÓÚÑ 0-9-]*)$/i.test(
 				event.target.value,
 			)
 		) {
@@ -183,35 +183,35 @@ const CreateUser = () => {
 		return '';
 	}
 
-	function controllerFormUsername(event) {
-		if (event.target.value.length < 3) {
-			return 'Solo se admite un min. de 3 caracteres';
-		}
-		if (event.target.value.length > 30) {
-			return 'Solo se permite un max. de 30 caracteres';
-		}
-		if (
-			!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(
-				event.target.value,
-			)
-		) {
-			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
-		}
-		return '';
-	}
+	// function controllerFormUsername(event) {
+	// 	if (event.target.value.length < 3) {
+	// 		return 'Solo se admite un min. de 3 caracteres';
+	// 	}
+	// 	if (event.target.value.length > 30) {
+	// 		return 'Solo se permite un max. de 30 caracteres';
+	// 	}
+	// 	if (
+	// 		!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(
+	// 			event.target.value,
+	// 		)
+	// 	) {
+	// 		return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
+	// 	}
+	// 	return '';
+	// }
 
-	function controllerFormPassword(event) {
-		if (event.target.value.length < 8) {
-			return 'Solo se admite un min. de 4 caracteres';
-		}
-		if (event.target.value.length > 20) {
-			return 'Solo se permite un max. de 20 caracteres';
-		}
-		if (!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
-			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
-		}
-		return '';
-	}
+	// function controllerFormPassword(event) {
+	// 	if (event.target.value.length < 8) {
+	// 		return 'Solo se admite un min. de 4 caracteres';
+	// 	}
+	// 	if (event.target.value.length > 20) {
+	// 		return 'Solo se permite un max. de 20 caracteres';
+	// 	}
+	// 	if (!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
+	// 		return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
+	// 	}
+	// 	return '';
+	// }
 
 /* 	function controllerFormFirstname(event) {
 		if (event.target.value.length < 4) {

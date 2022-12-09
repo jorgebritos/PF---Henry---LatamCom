@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 import { createComment, deleteComment, getAllComments, updateComment, updateRatingProduct, } from '../../../../redux/actions';
@@ -33,7 +33,7 @@ const CreateComment = () => {
 		return comment;
 	}
 
-	function calculateRating() {
+	const calculateRating= useCallback(() =>{
 		let newRating = 0;
 		for (const c of comments) {
 			newRating += c.rating;
@@ -44,7 +44,7 @@ const CreateComment = () => {
 			dispatch(getAllComments(product.id))
 		}
 		return newRating
-	}
+	},[comments, product.id, dispatch])
 
 	async function sendComment(e, idUser) {
 		e.preventDefault();
@@ -88,9 +88,11 @@ const CreateComment = () => {
 	useEffect(() => {
 		if (product.id) {
 			dispatch(getAllComments(product.id))
-			calculateRating()
+			
 		};
-	}, [dispatch, comments.length]);
+	}, [dispatch, comments.length,product.id]);
+
+
 
 	return (
 		<div className={s.conten}>

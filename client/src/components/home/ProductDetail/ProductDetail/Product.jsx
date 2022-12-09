@@ -13,10 +13,10 @@ import {
 import CreateComment from '../CreateComment/CreateComment';
 import Loading from '../../../loading/Loading';
 import s from './Product.module.css';
-import { useAuth0 } from '@auth0/auth0-react';
+//import { useAuth0 } from '@auth0/auth0-react';
 
 const Product = () => {
-	const { isAuthenticated } = useAuth0();
+	//const { isAuthenticated } = useAuth0();
 
 	const addProduct = async (event) => {
 		event.preventDefault();
@@ -37,7 +37,7 @@ const Product = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const product = useSelector((state) => state.productDetail);
-	const user = useSelector((state) => state.user);
+	//const user = useSelector((state) => state.user);
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////

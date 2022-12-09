@@ -20,14 +20,14 @@ import {
 	TextField,
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 function UpdateProduct() {
 	const dispatch = useDispatch();
 
 	const products = useSelector((state) => state.allProducts);
 	const [data, setData] = useState([]);
-	const [modalInsertar, setModalInsertar] = useState(false);
+	//const [modalInsertar, setModalInsertar] = useState(false);
 	const [modalEditar, setModalEditar] = useState(false);
 	const [modalEliminar, setModalEliminar] = useState(false);
 	const [productoSeleccionado, setProductoSeleccionado] = useState({
@@ -42,7 +42,7 @@ function UpdateProduct() {
 
 	const handleSubmit = () => {
 		let newProduct = data;
-		newProduct.map((producto) => {
+		newProduct.forEach((producto) => {
 			if (productoSeleccionado.id === producto.id) {
 				producto.nombre = productoSeleccionado.nombre;
 				producto.lanzamiento = productoSeleccionado.lanzamiento;
@@ -81,9 +81,9 @@ function UpdateProduct() {
 		dispatch(getAllProducts());
 	}, [dispatch]);
 
-	const abrirCerrarModalInsertar = () => {
-		setModalInsertar(!modalInsertar);
-	};
+	// const abrirCerrarModalInsertar = () => {
+	// 	setModalInsertar(!modalInsertar);
+	// };
 	const abrirCerrarModalEditar = () => {
 		setModalEditar(!modalEditar);
 	};

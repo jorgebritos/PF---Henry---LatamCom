@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ChatBot from 'react-simple-chatbot'
 //import { ThemeProvider } from 'styled-components' //La documentación recomienda usar style components
 
 
 //const theme = {} //tambien recomienda usar un objeto para añadir los estilos
 
-export default function Chat_Bot() {
+export default function MyChatBot() {
 
       return (
         <div>

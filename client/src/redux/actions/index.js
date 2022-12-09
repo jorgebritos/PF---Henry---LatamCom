@@ -118,7 +118,7 @@ export function authTokenRouterPerf() {
 
 export function setUserData(payload) {
     return async function (dispatch) {
-        console.log("payload actions: ", payload)
+        //console.log("payload actions: ", payload)
         dispatch({
             type: SET_USER_DATA,
             payload

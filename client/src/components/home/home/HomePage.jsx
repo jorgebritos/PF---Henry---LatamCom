@@ -11,7 +11,7 @@ import {
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
-import ChatBot from '../ChatBot/ChatBot.jsx';
+//import MyChatBot from '../ChatBot/ChatBot.jsx';
 import s from './HomePage.module.css';
 // import Carousel from '../Carousel/Carousel.jsx';
 // import trabajos1 from './trabajos1.jpg';
@@ -27,6 +27,7 @@ export default function HomePage() {
 	const totalProducts = useSelector((state) => state.products);
 	const searchProducts = useSelector((state)=> state.searchedProducts2)
 	const search= window.location.search
+	const search1= search.split('=')[1]
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, ] = useState(8);
 	const indexOfLastProduct = currentPage * perPage; //8
@@ -49,8 +50,8 @@ export default function HomePage() {
 		dispatch(getAllCategories());
 		dispatch(getAllUsers());
 		dispatch(getAllProducts());
-		dispatch(searchByName(search.split('=')[1], "SEARCH_BY_NAME2"))
-	}, [search.split('=')[1], dispatch, search]);
+		dispatch(searchByName(search1, "SEARCH_BY_NAME2"))
+	}, [search1, dispatch, search]);
 	//console.log(search.split('=')[1]);
 	return (
 		<div>

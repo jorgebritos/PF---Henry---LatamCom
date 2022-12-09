@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from "axios";
+//import axios from "axios";
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import usericon from '../../../asset/usericon.png';
-import {authTokenRouterLog, setUserData } from '../../../redux/actions';
+import { setUserData } from '../../../redux/actions';
 import {
 	dropdown_wrapper,
 	dropdown_activator,
@@ -22,7 +22,7 @@ function LoginRegister({ items = [] }) {
 	let { logout, isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
 	let functionalUser;
-	const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+	//const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 	const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	// const [usuario, setUsuario]=useState([]);
@@ -126,7 +126,7 @@ function LoginRegister({ items = [] }) {
 		//   }
 
 		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-		  console.log("userInfo", userInfo)
+		  //console.log("userInfo", userInfo)
 		  if(loggedUser) {
 			dispatch(setUserData({
 				username: userInfo.username,
@@ -139,8 +139,8 @@ function LoginRegister({ items = [] }) {
 		  }
 		};
 
-		autenticarUsuario();
-	  }, []);
+		autenticarUsuario();// eslint-disable-next-line 
+	  }, [])
 	//   console.log(user)
 	// let JWT;
 	// 	if (localStorage.getItem('loggedUserJWT')) {
