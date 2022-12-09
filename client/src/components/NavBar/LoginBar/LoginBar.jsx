@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from "axios";
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import usericon from '../../../asset/usericon.png';
+import {authTokenRouterLog, setUserData } from '../../../redux/actions';
 import {
 	dropdown_wrapper,
 	dropdown_activator,
@@ -12,19 +14,33 @@ import {
 	item_list,
 	componet_login,
 } from './LoginBar.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
 
 function LoginRegister({ items = [] }) {
+	const dispatch = useDispatch();
 	const history = useHistory();
 	let { logout, isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
-	let functionalUser = {};
+	let functionalUser;
+	const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+	const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
+	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	// const [usuario, setUsuario]=useState([]);
+	
+
+	// console.log(loggedUserJWT)
+	// console.log(loggedUser)
 
 	const userConfig = (e) => {
 		e.preventDefault();
 		history.push('/profile');
 	};
+	
+	// useEffect(()=>{
 
+	// 	console.log(userInfo.username)
+	// })
+	
 	const Logout = /*async*/ (e) => {
 		e.preventDefault();
 		// const domain = "dev-g1jtn0qvoq0x04y4.us.auth0.com";
@@ -36,8 +52,10 @@ function LoginRegister({ items = [] }) {
 		//   { redirect: "manual" }
 		// );
 		// window.location.replace(response.url);
-
-		console.log('entre');
+		localStorage.removeItem("loggedUserJWT");
+		localStorage.removeItem("loggedUser");
+		localStorage.removeItem("userInfo");
+		// console.log('entre');
 		Swal.fire({
 			title: 'Sure about loging out?',
 			icon: 'warning',
@@ -91,10 +109,62 @@ function LoginRegister({ items = [] }) {
 			document.addEventListener('mousedown', clickOutsideHandler);
 		}
 	}, [isOpen]);
+	
+	useEffect(() => {
+		const autenticarUsuario = async () => {
+		
+		//   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+		//   if (!loggedUser) {
+		// 	history.push("/loginForm");
+		// 	return;
+		//   }
+
+		//   const loggedUserJWT = JSON.parse(localStorage.getItem("loggedUserJWT"));
+		//   if (!loggedUserJWT) {
+		// 	history.push("/loginForm");
+		// 	return;
+		//   }
+
+		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+		  console.log("userInfo", userInfo)
+		  if(loggedUser) {
+			dispatch(setUserData({
+				username: userInfo.username,
+				picture: userInfo.picture,
+				name: userInfo.name,
+				email: userInfo.email,
+				admin: userInfo.admin,
+				jwt: loggedUserJWT
+			}))
+		  }
+		};
+
+		autenticarUsuario();
+	  }, []);
+	//   console.log(user)
+	// let JWT;
+	// 	if (localStorage.getItem('loggedUserJWT')) {
+	// 		JWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
+	// 	}
+	// 	let userR;
+	// 	if (localStorage.getItem('loggedUser')) {
+	// 		userR = JSON.parse(localStorage.getItem('loggedUser'));
+	// 	}		
+	// 	console.log("soy userR:" + userR)
+	// // useEffect(()=>{
+	// // },[])
+	// if(!userNow){
+	// 	setUsuario({...userNow, email:userR.email, password:userR.password, JWT:JWT})
+	// }
+	// console.log(userR)
+	
+
 
 	return (
-		<>
-			{Object.keys(userNow).length > 0 ? functionalUser = userNow.username : user ? functionalUser = user.name : ""}
+		<> 
+		{/* { console.log("USERNOW:: ", userNow) } */}
+		{/* {loggedUser? userNow.email= loggedUser.email : null } */}
+			{Object.keys(userNow).length > 0 ? functionalUser = userNow.username : user ? functionalUser = user.name :""}	
 			{Object.keys(userNow).length > 0 || isAuthenticated ? (
 				<div className={dropdown_wrapper} onKeyUp={keyHandler}>
 					<button
