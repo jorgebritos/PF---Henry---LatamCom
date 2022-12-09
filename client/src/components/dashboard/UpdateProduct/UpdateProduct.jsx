@@ -4,7 +4,7 @@ import {
 	deleteProduct,
 	getAllProducts,
 	updateProduct,
-} from '../../redux/actions/index';
+} from '../../../redux/actions/index';
 import s from './UpdateProduct.module.css';
 
 //Material UI
