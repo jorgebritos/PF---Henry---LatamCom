@@ -92,9 +92,9 @@ const putUser = async (req, res) => {
 
 		await selectedUser.save()
 
-		res.sendStatus(200)
+		res.status(200)
 	} else {
-		res.sendStatus(404)
+		res.status(404)
 	}
 }
 

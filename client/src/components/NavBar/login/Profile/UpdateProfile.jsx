@@ -73,7 +73,7 @@ const UpdateProfile = (props)=>{
         password:"",
         confirm_password:"",
         email:userNow.email,
-        profile_image:"",
+        profile_image:userNow.picture,
         username: userNow.username
     })
     const [errors, setErrors] = useState({
@@ -127,7 +127,7 @@ const UpdateProfile = (props)=>{
     ////////////////////////////////////////
 
     // Uptade User //////////////////////////////
-	const submitData = async (event) => {
+	const submitData = (event) => {
 		event.preventDefault();
 		try {
             const newDates = {
@@ -140,9 +140,9 @@ const UpdateProfile = (props)=>{
                 id: userNow.id
             }
             
-			await dispatch(updateUser(newDates)).then(
-				history.push('/profile/success'),
-			);
+			dispatch(updateUser(newDates))
+            .then(console.log("nuevos datos:",userNow))
+            .then(history.push('/profile/success'))
 		} catch (error) {
 			alert(
 				error.message
