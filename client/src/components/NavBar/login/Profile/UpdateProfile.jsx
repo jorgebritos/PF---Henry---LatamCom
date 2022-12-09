@@ -60,13 +60,10 @@ const Validate = (input)=>{
 
 const UpdateProfile = (props)=>{
 
-    
-    // const users = useSelector((state)=>state.allUsers)
-    const userNow =  useSelector((state)=>state.user)
+    const userNow = JSON.parse(localStorage.getItem("userInfo"))
     const dispatch = useDispatch()
     const history = useHistory()
-    
-    console.log(userNow)
+
     const [input, setInput] = useState({
         firstname:userNow.name.split(" ",1).join(),
         lastname:userNow.name.split(" ",).slice(1).join(),
@@ -151,115 +148,127 @@ const UpdateProfile = (props)=>{
 	};
 	/////////////////////////////////////////////
    
-    return(
-        <div>
-            <p>
-               Update User
-            </p>
+    if(!userNow){
+        return(
+            <div><p>Loading...</p></div>
+        )
+    }
+    else{
+
+        return(
+    
             <div>
-                <form onSubmit={submitData}>
-
-                    <div>
-                        <label>Firstname</label>
-                        <input 
-                            name="firstname" 
-                            value={input.firstname}
-                            autoComplete='off' 
-                            onChange={introduceData}  />
-                        {errors.firstname && <p>{errors.firstname}</p> }
-                    </div>
-
-                    <div>
-                        <label>Lastname</label>
-                        <input 
-                            name="lastname" 
-                            value={input.lastname}
-                            autoComplete='off' 
-                            onChange={introduceData}  />
-                        {errors.lastname && <p>{errors.lastname}</p> }
-                    </div>
-
-                    <div>
-                        <label>Password</label>
-                        <input 
-                            name="password" 
-                            value={input.password}
-                            autoComplete='off' 
-                            onChange={introduceData}  />
-                        {errors.password && <p>{errors.password}</p> }
-                    </div>
-
-                    <div>
-                        <label>Confirm password</label>
-                        <input 
-                            name="confirm_password" 
-                            value={input.confirm_password}
-                            autoComplete='off' 
-                            onChange={introduceData}  />
-                        {errors.confirm_password && <p>{errors.confirm_password}</p> }
-                    </div>
-
-                    <div>
-                        <label>Email</label>
-                        <input  
-                            name="email" 
-                            value={input.email}
-                            autoComplete='off' 
-                            onChange={introduceData}  />
-                        {errors.email && <p>{errors.email}</p> }
-                    </div>
-
-                    {userNow.picture? (
+                <p>
+                   Update User
+                </p>
+                <div>
+                    <form onSubmit={submitData}>
+    
                         <div>
-                            <p>Actual image</p>
-                            <img src={userNow.picture} style={{ width: '300px' }} alt="img" />
+                            <label>Firstname</label>
+                            <input 
+                                name="firstname" 
+                                value={input.firstname}
+                                autoComplete='off' 
+                                onChange={introduceData}  />
+                            {errors.firstname && <p>{errors.firstname}</p> }
                         </div>
-                    ) : (
+    
                         <div>
-                            <p>No current image</p>
+                            <label>Lastname</label>
+                            <input 
+                                name="lastname" 
+                                value={input.lastname}
+                                autoComplete='off' 
+                                onChange={introduceData}  />
+                            {errors.lastname && <p>{errors.lastname}</p> }
                         </div>
-                    )}
-
-                    <div>
-                        <label>Profile Image</label>
-                        <p>(this will replace the current image)</p>
-                        <input 
-                            type="file" 
-                            name="file" 
-                            autoComplete='off'
-                            onChange={uploadImage}  />
-                        {loading ? (
-                                <h4>Uploading image...</h4>
-                            ) : (
-                                userNow.picture === input.profile_image.toString()? (
-                                    <div>
-                                        <p>You will keep the same picture</p>
-                                    </div>
-                                ) : <img src={input.profile_image} style={{ width: '300px' }} alt=''></img>
-                                
-                            )}
-                    </div>
-
-                    <div>
-                        <button onClick={deleteNewImage}>Delete new image</button>
-                    </div>
-
-                    <div>
-                        <label>Username</label>
-                        <input 
-                            name="username" 
-                            value={input.username}
-                            autoComplete='off' 
-                            onChange={introduceData}  />
-                        {errors.username && <p>{errors.username}</p> }
-                    </div>
-
-                    <div>
-                        <button type="submit" id='sendButtom' disabled>SEND</button>
-                    </div>
-                </form>
+    
+                        <div>
+                            <label>Password</label>
+                            <input 
+                                name="password" 
+                                value={input.password}
+                                autoComplete='off' 
+                                onChange={introduceData}  />
+                            {errors.password && <p>{errors.password}</p> }
+                        </div>
+    
+                        <div>
+                            <label>Confirm password</label>
+                            <input 
+                                name="confirm_password" 
+                                value={input.confirm_password}
+                                autoComplete='off' 
+                                onChange={introduceData}  />
+                            {errors.confirm_password && <p>{errors.confirm_password}</p> }
+                        </div>
+    
+                        <div>
+                            <label>Email</label>
+                            <input  
+                                name="email" 
+                                value={input.email}
+                                autoComplete='off' 
+                                onChange={introduceData}  />
+                            {errors.email && <p>{errors.email}</p> }
+                        </div>
+    
+                        {userNow.picture? (
+                            <div>
+                                <p>Actual image</p>
+                                <img src={userNow.picture} style={{ width: '300px' }} alt="img" />
+                            </div>
+                        ) : (
+                            <div>
+                                <p>No current image</p>
+                            </div>
+                        )}
+    
+                        <div>
+                            <label>Profile Image</label>
+                            <p>(this will replace the current image)</p>
+                            <input 
+                                type="file" 
+                                name="file" 
+                                autoComplete='off'
+                                onChange={uploadImage}  />
+                            {loading ? (
+                                    <h4>Uploading image...</h4>
+                                ) : (
+                                    input.profile_image!== null && userNow.picture === input.profile_image.toString()? (
+                                        <div>
+                                            <p>You will keep the same picture</p>
+                                        </div>
+                                    ) : <img src={input.profile_image} style={{ width: '300px' }} alt=''></img>
+                                    
+                                )}
+                        </div>
+    
+                        <div>
+                            {input.profile_image?(
+                                <button onClick={deleteNewImage}>Delete new image</button>
+                            ):""}
+                            
+                        </div>
+    
+                        <div>
+                            <label>Username</label>
+                            <input 
+                                name="username" 
+                                value={input.username}
+                                autoComplete='off' 
+                                onChange={introduceData}  />
+                            {errors.username && <p>{errors.username}</p> }
+                        </div>
+    
+                        <div>
+                            <button type="submit" id='sendButtom' disabled>SEND</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 export default UpdateProfile
