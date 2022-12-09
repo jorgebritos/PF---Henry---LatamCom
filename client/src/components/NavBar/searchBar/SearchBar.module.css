@@ -10,6 +10,7 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 
 .btn:hover {
@@ -26,6 +27,7 @@
 	border-radius: 13px;
 	background-color: #17addac5;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 .input:hover {
 	background-color: #d9d9d9;
@@ -45,13 +47,12 @@
 	margin: 0%;
 }
 
-
-.ilink{
+.ilink {
 	text-decoration: none;
 	color: black;
 }
 
-.ilink:hover{
+.ilink:hover {
 	cursor: pointer;
 	background-color: lightgray;
 }

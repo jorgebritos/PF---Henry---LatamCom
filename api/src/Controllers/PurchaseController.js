@@ -1,59 +1,106 @@
-const { Purchase , User} = require("../db.js");
+const { Purchase, User, Product } = require("../db.js");
 
 
 
-const getPurchase = async (req, res) => {
+const getPurchaseAll = async (req, res) => {
 
-  let purchaseTable = await Purchase.findAll({
-      include:[
-          {
-              model: User,
-              attributes: ["username"],
-              through: {
-                  attributes: []
-              }
-          },
-      ],
-      
-      order: [
-          ['id', 'ASC']
-      ]
-  })
+    let purchaseTable = await Purchase.findAll({
+        include: [
+            {
+                model: User,
+                attributes: ["id", "username"],
+                through: {
+                    attributes: []
+                }
+            },
+        ],
 
-  res.send(purchaseTable);
+        order: [
+            ['id', 'ASC']
+        ]
+    })
+
+    res.send(purchaseTable);
 }
 
 
-const postPurchase = async (req,res)=>{
+const postPurchase = async (req, res) => {
+    try {
+        const { products, totalPrice, idUser } = req.body.purchase
+        const { amounts } = req.body
+        let allData = []
 
-  try {
-      
-      const {products, totalPrice, idUser} = req.body
-  
-      const newPurchase = await Purchase.create({
-          products,
-          totalPrice
-      })
-  
-      const searchUser = await User.findOne({
-          where: { id: idUser }
-      })
-  
-      if(searchUser){
-          newPurchase.addUser(searchUser)
-          res.status(200).send(newPurchase)
-      }else{
-          res.send("Missing Id")
-      }
-      
-  
-  } catch (error) {
-      res.sendStatus(404)
-  }
-  
-  }
+        for (let i = 0; i < products.length; i++) {
+            let id = products[i];
+            let product = await Product.findOne({
+                where: { id: id },
+                attributes: ["id", "name", "price", "image", "stock"],
+                through: {
+                    attributes: []
+                }
+            })
+            product.stock -= Number(amounts[i])
+            await product.save()
+            allData.push(product)
+        }
+        let newTry = []
+        for (let i = 0; i < allData.length; i++) {
+            let product = allData[i];
+            let { id, name, price, image } = product
+            let amount = amounts[i]
+            let newObj = {
+                id,
+                name,
+                price,
+                image,
+                amount
+            }
+            newTry.push(newObj)
+        }
+        const newPurchase = await Purchase.create({
+            products: newTry,
+            totalPrice
+        })
+        const searchUser = await User.findOne({
+            where: { id: idUser }
+        })
+        if (searchUser) {
+            await newPurchase.addUser(searchUser)
+        } else {
+            return res.send("Missing Id")
+        }
+        res.status(200).send(newPurchase)
+    } catch (error) {
+        res.sendStatus(404)
+    }
+}
+
+const getPurchaseId = async (req, res) => {
+
+    let { id } = req.params
+
+    let purchaseTable = await Purchase.findAll({
+        include: [
+            {
+                model: User,
+                where: { id: id },
+                attributes: ["username"],
+                through: {
+                    attributes: []
+                }
+            },
+        ],
+
+        order: [
+            ['id', 'ASC']
+        ]
+    })
+
+    res.send(purchaseTable);
+}
 
 module.exports = {
-  getPurchase,
-  postPurchase
+    getPurchaseAll,
+    postPurchase,
+    getPurchaseId
 }

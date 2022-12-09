@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import s from './Profile.module.css';
 import Loading from '../../../loading/Loading';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import usericon from '../../../../asset/usericon.png';
+import { getUserPurchases } from '../../../../redux/actions';
+import { useHistory } from 'react-router-dom';
 
 export const Profile = () => {
 	const { user, isAuthenticated, isLoading } = useAuth0();
+	const history = useHistory()
+	const dispatch = useDispatch();
 
 	const userNow = useSelector((state) => state.user);
+	const userPurchases = useSelector((state) => state.userPurchases)
+
+	useEffect(() => {
+		if (userNow.id) {
+			dispatch(getUserPurchases(userNow.id))
+		}
+	}, [dispatch, userNow.id])
 
 	if (isLoading) {
 		return (
@@ -43,8 +54,34 @@ export const Profile = () => {
 						</div>
 						<div className={s.conCompra}>
 							<h2>Consola de Compras</h2>
+							{
+								userPurchases.length > 0? userPurchases.map((p) => {
+									return(
+										<div key={p.id}>
+											<p> Purchase made at: {p.createdAt.split("T",1).join()}</p>
+											{p.products.map((producto)=>{
+												return(
+												<div key={p.id}>
+													<p>{producto.name}</p>
+													<p>Amount: {producto.amount}</p>
+													<img src={producto.image} alt="product_image"></img>
+													<p>Price: {producto.price}</p>
+												</div>
+												
+												)
+											})}
+											<p>Total Price: {p.totalPrice}</p>
+										</div>
+									)
+									
+								}) : ""
+							}
 							<div></div>
 						</div>
+						<div>
+							<button onClick={()=>history.push(`/profile/changedata`)}>Edit information</button>
+						</div>
+						
 					</div>
 				) : (<h1>Inicie Sesión</h1>)}
 		</>

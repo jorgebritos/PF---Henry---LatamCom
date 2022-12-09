@@ -8,9 +8,7 @@ import s from './LoginForm.module.css';
 
 // import queryString from 'query-string';
 
-
-
-export const LoginForm = ({location}) => {
+export const LoginForm = ({ location }) => {
 	// const {code} =queryString.parse(location.search);
 	// const [challengesData, setChallengesData] = useState("none");
 
@@ -84,15 +82,15 @@ export const LoginForm = ({location}) => {
 	const log= async ()=>{
 		loginWithRedirect();
 		// const domain = 'dev-g1jtn0qvoq0x04y4.us.auth0.com';
-    	// const audience = 'https://www.PF---Henry---LatamCom.com';
-    	// const scope = "read:PF-Henry";
-    	// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
-    	// const responseType = "code";
-    	// const redirectUri = "http://localhost:3000/home";
+		// const audience = 'https://www.PF---Henry---LatamCom.com';
+		// const scope = "read:PF-Henry";
+		// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
+		// const responseType = "code";
+		// const redirectUri = "http://localhost:3000/home";
 
 		// const response = await fetch(
-		// 	`https://${domain}/authorize?` + 
-		// 	`audience=${audience}&` + 
+		// 	`https://${domain}/authorize?` +
+		// 	`audience=${audience}&` +
 		// 	`scope=${scope}&` +
 		// 	`response_type=${responseType}&` +
 		// 	`client_id=${clientId}&` +
@@ -101,8 +99,7 @@ export const LoginForm = ({location}) => {
 		// 	}
 		//   );
 		//   window.location.replace(response.url);
-
-	}
+	};
 
 	function handleInputChange(e) {
 		e.preventDefault();
@@ -184,7 +181,10 @@ export const LoginForm = ({location}) => {
 						/>
 					</div>
 					<br />
-					<button className={s.btn} id="confirm" onClick={(e) => confirmUser(e)}>
+					<button
+						className={s.btn}
+						id='confirm'
+						onClick={(e) => confirmUser(e)}>
 						Let`s get started
 					</button>
 					<br />
@@ -197,7 +197,7 @@ export const LoginForm = ({location}) => {
 					{/* <div>{challengesData}</div> */}
 					<button className={s.btnG} onClick={() => log()}>
 						<img
-							src='https://img.icons8.com/fluency/16/null/google-logo.png'
+							src='https://img.icons8.com/fluency/25/null/google-logo.png'
 							alt=''
 						/>
 						<p className={s.p}>Google</p>

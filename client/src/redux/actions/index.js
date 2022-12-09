@@ -11,8 +11,9 @@ export const GET_ALL_BRANDS = "GET_ALL_BRANDS"
 export const GET_AUTHTOKENROUTER = "GET_AUTHTOKENROUTER"
 export const GET_AUTHTOKENROUTERPERF = "GET_AUTHTOKENROUTERPERF"
 export const GET_FAVORITES = "GET_FAVORITES"
-
 export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
+export const GET_ALL_PURCHASES = "GET_ALL_PURCHASES"
+export const GET_USER_PURCHASES = "GET_USER_PURCHASES"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE"
@@ -41,6 +42,7 @@ export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
 export const FILTER_BY_PRICE = "FILTER_BY_PRICE"
 export const FILTER_BY_CATEGORY = "FILTER_BY_CATEGORY"
+export const FILTER_BY_RATING = "FILTER_BY_RATING"
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
 export const SEARCH_BY_NAME2 = "SEARCH_BY_NAME2"
 export const ORDER_BY = "ORDER_BY"
@@ -52,6 +54,27 @@ export const NEW_SEARCH = "NEW_SEARCH"
 export const LOCALSTORAGE = "LOCALSTORAGE"
 export const LOCALSTORAGEUSERINFO= "LOCALSTORAGEUSERINFO"
 
+//RUTAS GET
+export function getAllPurchases() {
+    return async function (dispatch) {
+        const purchasesInfo = await axios.get(`http://localhost:3001/purchase`)
+        dispatch({
+            type: GET_ALL_PURCHASES,
+            payload: purchasesInfo.data
+        })
+    }
+}
+
+export function getUserPurchases(id) {
+    return async function (dispatch) {
+        const purchasesInfo = await axios.get(`http://localhost:3001/purchase/${id}`)
+        dispatch({
+            type: GET_USER_PURCHASES,
+            payload: purchasesInfo.data
+        })
+    }
+}
+
 export function getAllProducts() {
     return async function (dispatch) {
         const productsInfo = await axios.get(`http://localhost:3001/products`)
@@ -62,12 +85,9 @@ export function getAllProducts() {
     }
 }
 
-
-//RUTAS GET
-
-export function getAllComments() {
+export function getAllComments(id) {
     return async function (dispatch) {
-        const commentsInfo = await axios.get('http://localhost:3001/comments')
+        const commentsInfo = await axios.get(`http://localhost:3001/comments/${id}`)
         dispatch({
             type: GET_ALL_COMMENTS,
             payload: commentsInfo.data
@@ -147,8 +167,6 @@ export function getAllBrands(payload) {
 
             brands = new Set(brands)
             brands = [...brands]
-            console.log(products)
-            console.log(brands)
             await dispatch({
                 type: GET_ALL_BRANDS,
                 payload: brands
@@ -255,7 +273,7 @@ export function buyShoppingCart(payload) {
     return async function (dispatch) {
         const info = await axios.post('http://localhost:3001/buyings/createpayment', payload)
         console.log(info.data);
-        window.location.href= info.data
+        window.location.href = info.data
         dispatch({
             type: PP_PURCHASE,
             payload: info
@@ -267,7 +285,7 @@ export function buyShoppingCart(payload) {
 
 export function updateUser(payload) {
     return async function (dispatch) {
-        const info = await axios.put('http://localhost:3001/users', payload)
+        const info = await axios.put(`http://localhost:3001/users/${payload.id}`, payload)
         dispatch({
             type: UPDATE_USER,
             payload: info.data
@@ -276,7 +294,6 @@ export function updateUser(payload) {
 }
 
 export function updateRatingProduct(payload) {
-    console.log(payload)
     let id = payload.id;
     return async function (dispatch) {
         const info = await axios.put(`http://localhost:3001/products/${id}`, payload)
@@ -309,9 +326,9 @@ export function updateComment(payload) {
 }
 
 //RUTAS DELETE
-export function deleteComment(id) {
+export function deleteComment(idUser, idProduct) {
     return async function (dispatch) {
-        const deletedComment = await axios.delete(`http://localhost:3001/comments/${id}`)
+        const deletedComment = await axios.delete(`http://localhost:3001/comments/${idUser}/${idProduct}`)
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
@@ -331,7 +348,7 @@ export function deleteProduct(id) {
 
 export function removeFavorite(id, idProduct) {
     return async function (dispatch) {
-        const deletedFavorite = await axios.delete(`http://localhost:3001/favorites/${id}`, idProduct)
+        const deletedFavorite = await axios.delete(`http://localhost:3001/favorites/${id}/${idProduct}`)
         dispatch({
             type: REMOVE_FAVORITE,
             payload: deletedFavorite.data
@@ -367,6 +384,8 @@ export function filterByBrand(payload) {
 }
 
 export function filterByPrice(payload) {
+    if (!payload.min) payload.min = 0
+    if (!payload.max) payload.max = 0
     return {
         type: FILTER_BY_PRICE,
         payload
@@ -377,6 +396,13 @@ export function filterByCategory(payload) {
     return {
         type: FILTER_BY_CATEGORY,
         payload
+    }
+}
+
+export function filterByRating(payload) {
+    return {
+        type: FILTER_BY_RATING,
+        payload,
     }
 }
 
@@ -406,7 +432,7 @@ export function searchByName(productName, typeR) {
     return async function (dispatch) {
         const productsInfo = await axios.get(`http://localhost:3001/products`)
 
-        if (productsInfo.data !== "Please Create Categories First"&& productName) {
+        if (productsInfo.data !== "Please Create Categories First" && productName) {
             const searchedProducts = productsInfo.data.filter(product => product.name.toLowerCase().includes(productName.toLowerCase()))
             dispatch({
                 type: typeR,
@@ -437,22 +463,22 @@ export function orderBy(payload) {
 
 // LocalStorage
 
-export function putLocalstorage(){
+export function putLocalstorage() {
     if (localStorage.getItem('cart')) {
         let cart = JSON.parse(localStorage.getItem('cart'));
-        return{
+        return {
             type: LOCALSTORAGE,
             payload: cart
         }
     }
-    else{
+    else {
         let cart = []
-        return{
+        return {
             type: LOCALSTORAGE,
             payload: cart
         }
     }
-    
+
 }
 // export function getLocalstorage(){
 //     if (localStorage.getItem('email','password' )) {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFavorites, removeFavorite } from '../../../redux/actions';
+import { removeFavorite } from '../../../redux/actions';
 import s from './ShowFavorites.module.css'
 
 const ShowFavorites = () => {
@@ -9,17 +9,17 @@ const ShowFavorites = () => {
 	let favorites = useSelector((state) => state.favorites);
 	const user = useSelector((state) => state.user);
 
-	const deleteProduct = (e, id) => {
+	const deleteProduct = (e, idProduct, idUser) => {
 		e.preventDefault();
-		favorites = favorites.filter((p) => p.id !== id);
+		favorites = favorites.filter((p) => p.id !== idProduct);
 		if (user.id) {
-			dispatch(removeFavorite(user.id, id));
+			dispatch(removeFavorite(idUser, idProduct));
 		}
 	};
 
 	useEffect(() => {
 		if (user.id) {
-			dispatch(getFavorites(user.id));
+			// dispatch(getFavorites(user.id));
 		}
 	}, [dispatch, favorites, user.id]);
 
@@ -47,7 +47,7 @@ const ShowFavorites = () => {
 											</div>
 											<button
 												className={s.btn}
-												onClick={(e) => deleteProduct(e, producto.id)}>
+												onClick={(e) => deleteProduct(e, user.id, producto.id)}>
 												REMOVE ITEM
 											</button>
 										</div>

@@ -5,7 +5,7 @@ import s from './SuccessedPayment.module.css';
 const renderer = ({ seconds, completed }) => {
 	const handleClick = (e) => {
 		//e.preventDefaul()
-		window.location.href = 'http://localhost:3000/home';
+		window.location.href = `${window.location.origin}/home`;
 	};
 	if (completed) {
 		return (
@@ -24,7 +24,7 @@ const renderer = ({ seconds, completed }) => {
 					If the verifiying takes more than
 					{seconds === 1 ? ` ${seconds} second` : ` ${seconds} seconds`}, please
 					return to
-					<a href='http://localhost:3000/home' className={s.homelnk}>
+					<a href={`${window.location.origin}/home`} className={s.homelnk}>
 						home
 					</a>
 					page

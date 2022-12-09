@@ -15,3 +15,6 @@ module.exports = {
     PAYPAL_API_SECRET,
     PAYPAL_API
 }
+
+// Agregar en el archivo .env la siguiente variable
+// LOCAL_URL=http://localhost:3001

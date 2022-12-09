@@ -3,7 +3,7 @@
 	flex-direction: column;
 	/* justify-content: center; */
 	align-items: center;
-	min-height: calc(100vh - 145px);
+	min-height: calc(100vh - 165px);
 }
 .contG {
 	display: flex;
@@ -26,7 +26,7 @@
 	flex-wrap: wrap;
 	flex-direction: row;
 	justify-content: center;
-	margin-top: 2em;
+
 	justify-content: space-between;
 	align-items: center;
 	background-color: #142328;
@@ -34,7 +34,7 @@
 	height: 200px;
 	padding: 23px;
 	border-radius: 23px;
-	cursor: pointer;
+	/* cursor: pointer; */
 	box-shadow: 2px 2px 15px #142328cc;
 }
 .cimg {
@@ -67,7 +67,7 @@
 }
 .precio {
 	color: #17abda;
-	font-size: 1.39 rem;
+	font-size: 1.39rem;
 	font-weight: bold;
 }
 .btn {
@@ -77,6 +77,8 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
+	cursor: pointer;
 }
 
 .btn:hover {
@@ -90,6 +92,8 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
+	cursor: pointer;
 }
 
 .btnM:hover {
@@ -112,16 +116,23 @@
 .contT {
 	display: scroll;
 	position: fixed;
+	/* display: flex; */
+
+	margin-bottom: 10px;
 }
+
 .contenedor {
-	margin-top: 18rem;
-	margin-right: 30rem;
-	margin-left: 30px;
+	/* margin-bottom: 1.6rem; */
+
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+	flex-direction: column;
+	/* justify-content: space-between; */
 	align-items: center;
 	padding: 5px;
+	/* background-color: #0e7d86; */
+	width: 400px;
+	min-height: calc(100vh - 1000px);
+	padding-bottom: 1rem;
 }
 .contpago {
 	display: flex;
@@ -129,8 +140,8 @@
 	justify-content: center;
 	align-items: center;
 	padding: 10px;
-	width: 400px;
-	height: 500px;
+	width: 300px;
+	height: 400px;
 	background-color: #142328;
 	border-radius: 23px;
 	box-shadow: 2px 2px 15px #142328cc;
@@ -144,6 +155,8 @@
 	border-radius: 13px;
 	background-color: #17dac8;
 	backdrop-filter: blur(4px);
+	border: none;
+	cursor: pointer;
 }
 
 .btnB:hover {

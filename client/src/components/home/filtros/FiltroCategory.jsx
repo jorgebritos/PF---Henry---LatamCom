@@ -6,6 +6,21 @@ export default function FiltroCategory({s, categories, handleCategoryFilter, fil
     <div className={s.filtro}>
 						<h4 className={s.h4}>Filter By Category</h4>
 						<ul>
+
+						<li className={s.li} key={"All"}>
+										<label className={s.label}>
+											<input
+												className={s.input}
+												type={'radio'}
+												value={"All"}
+												name={'category'}
+												id='categoria'
+												onInput={(e) => handleCategoryFilter("All")}
+											/>
+											<span className={s.span}>Todos</span>
+										</label>
+									</li>
+
 							{categories?.map((c) => {
 								return (
 									<li className={s.li} key={c.name}>

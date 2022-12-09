@@ -1,6 +1,6 @@
 const axios = require("axios");
 const paypal = require("./config.js")
-const { CLIENT_URL } = process.env
+const { CLIENT_URL, LOCAL_URL } = process.env
 
 // La idea todavia está en plan mejora. 
 
@@ -45,7 +45,7 @@ const createOrder = async (req,res)=>{
                 landing_page: "LOGIN",  // pagina que redirije el link emitido
                 user_action: "PAY_NOW", 
                 return_url: `${CLIENT_URL}/SuccessPayment`, // si acepta el pago va a este link
-                cancel_url: "http://localhost:3001/buyings/cancelpayment" // si rechaza el pago va a este link
+                cancel_url: `${LOCAL_URL}/buyings/cancelpayment` // si rechaza el pago va a este link
             }
         };
 
@@ -53,7 +53,7 @@ const createOrder = async (req,res)=>{
         const params = new URLSearchParams()
         params.append("grant_type","client_credentials")
 
-        const {data : {access_token}} = await axios.post("https://api-m.sandbox.paypal.com/v1/oauth2/token",params, {
+        const {data : {access_token}} = await axios.post(`${paypal.PAYPAL_API}/v1/oauth2/token`,params, {
             headers:{
                 'Content_Type': 'application/x-www-form-urlencoded'
             },  
@@ -63,7 +63,7 @@ const createOrder = async (req,res)=>{
             },
         })
 
-        const response = await axios.post("https://api-m.sandbox.paypal.com/v2/checkout/orders", order,{
+        const response = await axios.post(`${paypal.PAYPAL_API}/v2/checkout/orders`, order,{
             headers:{
                 Authorization : `Bearer ${access_token}`,
                 'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ const acceptOrder = async (req,res) =>{
 
 const cancelOrder = async (req,res) =>{
     try {
-        res.redirect(`${CLIENT_URL}/shoppingcart`)
+        res.redirect(`${CLIENT_URL}/cancelpayment`)
     } catch (error) {
         res.status(400).send(error)
     }

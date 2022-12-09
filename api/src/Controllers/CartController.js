@@ -12,7 +12,6 @@ const addToCart = async (req, res) => {
     })
     
     await user.addCart(product)
-    console.log(product)
 
     return res.send(201);
 }

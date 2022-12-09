@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import s from './ProductShopCart.module.css';
 import { putLocalstorage } from '../../redux/actions';
@@ -7,10 +7,11 @@ import { putLocalstorage } from '../../redux/actions';
 const ProductShopCart = () => {
 	const [total, setTotal] = useState(0);
 	const [productsSelected, setProductsSelected] = useState([]);
-	const history = useHistory()
-	const dispatch = useDispatch()
+	const history = useHistory();
+	const dispatch = useDispatch();
 	let cant = 0;
 
+	// Traer productos del localStorage ///
 	const seeProducts = () => {
 		let cart = [];
 		if (localStorage.getItem('cart')) {
@@ -25,7 +26,9 @@ const ProductShopCart = () => {
 	useEffect(() => {
 		seeProducts();
 	}, []);
+	///////////////////////////////////////
 
+	// Eliminar 1 producto del carrito ////
 	const deleteProduct = (e, id) => {
 		e.preventDefault();
 		let carrito = productsSelected.filter((p) => p.id !== id);
@@ -35,24 +38,27 @@ const ProductShopCart = () => {
 
 		let cant = carrito;
 		totalAccount(cant);
-		dispatch(putLocalstorage())
+		dispatch(putLocalstorage());
 	};
+	///////////////////////////////////////
 
+	// Eliminar todos los productos del carrito
 	const cleanCart = (e) => {
 		e.preventDefault();
 		setProductsSelected([]);
 		localStorage.removeItem('cart');
 		let cant = 0;
 		totalAccount(cant);
-		dispatch(putLocalstorage())
+		dispatch(putLocalstorage());
 	};
+	///////////////////////////////////////
 
+	// Aumentar o disminuir cantidades
 	const suma = (event) => {
 		event.preventDefault();
 		const name = event.target.name;
-
 		const increase = productsSelected.map((p) => {
-			if (p.id === Number(name)) {
+			if (p.id === Number(name) && (p.amount + 1) <= p.stock) {
 				return {
 					...p,
 					amount: p.amount + 1,
@@ -62,19 +68,22 @@ const ProductShopCart = () => {
 		});
 
 		setProductsSelected(increase);
-		cant = increase;
-		totalAccount(cant);
+
+		localStorage.setItem("cart", JSON.stringify(increase))
 	};
 
 	const resta = (event) => {
 		event.preventDefault();
 		const name = event.target.name;
+		
 		const decrease = productsSelected.map((p) => {
 			if (p.id === Number(name) && p.amount !== 1) {
 				return {
 					...p,
 					amount: p.amount - 1,
 				};
+			} else {
+				console.log("llegaste al maximo stock posible")
 			}
 			return p;
 		});
@@ -82,12 +91,19 @@ const ProductShopCart = () => {
 		setProductsSelected(decrease);
 		cant = decrease;
 		totalAccount(cant);
+		localStorage.setItem("cart", JSON.stringify(decrease))
 	};
+	////////////////////////////////////////
 
+	// Cuenta total: agregado de condicionales para cambiar los valores del localStorage
 	const totalAccount = (cant) => {
 		if (cant.length) {
 			if (cant.length === 1) {
 				setTotal(cant[0].price * cant[0].amount);
+				localStorage.setItem(
+					'total',
+					JSON.stringify(cant[0].price * cant[0].amount),
+				);
 			}
 
 			if (cant.length > 1) {
@@ -95,17 +111,34 @@ const ProductShopCart = () => {
 				cant.forEach((p) => {
 					account += p.price * p.amount;
 					setTotal(account.toFixed(2));
+					localStorage.setItem('total', JSON.stringify(account));
 				});
 			}
 		}
+		if (cant === 0 || cant.length === 0) {
+			setTotal(0);
+			localStorage.setItem('total', JSON.stringify(0));
+		}
 	};
+	///////////////////////////////////////
 
-	const buyItems = (event) =>{
-		event.preventDefault()
-		history.push("/buyproducts")
-		localStorage.setItem("total", JSON.stringify(total))
-	
+	// Comprar items: agregado localStorage
+	const buyItems = (event) => {
+		event.preventDefault();
+		localStorage.setItem('total', JSON.stringify(total));
+		history.push('/buyproducts');
+	};
+	///////////////////////////////////////
+
+	// Buttom /////////////////////////////
+	const sendButton = document.getElementById('sendButtom');
+
+	if (sendButton) {
+		productsSelected.length
+			? (sendButton.disabled = false)
+			: (sendButton.disabled = true);
 	}
+	///////////////////////////////////////
 
 	return (
 		<div className={s.cont}>
@@ -182,7 +215,9 @@ const ProductShopCart = () => {
 									CLEAN CART
 								</button>
 								<br />
-								<button className={s.btnB} onClick={buyItems} >BUY</button>
+								<button className={s.btnB} onClick={buyItems} id="sendButtom">
+									BUY
+								</button>
 							</div>
 						</div>
 					</div>

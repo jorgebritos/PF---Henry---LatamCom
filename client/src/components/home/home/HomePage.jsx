@@ -5,6 +5,7 @@ import {
 	getAllCategories,
 	getAllProducts,
 	getAllUsers,
+	resetDetail,
 	searchByName,
 } from '../../../redux/actions/index.js';
 import CardProduct from '../Card/CardProduct';
@@ -43,6 +44,7 @@ export default function HomePage() {
 	const [, setOrder] = useState('');
 
 	useEffect(() => {
+		dispatch(resetDetail())
 		dispatch(getAllCategories());
 		dispatch(getAllUsers());
 		dispatch(getAllProducts());
@@ -77,6 +79,7 @@ export default function HomePage() {
 									categories={p.categories}
 									price={p.price}
 									rating={p.rating}
+									stock={p.stock}
 								/>
 							);
 						}) : ""}

@@ -1,4 +1,4 @@
-const { Product, Category} = require("../db.js");
+const { Product, Category } = require("../db.js");
 const { Op } = require("sequelize");
 
 const getProduct = async (req, res) => {
@@ -33,7 +33,8 @@ const getProduct = async (req, res) => {
                     image: p.image,
                     price: p.price,
                     brand: p.brand ? p.brand : null,
-                    category: p.category
+                    category: p.category,
+                    stock: p.stock ? p.stock : 0
                 };
             });
 

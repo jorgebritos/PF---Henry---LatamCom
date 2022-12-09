@@ -32,6 +32,7 @@ function NavBar() {
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
+	const local = useSelector((state) => state.localstorage);
 
 	function search(e) {
 		dispatch(newSearch(''));
@@ -65,6 +66,15 @@ function NavBar() {
 							<li className={s.li}>
 								<Link to={'/update'} className={s.Link}>
 									<h3>Update-Product</h3>
+								</Link>
+							</li>
+						) : (
+							<p></p>
+						)}
+						{isAuthenticated || userNow.admin ? (
+							<li className={s.li}>
+								<Link to={'/dashboard'} className={s.Link}>
+									<h3>Dashboard</h3>
 								</Link>
 							</li>
 						) : (

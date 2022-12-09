@@ -27,6 +27,7 @@
 	border-radius: 13px;
 	background-color: #17addac5;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 .input:hover {
 	background-color: #d9d9d9;
@@ -39,12 +40,18 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 
-/* .btn:hover {
+.btn:hover {
 	background-color: #0e7d86;
 	color: whitesmoke;
-} */
+}
+.btn:disabled {
+	background-color: #313232;
+	color: rgb(114, 114, 114);
+}
+
 .btnd {
 	margin-left: 10px;
 	width: 150px;
@@ -57,6 +64,11 @@
 .btnd:hover {
 	background-color: #0e7d86;
 	color: whitesmoke;
+}
+
+.btnd:disabled {
+	background-color: #313232;
+	color: rgb(114, 114, 114);
 }
 
 .h1 {
@@ -82,25 +94,31 @@
 
 /* Product Sended page */
 
-
-.container{
-	display: grid;
-	grid-template-columns: repeat(12,1fr);
-	grid-auto-rows: 30px;
-
+.divC {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: calc(100vh - 160px);
 }
 
-.message{
-
-	grid-column: 3/11;
-	grid-row: 8/16;
+.container {
 	display: flex;
-	
-	background-color:#17abda;
-	justify-content: center;
+	flex-direction: column;
 	align-items: center;
-	border-radius: 20px;
-	
+	justify-content: center;
+	width: 790px;
+	height: 110px;
+	border-radius: 23px;
+	background-color: #17abda;
+	box-shadow: 2px 2px 15px #142328cc;
+}
+
+.message {
+	color: white;
+	font-size: 1.5rem;
+	font-weight: 500;
 }
 
 /*-----------ckebox-------------*/
