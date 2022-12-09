@@ -1,13 +1,17 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPurchases } from '../../redux/actions';
+import { getAllProducts, getAllPurchases } from '../../redux/actions';
+import { Link } from 'react-router-dom';
 export default function PurchasesAdmin() {
     const dispatch = useDispatch();
     const allPurchases = useSelector((state) => state.purchasesAdmin);
+    const allProducts = useSelector((state) => state.allProducts);
+    const outOfStock = allProducts.length > 0 ? allProducts.filter((p) => p.stock === 0) : [];
 
     useEffect(() => {
         dispatch(getAllPurchases())
+        dispatch(getAllProducts())
     }, [])
 
     let totalIncome = () => {
@@ -23,6 +27,22 @@ export default function PurchasesAdmin() {
     return (
         <div>
             <h1>Total Income: ${totalIncome()} USD</h1>
+            <ul>
+                {outOfStock.length > 0 ? (<h2>ITEMS OUT OF STOCK</h2>,
+                    outOfStock.map((p) => {
+                        return (
+                            <Link to={'/update'} key={p.id}>
+                                <li>
+                                    <img src={p.image} alt={`${p.name} image`}></img>
+                                    <h4>{p.name}</h4>
+                                    <h3>OUT OF STOCK</h3>
+                                </li>
+                            </Link>
+                        )
+                    })) : outOfStock === 0 ? <li>Currently, All Items have Stock</li>
+                    : <li>Currently, your shop has no items</li>}
+            </ul>
+
             <h2>ALL USERS PURCHASES</h2>
             {
                 allPurchases.length > 0 ? allPurchases.map((i) => {
