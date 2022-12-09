@@ -38,61 +38,61 @@ export default function PurchasesAdmin() {
 			<div className={s.conte_row}>
 				<div>
 					<h2>ITEMS OUT OF STOCK</h2>
-					<ul>
+					<div className={s.cads}>
 						{outOfStock.length > 0 ? (
 							outOfStock.map((p) => {
 								return (
-									<Link to={'/update'} key={p.id}>
-										<li>
-											<div className={s.producCard}>
-												<div className={s.cimg}>
-													<img
-														className={s.img}
-														src={p.image}
-														alt={`${p.name} image`}
-													/>
-												</div>
-												<div className={s.contenT}>
-													<h4>{p.name}</h4>
-													<h3>OUT OF STOCK</h3>
-												</div>
+									<Link className={s.link} to={'/update'} key={p.id}>
+										<div className={s.producCard}>
+											<div className={s.cimg}>
+												<img
+													className={s.img}
+													src={p.image}
+													alt={`${p.name} image`}
+												/>
 											</div>
-										</li>
+											<div className={s.contenT}>
+												<h4 className={s.name}>{p.name}</h4>
+												<h3 className={s.text}>OUT OF STOCK</h3>
+											</div>
+										</div>
 									</Link>
 								);
-							}))
-							: outOfStock === 0 ? (
-								<li>Currently, All Items have Stock</li>
-							) : (
-								<li>Currently, your shop has no items</li>
-							)}
-					</ul>
+							})
+						) : outOfStock === 0 ? (
+							<li>Currently, All Items have Stock</li>
+						) : (
+							<li>Currently, your shop has no items</li>
+						)}
+					</div>
 				</div>
+
+				<hr className={s.hr} />
 				<div>
 					<h2>ALL USERS PURCHASES</h2>
 					<div>
 						{allPurchases.length > 0
 							? allPurchases.map((i) => {
-								return (
-									<div key={i.id}>
-										<p>User: {i.users[0].username}</p>
-										<h3>ITEMS:</h3>
-										<ul>
-											{i.products.map((p) => {
-												return (
-													<li key={p.id}>
-														<img src={p.image} alt={`${p.name} image`}></img>
-														<h4>{p.name}</h4>
-														<h5>Unit Price: {p.price}</h5>
-														<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
-													</li>
-												);
-											})}
-										</ul>
-										<h3>Total Price: ${i.totalPrice} USD</h3>
-									</div>
-								);
-							})
+									return (
+										<div key={i.id}>
+											<p>User: {i.users[0].username}</p>
+											<h3>ITEMS:</h3>
+											<ul>
+												{i.products.map((p) => {
+													return (
+														<li key={p.id}>
+															<img src={p.image} alt={`${p.name} image`}></img>
+															<h4>{p.name}</h4>
+															<h5>Unit Price: {p.price}</h5>
+															<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
+														</li>
+													);
+												})}
+											</ul>
+											<h3>Total Price: ${i.totalPrice} USD</h3>
+										</div>
+									);
+							  })
 							: ''}
 					</div>
 				</div>
