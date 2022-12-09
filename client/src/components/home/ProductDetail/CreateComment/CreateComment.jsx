@@ -90,9 +90,7 @@ const CreateComment = () => {
 			dispatch(getAllComments(product.id))
 			
 		};
-	}, [dispatch, comments.length,product.id]);
-
-
+	}, [dispatch]);
 
 	return (
 		<div className={s.conten}>
