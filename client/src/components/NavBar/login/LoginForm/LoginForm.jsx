@@ -23,37 +23,35 @@ export const LoginForm = ({ location }) => {
 	//   .then(res => res.json())
 	//   .then(res => setChallengesData(JSON.stringify(res)))
 	// }, [code]);
-	
 
 	const { isLoading, loginWithRedirect } = useAuth0();
 	const history = useHistory();
-	const logg = useSelector((state) => state.login)
+	const logg = useSelector((state) => state.login);
 	const dispatch = useDispatch();
-	const user1 = useSelector((state)=> state.user)
+	const user1 = useSelector((state) => state.user);
 	const [logged, setLogin] = useState({
-		email:"",
-		password:""
-	})
+		email: '',
+		password: '',
+	});
 	useEffect(() => {
-		localStorage.removeItem("loggedUserJWT");
-		localStorage.removeItem("loggedUser");
-		localStorage.removeItem("userInfo");
+		localStorage.removeItem('loggedUserJWT');
+		localStorage.removeItem('loggedUser');
+		localStorage.removeItem('userInfo');
 		// eslint-disable-next-line
-	  },[]);
-	useEffect (()=>{
-		if(logg.length>1){
-			window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
-			window.localStorage.setItem("userInfo", JSON.stringify(user1))
-			history.push("/home")
-			console.log("A");
+	}, []);
+	useEffect(() => {
+		if (logg.length > 1) {
+			window.localStorage.setItem('loggedUserJWT', JSON.stringify(logg));
+			window.localStorage.setItem('userInfo', JSON.stringify(user1));
+			history.push('/home');
+			console.log('A');
 		}
 		// eslint-disable-next-line
-	},[logg])
+	}, [logg]);
 	// const [userA, setUserA]=useState({
 	// 	prop1:"",
 	// 	prop2:""
 	// })
-	
 
 	// const usuario = user && allUser.find((u) => u.email === user.email);
 	// console.log(allUser);
@@ -68,11 +66,11 @@ export const LoginForm = ({ location }) => {
 	// 	let userR = [];
 	// 	if (localStorage.getItem('loggedUser')) {
 	// 		userR = JSON.parse(localStorage.getItem('loggedUser'));
-	// 	}		
+	// 	}
 
 	// 	setLogin({...logged, email:userR.email, password:userR.password, token:JWT})
 	// };
-	
+
 	// console.log(logged)
 	// useEffect(() => {
 	// 	seeUser();
@@ -81,8 +79,8 @@ export const LoginForm = ({ location }) => {
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
-	
-	const log= async ()=>{
+
+	const log = async () => {
 		loginWithRedirect();
 		// const domain = 'dev-g1jtn0qvoq0x04y4.us.auth0.com';
 		// const audience = 'https://www.PF---Henry---LatamCom.com';
@@ -108,21 +106,20 @@ export const LoginForm = ({ location }) => {
 		e.preventDefault();
 		setLogin({
 			...logged,
-			[e.target.name]: e.target.value
-		})
-		return logged
+			[e.target.name]: e.target.value,
+		});
+		return logged;
 	}
 	// console.log(`user1 antes del dispatch: ${user1}`);
 
 	// console.log(`logg antes del dispatch: ${logg}`);
-/* 	const [input, setInput] = useState({email:"", password:""});
+	/* 	const [input, setInput] = useState({email:"", password:""});
 	const [error, setErrors] = useState({email:"", password:""}); */
-	
-/* 	const validateInput = (input) => {
+
+	/* 	const validateInput = (input) => {
 		let errors = {};
 		let expreg = /[.*+\-?^${}()|[\]\\/]/;
 	} */
-	
 
 	function confirmUser(e) {
 		e.preventDefault();
@@ -135,33 +132,31 @@ export const LoginForm = ({ location }) => {
 		// };
 		// let confirm = true
 		// console.log(login)
-/* 		const value = e.target.value;
+		/* 		const value = e.target.value;
 		const property = e.target.name; */
 
-/* 		setInput({ ...input, [property]: value });
+		/* 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value })); */
 		// seeUser();
-	   	dispatch(authTokenRouterLog({...logged, confirm: true,}))
+		dispatch(authTokenRouterLog({ ...logged, confirm: true }));
 
-	//   console.log(a)
-	  	window.localStorage.setItem("loggedUser", JSON.stringify(logged))
+		//   console.log(a)
+		window.localStorage.setItem('loggedUser', JSON.stringify(logged));
 
 		// console.log(`logg despues del dispatch: ${logg}`);
 		// console.log(`user1: ${user1}`);
-		if (logg === "IncorrectPassword") {
-			alert("La contraseña es incorrecta")
-		}else{
-		setLogin({email: "", password: "", admin:""})}
-		
+		if (logg === 'IncorrectPassword') {
+			alert('La contraseña es incorrecta');
+		} else {
+			setLogin({ email: '', password: '', admin: '' });
+		}
 	}
-	
-	if(logg.length){
-		window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
-		history.push("/home")
+
+	if (logg.length) {
+		window.localStorage.setItem('loggedUserJWT', JSON.stringify(logg));
+		history.push('/home');
 	}
 	//console.log("antes del if:" + logg)
-	
-	
 
 	return (
 		<div className={s.back_ground}>
@@ -172,7 +167,14 @@ export const LoginForm = ({ location }) => {
 					<br />
 					<div className={s.from}>
 						<label className={s.label}>Enter your email</label>
-						<input className={s.input} name="email" type='text' value={logged.email} onInput={e => handleInputChange(e)} placeholder=' Email..' />
+						<input
+							className={s.input}
+							name='email'
+							type='text'
+							value={logged.email}
+							onInput={(e) => handleInputChange(e)}
+							placeholder=' Email..'
+						/>
 						<label className={s.label}>Enter your password</label>
 						<input
 							className={s.input}
