@@ -26,7 +26,7 @@ export default function PurchasesAdmin() {
 			return total === 0 ? 0 : total.toFixed(2);
 		}
 	};
-
+	console.log(allPurchases[0]);
 	return (
 		<div className={s.conten}>
 			<div>

@@ -159,7 +159,7 @@ const ProductShopCart = () => {
 								<div className={s.cname}>
 									<div>
 										<h4 className={s.nameP}>{producto.name}</h4>
-										<h2 className={s.precio}>${producto.price}</h2>
+										<h2 className={s.precio}>${producto.price.toFixed(2)}</h2>
 									</div>
 
 									<button
@@ -201,7 +201,7 @@ const ProductShopCart = () => {
 							<div>
 								{productsSelected.length ? (
 									<div>
-										<h2 className={s.precio}>Total: {total}</h2>
+										<h2 className={s.precio}>Total: {total.toFixed(2)}</h2>
 									</div>
 								) : (
 									<div>

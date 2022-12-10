@@ -81,7 +81,7 @@ const Product = () => {
 					</div>
 					<div className={s.contInfo}>
 						<h1 className={s.name}>{product.name} </h1>
-						<h2 className={s.price}>${product.price} USD</h2>
+						<h2 className={s.price}>${product.price.toFixed(2)} USD</h2>
 						{product.stock > 0 ? (
 							<h3 className={s.h4}>Stock: {product.stock}</h3>
 						) : (
