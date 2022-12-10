@@ -18,7 +18,7 @@ import UserSended from './components/CreateUser/UserSended';
 import CreateUser from './components/CreateUser/CreateUser';
 import ShowFavorites from './components/NavBar/favorites/ShowFavorites';
 import CancelPayment from './components/BuyProducts/CancelPayment';
-import UpdateProfile from './components/NavBar/login/Profile/UpdateProfile';
+import UpdateProfile from './components/NavBar/login/Profile/UpdataProfile/UpdateProfile';
 import Success from './components/NavBar/login/Profile/Success';
 import MyChatBot from './components/home/ChatBot/ChatBot.jsx';
 import PurchasesAdmin from './components/dashboard/PurchasesAdmin/PurchasesAdmin';
@@ -52,10 +52,9 @@ function App() {
 			<Route exact path='/profile/changedata' component={UpdateProfile} />
 			<Route path='/profile/success' component={Success} />
 			<Route path='/dashboard' component={PurchasesAdmin} />
-			
-			{location.pathname === '/home' && <MyChatBot/>}
+
+			{location.pathname === '/home' && <MyChatBot />}
 			{location.pathname !== '/' && <FooterBar />}
-			
 		</div>
 	);
 }

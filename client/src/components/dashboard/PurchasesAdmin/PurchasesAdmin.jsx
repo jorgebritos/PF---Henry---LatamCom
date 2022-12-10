@@ -75,10 +75,10 @@ export default function PurchasesAdmin() {
 					<h2 className={s.h2}>ALL USERS PURCHASES</h2>
 					<div>
 						{allPurchases.length > 0
-							? allPurchases.map((i) => 
-									 (
+							? allPurchases.map((i) => {
+									return (
 										<div key={i.id}>
-											<p>User: {i.users.length?i.users[0].username:''}</p>
+											<p>User: {i.users[0].username}</p>
 											<h3>ITEMS:</h3>
 											<ul>
 												{i.products.map((p) => {
@@ -94,8 +94,8 @@ export default function PurchasesAdmin() {
 											</ul>
 											<h3>Total Price: ${i.totalPrice} USD</h3>
 										</div>
-									)
-							  )
+									);
+							  })
 							: ''}
 					</div>
 				</div>
