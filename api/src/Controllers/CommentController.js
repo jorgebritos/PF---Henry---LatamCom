@@ -45,11 +45,40 @@ const postComment = async (req, res) => {
         })
 
         const searchProduct = await Product.findOne({
-            where: { id: idProduct }
+            where: { id: idProduct },
+            include: {
+                model: Comment,
+                attributes: ["id", "rating", "comment"],
+                through: {
+                    attributes: [],
+                },
+                include: {
+                    model: User,
+                    attributes: ["id", "username"],
+                    through: {
+                        attributes: []
+                    }
+                }
+            }
         })
 
         await newComment.addUser(searchUser)
         await searchProduct.addComment(newComment)
+
+        let newRating = 0;
+        let newComments = [...searchProduct.comments, newComment]
+
+        for (const c of newComments) {
+            newRating += c.rating
+        }
+
+        searchProduct.rating = (newRating / newComments.length).toFixed(1);
+
+
+        await searchProduct.save();
+
+        await searchProduct.save();
+
         res.status(201);
     } catch (error) {
         res.sendStatus(404)
@@ -58,6 +87,7 @@ const postComment = async (req, res) => {
 
 const putComment = async (req, res) => {
     let { idUser, idProduct } = req.body
+
 
     let product = await Product.findOne({
         where: { id: idProduct },
@@ -111,6 +141,15 @@ const putComment = async (req, res) => {
             }
         })
 
+        let newRating = 0;
+        for (const c of product.comments) {
+            newRating += c.rating
+        }
+
+        product.rating = (newRating / product.comments.length).toFixed(1);
+
+        await product.save();
+
         res.send(product.comments)
     } else {
         res.status(404)
@@ -142,6 +181,16 @@ const deleteComment = async (req, res) => {
         let deleted = product.comments.filter((c) => c.users[0].id === Number(idUser));
         Comment.destroy({ where: { id: deleted[0].id } })
         product.removeComments(deleted)
+
+        let newRating = 0;
+        for (const c of newComm) {
+            newRating += c.rating
+        }
+
+        product.rating = (newRating / newComm.length).toFixed(1);
+
+
+        await product.save();
 
         return res.send(newComm);
     }

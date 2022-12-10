@@ -23,10 +23,12 @@ export default function PurchasesAdmin() {
 			for (const p of allPurchases) {
 				total += p.totalPrice;
 			}
-			return total === 0 ? 0 : total.toFixed(2);
+
+			return total.toFixed(2);
+		} else {
+			return 0;
 		}
 	};
-	console.log(allPurchases[0]);
 	return (
 		<div className={s.conten}>
 			<div>
@@ -78,24 +80,20 @@ export default function PurchasesAdmin() {
 							? allPurchases.map((i) => {
 									return (
 										<div key={i.id}>
-											{/* <p>User: {i.users[0].username}</p> */}
-											<h3 className={s.h2}>ITEMS:</h3>
-											<div className={s.cads}>
+											<p>User: {i.users[0].username}</p>
+											<h3>ITEMS:</h3>
+											<ul>
 												{i.products.map((p) => {
 													return (
-														<div className={s.producCard} key={p.id}>
-															<div className={s.cimg}>
-																<img src={p.image} alt={`${p.name}_image`} />
-															</div>
-															<div>
-																<h4>{p.name}</h4>
-																<h5>Unit Price: {p.price}</h5>
-																<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
-															</div>
-														</div>
+														<li key={p.id}>
+															<img src={p.image} alt={`${p.name}_image`}></img>
+															<h4>{p.name}</h4>
+															<h5>Unit Price: {p.price}</h5>
+															<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
+														</li>
 													);
 												})}
-											</div>
+											</ul>
 											<h3>Total Price: ${i.totalPrice} USD</h3>
 										</div>
 									);

@@ -110,7 +110,6 @@ const putProduct = async (req, res) => {
         });
 
         await selectedProduct.save();
-
         res.status(200);
     } else {
         res.status(404);
