@@ -25,7 +25,7 @@ function LoginRegister({ items = [] }) {
 	//const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-	// const [usuario, setUsuario]=useState([]);
+	//const [usuario, setUsuario]=useState([]);
 
 
 	// console.log(loggedUserJWT)
@@ -126,8 +126,8 @@ function LoginRegister({ items = [] }) {
 			//   }
 
 			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-			//console.log("userInfo", userInfo)
-			if (loggedUser) {
+			console.log("userInfo", userInfo, loggedUser)
+			if (loggedUser&&userInfo) {
 				dispatch(setUserData({
 					id: userInfo.id,
 					username: userInfo.username,

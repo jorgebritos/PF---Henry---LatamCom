@@ -45,9 +45,10 @@ export const LoginForm = ({ location }) => {
 			window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
 			window.localStorage.setItem("userInfo", JSON.stringify(user1))
 			history.push("/home")
+			console.log("A");
 		}
 		// eslint-disable-next-line
-	},[])
+	},[logg])
 	// const [userA, setUserA]=useState({
 	// 	prop1:"",
 	// 	prop2:""
@@ -147,18 +148,18 @@ export const LoginForm = ({ location }) => {
 
 		// console.log(`logg despues del dispatch: ${logg}`);
 		// console.log(`user1: ${user1}`);
-		// if (logg === "IncorrectPassword") {
-		// 	alert("La contraseña es incorrecta")
-		// }else{
-		// setLogin({email: "", password: "", admin:""})}
+		if (logg === "IncorrectPassword") {
+			alert("La contraseña es incorrecta")
+		}else{
+		setLogin({email: "", password: "", admin:""})}
 		
 	}
 	
-	// if(logg){
-	// 	window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
-	// 	history.push("/home")
-	// }
-	// console.log("antes del if:" + logg)
+	if(logg.length){
+		window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
+		history.push("/home")
+	}
+	//console.log("antes del if:" + logg)
 	
 	
 
