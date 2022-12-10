@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"
 import {updateUser} from "../../../../redux/actions/index"
 
 
+
 const Validate = (input)=>{
     let errors = {}
     let expreg = /[.*+\-?^${}()|[\]\\/]/;
@@ -136,9 +137,19 @@ const UpdateProfile = (props)=>{
                 username:input.username,
                 id: userNow.id
             }
+            const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
+            const userLocal = {
+                id: userNow.id,
+                username: newDates.username,
+                picture: input.profile_image,
+                name: newDates.firstname+" "+newDates.lastname,
+                email: newDates.email,
+                admin: userNow.admin,
+                jwt: loggedUserJWT
+            }
             
 			dispatch(updateUser(newDates))
-            .then(console.log("nuevos datos:",userNow))
+            .then(localStorage.setItem("userInfo",JSON.stringify(userLocal)))
             .then(history.push('/profile/success'))
 		} catch (error) {
 			alert(

@@ -92,6 +92,13 @@ const CreateComment = () => {
 		};// eslint-disable-next-line
 	}, [dispatch]);
 
+	
+	//	Poder visualizar crear un comentario, y una vez hecho dar a conocer que se creó y actualizar la página
+	// Se debe de mostrar el comentario y los botones de editar o eliminar en la posicion en donde se encuentre
+	// dicho comentario. Cuando se edite se debería traer el cuadro del comentario con el rating y si se acepta el 
+	// cambio ahí eliminar el anterior y reemplazarlo por el actual (o una ruta put de ultima)
+
+
 	return (
 		<div className={s.conten}>
 			{ratings > 0 ? (
