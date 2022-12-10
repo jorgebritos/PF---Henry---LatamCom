@@ -2,15 +2,23 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	width: 100%;
-	/* height: calc(100vh - 150px); */
+	min-height: calc(100vh - 155px);
 }
 .h1 {
 	color: #17abda;
 	font-size: 2.5rem;
 	font-weight: bold;
 }
+
+.h2 {
+	color: #30535f;
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: center;
+}
+
 .hr {
 	width: 80%;
 	border: 1px solid #17abda;
@@ -32,7 +40,7 @@
 	margin-top: 0.5em;
 	margin-block-start: 20px;
 	max-width: 1150px;
-	min-height: 615px;
+	min-height: 215px;
 	background-color: whitesmoke;
 }
 
@@ -62,7 +70,7 @@
 	border-radius: 23px;
 }
 .img {
-	max-width: 100px;
+	max-width: 90px;
 	max-height: 90px;
 	padding: 5px;
 	margin: 0.5rem;
