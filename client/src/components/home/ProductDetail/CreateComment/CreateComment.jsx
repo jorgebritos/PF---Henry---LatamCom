@@ -16,11 +16,10 @@ const CreateComment = () => {
 	const user = useSelector((state) => state.user);
 	const ratings = useSelector((state) => state.productDetail.rating);
 
-	console.log("ratingsss",ratings)
 	const userComment = comments.filter((c) => {
 		return c.users[0].id === user.id
 	})
-	
+
 	const [comment, setComment] = useState({
 		comment: '',
 		rating: 1,
@@ -35,23 +34,23 @@ const CreateComment = () => {
 		return comment;
 	}
 
-	const calculateRating= (() =>{
+	const setRating = (e) => {
+		e.preventDefault();
 		let newRating = 0;
 		for (const c of comments) {
 			newRating += c.rating;
 		}
-		console.log(newRating)
 		newRating /= comments.length;
-		console.log("newRtingasdasd",newRating)
 		if (newRating > 0) {
 			dispatch(updateRatingProduct({ rating: newRating, id: product.id }))
-			.then(dispatch(getAllComments(product.id)))
 		}
 		return newRating
-	})
+	}
+
 
 	async function sendComment(e, idUser) {
 		e.preventDefault();
+		if (!comment.comment || !comment.rating) return alert("Rellene los campos")
 		setFlag(!flag)
 		let idProduct = product.id;
 		dispatch(
@@ -62,8 +61,8 @@ const CreateComment = () => {
 			}),
 		);
 		setComment({ ...comment, comment: '' });
-		calculateRating()
-		.then(window.location.reload())
+		setRating(e);
+		window.location.reload()
 	}
 
 	async function deleteComments(e, idUser) {
@@ -73,11 +72,13 @@ const CreateComment = () => {
 		dispatch(deleteComment(idUser, idProduct))
 		dispatch(getAllComments(idProduct))
 		setComment({ ...comment, comment: '' });
-		calculateRating()
+		setRating(e);
+		window.location.reload()
 	}
 
 	async function editComment(e, idUser) {
 		e.preventDefault()
+		if (!comment.comment || !comment.rating) return alert("Rellene los campos")
 		setShow(!show)
 		let idProduct = product.id;
 		dispatch(updateComment({
@@ -85,16 +86,15 @@ const CreateComment = () => {
 			idUser,
 			idProduct,
 		}))
-		.then(dispatch(getAllComments(idProduct)))
-		// .then(setComment({ ...comment, comment: '' }))
-		.then(calculateRating())
-		
+		dispatch(getAllComments(idProduct))
+		setRating(e);
+		window.location.reload()
 	}
 
 	useEffect(() => {
 		if (product.id) {
 			dispatch(getAllComments(product.id))
-			
+
 		};// eslint-disable-next-line
 	}, [dispatch]);
 
@@ -145,7 +145,7 @@ const CreateComment = () => {
 				) : (
 					<div>
 						<p className={s.parafo}>You Already made a comment!</p>
-						
+
 					</div>
 				) : (
 					<p className={s.parafo}>Must Log in to make a comment!</p>
@@ -160,7 +160,7 @@ const CreateComment = () => {
 							return (
 								<div className={s.contenComments} key={index}>
 									<p>{c.users.length ? c.users[0].username : ''}</p>
-									
+
 									<div className={s.divrow}>
 										<h4 className={s.h3}>Rating:</h4>
 										<div className={s.divrow}>
@@ -178,7 +178,7 @@ const CreateComment = () => {
 									<div>
 										{c.users[0].id === user.id ? (
 											<div>
-												{show?(
+												{show ? (
 													<div>
 														<div className={s.rating}>
 															<label>Rating:</label>
@@ -207,33 +207,33 @@ const CreateComment = () => {
 															/>
 														</div>
 													</div>
-												):""}
-												
+												) : ""}
+
 												<div>
-													{!show?(
-														<button className={s.btn} onClick={(e) => editComment(e, user.id)}>
+													{!show ? (
+														<button className={s.btn} onClick={(e) => setShow(!show)}>
 															Edit Comment
 														</button>
-													):""}
-													
-													{show?(
+													) : ""}
+
+													{show ? (
 														<button className={s.btn} onClick={(e) => editComment(e, user.id)}>
 															Accept Comment
 														</button>
-													):""}
-													
+													) : ""}
+
 												</div>
 												<div>
 													<button className={s.btn} onClick={e => deleteComments(e, user.id)}>Delete Comment</button>
 												</div>
-												
-												
+
+
 											</div>
-																
-										):""}
+
+										) : ""}
 									</div>
 								</div>
-								
+
 							);
 						})}
 					</div>
