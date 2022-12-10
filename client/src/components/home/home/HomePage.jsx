@@ -80,7 +80,7 @@ export default function HomePage() {
 									name={p.name}
 									image={p.image}
 									categories={p.categories}
-									price={p.price}
+									price={p.price.toFixed(2)}
 									rating={p.rating}
 									stock={p.stock}
 								/>
