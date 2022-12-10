@@ -81,9 +81,6 @@ const ProductShopCart = () => {
 					...p,
 					amount: p.amount - 1,
 				};
-			} else {
-				console.log("llegaste al maximo stock posible")
-				alert("The total of items by product cannot be less than 1")
 			}
 			return p;
 		});
@@ -199,9 +196,10 @@ const ProductShopCart = () => {
 					<div className={s.contT}>
 						<div className={s.contpago}>
 							<div>
+							{console.log(total)}
 								{productsSelected.length ? (
 									<div>
-										<h2 className={s.precio}>Total: {total.toFixed(2)}</h2>
+										<h2 className={s.precio}>Total: {Number(total).toFixed(2)}</h2>
 									</div>
 								) : (
 									<div>

@@ -59,9 +59,9 @@ export const Profile = () => {
 									return(
 										<div key={p.id}>
 											<p> Purchase made at: {p.createdAt.split("T",1).join()}</p>
-											{p.products.map((producto)=>{
+											{p.products.map((producto, index)=>{
 												return(
-												<div key={p.id}>
+												<div key={index}>
 													<p>{producto.name}</p>
 													<p>Amount: {producto.amount}</p>
 													<img src={producto.image} alt="product_image"></img>
