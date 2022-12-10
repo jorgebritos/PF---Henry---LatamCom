@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../../asset/Logo.png';
 import Carito from '../../../asset/carrito.png';
 import star from '../../../asset/star.png';
@@ -7,17 +7,39 @@ import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { newSearch } from '../../../redux/actions/index';
+import { authTokenRouterLog, newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getAllUsers } from '../../../redux/actions';
+import { getAllUsers, createUser } from '../../../redux/actions';
 import { useEffect } from 'react';
 import Dropdown from '../dropdown/Dropdown';
 
 function NavBar() {
 	const dispatch = useDispatch();
 
-	const { isAuthenticated } = useAuth0();
+	const { isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
+	const allUsers = useSelector((state) => state.allUsers);
+	const [flag, setFlag] = useState(true)
+
+	const exists = () => {
+		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === user.email)[0] : {}
+		if (exist) {
+			let { email } = user
+			dispatch(authTokenRouterLog({ email, password: email, confirm: true }))
+		} else {
+			let { email, given_name, family_name, nickname } = user
+			let data = {
+				email,
+				firstname: given_name,
+				lastname: family_name,
+				username: nickname,
+				password: email
+			}
+			dispatch(createUser(data))
+			window.location.reload()
+		}
+		setFlag(!flag)
+	}
 
 	useEffect(() => {
 		dispatch(getAllUsers());
@@ -33,7 +55,7 @@ function NavBar() {
 	if (localStorage.getItem('cart')) {
 		cart = JSON.parse(localStorage.getItem('cart'));
 	}
-	 useSelector((state) => state.localstorage);
+	useSelector((state) => state.localstorage);
 
 	function search(e) {
 		dispatch(newSearch(''));
@@ -54,6 +76,7 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
+						{isAuthenticated && flag && !userNow.username ? exists() : ""}
 						{isAuthenticated || userNow.admin ? (
 							<Dropdown
 								items={[
