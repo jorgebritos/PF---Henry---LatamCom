@@ -9,16 +9,18 @@ const CreateComment = () => {
 	const { isAuthenticated } = useAuth0();
 	const dispatch = useDispatch();
 	const [flag, setFlag] = useState(true)
+	const [show, setShow] = useState(false)
 
 	const product = useSelector((state) => state.productDetail);
 	let comments = useSelector((state) => state.productComments);
 	const user = useSelector((state) => state.user);
 	const ratings = useSelector((state) => state.productDetail.rating);
 
+	console.log("ratingsss",ratings)
 	const userComment = comments.filter((c) => {
-		return c.users[0].username === user.username
+		return c.users[0].id === user.id
 	})
-
+	
 	const [comment, setComment] = useState({
 		comment: '',
 		rating: 1,
@@ -33,18 +35,20 @@ const CreateComment = () => {
 		return comment;
 	}
 
-	const calculateRating= useCallback(() =>{
+	const calculateRating= (() =>{
 		let newRating = 0;
 		for (const c of comments) {
 			newRating += c.rating;
 		}
+		console.log(newRating)
 		newRating /= comments.length;
+		console.log("newRtingasdasd",newRating)
 		if (newRating > 0) {
-			dispatch(updateRatingProduct({ rating: newRating, id: product.id }));
-			dispatch(getAllComments(product.id))
+			dispatch(updateRatingProduct({ rating: newRating, id: product.id }))
+			.then(dispatch(getAllComments(product.id)))
 		}
 		return newRating
-	},[comments, product.id, dispatch])
+	})
 
 	async function sendComment(e, idUser) {
 		e.preventDefault();
@@ -59,11 +63,12 @@ const CreateComment = () => {
 		);
 		setComment({ ...comment, comment: '' });
 		calculateRating()
+		.then(window.location.reload())
 	}
 
 	async function deleteComments(e, idUser) {
 		e.preventDefault()
-		setFlag(!flag);
+		setShow(false)
 		let idProduct = product.id;
 		dispatch(deleteComment(idUser, idProduct))
 		dispatch(getAllComments(idProduct))
@@ -73,16 +78,17 @@ const CreateComment = () => {
 
 	async function editComment(e, idUser) {
 		e.preventDefault()
-		setFlag(!flag);
+		setShow(!show)
 		let idProduct = product.id;
 		dispatch(updateComment({
 			...comment,
 			idUser,
 			idProduct,
 		}))
-		dispatch(getAllComments(idProduct))
-		setComment({ ...comment, comment: '' });
-		calculateRating()
+		.then(dispatch(getAllComments(idProduct)))
+		// .then(setComment({ ...comment, comment: '' }))
+		.then(calculateRating())
+		
 	}
 
 	useEffect(() => {
@@ -91,12 +97,6 @@ const CreateComment = () => {
 			
 		};// eslint-disable-next-line
 	}, [dispatch]);
-
-	
-	//	Poder visualizar crear un comentario, y una vez hecho dar a conocer que se creó y actualizar la página
-	// Se debe de mostrar el comentario y los botones de editar o eliminar en la posicion en donde se encuentre
-	// dicho comentario. Cuando se edite se debería traer el cuadro del comentario con el rating y si se acepta el 
-	// cambio ahí eliminar el anterior y reemplazarlo por el actual (o una ruta put de ultima)
 
 
 	return (
@@ -145,38 +145,7 @@ const CreateComment = () => {
 				) : (
 					<div>
 						<p className={s.parafo}>You Already made a comment!</p>
-						<div style={{ visibility: !flag }}>
-							<div className={s.rating}>
-								<label>Rating:</label>
-								<br />
-								<select
-									className={s.select}
-									name='rating'
-									onChange={(e) => handleComment(e)}>
-									<option value='1'>1</option>
-									<option value='2'>2</option>
-									<option value='3'>3</option>
-									<option value='4'>4</option>
-									<option value='5'>5</option>
-								</select>
-								<br />
-							</div>
-							<div className={s.comment}>
-								<textarea
-									className={s.textarea}
-									cols={50}
-									name='comment'
-									rows={10}
-									placeholder={'Please, write a comment'}
-									value={comment.comment}
-									onChange={(e) => handleComment(e)}
-								/>
-								<button className={s.btn} onClick={(e) => editComment(e, user.id)}>
-									Edit Comment
-								</button>
-							</div>
-						</div>
-						<button className={s.btn} onClick={e => deleteComments(e, user.id)}>Delete Comment</button>
+						
 					</div>
 				) : (
 					<p className={s.parafo}>Must Log in to make a comment!</p>
@@ -191,6 +160,7 @@ const CreateComment = () => {
 							return (
 								<div className={s.contenComments} key={index}>
 									<p>{c.users.length ? c.users[0].username : ''}</p>
+									
 									<div className={s.divrow}>
 										<h4 className={s.h3}>Rating:</h4>
 										<div className={s.divrow}>
@@ -205,7 +175,65 @@ const CreateComment = () => {
 									</div>
 
 									<p className={s.parafo}>{c.comment}</p>
+									<div>
+										{c.users[0].id === user.id ? (
+											<div>
+												{show?(
+													<div>
+														<div className={s.rating}>
+															<label>Rating:</label>
+															<br />
+															<select
+																className={s.select}
+																name='rating'
+																onChange={(e) => handleComment(e)}>
+																<option value='1'>1</option>
+																<option value='2'>2</option>
+																<option value='3'>3</option>
+																<option value='4'>4</option>
+																<option value='5'>5</option>
+															</select>
+															<br />
+														</div>
+														<div className={s.comment}>
+															<textarea
+																className={s.textarea}
+																cols={50}
+																name='comment'
+																rows={10}
+																placeholder={'Please, write a comment'}
+																value={comment.comment}
+																onChange={(e) => handleComment(e)}
+															/>
+														</div>
+													</div>
+												):""}
+												
+												<div>
+													{!show?(
+														<button className={s.btn} onClick={(e) => editComment(e, user.id)}>
+															Edit Comment
+														</button>
+													):""}
+													
+													{show?(
+														<button className={s.btn} onClick={(e) => editComment(e, user.id)}>
+															Accept Comment
+														</button>
+													):""}
+													
+												</div>
+												<div>
+													<button className={s.btn} onClick={e => deleteComments(e, user.id)}>Delete Comment</button>
+												</div>
+												
+												
+											</div>
+																
+										):""}
+									</div>
 								</div>
+								
 							);
 						})}
 					</div>
