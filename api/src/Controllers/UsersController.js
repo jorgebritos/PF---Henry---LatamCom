@@ -99,7 +99,7 @@ const putUser = async (req, res) => {
 }
 
 const postUser = async (req, res) => {
-	const {
+	let {
 		firstname,
 		lastname,
 		email,
@@ -108,6 +108,8 @@ const postUser = async (req, res) => {
 		password,
 		admin,
 	} = req.body;
+
+	console.log(req.body);
 
 	try {
 		if (!firstname || !lastname || !email || !profile_image || !username || !password) return res.status(404).send('Missing parameters');
@@ -119,7 +121,8 @@ const postUser = async (req, res) => {
 				email,
 				profile_image,
 				username,
-				password
+				password,
+				admin: false
 			});
 			return res.status(200).send(newUser);
 		} else {

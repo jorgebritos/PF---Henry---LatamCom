@@ -4,11 +4,11 @@ const usersController = require('./../Controllers/UsersController');
 
 router.get('/', usersController.getUser);
 
+router.post('/', usersController.postUser);
+
 router.get('/:id', usersController.getUserByID);
 
 router.put('/:id', usersController.putUser);
-
-router.post('/', usersController.postUser);
 
 router.delete('/:id', usersController.deleteUser)
 
