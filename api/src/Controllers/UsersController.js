@@ -121,7 +121,7 @@ const postUser = async (req, res) => {
 				username,
 				password
 			});
-			return res.status(200).send(newUser);
+			return res.send(newUser);
 		} else {
 			const newAdmin = await User.create({
 				firstname,
@@ -132,7 +132,7 @@ const postUser = async (req, res) => {
 				password,
 				admin
 			});
-			return res.status(200).send(newAdmin);
+			return res.send(newAdmin);
 		}
 
 	} catch (error) {
