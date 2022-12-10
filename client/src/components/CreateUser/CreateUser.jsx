@@ -68,7 +68,7 @@ const CreateUser = () => {
 		firstname: '',
 		lastname: '',
 		email: '',
-		profile_image: '',
+		profile_image: 'No img',
 		username: "",
 		password: '',
 	});
@@ -115,7 +115,8 @@ const CreateUser = () => {
 				},
 			);
 			const file = await res.json();
-			setInput({ ...input, image: file.secure_url });
+			console.log(file);
+			setInput({ ...input, profile_image: file.secure_url });
 			setLoading(false);	
 		}
 
@@ -358,6 +359,7 @@ const CreateUser = () => {
 	// Post Product /////////////////////////////
 	const submitData = async (event) => {
 		event.preventDefault();
+		console.log(input);
 		try {
 
 			let checkErrors=[]
@@ -366,9 +368,9 @@ const CreateUser = () => {
 					checkErrors.push(key)
 				}
 			}
-
+console.log("check: ", checkErrors.length);
 			if (Object.keys(errors).length == 6 && checkErrors.length == 6) {
-				await dispatch(createUser(input)).then(history.push("/createUser/usersended"))
+				await dispatch(createUser(input)).then(history.push("/home"))
 				alert("Usuario creado")
 			}else if(Object.keys(errors).length < 6){
 				console.log(checkErrors);
