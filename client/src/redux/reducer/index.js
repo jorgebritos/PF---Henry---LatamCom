@@ -52,6 +52,7 @@ export default function rootReducer(state = initialState, action) {
     let filBrands = state.filBrands;
     let result = [];
     let ratingResults = []
+    let allUsers = state.allUsers;
 
     switch (action.type) {
         case SET_USER_DATA:
@@ -133,7 +134,10 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_PRODUCT:
             return action.payload
         case CREATE_USER:
-            return action.payload
+            return {
+                ...state,
+                allUsers: [...allUsers, action.payload]
+            }
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:

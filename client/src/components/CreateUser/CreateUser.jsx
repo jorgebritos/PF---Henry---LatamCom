@@ -118,7 +118,7 @@ const CreateUser = () => {
 				},
 			);
 			const file = await res.json();
-			setInput({ ...input, image: file.secure_url });
+			setInput({ ...input, profile_image: file.secure_url });
 			setLoading(false);	
 		}
 

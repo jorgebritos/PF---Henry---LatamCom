@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { updateUser } from '../../../../../redux/actions/index';
-import s from './UpdateProfile.module.css';
+// import s from './UpdateProfile.module.css';
 import Loading from '../../../../loading/Loading';
 
 const Validate = (input) => {

@@ -1,16 +1,32 @@
 import React from 'react'
 import ChatBot from 'react-simple-chatbot'
-//import { ThemeProvider } from 'styled-components' //La documentación recomienda usar style components
+//import s from './ChatBot.module.css'
+import { ThemeProvider } from 'styled-components' //La documentación recomienda usar style components
 
 
 //const theme = {} //tambien recomienda usar un objeto para añadir los estilos
+const theme = {
+  background: '#f5f8fb',
+  fontFamily: 'Helvetica Neue',
+  headerBgColor: '#17abda',
+  headerFontColor: '#fff',
+  headerFontSize: '15px',
+  botBubbleColor: '#17abda',
+  botFontColor: '#fff',
+  userBubbleColor: '#fff',
+  userFontColor: '#4a4a4a',
+};
 
 export default function MyChatBot() {
 
       return (
         <div>
-          {/*/<ThemeProvider theme={theme}>*/}
+          <ThemeProvider theme={theme}>
               <ChatBot 
+              //botAvatar='https://cdn-icons-png.flaticon.com/512/4712/4712035.png' //para cambiar el avatar del chat
+              floatingIcon='https://cdn-icons-png.flaticon.com/512/4711/4711987.png'
+                floating='true'
+                width='300px'
                   steps={[
                     {
                         id: '0',
@@ -56,11 +72,11 @@ export default function MyChatBot() {
                         id: "1a",
                         message: "¿Algo más?",
                         trigger: "2"
-                      }
-
+                      },
+                     
                   ]}
-              />
-          {/*</ThemeProvider>*/}
+                  />
+          </ThemeProvider>
         </div>
       )
   }
