@@ -78,20 +78,24 @@ export default function PurchasesAdmin() {
 							? allPurchases.map((i) => {
 									return (
 										<div key={i.id}>
-											<p>User: {i.users[0].username}</p>
-											<h3>ITEMS:</h3>
-											<ul>
+											{/* <p>User: {i.users[0].username}</p> */}
+											<h3 className={s.h2}>ITEMS:</h3>
+											<div className={s.cads}>
 												{i.products.map((p) => {
 													return (
-														<li key={p.id}>
-															<img src={p.image} alt={`${p.name}_image`}></img>
-															<h4>{p.name}</h4>
-															<h5>Unit Price: {p.price}</h5>
-															<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
-														</li>
+														<div className={s.producCard} key={p.id}>
+															<div className={s.cimg}>
+																<img src={p.image} alt={`${p.name}_image`} />
+															</div>
+															<div>
+																<h4>{p.name}</h4>
+																<h5>Unit Price: {p.price}</h5>
+																<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
+															</div>
+														</div>
 													);
 												})}
-											</ul>
+											</div>
 											<h3>Total Price: ${i.totalPrice} USD</h3>
 										</div>
 									);

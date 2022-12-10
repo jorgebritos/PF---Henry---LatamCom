@@ -3,10 +3,11 @@ import { useEffect } from 'react';
 import s from './SuccessedPayment.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPurchase, getPurchaseDetail } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
 import Counter from './Counter';
 
 const purchaseStruct = (purchase) => {
-	let id = localStorage.getItem("idUser")
+	let id = localStorage.getItem('idUser');
 	let pStruct = {
 		products: purchase.data.purchase_units.map((p) => {
 			return p.reference_id;
@@ -19,6 +20,7 @@ const purchaseStruct = (purchase) => {
 };
 
 const SuccessedPayment = (req) => {
+	const history = useHistory();
 	const search = req.location.search;
 	const dispatch = useDispatch();
 	const purchased = useSelector((state) => state.purchase);
@@ -46,14 +48,15 @@ const SuccessedPayment = (req) => {
 
 	const handleClick = (e) => {
 		e.preventDefault();
-		let products = JSON.parse(localStorage.getItem("cart"))
-		let amounts = []
+		let products = JSON.parse(localStorage.getItem('cart'));
+		let amounts = [];
 		for (const p of products) {
-			amounts.push(p.amount)
+			amounts.push(p.amount);
 		}
 		dispatch(createPurchase({ purchase: purchaseStruct(purchased), amounts }));
 		localStorage.removeItem('cart');
-		localStorage.removeItem("idUser")
+		localStorage.removeItem('idUser');
+		history.push('/home');
 	};
 
 	return (
@@ -102,7 +105,12 @@ const SuccessedPayment = (req) => {
 			</div>
 
 			<div>
-				<a target='_blank' href='https://icons8.com/icon/21068/comprobado' rel='noreferrer'>{''}</a>
+				<a
+					target='_blank'
+					href='https://icons8.com/icon/21068/comprobado'
+					rel='noreferrer'>
+					{''}
+				</a>
 			</div>
 		</div>
 	);
