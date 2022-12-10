@@ -46,7 +46,7 @@ export default function PurchasesAdmin() {
 							outOfStock.map((p) => {
 								return (
 									<Link className={s.link} to={'/update'} key={p.id}>
-										<div className={s.producCard}>
+										<div className={s.productCard}>
 											<div className={s.cimg}>
 												<img
 													className={s.img}
@@ -80,21 +80,33 @@ export default function PurchasesAdmin() {
 							? allPurchases.map((i) => {
 									return (
 										<div key={i.id}>
-											<p>User: {i.users[0].username}</p>
+											{/* <p>User: {i.users[0].username}</p> */}
 											<h3>ITEMS:</h3>
-											<ul>
+											<div className={s.cads}>
 												{i.products.map((p) => {
 													return (
-														<li key={p.id}>
-															<img src={p.image} alt={`${p.name}_image`}></img>
-															<h4>{p.name}</h4>
-															<h5>Unit Price: {p.price}</h5>
-															<h6>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
-														</li>
+														<div className={s.productCard2} key={p.id}>
+															<div className={s.cimg}>
+																<img
+																	className={s.img}
+																	src={p.image}
+																	alt={`${p.name}_image`}></img>
+															</div>
+															<div className={s.contenE}>
+																<h4 className={s.name1}>{p.name}</h4>
+																<h5 className={s.text}>
+																	Unit Price: {p.price}
+																</h5>
+																<h6
+																	className={
+																		s.text
+																	}>{`Amount of Items Purchased: ${p.amount} item(s)`}</h6>
+															</div>
+														</div>
 													);
 												})}
-											</ul>
-											<h3>Total Price: ${i.totalPrice} USD</h3>
+											</div>
+											<h3 className={s.h3}>Total Price: ${i.totalPrice} USD</h3>
 										</div>
 									);
 							  })
