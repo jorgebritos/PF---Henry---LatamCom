@@ -25,7 +25,7 @@ export const LoginForm = ({ location }) => {
 	// }, [code]);
 	
 
-	const { isLoading, loginWithRedirect } = useAuth0();
+	const { isLoading, loginWithRedirect, user } = useAuth0();
 	const history = useHistory();
 	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
@@ -35,6 +35,7 @@ export const LoginForm = ({ location }) => {
 		password:""
 	})
 	useEffect(() => {
+		localStorage.removeItem("GoogleUser");
 		localStorage.removeItem("loggedUserJWT");
 		localStorage.removeItem("loggedUser");
 		localStorage.removeItem("userInfo");

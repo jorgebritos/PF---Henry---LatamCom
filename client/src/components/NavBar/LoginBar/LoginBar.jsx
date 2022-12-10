@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import usericon from '../../../asset/usericon.png';
-import {authTokenRouterLog, setUserData } from '../../../redux/actions';
+import {authTokenRouterLog, setUserData, } from '../../../redux/actions';
 import {
 	dropdown_wrapper,
 	dropdown_activator,
@@ -22,9 +22,11 @@ function LoginRegister({ items = [] }) {
 	let { logout, isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
 	let functionalUser;
-	const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+	// const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 	const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	
+
 	// const [usuario, setUsuario]=useState([]);
 	
 
@@ -36,6 +38,7 @@ function LoginRegister({ items = [] }) {
 		history.push('/profile');
 	};
 	
+
 	// useEffect(()=>{
 
 	// 	console.log(userInfo.username)
@@ -52,9 +55,7 @@ function LoginRegister({ items = [] }) {
 		//   { redirect: "manual" }
 		// );
 		// window.location.replace(response.url);
-		localStorage.removeItem("loggedUserJWT");
-		localStorage.removeItem("loggedUser");
-		localStorage.removeItem("userInfo");
+		
 		// console.log('entre');
 		Swal.fire({
 			title: 'Sure about loging out?',
@@ -66,6 +67,10 @@ function LoginRegister({ items = [] }) {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				Swal.fire('Log out succesfully!', '', 'success');
+				localStorage.removeItem("GoogleUser");
+				localStorage.removeItem("loggedUserJWT");
+				localStorage.removeItem("loggedUser");
+				localStorage.removeItem("userInfo");
 				logout();
 				history.push('/home');
 			} else {
@@ -111,8 +116,19 @@ function LoginRegister({ items = [] }) {
 	}, [isOpen]);
 	
 	useEffect(() => {
-		const autenticarUsuario = async () => {
-		
+		const autenticarUsuario = () => {
+			if(isAuthenticated){
+				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+			}
+			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+			if(googleUser){
+			dispatch(setUserData({
+				username:googleUser.name,
+				picture: googleUser.picture,
+				name: googleUser.given_name,
+				email:googleUser.email,
+			}))}
+			
 		//   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
 		//   if (!loggedUser) {
 		// 	history.push("/loginForm");
