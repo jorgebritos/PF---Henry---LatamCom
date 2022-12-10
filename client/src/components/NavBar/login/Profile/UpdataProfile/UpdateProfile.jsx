@@ -153,15 +153,17 @@ const UpdateProfile = (props) => {
 				<Loading />
 			</div>
 		);
-	} else {
+	} else
 		return (
-			<div>
-				<h1>Update User</h1>
-				<div>
-					<form onSubmit={submitData}>
+			<div className={s.conten}>
+				<h1 className={s.h1}>Update User</h1>
+
+				<div className={s.cont_form}>
+					<form className={s.form} onSubmit={submitData}>
 						<div>
-							<label>Firstname</label>
+							<label className={s.label}>Firstname</label>
 							<input
+								className={s.input}
 								name='firstname'
 								value={input.firstname}
 								autoComplete='off'
@@ -169,10 +171,11 @@ const UpdateProfile = (props) => {
 							/>
 							{errors.firstname && <p>{errors.firstname}</p>}
 						</div>
-
+						<br />
 						<div>
-							<label>Lastname</label>
+							<label className={s.label}>Lastname</label>
 							<input
+								className={s.input}
 								name='lastname'
 								value={input.lastname}
 								autoComplete='off'
@@ -180,10 +183,12 @@ const UpdateProfile = (props) => {
 							/>
 							{errors.lastname && <p>{errors.lastname}</p>}
 						</div>
+						<br />
 
 						<div>
-							<label>Password</label>
+							<label className={s.label}>Password</label>
 							<input
+								className={s.input}
 								name='password'
 								value={input.password}
 								autoComplete='off'
@@ -191,10 +196,11 @@ const UpdateProfile = (props) => {
 							/>
 							{errors.password && <p>{errors.password}</p>}
 						</div>
-
+						<br />
 						<div>
-							<label>Confirm password</label>
+							<label className={s.label}>Confirm password</label>
 							<input
+								className={s.input}
 								name='confirm_password'
 								value={input.confirm_password}
 								autoComplete='off'
@@ -202,10 +208,11 @@ const UpdateProfile = (props) => {
 							/>
 							{errors.confirm_password && <p>{errors.confirm_password}</p>}
 						</div>
-
+						<br />
 						<div>
-							<label>Email</label>
+							<label className={s.label}>Email</label>
 							<input
+								className={s.input}
 								name='email'
 								value={input.email}
 								autoComplete='off'
@@ -213,26 +220,30 @@ const UpdateProfile = (props) => {
 							/>
 							{errors.email && <p>{errors.email}</p>}
 						</div>
-
-						{userNow.picture ? (
-							<div>
-								<p>Actual image</p>
-								<img
-									src={userNow.picture}
-									style={{ width: '300px' }}
-									alt='img'
-								/>
-							</div>
-						) : (
-							<div>
-								<p>No current image</p>
-							</div>
-						)}
-
+						<br />
 						<div>
-							<label>Profile Image</label>
+							{userNow.picture ? (
+								<div>
+									<p>Actual image</p>
+									<img
+										src={userNow.picture}
+										style={{ width: '300px' }}
+										alt='img'
+									/>
+								</div>
+							) : (
+								<div>
+									<p>No current image</p>
+								</div>
+							)}
+						</div>
+
+						<br />
+						<div className={s.div}>
+							<label className={s.label}>Profile Image</label>
 							<p>(this will replace the current image)</p>
 							<input
+								className={s.input}
 								type='file'
 								name='file'
 								autoComplete='off'
@@ -252,18 +263,21 @@ const UpdateProfile = (props) => {
 									alt=''></img>
 							)}
 						</div>
-
+						<br />
 						<div>
 							{input.profile_image ? (
-								<button onClick={deleteNewImage}>Delete new image</button>
+								<button className={s.btn} onClick={deleteNewImage}>
+									Delete new image
+								</button>
 							) : (
 								''
 							)}
 						</div>
-
+						<br />
 						<div>
-							<label>Username</label>
+							<label className={s.label}>Username</label>
 							<input
+								className={s.input}
 								name='username'
 								value={input.username}
 								autoComplete='off'
@@ -271,9 +285,9 @@ const UpdateProfile = (props) => {
 							/>
 							{errors.username && <p>{errors.username}</p>}
 						</div>
-
+						<br />
 						<div>
-							<button type='submit' id='sendButtom' disabled>
+							<button className={s.btn} type='submit' id='sendButtom' disabled>
 								SEND
 							</button>
 						</div>
@@ -281,6 +295,6 @@ const UpdateProfile = (props) => {
 				</div>
 			</div>
 		);
-	}
 };
+
 export default UpdateProfile;
