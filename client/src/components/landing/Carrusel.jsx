@@ -38,7 +38,7 @@ export default function Carrusel({products}){
         dispatch(filterByRating(products))
 		country.getCurrentPosition(coordenadas, error)
     },[products])
-    console.log(geoloc.slice(-1)[0].toLowerCase());
+    //console.log(geoloc.slice(-1)[0].toLowerCase());
     return(
         <div className={s.carrusel}>
             <Carousel showThumbs={false} showArrows={true} showStatus={false} showIndicators={false} infiniteLoop={true} useKeyboardArrows={true} autoPlay={true} stopOnHover={true} swipeable={true} dynamicHeight={true} emulateTouch={true} autoFocus={false}>
