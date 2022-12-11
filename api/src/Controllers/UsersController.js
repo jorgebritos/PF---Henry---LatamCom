@@ -110,7 +110,7 @@ const postUser = async (req, res) => {
 	} = req.body;
 
 	try {
-		if (!firstname || !lastname || !email || !profile_image || !username || !password) return res.status(404).send('Missing parameters');
+		if (!firstname || !lastname || !email || !username || !password) return res.status(404).send('Missing parameters');
 
 		if (!admin) {
 			const newUser = await User.create({
