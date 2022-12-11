@@ -11,14 +11,17 @@ import {
 import CardProduct from '../Card/CardProduct';
 import Filtros from '../filtros/Filtros.jsx';
 import Paginate from '../Paginate/Paginate';
-//import MyChatBot from '../ChatBot/ChatBot.jsx';
 import s from './HomePage.module.css';
-// import Carousel from '../Carousel/Carousel.jsx';
+import Carrusel from '../../landing/Carrusel.jsx';
 // import trabajos1 from './trabajos1.jpg';
 // import trabajos2 from './trabajos2.jpg';
 // import trabajos3 from './trabajos3.jpeg';
 
 // const images = [trabajos1, trabajos2, trabajos3];
+
+
+
+
 
 export default function HomePage() {
 
@@ -53,11 +56,10 @@ export default function HomePage() {
 		dispatch(getAllProducts());
 		dispatch(searchByName(search1, "SEARCH_BY_NAME2"))
 	}, [search1, dispatch, search]);
-	//console.log(search.split('=')[1]);
 	return (
 		<div>
 			<div className={s.cont}>
-			{/* <Carousel images={images} /> */}
+			<Carrusel products={totalProducts} />
 				<div className={s.filter}>
 					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} />
 				</div>
