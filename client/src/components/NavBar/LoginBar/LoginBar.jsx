@@ -27,7 +27,6 @@ function LoginRegister({ items = [] }) {
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	//const [usuario, setUsuario]=useState([]);
 
-
 	// console.log(loggedUserJWT)
 	// console.log(loggedUser)
 
@@ -52,9 +51,9 @@ function LoginRegister({ items = [] }) {
 		//   { redirect: "manual" }
 		// );
 		// window.location.replace(response.url);
-		localStorage.removeItem("loggedUserJWT");
-		localStorage.removeItem("loggedUser");
-		localStorage.removeItem("userInfo");
+		localStorage.removeItem('loggedUserJWT');
+		localStorage.removeItem('loggedUser');
+		localStorage.removeItem('userInfo');
 		// console.log('entre');
 		Swal.fire({
 			title: 'Sure about loging out?',
@@ -112,7 +111,6 @@ function LoginRegister({ items = [] }) {
 
 	useEffect(() => {
 		const autenticarUsuario = async () => {
-
 			//   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
 			//   if (!loggedUser) {
 			// 	history.push("/loginForm");
@@ -125,23 +123,25 @@ function LoginRegister({ items = [] }) {
 			// 	return;
 			//   }
 
-			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-			console.log("userInfo", userInfo, loggedUser)
-			if (loggedUser&&userInfo) {
-				dispatch(setUserData({
-					id: userInfo.id,
-					username: userInfo.username,
-					profile_image: userInfo.picture,
-					name: userInfo.name,
-					email: userInfo.email,
-					admin: userInfo.admin,
-					jwt: loggedUserJWT
-				}))
+			const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+			console.log('userInfo', userInfo, loggedUser);
+			if (loggedUser && userInfo) {
+				dispatch(
+					setUserData({
+						id: userInfo.id,
+						username: userInfo.username,
+						profile_image: userInfo.picture,
+						name: userInfo.name,
+						email: userInfo.email,
+						admin: userInfo.admin,
+						jwt: loggedUserJWT,
+					}),
+				);
 			}
 		};
 
-		autenticarUsuario();// eslint-disable-next-line 
-	  }, [])
+		autenticarUsuario(); // eslint-disable-next-line
+	}, []);
 	//   console.log(user)
 	// let JWT;
 	// 	if (localStorage.getItem('loggedUserJWT')) {
@@ -150,7 +150,7 @@ function LoginRegister({ items = [] }) {
 	// 	let userR;
 	// 	if (localStorage.getItem('loggedUser')) {
 	// 		userR = JSON.parse(localStorage.getItem('loggedUser'));
-	// 	}		
+	// 	}
 	// 	console.log("soy userR:" + userR)
 	// // useEffect(()=>{
 	// // },[])
@@ -159,13 +159,15 @@ function LoginRegister({ items = [] }) {
 	// }
 	// console.log(userR)
 
-
-
 	return (
 		<>
 			{/* { console.log("USERNOW:: ", userNow) } */}
 			{/* {loggedUser? userNow.email= loggedUser.email : null } */}
-			{Object.keys(userNow).length > 0 ? functionalUser = userNow.username : user ? functionalUser = user.name : ""}
+			{Object.keys(userNow).length > 0
+				? (functionalUser = userNow.username)
+				: user
+				? (functionalUser = user.name)
+				: ''}
 			{Object.keys(userNow).length > 0 || isAuthenticated ? (
 				<div className={dropdown_wrapper} onKeyUp={keyHandler}>
 					<button
@@ -220,7 +222,7 @@ function LoginRegister({ items = [] }) {
 			) : (
 				<div className={componet_login}>
 					<img src={usericon} alt='' height={'25px'} />
-					<h6 onClick={() => history.push("/LoginForm")} className={h4}>
+					<h6 onClick={() => history.push('/LoginForm')} className={h4}>
 						Login
 					</h6>
 				</div>

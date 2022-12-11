@@ -9,17 +9,17 @@ import { useHistory } from 'react-router-dom';
 
 export const Profile = () => {
 	const { user, isAuthenticated, isLoading } = useAuth0();
-	const history = useHistory()
+	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const userNow = useSelector((state) => state.user);
-	const userPurchases = useSelector((state) => state.userPurchases)
+	const userPurchases = useSelector((state) => state.userPurchases);
 
 	useEffect(() => {
 		if (userNow.id) {
-			dispatch(getUserPurchases(userNow.id))
+			dispatch(getUserPurchases(userNow.id));
 		}
-	}, [dispatch, userNow.id])
+	}, [dispatch, userNow.id]);
 
 	if (isLoading) {
 		return (
@@ -29,61 +29,91 @@ export const Profile = () => {
 		);
 	}
 
-
 	// Object.keys(userNow).length > 0 && !name ? setItems(userNow) : isAuthenticated ? setItems(user) : setItems(voidItem)
 
 	return (
 		<>
-			{
-				Object.keys(userNow).length > 0 || isAuthenticated ? (
-					<div className={s.conten}>
-						<div className={s.barPerfil}>
-							<div className={s.imgPerfil}>
-								{user ? (
-									<img src={user.picture} alt={user.name ? user.name : userNow.name} className={s.img} />
-								) : userNow.picture ? (
-									<img src={userNow.picture} alt={userNow.name} className={s.img} />
-								) :
-									<img src={usericon} alt={'user icon'} className={s.img} />
-								}
-							</div>
-							<div className={s.infoPerfil}>
-								<h2>{user ? user.name : userNow.name}</h2>
-								<p>Email: {user ? user.email : userNow.email}</p>
-							</div>
+			{Object.keys(userNow).length > 0 || isAuthenticated ? (
+				<div className={s.conten}>
+					<div className={s.barPerfil}>
+						<div className={s.imgPerfil}>
+							{user ? (
+								<img
+									src={user.picture}
+									alt={user.name ? user.name : userNow.name}
+									className={s.img}
+								/>
+							) : userNow.picture ? (
+								<img
+									src={userNow.picture}
+									alt={userNow.name}
+									className={s.img}
+								/>
+							) : (
+								<img src={usericon} alt={'user icon'} className={s.img} />
+							)}
 						</div>
-						<div className={s.conCompra}>
-							<h2>Consola de Compras</h2>
-							{
-								userPurchases.length > 0? userPurchases.map((p) => {
-									return(
-										<div key={p.id}>
-											<p> Purchase made at: {p.createdAt.split("T",1).join()}</p>
-											{p.products.map((producto, index)=>{
-												return(
-												<div key={index}>
-													<p>{producto.name}</p>
-													<p>Amount: {producto.amount}</p>
-													<img src={producto.image} alt="product_image"></img>
-													<p>Price: {producto.price}</p>
-												</div>
-												
-												)
-											})}
-											<p>Total Price: {p.totalPrice}</p>
-										</div>
-									)
-									
-								}) : ""
-							}
-							<div></div>
+						<div className={s.infoPerfil}>
+							<h2>{user ? user.name : userNow.name}</h2>
+							<p>Email: {user ? user.email : userNow.email}</p>
 						</div>
-						<div>
-							<button onClick={()=>history.push(`/profile/changedata`)}>Edit information</button>
-						</div>
-						
 					</div>
-				) : (<h1>Inicie Sesión</h1>)}
+					<div className={s.conCompra}>
+						<h2>Consola de Compras</h2>
+						<div className={s.contG}>
+							{userPurchases.length > 0
+								? userPurchases.map((p) => {
+										return (
+											<div className={s.contG} key={p.id}>
+												<div>
+													<p>
+														Purchase made at: {p.createdAt.split('T', 1).join()}
+													</p>
+												</div>
+
+												<div className={s.contItem}>
+													{p.products.map((producto, index) => {
+														return (
+															<div className={s.producCard} key={index}>
+																<dir className={s.cimg}>
+																	<img
+																		className={s.img2}
+																		src={producto.image}
+																		alt='product_image'
+																	/>
+																</dir>
+																<div>
+																	<p>{producto.name}</p>
+																	<p>Amount: {producto.amount}</p>
+																</div>
+
+																<div>
+																	<p>Price: {producto.price}</p>
+																</div>
+															</div>
+														);
+													})}
+												</div>
+												<div>
+													<p>Total Price: {p.totalPrice}</p>
+												</div>
+											</div>
+										);
+								  })
+								: ''}
+						</div>
+					</div>
+					<div>
+						<button
+							className={s.btn}
+							onClick={() => history.push(`/profile/changedata`)}>
+							Edit information
+						</button>
+					</div>
+				</div>
+			) : (
+				<h1>Inicie Sesión</h1>
+			)}
 		</>
 	);
 };
