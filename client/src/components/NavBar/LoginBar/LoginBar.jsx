@@ -129,18 +129,6 @@ function LoginRegister({ items = [] }) {
 				email:googleUser.email,
 			}))}
 			
-		//   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-		//   if (!loggedUser) {
-		// 	history.push("/loginForm");
-		// 	return;
-		//   }
-
-		//   const loggedUserJWT = JSON.parse(localStorage.getItem("loggedUserJWT"));
-		//   if (!loggedUserJWT) {
-		// 	history.push("/loginForm");
-		// 	return;
-		//   }
-
 		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 		  console.log("userInfo", userInfo)
 		  if(loggedUser) {

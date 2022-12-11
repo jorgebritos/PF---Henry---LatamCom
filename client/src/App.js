@@ -21,6 +21,7 @@ import CancelPayment from './components/BuyProducts/CancelPayment';
 import UpdateProfile from './components/NavBar/login/Profile/UpdateProfile';
 import Success from './components/NavBar/login/Profile/Success';
 import PurchasesAdmin from './components/dashboard/PurchasesAdmin';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 	let location = useLocation();
@@ -35,22 +36,22 @@ function App() {
 			<Route path='/SearchResults' exact component={HomePage} />
 			<Route path='/product/:id' component={Product} />
 			<Route path='/shoppingcart' component={ProductShopCart} />
-			<Route path='/create/product' component={CreateProduct} />
-			<Route path='/create/productsended' component={ProductSended} />
+			<PrivateRoute path='/create/product' component={CreateProduct} />
+			<PrivateRoute path='/create/productsended' component={ProductSended} />
 			<Route path='/CreateUser' component={CreateUser} />
 			<Route path='/createUser/usersended' component={UserSended} />
-			<Route exact path='/profile' component={Profile} />
+			<PrivateRoute exact path='/profile' component={Profile} />
 			<Route path='/LoginForm' component={LoginForm} />
-			<Route exact path='/contact' component={ContactUs} />
+			<PrivateRoute exact path='/contact' component={ContactUs} />
 			<Route path='/contact/messagesended' component={messageSended} />
-			<Route path="/buyproducts" component={Buy} />
-			<Route path="/SuccessPayment" component={SuccessedPayment} />
+			<PrivateRoute path="/buyproducts" component={Buy} />
+			<PrivateRoute path="/SuccessPayment" component={SuccessedPayment} />
 			<Route path="/favorites" component={ShowFavorites} />
 			<Route path='/update' component={UpdateProduct} />
-			<Route path='/cancelpayment' component={CancelPayment} />
-			<Route exact path="/profile/changedata" component={UpdateProfile} />
-			<Route path="/profile/success" component={Success} />
-			<Route path="/dashboard" component={PurchasesAdmin} />
+			<PrivateRoute path='/cancelpayment' component={CancelPayment} />
+			<PrivateRoute exact path="/profile/changedata" component={UpdateProfile} />
+			<PrivateRoute path="/profile/success" component={Success} />
+			<PrivateRoute path="/dashboard" component={PurchasesAdmin} />
 
 			{location.pathname !== '/' && <FooterBar />}
 		</div>
