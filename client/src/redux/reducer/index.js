@@ -1,5 +1,5 @@
 import {
-    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
+    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL, GET_GEOPOSITION,
     FILTER_BY_CATEGORY, SEARCH_BY_NAME, SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, FILTER_BY_RATING, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
@@ -37,6 +37,7 @@ const initialState = {
     createdPurchase: {},
     login: [],
     userPurchases: [],
+    geoposition:[],
     //LOCALSTORAGE
     localstorage: [],
 
@@ -125,6 +126,11 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 purchase: action.payload,
+            }
+        case GET_GEOPOSITION:
+            return {
+                ...state,
+                geoposition: action.payload,
             }
         case ADD_FAVORITE:
             return {

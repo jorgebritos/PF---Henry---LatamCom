@@ -126,7 +126,7 @@ function LoginRegister({ items = [] }) {
 			//   }
 
 			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-			console.log("userInfo", userInfo, loggedUser)
+			//console.log("userInfo", userInfo, loggedUser)
 			if (loggedUser&&userInfo) {
 				dispatch(setUserData({
 					id: userInfo.id,

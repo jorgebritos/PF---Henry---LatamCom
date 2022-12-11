@@ -14,6 +14,7 @@ export const GET_FAVORITES = "GET_FAVORITES"
 export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 export const GET_ALL_PURCHASES = "GET_ALL_PURCHASES"
 export const GET_USER_PURCHASES = "GET_USER_PURCHASES"
+export const GET_GEOPOSITION = "GET_GEOPOSITION"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE"
@@ -203,6 +204,18 @@ export function getPurchaseDetail(payload) {
         dispatch({
             type: GET_PURCHASE_DETAIL,
             payload: productDetail
+        })
+    }
+}
+
+export function getGeoPosition(payload) {
+    return async function (dispatch) {
+        const { latitude, longitude } = payload.coords;
+        const position = await axios(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=1b59c5aed58644cc928b9590904634f9`)
+        //console.log(position.data.results[0].formatted.split(", "));
+        dispatch({
+            type: GET_GEOPOSITION,
+            payload: position.data.results[0].formatted.split(", ")
         })
     }
 }
