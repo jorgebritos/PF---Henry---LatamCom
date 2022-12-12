@@ -40,7 +40,7 @@ export default function Carrusel({ products }) {
 	useEffect(() => {
 		dispatch(filterByRating(products));
 		country.getCurrentPosition(coordenadas, error);
-	}, [products]);
+	}, [products, country, coordenadas, dispatch]);
 	//console.log(geoloc.slice(-1)[0].toLowerCase());
 	return (
 		<div className={s.carrusel}>
