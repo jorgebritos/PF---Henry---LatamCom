@@ -1,0 +1,30 @@
+.carrusel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	align-items: center;
+	background-color: #17addacf;
+}
+.img {
+	max-width: 150px;
+	max-height: 150px;
+	padding: 5px;
+	margin: 10px;
+	justify-items: center;
+	align-items: center;
+}
+.imglatm {
+	background-color: black;
+}
+
+.const {
+	display: flex;
+	justify-content: center;
+	background-color: white;
+	width: 250px;
+	height: 200px;
+	justify-items: center;
+	border-radius: 23px;
+}
