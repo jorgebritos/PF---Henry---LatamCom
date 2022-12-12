@@ -39,7 +39,6 @@ function App() {
 
 	const isAllowed = !!userNow.name;
 
-	console.log(userNow);
 	// useEffect(() => {
 	// 	const autenticarUsuario = () => {
 	// 		if (isAuthenticated) {
@@ -84,7 +83,6 @@ function App() {
 				<NavBar />
 			)}
 
-			{console.log('userNow', userNow)}
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
@@ -116,6 +114,7 @@ function App() {
 				component={ProductSended}
 				isAllowed={isAllowed && userNow.admin}
 			/>
+			
 			<PrivateRoute
 				path='/dashboard'
 				component={PurchasesAdmin}
