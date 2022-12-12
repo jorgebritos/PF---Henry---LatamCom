@@ -5,101 +5,73 @@ import { authTokenRouterLog } from '../../../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import logoSimbolo from '../../../../asset/logoS.png';
 import s from './LoginForm.module.css';
+import { setUserData } from '../../../../redux/actions';
 
 // import queryString from 'query-string';
 
 export const LoginForm = ({ location }) => {
-	// const {code} =queryString.parse(location.search);
-	// const [challengesData, setChallengesData] = useState("none");
 
-	// useEffect(() => {
-	//   fetch(`http://localhost:3001/home?code=${code}`, {
-	// 	method: 'GET',
-	// 	headers: {
-	// 	  "Content-Type": "application/json",
-	// 	  Accept: "application/json",
-	// 	}
-	//   })
-	//   .then(res => res.json())
-	//   .then(res => setChallengesData(JSON.stringify(res)))
-	// }, [code]);
-	
-
-	const { isLoading, loginWithRedirect, user } = useAuth0();
+	const { isLoading, loginWithRedirect, user,isAuthenticated } = useAuth0();
 	const history = useHistory();
 	const logg = useSelector((state) => state.login)
 	const dispatch = useDispatch();
 	const user1 = useSelector((state)=> state.user)
+	const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
+	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	const [logged, setLogin] = useState({
 		email:"",
 		password:""
 	})
-	useEffect(() => {
-		localStorage.removeItem("GoogleUser");
-		localStorage.removeItem("loggedUserJWT");
-		localStorage.removeItem("loggedUser");
-		localStorage.removeItem("userInfo");
-	  },[]);
+
+	
 	useEffect (()=>{
 		if(logg.length>1){
 			window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
 			window.localStorage.setItem("userInfo", JSON.stringify(user1))
 			history.push("/home")
 		}
+		if(user1.length>1){
+			history.push("/home")
+		}
 	})
-	// const [userA, setUserA]=useState({
-	// 	prop1:"",
-	// 	prop2:""
-	// })
 	
+	useEffect(() => {
+		const autenticarUsuario = () => {
+			if(isAuthenticated){
+				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+			}
+			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+			if(googleUser){
+			dispatch(setUserData({
+				username:googleUser.name,
+				picture: googleUser.picture,
+				name: googleUser.given_name,
+				email:googleUser.email,
+			}))}
+			
+		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+		  console.log("userInfo", userInfo)
+		  if(loggedUser) {
+			dispatch(setUserData({
+				username: userInfo.username,
+				picture: userInfo.picture,
+				name: userInfo.name,
+				email: userInfo.email,
+				admin: userInfo.admin,
+				jwt: loggedUserJWT
+			}))
+		  }
+		};
 
-	// const usuario = user && allUser.find((u) => u.email === user.email);
-	// console.log(allUser);
-	// useEffect(() => {
-	// 	dispatch(getAllUsers());
-	// }, [dispatch]);
-	// const seeUser = () => {
-	// 	let JWT = [];
-	// 	if (localStorage.getItem('loggedUserJWT')) {
-	// 		JWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
-	// 	}
-	// 	let userR = [];
-	// 	if (localStorage.getItem('loggedUser')) {
-	// 		userR = JSON.parse(localStorage.getItem('loggedUser'));
-	// 	}		
-
-	// 	setLogin({...logged, email:userR.email, password:userR.password, token:JWT})
-	// };
+		autenticarUsuario();
+	  }, []);
 	
-	// console.log(logged)
-	// useEffect(() => {
-	// 	seeUser();
-	// }, []);
-
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 	
 	const log= async ()=>{
 		loginWithRedirect();
-		// const domain = 'dev-g1jtn0qvoq0x04y4.us.auth0.com';
-		// const audience = 'https://www.PF---Henry---LatamCom.com';
-		// const scope = "read:PF-Henry";
-		// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
-		// const responseType = "code";
-		// const redirectUri = "http://localhost:3000/home";
-
-		// const response = await fetch(
-		// 	`https://${domain}/authorize?` +
-		// 	`audience=${audience}&` +
-		// 	`scope=${scope}&` +
-		// 	`response_type=${responseType}&` +
-		// 	`client_id=${clientId}&` +
-		// 	`redirect_uri=${redirectUri}`, {
-		// 	  redirect: "manual"
-		// 	}
-		//   );
-		//   window.location.replace(response.url);
 	};
 
 	function handleInputChange(e) {
@@ -124,15 +96,6 @@ export const LoginForm = ({ location }) => {
 
 	function confirmUser(e) {
 		e.preventDefault();
-		// if ([email, password].includes("")) {
-		// 	setAlerta({ msg: "Ambos campos son requeridos", error: true });
-		// 	setTimeout(() => {
-		// 	  setAlerta({});
-		// 	}, 2500);
-		// 	return;
-		// };
-		// let confirm = true
-		// console.log(login)
 /* 		const value = e.target.value;
 		const property = e.target.name; */
 
@@ -152,16 +115,12 @@ export const LoginForm = ({ location }) => {
 		// setLogin({email: "", password: "", admin:""})}
 		
 	}
+	// let functionalUser;
 	
-	// if(logg){
-	// 	window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
-	// 	history.push("/home")
-	// }
-	// console.log("antes del if:" + logg)
+	// functionalUser=user1
 	
-	
-
 	return (
+	
 		<div className={s.back_ground}>
 			<h1 className={s.form_title}>LOG IN WITH</h1>
 			<div className={s.conten_form}>

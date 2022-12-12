@@ -11,22 +11,50 @@ import { newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers } from '../../../redux/actions';
 import { useEffect } from 'react';
+import { setUserData } from '../../../redux/actions';
 
 function NavBar() {
 	const dispatch = useDispatch();
 
-	const { isAuthenticated } = useAuth0();
+	const { isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
+	const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
+	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
-	// useEffect(()=>{
-	// 	dispatch(authTokenRouterLog({...login}))
-	// },[login,dispatch]
-	// )
+	useEffect(() => {
+		const autenticarUsuario = () => {
+			if(isAuthenticated){
+				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+			}
+			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+			if(googleUser){
+			dispatch(setUserData({
+				username:googleUser.name,
+				picture: googleUser.picture,
+				name: googleUser.given_name,
+				email:googleUser.email,
+			}))}
+			
+		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+		  console.log("userInfo", userInfo)
+		  if(loggedUser) {
+			dispatch(setUserData({
+				username: userInfo.username,
+				picture: userInfo.picture,
+				name: userInfo.name,
+				email: userInfo.email,
+				admin: userInfo.admin,
+				jwt: loggedUserJWT
+			}))
+		  }
+		};
 
+		autenticarUsuario();
+	  }, []);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites);
 	if (localStorage.getItem('cart')) {
