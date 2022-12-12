@@ -65,11 +65,12 @@ export default function Carrusel({ products }) {
                 centerSlidePercentage={100}>
 				{result.length ? (
 					result.slice(0, 10).map((p) => (
-						<div key={`cr${p.id}`}>
-                            <Link to={`/product/${p.id}`}>
-							    <img className={s.img} src={p.image} alt={p.name} />
-                            </Link>
-						</div>
+						<Link to={`/product/${p.id}`}>
+                            <div key={`cr${p.id}`}>
+                                
+                                    <img className={s.img} src={p.image} alt={p.name} />
+                            </div>
+                        </Link>
 					))
 				) : (
 					<></>
