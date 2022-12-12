@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Logo from '../../../asset/Logo.png';
 import Carito from '../../../asset/carrito.png';
 import star from '../../../asset/star.png';
+import Dropdown from '../dropdown/Dropdown'
 import SearchBar from '../searchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
@@ -11,13 +12,16 @@ import { authTokenRouterLog, newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers, createUser } from '../../../redux/actions';
 import { useEffect } from 'react';
-import Dropdown from '../dropdown/Dropdown';
+import { setUserData } from '../../../redux/actions';
 
 function NavBar() {
 	const dispatch = useDispatch();
 
 	const { isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
+	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
+	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+
 	const allUsers = useSelector((state) => state.allUsers);
 	const [flag, setFlag] = useState(true)
 
@@ -45,11 +49,37 @@ function NavBar() {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
-	// useEffect(()=>{
-	// 	dispatch(authTokenRouterLog({...login}))
-	// },[login,dispatch]
-	// )
+	useEffect(() => {
+		const autenticarUsuario = () => {
+			if (isAuthenticated) {
+				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+			}
+			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+			if (googleUser) {
+				dispatch(setUserData({
+					username: googleUser.name,
+					picture: googleUser.picture,
+					name: googleUser.given_name,
+					email: googleUser.email,
+				}))
+			}
 
+			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+			console.log("userInfo", userInfo)
+			if (loggedUser) {
+				dispatch(setUserData({
+					username: userInfo.username,
+					picture: userInfo.picture,
+					name: userInfo.name,
+					email: userInfo.email,
+					admin: userInfo.admin,
+					jwt: loggedUserJWT
+				}))
+			}
+		};
+
+		autenticarUsuario();
+	}, []);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites);
 	if (localStorage.getItem('cart')) {

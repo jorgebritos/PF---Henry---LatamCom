@@ -53,6 +53,7 @@ export const LoginForm = ({ location }) => {
 		  console.log("userInfo", userInfo)
 		  if(loggedUser) {
 			dispatch(setUserData({
+				id: userInfo.id,
 				username: userInfo.username,
 				picture: userInfo.picture,
 				name: userInfo.name,
