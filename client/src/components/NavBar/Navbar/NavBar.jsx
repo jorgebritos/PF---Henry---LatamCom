@@ -49,39 +49,39 @@ function NavBar() {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
-	useEffect(() => {
-		const autenticarUsuario = () => {
-			if (isAuthenticated) {
-				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
-			}
-			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
-			if (googleUser) {
-				dispatch(setUserData({
-					id: googleUser.id,
-					username: googleUser.name,
-					picture: googleUser.picture,
-					name: googleUser.given_name,
-					email: googleUser.email,
-				}))
-			}
+	// useEffect(() => {
+	// 	const autenticarUsuario = () => {
+	// 		if (isAuthenticated) {
+	// 			window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+	// 		}
+	// 		const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+	// 		if (googleUser) {
+	// 			dispatch(setUserData({
+	// 				id: googleUser.id,
+	// 				username: googleUser.name,
+	// 				picture: googleUser.picture,
+	// 				name: googleUser.given_name,
+	// 				email: googleUser.email,
+	// 			}))
+	// 		}
 
-			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-			console.log("userInfo", userInfo)
-			if (loggedUser) {
-				dispatch(setUserData({
-					id: userInfo.id,
-					username: userInfo.username,
-					picture: userInfo.picture,
-					name: userInfo.name,
-					email: userInfo.email,
-					admin: userInfo.admin,
-					jwt: loggedUserJWT
-				}))
-			}
-		};
+	// 		const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+	// 		console.log("userInfo", userInfo)
+	// 		if (loggedUser) {
+	// 			dispatch(setUserData({
+	// 				id: userInfo.id,
+	// 				username: userInfo.username,
+	// 				picture: userInfo.picture,
+	// 				name: userInfo.name,
+	// 				email: userInfo.email,
+	// 				admin: userInfo.admin,
+	// 				jwt: loggedUserJWT
+	// 			}))
+	// 		}
+	// 	};
 
-		autenticarUsuario();
-	}, [dispatch, isAuthenticated, loggedUser, loggedUserJWT, user]);
+	// 	autenticarUsuario();
+	// }, [dispatch, isAuthenticated, loggedUser, loggedUserJWT, user]);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites);
 	if (localStorage.getItem('cart')) {
