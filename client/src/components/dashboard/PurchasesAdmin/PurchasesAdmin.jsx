@@ -80,7 +80,7 @@ export default function PurchasesAdmin() {
 							? allPurchases.map((i) => {
 									return (
 										<div key={i.id}>
-											{/* <p>User: {i.users[0].username}</p> */}
+											<p>User: {i.users[0].username}</p>
 											<h3>ITEMS:</h3>
 											<div className={s.cads}>
 												{i.products.map((p) => {

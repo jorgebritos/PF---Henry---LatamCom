@@ -121,6 +121,7 @@
 	background-color: whitesmoke;
 	border-radius: 23px;
 	border: none;
+	margin: 0 !important;
 }
 .img2 {
 	max-width: 120px;

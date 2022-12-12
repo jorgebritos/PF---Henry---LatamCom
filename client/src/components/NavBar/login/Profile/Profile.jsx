@@ -60,7 +60,7 @@ export const Profile = () => {
 					</div>
 					<div className={s.conCompra}>
 						<h2>Consola de Compras</h2>
-						<div className={s.contG}>
+						<div>
 							{userPurchases.length > 0
 								? userPurchases.map((p) => {
 										return (
@@ -75,13 +75,13 @@ export const Profile = () => {
 													{p.products.map((producto, index) => {
 														return (
 															<div className={s.producCard} key={index}>
-																<dir className={s.cimg}>
+																<div className={s.cimg}>
 																	<img
 																		className={s.img2}
 																		src={producto.image}
 																		alt='product_image'
 																	/>
-																</dir>
+																</div>
 																<div>
 																	<p>{producto.name}</p>
 																	<p>Amount: {producto.amount}</p>
