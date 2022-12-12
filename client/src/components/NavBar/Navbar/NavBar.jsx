@@ -21,10 +21,12 @@ function NavBar() {
 	const userNow = useSelector((state) => state.user);
 	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 	const allUsers = useSelector((state) => state.allUsers);
 	const [flag, setFlag] = useState(true)
 	const [flagReported, setFlagReported] = useState(true)
+	const [flagLogged, setFlagLogged] = useState(true)
 
 	const exists = () => {
 		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === user.email)[0] : {}
@@ -51,6 +53,20 @@ function NavBar() {
 		setFlagReported(!flagReported)
 	}
 
+	const loginUser = () => {
+		console.log("userInfo", userInfo)
+		if (loggedUser) {
+			dispatch(setUserData({
+				id: userInfo.id,
+				username: userInfo.username,
+				picture: userInfo.picture,
+				name: userInfo.name,
+				email: userInfo.email,
+				admin: userInfo.admin,
+				jwt: loggedUserJWT
+			}))
+		}
+	}
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
@@ -115,6 +131,7 @@ function NavBar() {
 							</Link>
 						</li>
 						{isAuthenticated && flag && !userNow.username ? exists() : ""}
+						{loggedUser && flagLogged && !userNow.username ? loginUser() : ""}
 						{userNow.admin && flagReported ? reportedComments() : ""}
 						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
