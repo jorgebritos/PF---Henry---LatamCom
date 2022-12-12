@@ -79,7 +79,7 @@ function NavBar() {
 		};
 
 		autenticarUsuario();
-	}, []);
+	}, [dispatch, isAuthenticated, loggedUser, loggedUserJWT, user]);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites);
 	if (localStorage.getItem('cart')) {
