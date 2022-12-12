@@ -125,6 +125,7 @@ function LoginRegister({ items = [] }) {
 			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
 			if(googleUser){
 			dispatch(setUserData({
+				id: googleUser.id,
 				username:googleUser.name,
 				picture: googleUser.picture,
 				name: googleUser.given_name,
@@ -135,6 +136,7 @@ function LoginRegister({ items = [] }) {
 		  console.log("userInfo", userInfo)
 		  if(loggedUser) {
 			dispatch(setUserData({
+				id: userInfo.id,
 				username: userInfo.username,
 				picture: userInfo.picture,
 				name: userInfo.name,

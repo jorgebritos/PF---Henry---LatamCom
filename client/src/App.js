@@ -49,6 +49,7 @@ function App() {
 			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
 			if(googleUser){
 			dispatch(setUserData({
+				id: googleUser.id,
 				username:googleUser.name,
 				picture: googleUser.picture,
 				name: googleUser.given_name,
