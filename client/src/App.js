@@ -70,7 +70,7 @@ function App() {
 		};
 
 		autenticarUsuario();
-	  }, []);
+	  }, [dispatch, isAuthenticated,loggedUserJWT,loggedUser, user]);
 
 	return (
 		<div className='App'>

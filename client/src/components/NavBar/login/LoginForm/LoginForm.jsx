@@ -65,7 +65,7 @@ export const LoginForm = ({ location }) => {
 		};
 
 		autenticarUsuario();
-	  }, []);
+	  }, [dispatch, isAuthenticated,loggedUserJWT,loggedUser, user]);
 	
 	if (isLoading) {
 		return <div>Loading...</div>;
