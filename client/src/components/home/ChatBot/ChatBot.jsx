@@ -1,9 +1,7 @@
 import React from 'react';
-import {useEffect} from 'react'
 import ChatBot from 'react-simple-chatbot'
 //import s from './ChatBot.module.css'
 import { ThemeProvider } from 'styled-components' //La documentación recomienda usar style components
-import { useSelector } from 'react-redux';
 
 
 
