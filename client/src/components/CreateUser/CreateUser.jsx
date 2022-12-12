@@ -359,10 +359,26 @@ const CreateUser = () => {
 	// Post Product /////////////////////////////
 	const submitData = async (event) => {
 		event.preventDefault();
+		console.log(input);
 		try {
-			await dispatch(createUser(input)).then(
-				history.push('/createUser/usersended'),
-			);
+
+			let checkErrors=[]
+			for (let key in errors) {
+				if(errors[key].length == 0){
+					checkErrors.push(key)
+				}
+			}
+console.log("check: ", checkErrors.length);
+			if (Object.keys(errors).length == 6 && checkErrors.length == 6) {
+				await dispatch(createUser(input)).then(history.push("/home"))
+				alert("Usuario creado")
+			}else if(Object.keys(errors).length < 6){
+				console.log(checkErrors);
+				alert("El formulario está incompleto")
+			}else{
+				alert("Hay errores en el formulario")
+			}
+
 		} catch (error) {
 			alert(
 				'Chosen name already belongs to another user, please select again.',

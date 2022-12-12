@@ -27,6 +27,11 @@ function LoginRegister({ items = [] }) {
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	//const [usuario, setUsuario]=useState([]);
 
+	
+
+	// const [usuario, setUsuario]=useState([]);
+	
+
 	// console.log(loggedUserJWT)
 	// console.log(loggedUser)
 
@@ -34,6 +39,7 @@ function LoginRegister({ items = [] }) {
 		e.preventDefault();
 		history.push('/profile');
 	};
+	
 
 	// useEffect(()=>{
 
@@ -51,9 +57,7 @@ function LoginRegister({ items = [] }) {
 		//   { redirect: "manual" }
 		// );
 		// window.location.replace(response.url);
-		localStorage.removeItem('loggedUserJWT');
-		localStorage.removeItem('loggedUser');
-		localStorage.removeItem('userInfo');
+		
 		// console.log('entre');
 		Swal.fire({
 			title: 'Sure about loging out?',
@@ -65,6 +69,10 @@ function LoginRegister({ items = [] }) {
 		}).then((result) => {
 			if (result.isConfirmed) {
 				Swal.fire('Log out succesfully!', '', 'success');
+				localStorage.removeItem("GoogleUser");
+				localStorage.removeItem("loggedUserJWT");
+				localStorage.removeItem("loggedUser");
+				localStorage.removeItem("userInfo");
 				logout();
 				history.push('/home');
 			} else {
@@ -110,34 +118,31 @@ function LoginRegister({ items = [] }) {
 	}, [isOpen]);
 
 	useEffect(() => {
-		const autenticarUsuario = async () => {
-			//   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-			//   if (!loggedUser) {
-			// 	history.push("/loginForm");
-			// 	return;
-			//   }
-
-			//   const loggedUserJWT = JSON.parse(localStorage.getItem("loggedUserJWT"));
-			//   if (!loggedUserJWT) {
-			// 	history.push("/loginForm");
-			// 	return;
-			//   }
-
-			const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-			//console.log("userInfo", userInfo, loggedUser)
-			if (loggedUser && userInfo) {
-				dispatch(
-					setUserData({
-						id: userInfo.id,
-						username: userInfo.username,
-						profile_image: userInfo.picture,
-						name: userInfo.name,
-						email: userInfo.email,
-						admin: userInfo.admin,
-						jwt: loggedUserJWT,
-					}),
-				);
+		const autenticarUsuario = () => {
+			if(isAuthenticated){
+				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
 			}
+			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+			if(googleUser){
+			dispatch(setUserData({
+				username:googleUser.name,
+				picture: googleUser.picture,
+				name: googleUser.given_name,
+				email:googleUser.email,
+			}))}
+			
+		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+		  console.log("userInfo", userInfo)
+		  if(loggedUser) {
+			dispatch(setUserData({
+				username: userInfo.username,
+				picture: userInfo.picture,
+				name: userInfo.name,
+				email: userInfo.email,
+				admin: userInfo.admin,
+				jwt: loggedUserJWT
+			}))
+		  }
 		};
 
 		autenticarUsuario(); // eslint-disable-next-line
