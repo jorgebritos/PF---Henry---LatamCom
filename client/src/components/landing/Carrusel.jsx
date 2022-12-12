@@ -10,6 +10,7 @@ import argentina from '../../asset/countries/argentina.png';
 import uruguay from '../../asset/countries/uruguay.png';
 import latamcom from '../../asset/logoS.png';
 import { getGeoPosition } from '../../redux/actions';
+import { Link } from 'react-router-dom';
 
 // Para usar este componente procurar asegurarse de enviar
 // la lista completa de los productos desde el componente
@@ -43,7 +44,7 @@ export default function Carrusel({ products }) {
 		country.getCurrentPosition(coordenadas, error)
         // eslint-disable-next-line
 	}, [products]);
-	//console.log(geoloc.slice(-1)[0].toLowerCase());
+	console.log(result);
 	return (
 		<div className={s.carrusel}>
 			<Carousel
@@ -57,13 +58,17 @@ export default function Carrusel({ products }) {
 				autoPlay={true}
 				stopOnHover={true}
 				swipeable={true}
-				dynamicHeight={true}
+				dynamicHeight={false}
 				emulateTouch={true}
-				autoFocus={true}>
+				autoFocus={true}
+                centerMode={true}
+                centerSlidePercentage={100}>
 				{result.length ? (
 					result.slice(0, 10).map((p) => (
-						<div>
-							<img className={s.img} src={p.image} alt={p.name} />
+						<div key={`cr${p.id}`}>
+                            <Link to={`/product/${p.id}`}>
+							    <img className={s.img} src={p.image} alt={p.name} />
+                            </Link>
 						</div>
 					))
 				) : (
@@ -74,6 +79,7 @@ export default function Carrusel({ products }) {
 						<img
 							src={countries[geoloc.slice(-1)[0].toLowerCase()]}
 							alt={geoloc.slice(-1)}
+                            className={s.img}
 						/>
 					</div>
 				) : (
