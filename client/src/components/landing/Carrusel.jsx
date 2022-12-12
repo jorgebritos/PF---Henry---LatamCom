@@ -28,7 +28,8 @@ export default function Carrusel({ products }) {
 		uruguay: uruguay,
 		latamcom: latamcom,
 	};
-
+    
+    // eslint-disable-next-line
 	const coordenadas = async (posicion) => {
 		dispatch(getGeoPosition(posicion));
 	};
