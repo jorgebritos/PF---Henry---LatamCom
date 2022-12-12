@@ -1,13 +1,16 @@
-import React from 'react'
+import React from 'react';
+import {useEffect} from 'react'
 import ChatBot from 'react-simple-chatbot'
 //import s from './ChatBot.module.css'
 import { ThemeProvider } from 'styled-components' //La documentación recomienda usar style components
+import { useSelector } from 'react-redux';
+
 
 
 //const theme = {} //tambien recomienda usar un objeto para añadir los estilos
 const theme = {
   background: '#f5f8fb',
-  fontFamily: 'Helvetica Neue',
+  fontFamily: 'Arial',
   headerBgColor: '#17abda',
   headerFontColor: '#fff',
   headerFontSize: '15px',
@@ -27,6 +30,7 @@ export default function MyChatBot() {
               floatingIcon='https://cdn-icons-png.flaticon.com/512/4711/4711987.png'
                 floating='true'
                 width='300px'
+                botDelay={2000}
                   steps={[
                     {
                         id: '0',
@@ -41,10 +45,11 @@ export default function MyChatBot() {
                       {
                           id: "2",
                           options: [
-                            { value: "somos", label: "¿Quienes somos?", trigger: "3"},
+                            { value: "somos", label: "¿Quienes son?", trigger: "3"},
                             { value: 1, label: 'Medios de pago', trigger: '4' },
                             { value: 2, label: 'Reportar un problema', trigger: '5' },
-                            { value: 3, label: 'Tengo hambre 😔', trigger: '6' },
+                            { value: 3, label: 'Quiero comprar algo', trigger: '6' },
+                            { value: 4, label: 'Estoy bien, gracias', trigger: 'responseNo' },
                             ],
                           
                       },
@@ -60,12 +65,17 @@ export default function MyChatBot() {
                       },
                       {
                         id: "5",
-                        message: "De malas papá", //Esta respuesta solo es momentanea 😂
+                        message: "En la parte inferior de nuestra página Puedes hacer click en 'Contact' y contarnos qué pasa", //Esta respuesta solo es momentanea 😂
                         trigger: "1a"
                       },
                       {
                         id:"6",
-                        message: "Buen provecho: 🍕",
+                        message: "Genial, primero debes registrate ",
+                        trigger: "6a"
+                      },
+                      {
+                        id:"6a",
+                        message: "Haz click en 'Login' en la parte superior de nuestra página ingresa tus datos y disfruta 🤗",
                         trigger: "1a"
                       },
                       {
@@ -73,6 +83,26 @@ export default function MyChatBot() {
                         message: "¿Algo más?",
                         trigger: "2"
                       },
+                      {
+                        id: "responseNo",
+                        message: "Está bien...",
+                        trigger: "avisoEspera"
+                      },
+                      {
+                        id: "avisoEspera",
+                        message: "Escribenos cualquier cosa si nos necesitas 👋😉",
+                        trigger: "espera"
+                      },
+                      {
+                        id: "espera",
+                        user: true,
+                        trigger: "Dinos"
+                      },
+                      {
+                        id: "Dinos",
+                        message: "Dinos...",
+                        trigger: "1"
+                      }
                      
                   ]}
                   />
