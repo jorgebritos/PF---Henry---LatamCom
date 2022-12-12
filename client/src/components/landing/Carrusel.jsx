@@ -28,7 +28,7 @@ export default function Carrusel({ products }) {
 		uruguay: uruguay,
 		latamcom: latamcom,
 	};
-    
+
     // eslint-disable-next-line
 	const coordenadas = async (posicion) => {
 		dispatch(getGeoPosition(posicion));
@@ -40,8 +40,9 @@ export default function Carrusel({ products }) {
 
 	useEffect(() => {
 		dispatch(filterByRating(products));
-		country.getCurrentPosition(coordenadas, error);
-	}, [products, country, coordenadas, dispatch]);
+		country.getCurrentPosition(coordenadas, error)
+        // eslint-disable-next-line
+	}, [products]);
 	//console.log(geoloc.slice(-1)[0].toLowerCase());
 	return (
 		<div className={s.carrusel}>

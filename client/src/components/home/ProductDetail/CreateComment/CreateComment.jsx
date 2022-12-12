@@ -62,7 +62,7 @@ const CreateComment = () => {
 		);
 		setComment({ ...comment, comment: '' });
 		setRating(e);
-		window.location.reload()
+		window.scrollTo(0, 0);
 	}
 
 	async function deleteComments(e, idUser) {
@@ -73,7 +73,7 @@ const CreateComment = () => {
 		dispatch(getAllComments(idProduct))
 		setComment({ ...comment, comment: '' });
 		setRating(e);
-		window.location.reload()
+		window.scrollTo(0, 0);
 	}
 
 	async function editComment(e, idUser) {
@@ -88,7 +88,7 @@ const CreateComment = () => {
 		}))
 		dispatch(getAllComments(idProduct))
 		setRating(e);
-		window.location.reload()
+		window.scrollTo(0, 0);
 	}
 
 	useEffect(() => {

@@ -49,6 +49,7 @@ function App() {
 			if (googleUser) {
 				dispatch(
 					setUserData({
+						id: googleUser.id,
 						username: googleUser.name,
 						picture: googleUser.picture,
 						name: googleUser.given_name,
