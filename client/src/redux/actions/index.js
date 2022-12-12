@@ -15,6 +15,7 @@ export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 export const GET_ALL_PURCHASES = "GET_ALL_PURCHASES"
 export const GET_USER_PURCHASES = "GET_USER_PURCHASES"
 export const GET_GEOPOSITION = "GET_GEOPOSITION"
+export const GET_ALL_REPORTED = "GET_ALL_REPORTED"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE"
@@ -92,6 +93,16 @@ export function getAllComments(id) {
         dispatch({
             type: GET_ALL_COMMENTS,
             payload: commentsInfo.data
+        })
+    }
+}
+
+export function getAllReported() {
+    return async function (dispatch) {
+        const reported = await axios.get('http://localhost:3001/comments/reported');
+        dispatch({
+            type: GET_ALL_REPORTED,
+            payload: reported.data
         })
     }
 }
@@ -221,6 +232,10 @@ export function getGeoPosition(payload) {
 }
 
 //RUTAS POST
+export async function reportComment(id) {
+        let reported = await axios.post(`http://localhost:3001/comments/${id}`);
+    }
+
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
         const json = await axios.post('http://localhost:3001/login/loginForm', payload)
