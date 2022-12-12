@@ -11,4 +11,8 @@ router.put('/', commentController.putComment)
 
 router.delete('/:idUser/:idProduct', commentController.deleteComment);
 
+router.post('/:id', commentController.reportComment)
+
+router.get('/reported', commentController.getAllReported)
+
 module.exports = router

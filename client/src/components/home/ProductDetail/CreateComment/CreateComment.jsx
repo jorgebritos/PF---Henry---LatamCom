@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
-import { createComment, deleteComment, getAllComments, updateComment, updateRatingProduct, } from '../../../../redux/actions';
+import { createComment, deleteComment, getAllComments, reportComment, updateComment, updateRatingProduct, } from '../../../../redux/actions';
 import s from './CreateComment.module.css';
 import star from '../../../../asset/puntajes.png';
 
@@ -47,6 +47,10 @@ const CreateComment = () => {
 		return newRating
 	}
 
+	async function reportCommentary(e, id) {
+		e.preventDefault();
+		reportComment(id);
+	}
 
 	async function sendComment(e, idUser) {
 		e.preventDefault();
@@ -175,6 +179,7 @@ const CreateComment = () => {
 									</div>
 
 									<p className={s.parafo}>{c.comment}</p>
+									{c.users[0].id !== user.id && user.username ? <button onClick={e => reportCommentary(e, c.id)}>Report Comment!</button> : ""}
 									<div>
 										{c.users[0].id === user.id ? (
 											<div>

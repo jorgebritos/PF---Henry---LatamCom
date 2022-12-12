@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { authTokenRouterLog, newSearch } from '../../../redux/actions/index';
+import { authTokenRouterLog, getAllReported, newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers, createUser } from '../../../redux/actions';
 import { useEffect } from 'react';
@@ -24,6 +24,7 @@ function NavBar() {
 
 	const allUsers = useSelector((state) => state.allUsers);
 	const [flag, setFlag] = useState(true)
+	const [flagReported, setFlagReported] = useState(true)
 
 	const exists = () => {
 		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === user.email)[0] : {}
@@ -43,6 +44,11 @@ function NavBar() {
 			window.location.reload()
 		}
 		setFlag(!flag)
+	}
+
+	const reportedComments = () => {
+		dispatch(getAllReported());
+		setFlagReported(!flagReported)
 	}
 
 	useEffect(() => {
@@ -109,6 +115,7 @@ function NavBar() {
 							</Link>
 						</li>
 						{isAuthenticated && flag && !userNow.username ? exists() : ""}
+						{userNow.admin && flagReported ? reportedComments() : ""}
 						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
 								items={[
