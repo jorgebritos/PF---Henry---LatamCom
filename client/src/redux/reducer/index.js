@@ -1,6 +1,6 @@
 import {
-    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL,
-    FILTER_BY_CATEGORY, SEARCH_BY_NAME,SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, FILTER_BY_RATING, REMOVE_ALL_FILTERS, NEW_SEARCH,
+    GET_ALL_PRODUCTS, GET_PRODUCT_DETAIL, GET_ALL_CATEGORIES, GET_ALL_COMMENTS, GET_USER, GET_ALL_BRANDS, GET_PURCHASE_DETAIL, GET_GEOPOSITION,
+    FILTER_BY_CATEGORY, SEARCH_BY_NAME, SEARCH_BY_NAME2, ORDER_BY, RESET_DETAIL, FILTER_BY_BRAND, FILTER_BY_PRICE, FILTER_BY_RATING, REMOVE_ALL_FILTERS, NEW_SEARCH,
     CREATE_PRODUCT, CREATE_COMMENT, CREATE_PURCHASE, PP_PURCHASE, ADD_FAVORITE,
     UPDATE_USER, UPDATE_PRODUCT, UPDATE_COMMENT,
     DELETE_COMMENT, CREATE_USER,
@@ -10,7 +10,11 @@ import {
     LOCALSTORAGE,
     GET_FAVORITES,
     REMOVE_FAVORITE,
-    DELETE_PRODUCT
+    DELETE_PRODUCT,
+    SET_USER_DATA,
+    // LOCALSTORAGEUSERINFO,
+    GET_ALL_PURCHASES,
+    GET_USER_PURCHASES
 } from "../actions"
 
 const initialState = {
@@ -28,27 +32,43 @@ const initialState = {
     brands: [],
     filBrands: [],
     filCategory: [],
-    filRating:[],
+    filRating: [],
     pruchase: {},
     createdPurchase: {},
     login: [],
+    userPurchases: [],
+    geoposition:[],
     //LOCALSTORAGE
     localstorage: [],
+
+    // ADMIN
+    purchasesAdmin: []
 }
 
 
 export default function rootReducer(state = initialState, action) {
     const allProducts = state.allProducts;
-    let actualProducts = state.products;
+    //let actualProducts = state.products;
+    let fillCategory = state.filCategory;
+    let filBrands = state.filBrands;
     let result = [];
-    let ratingResults=[]
+    let ratingResults = []
+    let allUsers = state.allUsers;
 
     switch (action.type) {
+        case SET_USER_DATA:
+           // console.log("action", action    )
+            return {
+                ...state,
+                login: action.payload.jwt,
+                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.profile_image, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
+            }
         case GET_ALL_PRODUCTS:
             return {
                 ...state,
                 products: action.payload,
-                allProducts: action.payload
+                allProducts: action.payload,
+                filCategory: action.payload
             }
         case GET_ALL_COMMENTS:
             return {
@@ -60,10 +80,21 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 allUsers: action.payload,
             }
+        case GET_ALL_PURCHASES: {
+            return {
+                ...state,
+                purchasesAdmin: action.payload
+            }
+        }
         case GET_USER:
             return {
                 ...state,
                 user: action.payload,
+            }
+        case GET_USER_PURCHASES:
+            return {
+                ...state,
+                userPurchases: action.payload
             }
         case GET_FAVORITES:
             return {
@@ -96,6 +127,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 purchase: action.payload,
             }
+        case GET_GEOPOSITION:
+            return {
+                ...state,
+                geoposition: action.payload,
+            }
         case ADD_FAVORITE:
             return {
                 ...state,
@@ -104,7 +140,10 @@ export default function rootReducer(state = initialState, action) {
         case CREATE_PRODUCT:
             return action.payload
         case CREATE_USER:
-            return action.payload
+            return {
+                ...state,
+                allUsers: [...allUsers, action.payload]
+            }
         case CREATE_COMMENT:
             return action.payload
         case CREATE_PURCHASE:
@@ -113,19 +152,20 @@ export default function rootReducer(state = initialState, action) {
                 createdPurchase: action.payload,
             }
         case POST_AUTHTOKENROUTERLOG:
-            let user = action.payload.data.user 
+            let user = action.payload.data.user
             let logueo = action.payload.data.jwt || action.payload.data
-            console.log(logueo);
+            // console.log(user);
+            // console.log(logueo);
             let name;
-            if(user) {
-            name = user.firstname + " " + user.lastname;
-            console.log(action.payload);
-            return {
-                ...state,
-                login: logueo ,
-                user: {username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin}
-            }
-            }else{
+            if (user) {
+                name = user.firstname + " " + user.lastname;
+                return {
+                    ...state,
+                    login: logueo,
+                    user: { id: user.id, username: user.username, picture: user.profile_image, name: name, email: user.email, admin: user.admin },
+                    favorites: action.payload.data.favorites
+                }
+            } else {
                 return {
                     ...state,
                     login: logueo
@@ -142,13 +182,22 @@ export default function rootReducer(state = initialState, action) {
         case UPDATE_PRODUCT:
             return action.payload
         case UPDATE_COMMENT:
-            return action.payload
+            return {
+                ...state,
+                productComments: action.payload
+            }
         case DELETE_COMMENT:
-            return action.payload
+            return {
+                ...state,
+                productComments: action.payload
+            }
         case DELETE_PRODUCT:
             return action.payload
         case REMOVE_FAVORITE:
-            return action.payload
+            return {
+                ...state,
+                favorites: action.payload
+            }
         case RESET_DETAIL:
             return {
                 ...state,
@@ -158,8 +207,8 @@ export default function rootReducer(state = initialState, action) {
         case FILTER_BY_BRAND:
             result = [];
             if (action.payload.length > 0) {
-                for (let i = 0; i < actualProducts.length; i++) {
-                    let product = actualProducts[i];
+                for (let i = 0; i < fillCategory.length; i++) {
+                    let product = fillCategory[i];
                     for (let b = 0; b < action.payload.length; b++) {
                         let brand = action.payload[b];
                         if (product.brand === brand) result.push(product);
@@ -167,21 +216,65 @@ export default function rootReducer(state = initialState, action) {
                 }
                 return {
                     ...state,
-                    products: result
+                    products: result,
+                    filBrands: action.payload
+                }
+            } else {
+                return {
+                    ...state,
+                    filBrands: []
                 }
             }
-            return state
         case FILTER_BY_PRICE:
             result = [];
-            for (const p of actualProducts) {
-                if (p.price > action.payload.min && p.price < action.payload.max) result.push(p)
+            let theProducts = fillCategory.length === 0 ? allProducts : fillCategory
+            let { min, max } = action.payload
+            if (min < max && min !== 0) {
+                for (const p of theProducts) {
+                    if (p.price >= min && p.price <= max) result.push(p)
+                }
+            } else if (min > 0 && max === 0) {
+                for (const p of theProducts) {
+                    if ( min <= p.price) result.push(p)
+                }
+            } else if (max > 0 && min === 0) {
+                for (const p of theProducts) {
+                    if (p.price <= max) {
+                        result.push(p)
+                    }
+                }
+            } else {
+                result = theProducts;
             }
 
-            if (Number(action.payload.min) === 0 && Number(action.payload.max) === 0) return { ...state, products: allProducts }
             let marcasPrice = result.map((p) => {
                 return p.brand
             })
+
+            if (filBrands.length > 0) {
+                let newResult = [];
+                for (const p of result) {
+                    for (const b of filBrands) {
+                        if (p.brand === b) {
+                            newResult.push(p)
+                        }
+                    }
+                }
+                result = newResult;
+            }
+
+
+
+            // if (filBrands.length > 0 && filBrands == marcasPrice) {
+            //     for (const p of result) {
+            //         for (const b of filBrands) {
+            //             if (p.brand === b) newResult.push(p)
+            //         }
+            //     }
+
+            // }
             marcasPrice = marcasPrice.filter((m) => m != null)
+
             return {
                 ...state,
                 products: result,
@@ -189,8 +282,22 @@ export default function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_CATEGORY:
             result = [];
+            let marcas;
+
             if (action.payload === "All") {
                 result = allProducts
+                marcas = result.map((p) => {
+                    return p.brand
+                })
+
+                marcas = marcas.filter((m) => m != null)
+
+                return {
+                    ...state,
+                    products: result,
+                    filCategory: result,
+                    filBrands: [...new Set(marcas)]
+                }
             } else {
                 for (const p of allProducts) {
                     for (const k in p.categories) {
@@ -201,7 +308,7 @@ export default function rootReducer(state = initialState, action) {
                     }
                 }
             }
-            let marcas = result.map((p) => {
+            marcas = result.map((p) => {
                 return p.brand
             })
             marcas = marcas.filter((m) => m != null)
@@ -213,8 +320,7 @@ export default function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_RATING:
             ratingResults = [];
-                ratingResults = action.payload.sort((a,b)=> a.rating - b.rating)
-            console.log(action.payload);
+            ratingResults = action.payload.sort((a, b) => a.rating - b.rating)
             return {
                 ...state,
                 filRating: ratingResults,
@@ -258,6 +364,12 @@ export default function rootReducer(state = initialState, action) {
                 localstorage: [action.payload]
 
             }
+            // case LOCALSTORAGEUSERINFO:
+            // return {
+            //     ...state,
+            //     localstorage: [action.payload]
+
+            // }
         default:
             return state;
     }

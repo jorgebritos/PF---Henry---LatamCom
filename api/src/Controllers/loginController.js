@@ -1,9 +1,9 @@
 const Router = require("express");
 const { jwtVerify, SignJWT } = require("jose");
-const { User } = require("../db.js");
+const { User, Product } = require("../db.js");
 
 // import validateLoginDTO from "../dto/validate_login_dto.js";
-const { authByEmailPwd } = require("../helpers/auth-by-email-pwd.js");
+// const { authByEmailPwd } = require("../helpers/auth-by-email-pwd.js");
 
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
@@ -15,21 +15,36 @@ const authTokenRouterLog = async (req, res) => {
       where: { email: email, password: password }
     })
     let id = searchUser.id
-    
+
     //GENERAR TOKEN Y DEVOLVER TOKEN
     const jwtConstructor = new SignJWT({ id });
-    
-    
+
+
     const encoder = new TextEncoder();
     const jwt = await jwtConstructor
-    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-    .setIssuedAt()
-    .setExpirationTime("1d")
-    .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+      .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+      .setIssuedAt()
+      .setExpirationTime("1h")
+      .sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+      
+    const user = await User.findOne({
+      where: {
+        id: id
+      },
+      include: {
+        model: Product,
+        as: "favorites",
+        attributes: ["id", "name", "price", "image"],
+        through: {
+          attributes: []
+        }
+      }
+    })
+
     if (confirm) {
-      return res.send({ jwt, user: searchUser.dataValues });
+      return res.send({ jwt, user: searchUser.dataValues, favorites: user.favorites });
     }
-  }catch (err) {
+  } catch (err) {
     return res.sendStatus(401);
   }
 };
@@ -50,7 +65,7 @@ const authTokenRouterPerf = async (req, res) => {
     if (!user) {
       return res.sendStatus(401);
     }
-    delete user.password;
+    // delete user.password;
 
     return res.send(user);
   } catch (err) {

@@ -30,6 +30,7 @@
 	color: whitesmoke;
 	backdrop-filter: blur(4px);
 	margin-left: 20px;
+	border: none;
 }
 
 .comment {
@@ -47,6 +48,7 @@
 	padding: 0.5rem;
 	min-height: 3rem;
 	color: black;
+	border: none;
 }
 .textarea:empty::before {
 	position: absolute;
@@ -60,6 +62,7 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 
 .btn:hover {

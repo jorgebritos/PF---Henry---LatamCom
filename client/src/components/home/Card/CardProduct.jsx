@@ -6,9 +6,13 @@ import { addProductToShoppingCart } from "../../redux/actions/index.js"
 
 export default function CardProduct({ id, name, price, image, categories }) {
 
-	const shopCart = useSelector((state) => state.shopCart)
-	const dispatch = useDispatch()
+export default function CardProduct({ id, name, price, image, rating, stock }) {
+	const favorites = useSelector((state) => state.favorites);
+	const user = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 
+	const addFavorite = async (event, idUser) => {
+		event.preventDefault();
 
 	const addProduct = async (event) => {
 		event.preventDefault()
@@ -21,17 +25,12 @@ export default function CardProduct({ id, name, price, image, categories }) {
 		}
 		let cart = []
 
-		if (localStorage.getItem("cart")) {
-			cart = JSON.parse(localStorage.getItem("cart"))
-		}
-		if (cart.find((p) => p.id === product.id)) {
-			return 0
-		}
-		cart.push(product)
-		localStorage.setItem("cart", JSON.stringify(cart))
+		let exists = await favorites.find((f) => f.id === Number(id));
 
-	}
-
+		if (exists) return alert('Este objeto ya es de tus favoritos');
+		if (!idUser) return alert('Debes estar logueado para realizar esta acción');
+		dispatch(addFavorites({ idProduct: product.id, idUser }));
+	};
 
 	return (
 		<div className={s.espacio}>
@@ -43,20 +42,25 @@ export default function CardProduct({ id, name, price, image, categories }) {
 					<div className={s.cardBody}>
 						<p className={s.name}>{name}</p>
 						<p className={s.price}>${price} USD</p>
-						{/* <br /> */}
-						{/* Categories:{' '}
-						{categories.map((e) => {
-							return (
-								<div key={e.name}>
-									<p>{e.name}</p>
-								</div>
-							);
-						})} */}
-
+						<p className={s.price}>
+							{rating ? (
+								<label>
+									<span>{rating.toFixed(1)}</span>{' '}
+									<img className={s.star} src={star} height={'15px'} alt='' />
+								</label>
+							) : (
+								''
+							)}
+						</p>
+						{/* {stock > 0 ? <p>Stock: {stock}</p> : <p>OUT OF STOCK</p>} */}
+						<div>
+							<button
+								className={s.btn}
+								onClick={(e) => addFavorite(e, user.id)}>
+								ADD FAVORITE
+							</button>
+						</div>
 					</div>
-			<div>
-				<button className={s.btn} onClick={addProduct}>ADD TO CART</button>
-			</div>
 				</div>
 			</Link>
 

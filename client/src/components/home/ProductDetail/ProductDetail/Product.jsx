@@ -13,10 +13,11 @@ import {
 import CreateComment from '../CreateComment/CreateComment';
 import Loading from '../../../loading/Loading';
 import s from './Product.module.css';
-import { useAuth0 } from '@auth0/auth0-react';
+//import { useAuth0 } from '@auth0/auth0-react';
 
 const Product = () => {
-	const { isAuthenticated } = useAuth0();
+	//const { isAuthenticated } = useAuth0();
+
 	const addProduct = async (event) => {
 		event.preventDefault();
 		let cart = [];
@@ -36,7 +37,7 @@ const Product = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
 	const product = useSelector((state) => state.productDetail);
-	const user = useSelector((state) => state.user);
+	//const user = useSelector((state) => state.user);
 	///////////////////////////////////////////////////
 
 	// Hook de ciclo de vida //////////////////////////
@@ -46,6 +47,7 @@ const Product = () => {
 		dispatch(getAllProducts());
 		dispatch(getAllUsers());
 		dispatch(getProductDetail(id));
+		window.scrollTo(0,0)
 	}, [id, dispatch]);
 	//////////////////////////////////////////////////
 
@@ -79,7 +81,12 @@ const Product = () => {
 					</div>
 					<div className={s.contInfo}>
 						<h1 className={s.name}>{product.name} </h1>
-						<h2 className={s.price}>${product.price} USD</h2>
+						<h2 className={s.price}>${product.price.toFixed(2)} USD</h2>
+						{product.stock > 0 ? (
+							<h3 className={s.h4}>Stock: {product.stock}</h3>
+						) : (
+							<h3 className={s.h4}>OUT OF STOCK</h3>
+						)}
 						<h4 className={s.h4}>Description:</h4>
 						<p className={s.parafo}>{product.description}</p>
 						<h4 className={s.h4}>Categories:</h4>
@@ -90,23 +97,20 @@ const Product = () => {
 								</div>
 							);
 						})}
-
-						<button className={s.btn} onClick={addProduct}>
-							ADD TO CART
-						</button>
+						{product.stock > 0 ? (
+							<button className={s.btn} onClick={addProduct}>
+								ADD TO CART
+							</button>
+						) : (
+							<button className={s.btn} disabled={true}>
+								OUT OF STOCK
+							</button>
+						)}
 					</div>
 				</div>
 				<div className={s.contInfoComent}>
 					<h2 className={s.h2}>Comments</h2>
-					<>
-						{isAuthenticated || user.admin ? (
-							<div>
-								<CreateComment />
-							</div>
-						) : (
-							<p className={s.parafo}>Must Log in to make a comment!</p>
-						)}
-					</>
+					<CreateComment />
 				</div>
 			</div>
 		);

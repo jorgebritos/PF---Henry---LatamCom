@@ -3,26 +3,28 @@ import { useEffect } from 'react';
 import s from './SuccessedPayment.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPurchase, getPurchaseDetail } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
 import Counter from './Counter';
 
 const purchaseStruct = (purchase) => {
+	let id = localStorage.getItem('idUser');
 	let pStruct = {
 		products: purchase.data.purchase_units.map((p) => {
 			return p.reference_id;
 		}),
 		totalPrice: JSON.parse(localStorage.getItem('total')),
-		idUser: '1',
+		idUser: `${id}`,
 	};
 
 	return pStruct;
 };
 
 const SuccessedPayment = (req) => {
+	const history = useHistory();
 	const search = req.location.search;
 	const dispatch = useDispatch();
 	const purchased = useSelector((state) => state.purchase);
 	const created = useSelector((state) => state.createdPurchase);
-
 	useEffect(() => {
 		dispatch(getPurchaseDetail(search)).catch(() => {
 			return (
@@ -46,11 +48,16 @@ const SuccessedPayment = (req) => {
 
 	const handleClick = (e) => {
 		e.preventDefault();
-		dispatch(createPurchase(purchaseStruct(purchased)));
-		console.log(created);
+		let products = JSON.parse(localStorage.getItem('cart'));
+		let amounts = [];
+		for (const p of products) {
+			amounts.push(p.amount);
+		}
+		dispatch(createPurchase({ purchase: purchaseStruct(purchased), amounts }));
 		localStorage.removeItem('cart');
+		localStorage.removeItem('idUser');
+		history.push('/home');
 	};
-	console.log(purchased);
 
 	return (
 		<div className={s.container}>
@@ -63,7 +70,7 @@ const SuccessedPayment = (req) => {
 							width='150px'
 							height='150px'
 							frameBorder='0'
-							class='giphy-embed'
+							className='giphy-embed'
 							allowFullScreen></iframe>
 					) : (
 						<img
@@ -78,7 +85,7 @@ const SuccessedPayment = (req) => {
 						<span className={s.messagge}>
 							Your purchase was successfully complete!
 							{created.hasOwnProperty('id')
-								? (window.location.href = 'http://localhost:3000/home')
+								? (window.location.href = `${window.location.origin}/home`)
 								: ''}
 						</span>
 					) : (
@@ -98,7 +105,12 @@ const SuccessedPayment = (req) => {
 			</div>
 
 			<div>
-				<a target='_blank' href='https://icons8.com/icon/21068/comprobado'rel='noreferrer'></a>
+				<a
+					target='_blank'
+					href='https://icons8.com/icon/21068/comprobado'
+					rel='noreferrer'>
+					{''}
+				</a>
 			</div>
 		</div>
 	);

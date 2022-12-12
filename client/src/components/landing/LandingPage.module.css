@@ -46,6 +46,7 @@
 	border-radius: 13px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 
 .btn:hover {
@@ -57,8 +58,8 @@
 	text-decoration: none;
 }
 
-.carrusel{
+.carrusel {
 	display: flex;
-	width: 15%;
+	width: 100%;
 	align-items: center;
 }

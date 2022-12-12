@@ -1,20 +1,19 @@
 const { Comment, User, Product } = require("../db.js");
 
-
-
 const getComment = async (req, res) => {
 
     let commentTable = await Comment.findAll({
         include: [
             {
                 model: User,
-                attributes: ["username"],
+                attributes: ["id", "username"],
                 through: {
                     attributes: []
                 }
             },
             {
                 model: Product,
+                where: { id: req.params.id },
                 attributes: ["id", "name"],
                 through: {
                     attributes: []
@@ -46,11 +45,40 @@ const postComment = async (req, res) => {
         })
 
         const searchProduct = await Product.findOne({
-            where: { id: idProduct }
+            where: { id: idProduct },
+            include: {
+                model: Comment,
+                attributes: ["id", "rating", "comment"],
+                through: {
+                    attributes: [],
+                },
+                include: {
+                    model: User,
+                    attributes: ["id", "username"],
+                    through: {
+                        attributes: []
+                    }
+                }
+            }
         })
 
         await newComment.addUser(searchUser)
         await searchProduct.addComment(newComment)
+
+        let newRating = 0;
+        let newComments = [...searchProduct.comments, newComment]
+
+        for (const c of newComments) {
+            newRating += c.rating
+        }
+
+        searchProduct.rating = (newRating / newComments.length).toFixed(1);
+
+
+        await searchProduct.save();
+
+        await searchProduct.save();
+
         res.status(201);
     } catch (error) {
         res.sendStatus(404)
@@ -58,40 +86,113 @@ const postComment = async (req, res) => {
 }
 
 const putComment = async (req, res) => {
-    const selectedComment = await Comment.findOne({
-        where: {
-            id: req.params.id
+    let { idUser, idProduct } = req.body
+
+
+    let product = await Product.findOne({
+        where: { id: idProduct },
+        include: {
+            model: Comment,
+            attributes: ["id", "rating", "comment"],
+            through: {
+                attributes: [],
+            },
+            include: {
+                model: User,
+                attributes: ["id", "username"],
+                through: {
+                    attributes: []
+                }
+            }
         }
-    });
-    if (selectedComment) {
-        let data = { ...req.body }
+    })
+
+    let selected = product.comments.filter((c) => c.users[0].id === Number(idUser));
+
+    selected = selected[0];
+    if (selected) {
+        let { comment, rating } = req.body;
+        let data = { comment, rating }
 
         let keys = Object.keys(data);
 
         keys.forEach(k => {
-            selectedComment[k] = data[k]
+            selected[k] = data[k]
         });
 
-        await selectedComment.save()
+        await selected.save()
+        await product.save()
 
-        res.sendStatus(200)
+        product = await Product.findOne({
+            where: { id: idProduct },
+            include: {
+                model: Comment,
+                attributes: ["id", "rating", "comment"],
+                through: {
+                    attributes: [],
+                },
+                include: {
+                    model: User,
+                    attributes: ["id", "username"],
+                    through: {
+                        attributes: []
+                    }
+                }
+            }
+        })
+
+        let newRating = 0;
+        for (const c of product.comments) {
+            newRating += c.rating
+        }
+
+        product.rating = (newRating / product.comments.length).toFixed(1);
+
+        await product.save();
+
+        res.send(product.comments)
     } else {
-        res.sendStatus(404)
+        res.status(404)
     }
 }
 
 const deleteComment = async (req, res) => {
-    const { id } = req.params;
+    const { idProduct, idUser } = req.params;
     try {
-        const deletedComment = await Comment.findOne({
-            where: {
-                id: req.params.id
+        let product = await Product.findOne({
+            where: { id: idProduct },
+            include: {
+                model: Comment,
+                attributes: ["id", "rating", "comment"],
+                through: {
+                    attributes: [],
+                },
+                include: {
+                    model: User,
+                    attributes: ["id", "username"],
+                    through: {
+                        attributes: []
+                    }
+                }
             }
         })
-        if (!deletedComment) return 0;
-        await Comment.destroy({where: { id: id }});
 
-        return res.status(200).json("Comment deleted");
+        let newComm = product.comments.filter((c) => c.users[0].id !== Number(idUser));
+        let deleted = product.comments.filter((c) => c.users[0].id === Number(idUser));
+        Comment.destroy({ where: { id: deleted[0].id } })
+        product.removeComments(deleted)
+
+        let newRating = 0;
+        for (const c of newComm) {
+            newRating += c.rating
+        }
+
+        product.rating = (newRating / newComm.length).toFixed(1);
+
+
+        await product.save();
+
+        return res.send(newComm);
     }
     catch (err) {
         return res.status(500).send(`Comment could not be deleted (${err})`);

@@ -92,14 +92,14 @@ const putUser = async (req, res) => {
 
 		await selectedUser.save()
 
-		res.sendStatus(200)
+		res.status(200)
 	} else {
-		res.sendStatus(404)
+		res.status(404)
 	}
 }
 
 const postUser = async (req, res) => {
-	const {
+	let {
 		firstname,
 		lastname,
 		email,
@@ -109,8 +109,10 @@ const postUser = async (req, res) => {
 		admin,
 	} = req.body;
 
+	console.log(req.body);
+
 	try {
-		if (!firstname || !lastname || !email || !profile_image || !username || !password) return res.status(404).send('Missing parameters');
+		if (!firstname || !lastname || !email || !username || !password) return res.status(404).send('Missing parameters');
 
 		if (!admin) {
 			const newUser = await User.create({
@@ -119,9 +121,10 @@ const postUser = async (req, res) => {
 				email,
 				profile_image,
 				username,
-				password
+				password,
+				admin: false
 			});
-			return res.status(200).send(newUser);
+			return res.send(newUser);
 		} else {
 			const newAdmin = await User.create({
 				firstname,
@@ -132,7 +135,7 @@ const postUser = async (req, res) => {
 				password,
 				admin
 			});
-			return res.status(200).send(newAdmin);
+			return res.send(newAdmin);
 		}
 
 	} catch (error) {

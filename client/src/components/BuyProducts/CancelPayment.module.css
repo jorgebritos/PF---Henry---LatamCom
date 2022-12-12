@@ -1,0 +1,104 @@
+.container {
+	background-color: #142328d5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: calc(100vh - 3.5rem);
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	padding-top: 22px;
+
+	width: 300px;
+	height: 400px;
+
+	border-radius: 23px;
+	box-shadow: 0 0 13px #000000;
+	background-color: #38606dd5;
+}
+
+.topcard {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+
+	padding-bottom: 22px;
+}
+.img {
+	height: 220px;
+}
+
+.buttoncard {
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	width: 200px;
+}
+
+.messagge {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #17abda;
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+.cont {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.contador {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+	padding: 20px;
+	width: 220px;
+	color: whitesmoke;
+	font-size: small;
+}
+
+.btndiv {
+	display: flex;
+	justify-content: center;
+}
+
+.homebtn {
+	margin-left: 10px;
+	width: 170px;
+	height: 35px;
+	border-radius: 23px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+	border: none;
+}
+
+.homebtn:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
+	cursor: pointer;
+}
+
+.homelnk {
+	text-decoration: none;
+}
+
+.homelnk:hover {
+	cursor: pointer;
+}

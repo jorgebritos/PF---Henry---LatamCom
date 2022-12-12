@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-	createUser,
-	getAllUsers
-} from '../../redux/actions/index';
+import { createUser, getAllUsers } from '../../redux/actions/index';
 import s from './CreateUser.module.css';
 
 // Input Validate /////////////////////////////
@@ -58,7 +55,6 @@ import s from './CreateUser.module.css';
 ///////////////////////////////////////////////
 
 const CreateUser = () => {
-
 	//Hooks and states ///////////////////////
 	const dispatch = useDispatch();
 
@@ -69,7 +65,7 @@ const CreateUser = () => {
 		lastname: '',
 		email: '',
 		profile_image: '',
-		username: "",
+		username: '',
 		password: '',
 	});
 
@@ -78,7 +74,7 @@ const CreateUser = () => {
 		lastname: '',
 		email: '',
 		profile_image: '',
-		username: "",
+		username: '',
 		password: '',
 	});
 
@@ -93,20 +89,39 @@ const CreateUser = () => {
 
 	const uploadImage = async (e) => {
 		const files = e.target.files;
-		const data = new FormData();
-		data.append('file', files[0]);
-		data.append('upload_preset', 'LatamCom');
-		setLoading(true);
-		const res = await fetch(
-			'https://api.cloudinary.com/v1_1/drruxw6zi/image/upload',
-			{
-				method: 'POST',
-				body: data,
-			},
-		);
-		const file = await res.json();
-		setInput({ ...input, image: file.secure_url });
-		setLoading(false);
+		console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: ""
+		})
+		if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(files[0].name)) {
+			console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: "Debes usar un formato de imagen válido"
+		})
+		}else{
+			console.log(files);
+		setErrors({
+			...errors,
+			[e.target.name]: ""
+		})
+			const data = new FormData();
+			data.append('file', files[0]);
+			data.append('upload_preset', 'LatamCom');
+			setLoading(true);
+			const res = await fetch(
+				'https://api.cloudinary.com/v1_1/drruxw6zi/image/upload',
+				{
+					method: 'POST',
+					body: data,
+				},
+			);
+			const file = await res.json();
+			setInput({ ...input, profile_image: file.secure_url });
+			setLoading(false);	
+		}
+
 		/* setErrors(validateInput({ ...input, image: file.secure_url })); */
 	};
 
@@ -114,78 +129,102 @@ const CreateUser = () => {
 
 	//------------------------------Controllers Form---------------------------------
 
-	function controllerFormFirstname(event){
-		if(event.target.value.length < 4){
-      return "Solo se admite un min. de 3 caracteres"
-    } 
-    if (event.target.value.length > 30) {
-      return "Solo se permite un max. de 30 caracteres";
-    }
-    if(!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
-      return "Solo se permiten letras"
-    }
-    return "";
-  }
-
-	function controllerFormLastname(event){
-		if(event.target.value.length < 5){
-      return "Solo se admite un min. de 4 caracteres"
-    } 
-    if (event.target.value.length > 30) {
-      return "Solo se permite un max. de 30 caracteres";
-    }
-		if(!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
-      return "Solo se permiten letras"
-    }
-    return "";
-  }
-
-
-	function controllerFormEmail(event) {
-		if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(event.target.value)) {
-			return "Esto no es un email";
-		}
-		return "";
-	}
-
-	function controllerFormUsername(event){
-		if(event.target.value.length < 3){
-      return "Solo se admite un min. de 3 caracteres"
-    } 
-    if (event.target.value.length > 30) {
-      return "Solo se permite un max. de 30 caracteres";
-    }
-    if(!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(event.target.value)){
-      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
-    }
-    return "";
-  }
-
-	function controllerFormPassword(event){
-		if(event.target.value.length < 8){
-      return "Solo se admite un min. de 4 caracteres"
-    } 
-    if (event.target.value.length > 20) {
-      return "Solo se permite un max. de 20 caracteres";
-    }
-    if(!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)){
-      return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
-    }
-    return "";
-  }
-
 	function controllerFormFirstname(event) {
 		if (event.target.value.length < 4) {
-			return "Solo se admite un min. de 3 caracteres"
+			return 'Solo se admite un min. de 3 caracteres';
+		}
+		if (event.target.value.length > 30) {
+			return 'Solo se permite un max. de 30 caracteres';
+		}
+		if (!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
+			return 'Solo se permiten letras';
+		}
+		return '';
+	}
+
+	function controllerFormLastname(event) {
+		if (event.target.value.length < 5) {
+			return 'Solo se admite un min. de 4 caracteres';
+		}
+		if (event.target.value.length > 30) {
+			return 'Solo se permite un max. de 30 caracteres';
+		}
+		if (!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
+			return 'Solo se permiten letras';
+		}
+		return '';
+	}
+
+	function controllerFormEmail(event) {
+		if (
+			!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(
+				event.target.value,
+			)
+		) {
+			return 'Esto no es un email';
+		}
+		return '';
+	}
+
+	function controllerFormUsername(event) {
+		if (event.target.value.length < 3) {
+			return 'Solo se admite un min. de 3 caracteres';
+		}
+		if (event.target.value.length > 30) {
+			return 'Solo se permite un max. de 30 caracteres';
+		}
+		if (
+			!/^([A-Z()_ÁÉÍÓÚÑ0-9-]* [A-Z()_ÁÉÍÓÚÑ 0-9-]*)$/i.test(
+				event.target.value,
+			)
+		) {
+			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
+		}
+		return '';
+	}
+
+	// function controllerFormUsername(event) {
+	// 	if (event.target.value.length < 3) {
+	// 		return 'Solo se admite un min. de 3 caracteres';
+	// 	}
+	// 	if (event.target.value.length > 30) {
+	// 		return 'Solo se permite un max. de 30 caracteres';
+	// 	}
+	// 	if (
+	// 		!/^([A-Z\(\)_ÁÉÍÓÚÑ0-9\-]* [A-Z\(\)_ÁÉÍÓÚÑ 0-9\-]*)$/i.test(
+	// 			event.target.value,
+	// 		)
+	// 	) {
+	// 		return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
+	// 	}
+	// 	return '';
+	// }
+
+	// function controllerFormPassword(event) {
+	// 	if (event.target.value.length < 8) {
+	// 		return 'Solo se admite un min. de 4 caracteres';
+	// 	}
+	// 	if (event.target.value.length > 20) {
+	// 		return 'Solo se permite un max. de 20 caracteres';
+	// 	}
+	// 	if (!/^[A-Z \( \) \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
+	// 		return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
+	// 	}
+	// 	return '';
+	// }
+
+/* 	function controllerFormFirstname(event) {
+		if (event.target.value.length < 4) {
+			return 'Solo se admite un min. de 3 caracteres';
 		}
 		if (event.target.value.length > 120) {
-			return "Solo se permite un max. de 120 caracteres";
+			return 'Solo se permite un max. de 120 caracteres';
 		}
 		if (!/^[A-Z  \- _ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
-			return "Solo se admiten letras, uso de tilde y caracteres como: \" (, ), -, _ \" "
+			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
 		}
-		return "";
-	}
+		return '';
+	} */
 
 	// function controllerFormLastname(event) {
 	// 	if (event.target.value.length < 5) {
@@ -200,146 +239,151 @@ const CreateUser = () => {
 	// 	return "";
 	// }
 
-
 	/* 	function controllerFormEmail(event) {
 			if (condition) {
 				
 			}
 		} */
 
-
-
-
 	//-------------------------------------------------------------------------------
 
 	//---------------------------------- Change Local States -------------------------
 	const introduceData = (event) => {
-		event.preventDefault()
+		event.preventDefault();
 
 		switch (event.target.name) {
-			case "firstname":
-				console.log("err ", event.target.value);
+			case 'firstname':
+				console.log('err ', event.target.value);
 				setErrors({
 					...errors,
-					[event.target.name]: ""
-				})
+					[event.target.name]: '',
+				});
 
 				setInput({
 					...input,
-					firstname: event.target.value
-				})
+					firstname: event.target.value,
+				});
 
-				console.log("erm", controllerFormFirstname(event));
+				console.log('erm', controllerFormFirstname(event));
 				if (controllerFormFirstname(event).length > 0) {
 					setErrors({
 						...errors,
-						firstname: controllerFormFirstname(event)
-					})
+						firstname: controllerFormFirstname(event),
+					});
 				}
 
 				break;
 
-			case "lastname":
-				console.log("err ", event.target.value);
+			case 'lastname':
+				console.log('err ', event.target.value);
 				setErrors({
 					...errors,
-					[event.target.name]:""
-				})
+					[event.target.name]: '',
+				});
 
 				setInput({
 					...input,
-					lastname: event.target.value
-				})
+					lastname: event.target.value,
+				});
 
-				console.log("erm",controllerFormLastname(event));
-				if(controllerFormLastname(event).length>0){
+				console.log('erm', controllerFormLastname(event));
+				if (controllerFormLastname(event).length > 0) {
 					setErrors({
 						...errors,
-						lastname: controllerFormLastname(event)
-					})
+						lastname: controllerFormLastname(event),
+					});
 				}
 
 				break;
-			case "email":
-				console.log("err ", event.target.value);
+			case 'email':
+				console.log('err ', event.target.value);
 				setErrors({
 					...errors,
-					[event.target.name]:""
-				})
+					[event.target.name]: '',
+				});
 
 				setInput({
 					...input,
-					email: event.target.value
-				})
+					email: event.target.value,
+				});
 
-				console.log("erm",controllerFormEmail(event));
-				if(controllerFormEmail(event).length>0){
+				console.log('erm', controllerFormEmail(event));
+				if (controllerFormEmail(event).length > 0) {
 					setErrors({
 						...errors,
-						email: controllerFormEmail(event)
-					})
+						email: controllerFormEmail(event),
+					});
 				}
 
-
-
 				break;
-			case "file":
-				
+			case 'file':
 				break;
-			case "username":
+			case 'username':
 				setErrors({
 					...errors,
-					[event.target.name]:""
-				})
+					[event.target.name]: '',
+				});
 
 				setInput({
 					...input,
-					username: event.target.value
-				})
+					username: event.target.value,
+				});
 
-				console.log("erm",controllerFormUsername(event));
-				if(controllerFormUsername(event).length>0){
+				console.log('erm', controllerFormUsername(event));
+				if (controllerFormUsername(event).length > 0) {
 					setErrors({
 						...errors,
-						username: controllerFormUsername(event)
-					})
+						username: controllerFormUsername(event),
+					});
 				}
 
 				break;
-			case "password":
+			case 'password':
 				break;
-
 
 			default:
 				break;
 		}
-
 
 		event.preventDefault();
 		const value = event.target.value;
 		const property = event.target.name;
 		console.log(property);
 		setInput({ ...input, [property]: value });
-		/* setErrors(validateInput({ ...input, [property]: value })) */;
+		/* setErrors(validateInput({ ...input, [property]: value })) */
 	};
 	//-----------------------------------------------------------------------------------
-
-
 
 	///////////////////////////////////////////////////////
 
 	// Post Product /////////////////////////////
 	const submitData = async (event) => {
 		event.preventDefault();
+		console.log(input);
 		try {
-			await dispatch(createUser(input)).then(history.push("/createUser/usersended"))
+
+			let checkErrors=[]
+			for (let key in errors) {
+				if(errors[key].length == 0){
+					checkErrors.push(key)
+				}
+			}
+console.log("check: ", checkErrors.length);
+			if (Object.keys(errors).length == 6 && checkErrors.length == 6) {
+				await dispatch(createUser(input)).then(history.push("/home"))
+				alert("Usuario creado")
+			}else if(Object.keys(errors).length < 6){
+				console.log(checkErrors);
+				alert("El formulario está incompleto")
+			}else{
+				alert("Hay errores en el formulario")
+			}
 
 		} catch (error) {
 			alert(
 				'Chosen name already belongs to another user, please select again.',
 			);
 		}
-
 	};
 	/////////////////////////////////////////////
 	//---------------------------Render--------------------------------
@@ -375,7 +419,6 @@ const CreateUser = () => {
 
 					<br />
 
-
 					<div className={s.contsp}>
 						<label className={s.label}>*U. Email: </label>
 						<input
@@ -392,7 +435,7 @@ const CreateUser = () => {
 						<label className={s.label}>*P. Image: </label>
 						<input
 							className={s.input}
-							name='file'
+							name='profile_image'
 							onChange={uploadImage}
 							autoComplete='off'
 							type='file'></input>
@@ -400,7 +443,10 @@ const CreateUser = () => {
 						{loading ? (
 							<h4>Uploading image...</h4>
 						) : (
-							<img src={input.profile_image} style={{ width: '300px' }} alt=''></img>
+							<img
+								src={input.profile_image}
+								style={{ width: '300px' }}
+								alt=''></img>
 						)}
 					</div>
 
@@ -413,8 +459,7 @@ const CreateUser = () => {
 							name='username'
 							value={input.username}
 							onChange={introduceData}
-							autoComplete='off'
-						></input>
+							autoComplete='off'></input>
 						{errors.username && <p>{errors.username}</p>}
 					</div>
 
@@ -427,8 +472,7 @@ const CreateUser = () => {
 							name='password'
 							value={input.password}
 							onChange={introduceData}
-							autoComplete='off'
-						></input>
+							autoComplete='off'></input>
 						{errors.password && <p>{errors.password}</p>}
 					</div>
 
@@ -436,12 +480,12 @@ const CreateUser = () => {
 
 					<br />
 
-
 					<br />
-
-					<button className={s.btn} id='sendButtom' type='submit' disabled>
-						SEND
-					</button>
+					
+						<button className={s.btn} id='sendButtom' type='submit' >
+							SEND
+						</button>
+					
 				</form>
 			</div>
 		</div>

@@ -96,7 +96,7 @@ const acceptOrder = async (req,res) =>{
 
 const cancelOrder = async (req,res) =>{
     try {
-        res.redirect(`${CLIENT_URL}/shoppingcart`)
+        res.redirect(`${CLIENT_URL}/cancelpayment`)
     } catch (error) {
         res.status(400).send(error)
     }

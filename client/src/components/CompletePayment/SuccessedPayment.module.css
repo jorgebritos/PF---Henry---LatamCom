@@ -82,9 +82,10 @@
 	margin-left: 10px;
 	width: 130px;
 	height: 30px;
-	border-radius: 13px;
+	border-radius: 23px;
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
+	border: none;
 }
 
 .homebtn:hover {
