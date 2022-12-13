@@ -109,10 +109,10 @@ const UpdateProfile = (props) => {
 
 	const deleteNewImage = (e) => {
 		e.preventDefault();
-		setInput({ ...input, profile_image: userNow.picture});
-		const deleteInfo = document.getElementById("cloudinary")
-		deleteInfo.value= ""
-		console.log("asdasdasd",deleteInfo)
+		setInput({ ...input, profile_image: userNow.picture });
+		const deleteInfo = document.getElementById('cloudinary');
+		deleteInfo.value = '';
+		console.log('asdasdasd', deleteInfo);
 	};
 	////////////////////////////////////////
 
@@ -139,12 +139,11 @@ const UpdateProfile = (props) => {
 				admin: userNow.admin,
 				jwt: loggedUserJWT,
 			};
-			
-				
+
 			dispatch(setUserData(userLocal))
-			.then(dispatch(updateUser(newDates)))
-			.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
-			.then(history.push('/profile/success'));
+				.then(dispatch(updateUser(newDates)))
+				.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
+				.then(history.push('/profile/success'));
 		} catch (error) {
 			alert(error.message);
 		}
@@ -248,13 +247,14 @@ const UpdateProfile = (props) => {
 							<p>(this will replace the current image)</p>
 							<input
 								className={s.input}
-								id="cloudinary"
+								id='cloudinary'
 								type='file'
 								name='file'
-								accept="image/*"
+								accept='image/*'
 								autoComplete='off'
-								onChange={uploadImage}
-							/>
+								onChange={uploadImage}>
+								<span></span>
+							</input>
 							{loading ? (
 								<h4>Uploading image...</h4>
 							) : input.profile_image !== null &&
@@ -271,7 +271,8 @@ const UpdateProfile = (props) => {
 						</div>
 						<br />
 						<div>
-							{document.getElementById("cloudinary") && document.getElementById("cloudinary").value  ? (
+							{document.getElementById('cloudinary') &&
+							document.getElementById('cloudinary').value ? (
 								<button className={s.btn} onClick={deleteNewImage}>
 									Delete new image
 								</button>
