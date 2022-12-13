@@ -165,7 +165,7 @@ const UpdateProfile = (props) => {
 
 				<div className={s.cont_form}>
 					<form className={s.form} onSubmit={submitData}>
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Firstname</label>
 							<input
 								className={s.input}
@@ -177,7 +177,7 @@ const UpdateProfile = (props) => {
 							{errors.firstname && <p>{errors.firstname}</p>}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Lastname</label>
 							<input
 								className={s.input}
@@ -190,7 +190,7 @@ const UpdateProfile = (props) => {
 						</div>
 						<br />
 
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Password</label>
 							<input
 								className={s.input}
@@ -202,7 +202,7 @@ const UpdateProfile = (props) => {
 							{errors.password && <p>{errors.password}</p>}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Confirm password</label>
 							<input
 								className={s.input}
@@ -214,7 +214,7 @@ const UpdateProfile = (props) => {
 							{errors.confirm_password && <p>{errors.confirm_password}</p>}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Email</label>
 							<input
 								className={s.input}
@@ -226,7 +226,7 @@ const UpdateProfile = (props) => {
 							{errors.email && <p>{errors.email}</p>}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							{userNow.picture ? (
 								<div>
 									<p>Actual image</p>
@@ -271,7 +271,7 @@ const UpdateProfile = (props) => {
 							)}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							{document.getElementById('cloudinary') &&
 							document.getElementById('cloudinary').value ? (
 								<button className={s.btn} onClick={deleteNewImage}>
@@ -282,7 +282,7 @@ const UpdateProfile = (props) => {
 							)}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Username</label>
 							<input
 								className={s.input}
@@ -294,7 +294,7 @@ const UpdateProfile = (props) => {
 							{errors.username && <p>{errors.username}</p>}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							<button className={s.btn} type='submit' id='sendButtom' disabled>
 								SEND
 							</button>
