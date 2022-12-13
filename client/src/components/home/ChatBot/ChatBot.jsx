@@ -1,7 +1,8 @@
 import React from 'react';
 import ChatBot from 'react-simple-chatbot'
-//import s from './ChatBot.module.css'
+import s from './ChatBot.module.css'
 import { ThemeProvider } from 'styled-components' //La documentación recomienda usar style components
+import { Link } from 'react-router-dom'
 
 
 
@@ -63,17 +64,27 @@ export default function MyChatBot() {
                       },
                       {
                         id: "5",
-                        message: "En la parte inferior de nuestra página Puedes hacer click en 'Contact' y contarnos qué pasa", //Esta respuesta solo es momentanea 😂
+                        message: "Puedes contarnos qué pasa haciendo click en el 'Contact' de la parte inferior de la página o en el siguiente botón", //Esta respuesta solo es momentanea 😂
+                        trigger: "5a"
+                      },
+                      {
+                        id: "5a",
+                        component:(<div><Link to="/contact"><button className={s.btn}>Contact</button></Link> </div>),
                         trigger: "1a"
                       },
                       {
                         id:"6",
-                        message: "Genial, primero debes registrate ",
+                        message: "Genial, primero debes iniciar sesión ",
                         trigger: "6a"
                       },
                       {
                         id:"6a",
-                        message: "Haz click en 'Login' en la parte superior de nuestra página ingresa tus datos y disfruta 🤗",
+                        message: `Puedes disfrutar de toda la experiencia después de ingresar tus datos para iniciar sesión haciendo click en el 'Login' de la parte superior de nuestra página o en el siguiente botón🤗`,
+                        trigger: "6b"
+                      },
+                      {
+                        id:"6b",
+                        component: (<div><Link to="/LoginForm"><button className={s.btn}>Login</button></Link> </div>),
                         trigger: "1a"
                       },
                       {
