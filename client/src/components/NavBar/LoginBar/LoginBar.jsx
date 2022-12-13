@@ -4,7 +4,6 @@ import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import usericon from '../../../asset/usericon.png';
-import { setUserData } from '../../../redux/actions';
 import {
 	dropdown_wrapper,
 	dropdown_activator,
@@ -14,17 +13,17 @@ import {
 	item_list,
 	componet_login,
 } from './LoginBar.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function LoginRegister({ items = [] }) {
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 	const history = useHistory();
 	let { logout, isAuthenticated, user } = useAuth0();
 	const userNow = useSelector((state) => state.user);
 	let functionalUser;
 	//const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
-	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	// const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
+	// const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	//const [usuario, setUsuario]=useState([]);
 
 	
@@ -117,36 +116,38 @@ function LoginRegister({ items = [] }) {
 		}
 	}, [isOpen]);
 
-	useEffect(() => {
-		const autenticarUsuario = () => {
-			if(isAuthenticated){
-				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
-			}
-			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
-			if(googleUser){
-			dispatch(setUserData({
-				username:googleUser.name,
-				picture: googleUser.picture,
-				name: googleUser.given_name,
-				email:googleUser.email,
-			}))}
+	// useEffect(() => {
+	// 	const autenticarUsuario = () => {
+	// 		if(isAuthenticated){
+	// 			window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+	// 		}
+	// 		const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+	// 		if(googleUser){
+	// 		dispatch(setUserData({
+	// 			id: googleUser.id,
+	// 			username:googleUser.name,
+	// 			picture: googleUser.picture,
+	// 			name: googleUser.given_name,
+	// 			email:googleUser.email,
+	// 		}))}
 			
-		  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-		  console.log("userInfo", userInfo)
-		  if(loggedUser) {
-			dispatch(setUserData({
-				username: userInfo.username,
-				picture: userInfo.picture,
-				name: userInfo.name,
-				email: userInfo.email,
-				admin: userInfo.admin,
-				jwt: loggedUserJWT
-			}))
-		  }
-		};
+	// 	  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+	// 	  console.log("userInfo", userInfo)
+	// 	  if(loggedUser) {
+	// 		dispatch(setUserData({
+	// 			id: userInfo.id,
+	// 			username: userInfo.username,
+	// 			picture: userInfo.picture,
+	// 			name: userInfo.name,
+	// 			email: userInfo.email,
+	// 			admin: userInfo.admin,
+	// 			jwt: loggedUserJWT
+	// 		}))
+	// 	  }
+	// 	};
 
-		autenticarUsuario(); // eslint-disable-next-line
-	}, []);
+	// 	autenticarUsuario(); // eslint-disable-next-line
+	// }, []);
 	//   console.log(user)
 	// let JWT;
 	// 	if (localStorage.getItem('loggedUserJWT')) {

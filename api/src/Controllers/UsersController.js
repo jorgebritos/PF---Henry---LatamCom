@@ -109,8 +109,6 @@ const postUser = async (req, res) => {
 		admin,
 	} = req.body;
 
-	console.log(req.body);
-
 	try {
 		if (!firstname || !lastname || !email || !username || !password) return res.status(404).send('Missing parameters');
 

@@ -8,8 +8,7 @@ const validateInput = (input) => {
 	let errors = {};
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
 
-	let regexEmail =
-		/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+	let regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
 	if (!input.name || input.name?.trim() >= 1) {
 		errors.name = 'Introduce a name!';
@@ -82,72 +81,79 @@ export const ContactUs = () => {
 	};
 
 	return (
-		<div className={s.back_ground}>
-			<form ref={form} onSubmit={sendEmail} className={s.conten_form}>
-				<div className={s.divf}>
-					<label className={s.label}>Name</label>
-					<input
-						className={s.input}
-						type='text'
-						name='name'
-						value={input.name}
-						onChange={introduceData}
-						autoComplete='off'
-						placeholder='Your name...'
-					/>
-					{errors.name && <p>{errors.name}</p>}
-				</div>
+		<div className={s.conten}>
+			<h1 className={s.h1}>Contact Us</h1>
+			<div className={s.cont_form}>
+				<form ref={form} onSubmit={sendEmail} className={s.form}>
+					<div className={s.div}>
+						<label className={s.label}>Name</label>
+						<input
+							className={s.input}
+							type='text'
+							name='name'
+							value={input.name}
+							onChange={introduceData}
+							autoComplete='off'
+							placeholder='Your name...'
+						/>
+						{errors.name && <p>{errors.name}</p>}
+					</div>
+					<br />
 
-				<div className={s.divf}>
-					<label className={s.label}>Email</label>
-					<input
-						className={s.input}
-						type='text'
-						name='email'
-						value={input.email}
-						onChange={introduceData}
-						autoComplete='off'
-						placeholder='Your email...'
-					/>
-					{errors.email && <p>{errors.email}</p>}
-				</div>
+					<div className={s.div}>
+						<label className={s.label}>Email</label>
+						<input
+							className={s.input}
+							type='text'
+							name='email'
+							value={input.email}
+							onChange={introduceData}
+							autoComplete='off'
+							placeholder='Your email...'
+						/>
+						{errors.email && <p className={s.label}> {errors.email}</p>}
+					</div>
+					<br />
 
-				<div className={s.divf}>
-					<label className={s.label}>Subject</label>
-					<input
-						className={s.input}
-						type='text'
-						name='subject'
-						value={input.subject}
-						onChange={introduceData}
-						autoComplete='off'
-						placeholder='Your reason...'
-					/>
-					{errors.subject && <p>{errors.subject}</p>}
-				</div>
+					<div className={s.div}>
+						<label className={s.label}>Subject</label>
+						<input
+							className={s.input}
+							type='text'
+							name='subject'
+							value={input.subject}
+							onChange={introduceData}
+							autoComplete='off'
+							placeholder='Your reason...'
+						/>
+						{errors.subject && <p className={s.label}>{errors.subject}</p>}
+					</div>
+					<br />
 
-				<div className={s.divf}>
-					<label className={s.label}>Message</label>
-					<textarea
-						className={s.textarea}
-						name='message'
-						value={input.message}
-						onChange={introduceData}
-						placeholder='Introduce your message...'
-					/>
-					{errors.message && <p>{errors.message}</p>}
-				</div>
-				<br />
-				<div className={s.divb}>
-					<input
-						className={s.btn}
-						type='submit'
-						value='SEND'
-						id='sendButtom'
-						disabled
-					/>
-				</div>
-			</form>
+					<div className={s.div}>
+						<label className={s.label}>Message</label>
+						<textarea
+							className={s.textarea}
+							name='message'
+							value={input.message}
+							onChange={introduceData}
+							placeholder='Introduce your message...'
+						/>
+						{errors.message && <p className={s.label}>{errors.message}</p>}
+					</div>
+					<br />
+
+					<div className={s.div}>
+						<input
+							className={s.btn}
+							type='submit'
+							value='SEND'
+							id='sendButtom'
+							disabled
+						/>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 };

@@ -15,6 +15,7 @@ export const GET_PURCHASE_DETAIL = "GET_PURCHASE_DETAIL"
 export const GET_ALL_PURCHASES = "GET_ALL_PURCHASES"
 export const GET_USER_PURCHASES = "GET_USER_PURCHASES"
 export const GET_GEOPOSITION = "GET_GEOPOSITION"
+export const GET_ALL_REPORTED = "GET_ALL_REPORTED"
 
 //RUTAS POST
 export const ADD_FAVORITE = "ADD_FAVORITE"
@@ -38,6 +39,7 @@ export const SET_USER_DATA = "SET_USER_DATA"
 export const DELETE_COMMENT = "DELETE_COMMENT"
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
+export const DISMISSED_REPORT = "DISMISSED_REPORT"
 
 //FILTRADOS
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
@@ -96,6 +98,16 @@ export function getAllComments(id) {
     }
 }
 
+export function getAllReported() {
+    return async function (dispatch) {
+        const reported = await axios.get('http://localhost:3001/reported');
+        dispatch({
+            type: GET_ALL_REPORTED,
+            payload: reported.data
+        })
+    }
+}
+
 export function getAllUsers() {
     return async function (dispatch) {
         const allUsers = await axios.get('http://localhost:3001/users')
@@ -119,7 +131,7 @@ export function authTokenRouterPerf() {
 
 export function setUserData(payload) {
     return async function (dispatch) {
-        //console.log("payload actions: ", payload)
+        console.log("payload actions: ", payload)
         dispatch({
             type: SET_USER_DATA,
             payload
@@ -211,16 +223,20 @@ export function getPurchaseDetail(payload) {
 export function getGeoPosition(payload) {
     return async function (dispatch) {
         const { latitude, longitude } = payload.coords;
-        const position = await axios(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=1b59c5aed58644cc928b9590904634f9`)
-        //console.log(position.data.results[0].formatted.split(", "));
+        const position = await axios(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=4da1bb9c3214476a81ee2802fc018f48`).catch((err) =>{return err})
+        //console.log(position.data.results[0].components);
         dispatch({
             type: GET_GEOPOSITION,
-            payload: position.data.results[0].formatted.split(", ")
+            payload: position.data.results[0].components,
         })
     }
 }
 
 //RUTAS POST
+export async function reportComment(payload) {
+        await axios.post(`http://localhost:3001/reported/${payload.id}`, payload);
+    }
+
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
         const json = await axios.post('http://localhost:3001/login/loginForm', payload)
@@ -345,6 +361,16 @@ export function deleteComment(idUser, idProduct) {
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
+        })
+    }
+}
+
+export function dismissReport(id) {
+    return async function (dispatch) {
+        const dismissed = await axios.delete(`http://localhost:3001/reported/${id}`)
+        dispatch({
+            type: DISMISSED_REPORT,
+            payload: dismissed.data
         })
     }
 }

@@ -21,9 +21,11 @@ function NavBar() {
 	const userNow = useSelector((state) => state.user);
 	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 	const allUsers = useSelector((state) => state.allUsers);
 	const [flag, setFlag] = useState(true)
+	const [flagLogged, setFlagLogged] = useState(true)
 
 	const exists = () => {
 		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === user.email)[0] : {}
@@ -45,41 +47,58 @@ function NavBar() {
 		setFlag(!flag)
 	}
 
+	const loginUser = () => {
+		console.log("userInfo", userInfo)
+		if (loggedUser) {
+			dispatch(setUserData({
+				id: userInfo.id,
+				username: userInfo.username,
+				picture: userInfo.picture,
+				name: userInfo.name,
+				email: userInfo.email,
+				admin: userInfo.admin,
+				jwt: loggedUserJWT
+			}))
+		}
+		setFlagLogged(!flagLogged)
+	}
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
-	useEffect(() => {
-		const autenticarUsuario = () => {
-			if (isAuthenticated) {
-				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
-			}
-			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
-			if (googleUser) {
-				dispatch(setUserData({
-					username: googleUser.name,
-					picture: googleUser.picture,
-					name: googleUser.given_name,
-					email: googleUser.email,
-				}))
-			}
+	// useEffect(() => {
+	// 	const autenticarUsuario = () => {
+	// 		if (isAuthenticated) {
+	// 			window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+	// 		}
+	// 		const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+	// 		if (googleUser) {
+	// 			dispatch(setUserData({
+	// 				id: googleUser.id,
+	// 				username: googleUser.name,
+	// 				picture: googleUser.picture,
+	// 				name: googleUser.given_name,
+	// 				email: googleUser.email,
+	// 			}))
+	// 		}
 
-			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-			console.log("userInfo", userInfo)
-			if (loggedUser) {
-				dispatch(setUserData({
-					username: userInfo.username,
-					picture: userInfo.picture,
-					name: userInfo.name,
-					email: userInfo.email,
-					admin: userInfo.admin,
-					jwt: loggedUserJWT
-				}))
-			}
-		};
+	// 		const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+	// 		console.log("userInfo", userInfo)
+	// 		if (loggedUser) {
+	// 			dispatch(setUserData({
+	// 				id: userInfo.id,
+	// 				username: userInfo.username,
+	// 				picture: userInfo.picture,
+	// 				name: userInfo.name,
+	// 				email: userInfo.email,
+	// 				admin: userInfo.admin,
+	// 				jwt: loggedUserJWT
+	// 			}))
+	// 		}
+	// 	};
 
-		autenticarUsuario();
-	}, []);
+	// 	autenticarUsuario();
+	// }, [dispatch, isAuthenticated, loggedUser, loggedUserJWT, user]);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites);
 	if (localStorage.getItem('cart')) {
@@ -107,7 +126,8 @@ function NavBar() {
 							</Link>
 						</li>
 						{isAuthenticated && flag && !userNow.username ? exists() : ""}
-						{isAuthenticated || userNow.admin ? (
+						{loggedUser && flagLogged && !userNow.username ? loginUser() : ""}
+						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
 								items={[
 									{ anchor: 'Create Product', slug: '/create/product' },

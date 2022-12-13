@@ -1,7 +1,6 @@
 const { Comment, User, Product } = require("../db.js");
 
 const getComment = async (req, res) => {
-
     let commentTable = await Comment.findAll({
         include: [
             {

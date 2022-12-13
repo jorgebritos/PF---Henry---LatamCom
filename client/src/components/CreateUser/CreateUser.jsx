@@ -364,12 +364,12 @@ const CreateUser = () => {
 
 			let checkErrors=[]
 			for (let key in errors) {
-				if(errors[key].length == 0){
+				if(errors[key].length === 0){
 					checkErrors.push(key)
 				}
 			}
 console.log("check: ", checkErrors.length);
-			if (Object.keys(errors).length == 6 && checkErrors.length == 6) {
+			if (Object.keys(errors).length === 6 && checkErrors.length === 6) {
 				await dispatch(createUser(input)).then(history.push("/home"))
 				alert("Usuario creado")
 			}else if(Object.keys(errors).length < 6){

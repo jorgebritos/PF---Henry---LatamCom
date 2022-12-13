@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import {
     dropdown_wrapper,
     dropdown_activator,
@@ -86,7 +87,7 @@ function Dropdown({ items = [], dropdownTitle }) {
                 {items.map((item, index) => {
                     return (
                         <li className={item_list} key={index}>
-                            <a href={item.slug}>{item.anchor}</a>
+                            <Link to={item.slug} style={{ "cursor": "pointer" }}>{item.anchor}</Link>
                         </li>
                     );
                 })}

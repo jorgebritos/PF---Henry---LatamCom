@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { updateUser } from '../../../../../redux/actions/index';
+import { updateUser, setUserData } from '../../../../../redux/actions/index';
 import s from './UpdateProfile.module.css';
 import Loading from '../../../../loading/Loading';
 
@@ -102,7 +102,6 @@ const UpdateProfile = (props) => {
 		const file = await res.json();
 		setInput({ ...input, profile_image: file.secure_url });
 		setLoading(false);
-		setErrors(Validate({ ...input, profile_image: file.secure_url }));
 	};
 	///////////////////////////////////////////////////////////////////////
 
@@ -110,7 +109,10 @@ const UpdateProfile = (props) => {
 
 	const deleteNewImage = (e) => {
 		e.preventDefault();
-		setInput({ ...input, profile_image: userNow.picture });
+		setInput({ ...input, profile_image: userNow.picture});
+		const deleteInfo = document.getElementById("cloudinary")
+		deleteInfo.value= ""
+		console.log("asdasdasd",deleteInfo)
 	};
 	////////////////////////////////////////
 
@@ -137,10 +139,12 @@ const UpdateProfile = (props) => {
 				admin: userNow.admin,
 				jwt: loggedUserJWT,
 			};
-
-			dispatch(updateUser(newDates))
-				.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
-				.then(history.push('/profile/success'));
+			
+				
+			dispatch(setUserData(userLocal))
+			.then(dispatch(updateUser(newDates)))
+			.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
+			.then(history.push('/profile/success'));
 		} catch (error) {
 			alert(error.message);
 		}
@@ -244,15 +248,17 @@ const UpdateProfile = (props) => {
 							<p>(this will replace the current image)</p>
 							<input
 								className={s.input}
+								id="cloudinary"
 								type='file'
 								name='file'
+								accept="image/*"
 								autoComplete='off'
 								onChange={uploadImage}
 							/>
 							{loading ? (
 								<h4>Uploading image...</h4>
 							) : input.profile_image !== null &&
-							  userNow.picture === input.profile_image.toString() ? (
+							  userNow.picture === input.profile_image ? (
 								<div>
 									<p>You will keep the same picture</p>
 								</div>
@@ -265,7 +271,7 @@ const UpdateProfile = (props) => {
 						</div>
 						<br />
 						<div>
-							{input.profile_image ? (
+							{document.getElementById("cloudinary") && document.getElementById("cloudinary").value  ? (
 								<button className={s.btn} onClick={deleteNewImage}>
 									Delete new image
 								</button>

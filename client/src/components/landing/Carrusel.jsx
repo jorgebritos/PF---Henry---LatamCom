@@ -5,11 +5,12 @@ import { useEffect } from 'react';
 import { filterByRating } from '../../redux/actions';
 import { Carousel } from 'react-responsive-carousel';
 import s from './Carrusel.module.css';
-import colombia from '../../asset/countries/colombia.png';
-import argentina from '../../asset/countries/argentina.png';
-import uruguay from '../../asset/countries/uruguay.png';
-import latamcom from '../../asset/logoS.png';
+import colombia from '../../asset/countries/co.png';
+import argentina from '../../asset/countries/arg.png';
+import uruguay from '../../asset/countries/uru.png';
+import latamcom from '../../asset/countries/latcom.png';
 import { getGeoPosition } from '../../redux/actions';
+import { Link } from 'react-router-dom';
 
 // Para usar este componente procurar asegurarse de enviar
 // la lista completa de los productos desde el componente
@@ -23,12 +24,13 @@ export default function Carrusel({ products }) {
 	const country = navigator.geolocation;
 
 	const countries = {
-		colombia: colombia,
-		argentina: argentina,
-		uruguay: uruguay,
+		co: colombia,
+		ar: argentina,
+		uy: uruguay,
 		latamcom: latamcom,
 	};
 
+    // eslint-disable-next-line
 	const coordenadas = async (posicion) => {
 		dispatch(getGeoPosition(posicion));
 	};
@@ -39,12 +41,13 @@ export default function Carrusel({ products }) {
 
 	useEffect(() => {
 		dispatch(filterByRating(products));
-		country.getCurrentPosition(coordenadas, error);
+		country.getCurrentPosition(coordenadas, error)
+        // eslint-disable-next-line
 	}, [products]);
-	//console.log(geoloc.slice(-1)[0].toLowerCase());
+	
 	return (
-		<div className={s.carrusel}>
-			<Carousel
+		// <div className={s.carrusel}>
+			<Carousel key={'RC1'}
 				className={s.const}
 				showThumbs={false}
 				showArrows={false}
@@ -55,23 +58,29 @@ export default function Carrusel({ products }) {
 				autoPlay={true}
 				stopOnHover={true}
 				swipeable={true}
-				dynamicHeight={true}
+				dynamicHeight={false}
 				emulateTouch={true}
-				autoFocus={true}>
+				autoFocus={true}
+                centerMode={true}
+                centerSlidePercentage={100}>
 				{result.length ? (
 					result.slice(0, 10).map((p) => (
-						<div>
-							<img className={s.img} src={p.image} alt={p.name} />
-						</div>
+						<Link to={`/product/${p.id}`} key={`lcr${p.id}`}>
+                            <div key={`cr${p.id}`}>
+                                
+                                    <img className={s.img} src={p.image} alt={p.name} />
+                            </div>
+                        </Link>
 					))
 				) : (
 					<></>
 				)}
-				{geoloc.length ? (
+				{geoloc.hasOwnProperty("country_code") ? (
 					<div>
 						<img
-							src={countries[geoloc.slice(-1)[0].toLowerCase()]}
-							alt={geoloc.slice(-1)}
+							src={countries[geoloc.country_code.toLowerCase()]}
+							alt={geoloc["ISO_3166-1_alpha-2"].toLowerCase()}
+                            className={s.imglatm}
 						/>
 					</div>
 				) : (
@@ -84,6 +93,6 @@ export default function Carrusel({ products }) {
 					</div>
 				)}
 			</Carousel>
-		</div>
+		//</div>
 	);
 }
