@@ -5,19 +5,19 @@ import { authTokenRouterLog } from '../../../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import logoSimbolo from '../../../../asset/logoS.png';
 import s from './LoginForm.module.css';
-import { setUserData } from '../../../../redux/actions';
+// import { setUserData } from '../../../../redux/actions';
 
 // import queryString from 'query-string';
 
 export const LoginForm = ({ location }) => {
 
-	const { isLoading, loginWithRedirect, user,isAuthenticated } = useAuth0();
+	const { isLoading, loginWithRedirect } = useAuth0();
 	const history = useHistory();
 	const logg = useSelector((state) => state.login);
 	const dispatch = useDispatch();
 	const user1 = useSelector((state)=> state.user)
-	const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
-	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	// const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
+	// const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	const [logged, setLogin] = useState({
 		email:"",
 		password:""

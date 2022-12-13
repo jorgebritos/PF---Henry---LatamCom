@@ -7,7 +7,6 @@ const { User, Product } = require("../db.js");
 
 //Login con email y password
 const authTokenRouterLog = async (req, res) => {
-  console.log(req.body)
   const { email, password, confirm } = req.body;
   if (!email || !password) return res.status(400)
 

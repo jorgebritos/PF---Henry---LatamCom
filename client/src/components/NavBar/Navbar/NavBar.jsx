@@ -25,7 +25,6 @@ function NavBar() {
 
 	const allUsers = useSelector((state) => state.allUsers);
 	const [flag, setFlag] = useState(true)
-	const [flagReported, setFlagReported] = useState(true)
 	const [flagLogged, setFlagLogged] = useState(true)
 
 	const exists = () => {
@@ -61,6 +60,7 @@ function NavBar() {
 				jwt: loggedUserJWT
 			}))
 		}
+		setFlagLogged(!flagLogged)
 	}
 	useEffect(() => {
 		dispatch(getAllUsers());

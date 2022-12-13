@@ -1,8 +1,8 @@
 import { Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setUserData } from './redux/actions';
-import { useAuth0 } from '@auth0/auth0-react';
-import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+// import { setUserData } from './redux/actions';
+// import { useAuth0 } from '@auth0/auth0-react';
+import React from 'react';
 import LandingPage from './components/landing/LandingPage';
 import HomePage from './components/home/home/HomePage';
 import NavBar from './components/NavBar/Navbar/NavBar.jsx';
@@ -31,11 +31,11 @@ import PrivateRoute from './components/PrivateRoute';
 function App() {
 	let location = useLocation();
 
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 	const userNow = useSelector((state) => state.user);
-	let { isAuthenticated, user } = useAuth0();
-	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
-	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	// let { isAuthenticated, user } = useAuth0();
+	// const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
+	// const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 
 	const isAllowed = !!userNow.name;
 
@@ -86,7 +86,7 @@ function App() {
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
-			<Route path='/SearchResults' exact component={HomePage} />
+			<Route path='/SearchResults' exact component={HomePage && MyChatBot} />
 			<Route path='/product/:id' component={Product} />
 			<Route path='/shoppingcart' component={ProductShopCart} />
 			<Route path='/CreateUser' component={CreateUser} />
@@ -150,7 +150,7 @@ function App() {
 				isAllowed={isAllowed}
 			/>
 
-			{location.pathname === '/home' && <MyChatBot />}
+			{/* {location.pathname === '/home' && <MyChatBot />} */}
 			{location.pathname !== '/' && <FooterBar />}
 		</div>
 	);
