@@ -3,7 +3,7 @@
 	flex-direction: column;
 	/* justify-content: center; */
 	align-items: center;
-	min-height: calc(100vh - 155px);
+	min-height: calc(100vh - 100px);
 }
 .contG {
 	display: flex;
@@ -119,11 +119,11 @@
 	position: fixed;
 	/* display: flex; */
 
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 }
 
 .contenedor {
-	/* margin-bottom: 1.6rem; */
+	margin-bottom: 1.6rem;
 
 	display: flex;
 	flex-direction: column;
@@ -142,7 +142,7 @@
 	align-items: center;
 	padding: 10px;
 	width: 300px;
-	height: 400px;
+	height: 300px;
 	background-color: #142328;
 	border-radius: 23px;
 	box-shadow: 2px 2px 15px #142328cc;
