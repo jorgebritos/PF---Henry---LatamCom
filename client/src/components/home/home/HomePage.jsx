@@ -53,7 +53,7 @@ export default function HomePage() {
 			</div>
 			<div className={s.cont}>
 				<div className={s.filter}>
-					{window.location.search == "" ? <Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} /> : ""}
+					{window.location.search === "" ? <Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} /> : ""}
 				</div>
 				<div className={s.conthome}>
 					<div className={s.pag}>
