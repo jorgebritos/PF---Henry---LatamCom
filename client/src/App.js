@@ -39,43 +39,43 @@ function App() {
 
 	const isAllowed = !!userNow.name;
 
-	console.log(userNow);
-	useEffect(() => {
-		const autenticarUsuario = () => {
-			if (isAuthenticated) {
-				window.localStorage.setItem('GoogleUser', JSON.stringify(user));
-			}
-			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
-			if (googleUser) {
-				dispatch(
-					setUserData({
-						id: googleUser.id,
-						username: googleUser.name,
-						picture: googleUser.picture,
-						name: googleUser.given_name,
-						email: googleUser.email,
-					}),
-				);
-			}
+	// useEffect(() => {
+	// 	const autenticarUsuario = () => {
+	// 		if (isAuthenticated) {
+	// 			window.localStorage.setItem('GoogleUser', JSON.stringify(user));
+	// 		}
+	// 		const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+	// 		if (googleUser) {
+	// 			dispatch(
+	// 				setUserData({
+	// 					id: googleUser.id,
+	// 					username: googleUser.name,
+	// 					picture: googleUser.picture,
+	// 					name: googleUser.given_name,
+	// 					email: googleUser.email,
+	// 				}),
+	// 			);
+	// 		}
 
-			const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-			console.log('userInfo', userInfo);
-			if (loggedUser) {
-				dispatch(
-					setUserData({
-						username: userInfo.username,
-						picture: userInfo.picture,
-						name: userInfo.name,
-						email: userInfo.email,
-						admin: userInfo.admin,
-						jwt: loggedUserJWT,
-					}),
-				);
-			}
-		};
+	// 		const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+	// 		console.log('userInfo', userInfo);
+	// 		console.log(loggedUser)
+	// 		if (loggedUser) {
+	// 			dispatch(
+	// 				setUserData({
+	// 					username: userInfo.username,
+	// 					picture: userInfo.picture,
+	// 					name: userInfo.name,
+	// 					email: userInfo.email,
+	// 					admin: userInfo.admin,
+	// 					jwt: loggedUserJWT,
+	// 				}),
+	// 			);
+	// 		}
+	// 	};
 
-		autenticarUsuario();
-	}, [dispatch, isAuthenticated, loggedUserJWT, loggedUser, user]);
+	// 	autenticarUsuario();
+	// }, [dispatch, isAuthenticated, loggedUserJWT, loggedUser, user]);
 
 	return (
 		<div className='App'>
@@ -83,7 +83,6 @@ function App() {
 				<NavBar />
 			)}
 
-			{console.log('userNow', userNow)}
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
@@ -115,6 +114,7 @@ function App() {
 				component={ProductSended}
 				isAllowed={isAllowed && userNow.admin}
 			/>
+			
 			<PrivateRoute
 				path='/dashboard'
 				component={PurchasesAdmin}

@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     profile_image: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true
     },
     username: {

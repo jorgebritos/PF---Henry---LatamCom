@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import {
     dropdown_wrapper,
     dropdown_activator,
@@ -11,6 +12,7 @@ function Dropdown({ items = [], dropdownTitle }) {
     const activatorRef = useRef(null);
     const dropdownListRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+    const history = useHistory();
 
     const clickHandler = () => {
         setIsOpen(!isOpen);
@@ -86,7 +88,7 @@ function Dropdown({ items = [], dropdownTitle }) {
                 {items.map((item, index) => {
                     return (
                         <li className={item_list} key={index}>
-                            <a href={item.slug}>{item.anchor}</a>
+                            <a onClick={e => history.push(item.slug)} style={{"cursor": "pointer"}}>{item.anchor}</a>
                         </li>
                     );
                 })}

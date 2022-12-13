@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import LoginRegister from '../LoginBar/LoginBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { authTokenRouterLog, newSearch } from '../../../redux/actions/index';
+import { authTokenRouterLog, getAllReported, newSearch } from '../../../redux/actions/index';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers, createUser } from '../../../redux/actions';
 import { useEffect } from 'react';
@@ -21,9 +21,12 @@ function NavBar() {
 	const userNow = useSelector((state) => state.user);
 	const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
 	const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+	const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 	const allUsers = useSelector((state) => state.allUsers);
 	const [flag, setFlag] = useState(true)
+	const [flagReported, setFlagReported] = useState(true)
+	const [flagLogged, setFlagLogged] = useState(true)
 
 	const exists = () => {
 		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === user.email)[0] : {}
@@ -45,43 +48,62 @@ function NavBar() {
 		setFlag(!flag)
 	}
 
+	const reportedComments = () => {
+		dispatch(getAllReported());
+		setFlagReported(!flagReported)
+	}
+
+	const loginUser = () => {
+		console.log("userInfo", userInfo)
+		if (loggedUser) {
+			dispatch(setUserData({
+				id: userInfo.id,
+				username: userInfo.username,
+				picture: userInfo.picture,
+				name: userInfo.name,
+				email: userInfo.email,
+				admin: userInfo.admin,
+				jwt: loggedUserJWT
+			}))
+		}
+	}
 	useEffect(() => {
 		dispatch(getAllUsers());
 	}, [dispatch]);
 
-	useEffect(() => {
-		const autenticarUsuario = () => {
-			if (isAuthenticated) {
-				window.localStorage.setItem("GoogleUser", JSON.stringify(user))
-			}
-			const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
-			if (googleUser) {
-				dispatch(setUserData({
-					id: googleUser.id,
-					username: googleUser.name,
-					picture: googleUser.picture,
-					name: googleUser.given_name,
-					email: googleUser.email,
-				}))
-			}
+	// useEffect(() => {
+	// 	const autenticarUsuario = () => {
+	// 		if (isAuthenticated) {
+	// 			window.localStorage.setItem("GoogleUser", JSON.stringify(user))
+	// 		}
+	// 		const googleUser = JSON.parse(localStorage.getItem('GoogleUser'));
+	// 		if (googleUser) {
+	// 			dispatch(setUserData({
+	// 				id: googleUser.id,
+	// 				username: googleUser.name,
+	// 				picture: googleUser.picture,
+	// 				name: googleUser.given_name,
+	// 				email: googleUser.email,
+	// 			}))
+	// 		}
 
-			const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-			console.log("userInfo", userInfo)
-			if (loggedUser) {
-				dispatch(setUserData({
-					id: userInfo.id,
-					username: userInfo.username,
-					picture: userInfo.picture,
-					name: userInfo.name,
-					email: userInfo.email,
-					admin: userInfo.admin,
-					jwt: loggedUserJWT
-				}))
-			}
-		};
+	// 		const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+	// 		console.log("userInfo", userInfo)
+	// 		if (loggedUser) {
+	// 			dispatch(setUserData({
+	// 				id: userInfo.id,
+	// 				username: userInfo.username,
+	// 				picture: userInfo.picture,
+	// 				name: userInfo.name,
+	// 				email: userInfo.email,
+	// 				admin: userInfo.admin,
+	// 				jwt: loggedUserJWT
+	// 			}))
+	// 		}
+	// 	};
 
-		autenticarUsuario();
-	}, [dispatch, isAuthenticated, loggedUser, loggedUserJWT, user]);
+	// 	autenticarUsuario();
+	// }, [dispatch, isAuthenticated, loggedUser, loggedUserJWT, user]);
 	let cart = '';
 	let favorites = useSelector((state) => state.favorites);
 	if (localStorage.getItem('cart')) {
@@ -109,6 +131,8 @@ function NavBar() {
 							</Link>
 						</li>
 						{isAuthenticated && flag && !userNow.username ? exists() : ""}
+						{loggedUser && flagLogged && !userNow.username ? loginUser() : ""}
+						{userNow.admin && flagReported ? reportedComments() : ""}
 						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
 								items={[

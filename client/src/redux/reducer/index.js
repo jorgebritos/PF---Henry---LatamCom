@@ -14,7 +14,8 @@ import {
     SET_USER_DATA,
     // LOCALSTORAGEUSERINFO,
     GET_ALL_PURCHASES,
-    GET_USER_PURCHASES
+    GET_USER_PURCHASES,
+    GET_ALL_REPORTED
 } from "../actions"
 
 const initialState = {
@@ -42,7 +43,8 @@ const initialState = {
     localstorage: [],
 
     // ADMIN
-    purchasesAdmin: []
+    purchasesAdmin: [],
+    reportedComments: []
 }
 
 
@@ -61,7 +63,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: action.payload.jwt,
-                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.profile_image, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
+                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.picture, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
             }
         case GET_ALL_PRODUCTS:
             return {
@@ -75,6 +77,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productComments: action.payload,
             }
+            case GET_ALL_REPORTED:
+                return {
+                    ...state,
+                    reportedComments: action.payload
+                }
         case GET_ALL_USERS:
             return {
                 ...state,
