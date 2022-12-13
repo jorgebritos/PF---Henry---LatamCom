@@ -20,11 +20,13 @@ const validateInput = (input) => {
 		errors.image = 'Introduce an image';
 	} else if (!input.price) {
 		errors.price = 'Introduce a price';
-	} else if (expreg.test(input.price)) {
+	} else if (input.price / 2 < 0) {
 		errors.price = 'Introduce a valid price';
-	} else if (expreg.test(input.brand)) {
-		errors.brand = 'Introduce a valid brand';
-	} else if (!input.categories.length) {
+	}else if(!input.stock){
+		errors.stock = "Introduce a stock"
+	} else if(input.stock / 2 < 0 || input.stock % 1 !== 0){
+		errors.stock = "Introduce a valid stock"
+	}else if (!input.categories.length) {
 		errors.categories = 'Category is required!';
 	}
 	const sendButton = document.getElementById('sendButtom');
@@ -195,6 +197,7 @@ const CreateProduct = () => {
 							onChange={introduceData}
 							autoComplete='off'
 							type='number'
+							step=".01"
 							min='0'></input>
 						{errors.price && <p>{errors.price}</p>}
 					</div>
@@ -202,7 +205,7 @@ const CreateProduct = () => {
 					<br />
 
 					<div className={s.contsp}>
-						<label className={s.label}>P. Stock: </label>
+						<label className={s.label}>*P. Stock: </label>
 						<input
 							className={s.input}
 							name='stock'
