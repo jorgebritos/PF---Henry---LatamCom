@@ -168,7 +168,7 @@ function CreateCategory() {
 			<br />
 			<br />
 			<div className={s.contenedor}>
-				<TableContainer>
+				<TableContainer className={s.border}>
 					<Table>
 						<TableHead className={s.thead}>
 							<TableRow>
