@@ -92,15 +92,14 @@
 }
 .contItem {
 	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	justify-content: space-between;
+	flex-direction: column;
+	justify-content: center;
 	align-items: center;
 }
 .producCard {
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: center;
 	background-color: #142328;
 	width: 700px;
@@ -118,7 +117,7 @@
 	align-items: center;
 	width: 150px;
 	height: 150px;
-	background-color: whitesmoke;
+	background-color: white;
 	border-radius: 23px;
 	border: none;
 	margin: 0 !important;
@@ -128,4 +127,48 @@
 	max-height: 120px;
 	padding: 5px;
 	margin: 1rem;
+}
+.nameP {
+	color: white;
+	font-size: 1rem;
+	font-weight: bold;
+	width: 250px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.precio {
+	color: #17abda;
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+/* Success*/
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: calc(100vh - 13px);
+	background-color: #f5f5f5;
+	color: whitesmoke;
+}
+.contenS {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	/* width: 400px;
+	height: 500px; */
+
+	margin-top: 2.1%;
+	margin-bottom: 2.2%;
+	padding: 45px;
+
+	border-radius: 23px;
+	background-color: #0f7c9d;
+	box-shadow: 2px 2px 25px #0d0f0f86;
+	backdrop-filter: blur(15px);
 }
