@@ -327,7 +327,7 @@ export default function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_RATING:
             ratingResults = [];
-            ratingResults = action.payload.sort((a, b) => a.rating - b.rating)
+            ratingResults = action.payload.sort((a, b) => b.rating - a.rating)
             return {
                 ...state,
                 filRating: ratingResults,
