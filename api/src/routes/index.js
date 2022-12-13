@@ -11,6 +11,7 @@ const loginRoute = require("./login.js")
 const mailRoute = require("./mail.js")
 const buyPaypalRoute = require("./buyPaypal.js")
 const cartRoute = require("./cart.js")
+const reportedRoute = require("./reported.js")
 
 const router = Router();
 
@@ -27,5 +28,6 @@ router.use("/login", loginRoute)
 router.use('/send-mail', mailRoute)
 router.use('/buyings', buyPaypalRoute)
 router.use('/cart', cartRoute)
+router.use('/reported', reportedRoute)
 
 module.exports = router;

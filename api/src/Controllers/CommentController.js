@@ -1,24 +1,6 @@
 const { Comment, User, Product } = require("../db.js");
 
 const getComment = async (req, res) => {
-
-    if (req.params.id === "reported") {
-        let admin = await User.findOne({
-            where: { admin: true },
-            include:
-            {
-                model: Comment,
-                as: "reported",
-                attributes: ["id"],
-                through: {
-                    attributes: []
-                }
-            }
-        })
-        console.log(admin)
-
-        return res.send(admin.reported)
-    }
     let commentTable = await Comment.findAll({
         include: [
             {
@@ -216,63 +198,9 @@ const deleteComment = async (req, res) => {
     }
 }
 
-const reportComment = async (req, res) => {
-    const { id } = req.params
-
-    let reported = await Comment.findOne({
-        where: { id: id },
-        include: [
-            {
-                model: User,
-                attributes: ["id", "username"],
-                through: {
-                    attributes: []
-                }
-            },
-            {
-                model: Product,
-                attributes: ["id", "name"],
-                through: {
-                    attributes: []
-                }
-            }]
-    })
-
-    let admin = await User.findOne({
-        where: { admin: true },
-        include:
-        {
-            model: Comment,
-            as: "reported",
-            attributes: ["id"],
-            through: {
-                attributes: []
-            }
-        }
-    })
-    console.log(id, admin.reported.filter((c) => c.id === Number(id)))
-    if (admin.reported.filter((c) => c.id === Number(id)).length) {
-        return res.sendStatus(403)
-    }
-    if (reported && admin) {
-        admin.addReported(reported)
-        await admin.save();
-        return res.send(reported)
-    } else {
-        res.sendStatus(401)
-    }
-
-}
-
-const getAllReported = async (req, res) => {
-
-}
-
 module.exports = {
     getComment,
     postComment,
     putComment,
-    deleteComment,
-    reportComment,
-    getAllReported
+    deleteComment
 }

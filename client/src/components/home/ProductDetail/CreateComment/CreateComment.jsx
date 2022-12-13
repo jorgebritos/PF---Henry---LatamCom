@@ -47,9 +47,9 @@ const CreateComment = () => {
 		return newRating
 	}
 
-	async function reportCommentary(e, id) {
+	async function reportCommentary(e, comment) {
 		e.preventDefault();
-		reportComment(id);
+		reportComment({ ...comment });
 	}
 
 	async function sendComment(e, idUser) {
@@ -66,7 +66,7 @@ const CreateComment = () => {
 		);
 		setComment({ ...comment, comment: '' });
 		setRating(e);
-		window.scrollTo(0, 0);
+		window.location.reload();
 	}
 
 	async function deleteComments(e, idUser) {
@@ -77,7 +77,7 @@ const CreateComment = () => {
 		dispatch(getAllComments(idProduct))
 		setComment({ ...comment, comment: '' });
 		setRating(e);
-		window.scrollTo(0, 0);
+		window.location.reload();
 	}
 
 	async function editComment(e, idUser) {
@@ -92,7 +92,7 @@ const CreateComment = () => {
 		}))
 		dispatch(getAllComments(idProduct))
 		setRating(e);
-		window.scrollTo(0, 0);
+		window.location.reload();
 	}
 
 	useEffect(() => {
@@ -164,7 +164,6 @@ const CreateComment = () => {
 							return (
 								<div className={s.contenComments} key={index}>
 									<p>{c.users.length ? c.users[0].username : ''}</p>
-
 									<div className={s.divrow}>
 										<h4 className={s.h3}>Rating:</h4>
 										<div className={s.divrow}>
@@ -179,7 +178,7 @@ const CreateComment = () => {
 									</div>
 
 									<p className={s.parafo}>{c.comment}</p>
-									{c.users[0].id !== user.id && user.username ? <button onClick={e => reportCommentary(e, c.id)}>Report Comment!</button> : ""}
+									{c.users[0].id !== user.id && user.username && !user.admin ? <button onClick={e => reportCommentary(e, c)}>Report Comment!</button> : user.admin ? <button onClick={e => deleteComments(e, c.users[0].id)}>Delete Comment</button> : ""}
 									<div>
 										{c.users[0].id === user.id ? (
 											<div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts, getAllPurchases, getAllReported } from '../../../redux/actions';
-import { Link } from 'react-router-dom';
+import { deleteComment, dismissReport, getAllProducts, getAllPurchases, getAllReported } from '../../../redux/actions';
+import { Link, NavLink } from 'react-router-dom';
 import s from './PurchasesAdmin.module.css';
 
 export default function PurchasesAdmin() {
@@ -10,8 +10,7 @@ export default function PurchasesAdmin() {
 	const allPurchases = useSelector((state) => state.purchasesAdmin);
 	const allProducts = useSelector((state) => state.allProducts);
 	const reportedComments = useSelector((state) => state.reportedComments)
-	const outOfStock =
-		allProducts.length > 0 ? allProducts.filter((p) => p.stock === 0) : [];
+	const outOfStock = allProducts.length > 0 ? allProducts.filter((p) => p.stock === 0) : [];
 
 	useEffect(() => {
 		dispatch(getAllPurchases());
@@ -31,6 +30,11 @@ export default function PurchasesAdmin() {
 			return 0;
 		}
 	};
+
+	const dismissedReport = (id) => {
+		dispatch(dismissReport(id))
+	}
+
 	return (
 		<div className={s.conten}>
 			<div>
@@ -41,13 +45,20 @@ export default function PurchasesAdmin() {
 
 			<div className={s.conte_row}>
 				<div>
+					<h2>REPORTED COMMENTS</h2>
 					{reportedComments.length > 0 ? reportedComments.map((c) => {
 						return (
-							<div>
-								console.log(c)
+							<div key={c.id}>
+								<p>User: {c.users[0].username}</p>
+								<p>Comment: {c.comment}</p>
+								<p>Inside Of: {c.products[0].name}</p>
+								<h5>Actions:</h5>
+								<button onClick={e => dispatch(deleteComment(c.users[0].id, c.products[0].id))}>Delete Comment</button> Or <button onClick={e => dismissedReport(c.id)}>Dismiss</button>
+								<br />
+								<NavLink to={`/product/${c.products[0].id}`}>Click Here to Follow the Comment</NavLink>
 							</div>
 						)
-					}) : ""}
+					}) : <h3>All Good for now!</h3>}
 				</div>
 				<div>
 					<h2 className={s.h2}>ITEMS OUT OF STOCK</h2>

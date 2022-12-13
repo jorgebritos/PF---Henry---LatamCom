@@ -39,6 +39,7 @@ export const SET_USER_DATA = "SET_USER_DATA"
 export const DELETE_COMMENT = "DELETE_COMMENT"
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
+export const DISMISSED_REPORT = "DISMISSED_REPORT"
 
 //FILTRADOS
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
@@ -99,7 +100,7 @@ export function getAllComments(id) {
 
 export function getAllReported() {
     return async function (dispatch) {
-        const reported = await axios.get('http://localhost:3001/comments/reported');
+        const reported = await axios.get('http://localhost:3001/reported');
         dispatch({
             type: GET_ALL_REPORTED,
             payload: reported.data
@@ -232,8 +233,8 @@ export function getGeoPosition(payload) {
 }
 
 //RUTAS POST
-export async function reportComment(id) {
-        let reported = await axios.post(`http://localhost:3001/comments/${id}`);
+export async function reportComment(payload) {
+        await axios.post(`http://localhost:3001/reported/${payload.id}`, payload);
     }
 
 export function authTokenRouterLog(payload) {
@@ -360,6 +361,16 @@ export function deleteComment(idUser, idProduct) {
         dispatch({
             type: DELETE_COMMENT,
             payload: deletedComment.data
+        })
+    }
+}
+
+export function dismissReport(id) {
+    return async function (dispatch) {
+        const dismissed = await axios.delete(`http://localhost:3001/reported/${id}`)
+        dispatch({
+            type: DISMISSED_REPORT,
+            payload: dismissed.data
         })
     }
 }
