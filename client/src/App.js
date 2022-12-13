@@ -133,10 +133,9 @@ function App() {
 				component={Buy}
 				isAllowed={isAllowed && !userNow.admin}
 			/>
-			<PrivateRoute
+			<Route
 				path='/cancelpayment'
 				component={CancelPayment}
-				isAllowed={isAllowed && !userNow.admin}
 			/>
 			<PrivateRoute
 				exact
