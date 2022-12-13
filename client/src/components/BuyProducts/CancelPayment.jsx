@@ -21,6 +21,7 @@ const CancelPayment = (req) => {
 				<Link to={'/shoppingcart'}>
 					<button className={s.homebtn}>Return to Shopping Cart</button>
 				</Link>
+				{localStorage.removeItem("idUser")}
 			</div>
 			<div>
 				<a

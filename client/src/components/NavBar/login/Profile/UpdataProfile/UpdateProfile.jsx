@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { updateUser, setUserData } from '../../../../../redux/actions/index';
 import s from './UpdateProfile.module.css';
@@ -48,7 +48,8 @@ const Validate = (input) => {
 };
 
 const UpdateProfile = (props) => {
-	const userNow = JSON.parse(localStorage.getItem('userInfo'));
+	const user = useSelector((state) => state.user);
+	const userNow = user.id ? user : JSON.parse(localStorage.getItem('userInfo'));
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -141,6 +142,9 @@ const UpdateProfile = (props) => {
 			};
 
 			dispatch(setUserData(userLocal))
+				.then(dispatch(updateUser(newDates)))
+				.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
+				.then(history.push('/profile/success'));
 				.then(dispatch(updateUser(newDates)))
 				.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
 				.then(history.push('/profile/success'));
@@ -258,7 +262,7 @@ const UpdateProfile = (props) => {
 							{loading ? (
 								<h4>Uploading image...</h4>
 							) : input.profile_image !== null &&
-							  userNow.picture === input.profile_image ? (
+								userNow.picture === input.profile_image ? (
 								<div>
 									<p>You will keep the same picture</p>
 								</div>

@@ -7,7 +7,7 @@ import s from './CreateProduct.module.css';
 // Input Validate /////////////////////////////
 const validateInput = (input) => {
 	let errors = {};
-	let expreg = /[.*+\-?^${}()|[\]\\/]/;
+	let expreg = /[,*+\-?^${}()|[\]\\/]/;
 	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
 	if (!input.name || input.name?.trim() >= 1) {
@@ -50,7 +50,7 @@ const CreateProduct = () => {
 		name: '',
 		description: '',
 		image: '',
-		price: '',
+		price: '0.00',
 		stock: 0,
 		brand: '',
 		categories: [],
@@ -193,6 +193,7 @@ const CreateProduct = () => {
 							name='price'
 							value={input.price}
 							onChange={introduceData}
+							step={0.01}
 							autoComplete='off'
 							type='number'
 							min='0'></input>
