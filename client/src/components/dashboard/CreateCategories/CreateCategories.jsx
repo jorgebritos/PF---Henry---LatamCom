@@ -77,38 +77,40 @@ function CreateCategory() {
 
 	return (
 		<div className={s.back_ground}>
-			<br />
-			<Button className={s.btn} onClick={() => abrirCerrarModalInsertar()}>
+			<button className={s.btn} onClick={() => abrirCerrarModalInsertar()}>
 				Crear
-			</Button>
+			</button>{' '}
 			<br />
-			<br />
-			<TableContainer className={s.contenedor}>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell className={s.text}>Id</TableCell>
-							<TableCell className={s.text}>Nombre</TableCell>
-						</TableRow>
-					</TableHead>
+			<div className={s.contenedor}>
+				<br />
+				<br />
+				<TableContainer>
+					<Table>
+						<TableHead className={s.thead}>
+							<TableRow>
+								<TableCell className={s.text}>Id</TableCell>
+								<TableCell className={s.text}>Nombre</TableCell>
+							</TableRow>
+						</TableHead>
 
-					{/* informacion de la  Tabla */}
+						{/* informacion de la  Tabla */}
 
-					<TableBody>
-						{categories &&
-							categories.map((e) => (
-								<TableRow key={e.id}>
-									<TableCell className={s.text}>{e.id}</TableCell>
-									<TableCell className={s.text}>{e.name}</TableCell>
-								</TableRow>
-							))}
-					</TableBody>
-				</Table>
-			</TableContainer>
+						<TableBody>
+							{categories &&
+								categories.map((e) => (
+									<TableRow key={e.id}>
+										<TableCell className={s.text}>{e.id}</TableCell>
+										<TableCell className={s.text}>{e.name}</TableCell>
+									</TableRow>
+								))}
+						</TableBody>
+					</Table>
+				</TableContainer>
 
-			<Modal open={modalInsertar} onClose={() => abrirCerrarModalInsertar()}>
-				{bodyInsertar}
-			</Modal>
+				<Modal open={modalInsertar} onClose={() => abrirCerrarModalInsertar()}>
+					{bodyInsertar}
+				</Modal>
+			</div>
 		</div>
 	);
 }
