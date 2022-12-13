@@ -86,7 +86,7 @@ function App() {
 
 			<Route path='/' exact component={LandingPage} />
 			<Route exact path='/home' component={HomePage} />
-			<Route path='/SearchResults' exact component={HomePage && MyChatBot} />
+			<Route path='/SearchResults' exact component={HomePage} />
 			<Route path='/product/:id' component={Product} />
 			<Route path='/shoppingcart' component={ProductShopCart} />
 			<Route path='/CreateUser' component={CreateUser} />
@@ -94,8 +94,8 @@ function App() {
 			<Route path='/LoginForm' component={LoginForm} />
 			<Route exact path='/contact' component={ContactUs} />
 			<Route path='/favorites' component={ShowFavorites} />
-			<Route path='/SuccessPayment' component={SuccessedPayment}/>
-			
+			<Route path='/SuccessPayment' component={SuccessedPayment} />
+
 			<PrivateRoute
 				path='/update'
 				component={UpdateProduct}
@@ -116,7 +116,7 @@ function App() {
 				component={ProductSended}
 				isAllowed={isAllowed && userNow.admin}
 			/>
-			
+
 			<PrivateRoute
 				path='/dashboard'
 				component={PurchasesAdmin}
@@ -149,7 +149,7 @@ function App() {
 				isAllowed={isAllowed}
 			/>
 
-			{/* {location.pathname === '/home' && <MyChatBot />} */}
+			{location.pathname === '/home' && <MyChatBot />}
 			{location.pathname !== '/' && <FooterBar />}
 		</div>
 	);
