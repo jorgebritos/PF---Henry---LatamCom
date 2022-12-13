@@ -63,7 +63,7 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 login: action.payload.jwt,
-                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.profile_image, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
+                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.picture, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
             }
         case GET_ALL_PRODUCTS:
             return {
