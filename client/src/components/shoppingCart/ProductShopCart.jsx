@@ -12,7 +12,7 @@ const ProductShopCart = () => {
 	let cant = 0;
 
 	// Traer productos del localStorage ///
-	const seeProducts =useCallback( () => {
+	const seeProducts = useCallback(() => {
 		let cart = [];
 		if (localStorage.getItem('cart')) {
 			cart = JSON.parse(localStorage.getItem('cart'));
@@ -21,7 +21,7 @@ const ProductShopCart = () => {
 		setProductsSelected(cart);
 		let cant = cart;
 		totalAccount(cant);
-	},[]);
+	}, []);
 
 	useEffect(() => {
 		seeProducts();
@@ -67,14 +67,14 @@ const ProductShopCart = () => {
 			return p;
 		});
 		setProductsSelected(increase);
-
+		totalAccount(increase)
 		localStorage.setItem("cart", JSON.stringify(increase))
 	};
 
 	const resta = (event) => {
 		event.preventDefault();
 		const name = event.target.name;
-		
+
 		const decrease = productsSelected.map((p) => {
 			if (p.id === Number(name) && p.amount !== 1) {
 				return {
@@ -196,7 +196,7 @@ const ProductShopCart = () => {
 					<div className={s.contT}>
 						<div className={s.contpago}>
 							<div>
-							{console.log(total)}
+								{console.log(total)}
 								{productsSelected.length ? (
 									<div>
 										<h2 className={s.precio}>Total: {Number(total).toFixed(2)}</h2>
