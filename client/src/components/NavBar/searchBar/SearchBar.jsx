@@ -14,7 +14,7 @@ function SearchBar() {
 
 	useEffect(() => {
 		dispatch(searchByName(productName, "SEARCH_BY_NAME"));
-	}, [showList, currentURL,products, dispatch, productName]);
+	}, [showList, currentURL, dispatch, productName]);
 
 	function search(e) {
 		dispatch(newSearch(productName));
