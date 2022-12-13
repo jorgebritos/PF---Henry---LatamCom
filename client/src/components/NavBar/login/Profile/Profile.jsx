@@ -59,7 +59,7 @@ export const Profile = () => {
 						</div>
 					</div>
 					<div className={s.conCompra}>
-						<h2>Consola de Compras</h2>
+						<h2>Shopping Console</h2>
 						<div>
 							{userPurchases.length > 0
 								? userPurchases.map((p) => {
@@ -83,12 +83,14 @@ export const Profile = () => {
 																	/>
 																</div>
 																<div>
-																	<p>{producto.name}</p>
+																	<p className={s.nameP}>{producto.name}</p>
 																	<p>Amount: {producto.amount}</p>
 																</div>
 
 																<div>
-																	<p>Price: {producto.price}</p>
+																	<p className={s.precio}>
+																		Price: {producto.price}
+																	</p>
 																</div>
 															</div>
 														);

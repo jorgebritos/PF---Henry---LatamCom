@@ -1,31 +1,14 @@
-.chat{
-    -webkit-align-items: center;
--webkit-box-align: center;
--ms-flex-align: center;
-align-items: center;
-cursor: pointer;
-background: #2b95c7;
-bottom: 32px;
-border-radius: 100%;
-box-shadow: 0 12px 24px 0 rgba(0,0,0,0.15);
-display: -webkit-box;
-display: -webkit-flex;
-display: -ms-flexbox;
-display: flex;
-fill: #fff;
-height: 56px;
--webkit-box-pack: center;
--webkit-justify-content: center;
--ms-flex-pack: center;
-justify-content: center;
-position: fixed;
-right: 32px;
--webkit-transform: scale(1);
--ms-transform: scale(1);
-transform: scale(1);
--webkit-transition: -webkit-transform 0.3s ease;
--webkit-transition: transform 0.3s ease;
-transition: transform 0.3s ease;
-width: 56px;
-z-index: 999;
+.btn {
+        margin-left: 10px;
+        width: 90px;
+        height: 30px;
+        border-radius: 13px;
+        background-color: #17abda;
+        backdrop-filter: blur(4px);
+        border: none;
+}
+
+.btn:hover {
+	background-color: #0e7d86;
+	color: whitesmoke;
 }
