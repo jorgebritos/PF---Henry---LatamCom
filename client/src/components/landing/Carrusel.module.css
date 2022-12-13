@@ -27,7 +27,13 @@
 	max-height: 150px;
 	padding: 5px;
 	margin: 10px;
-	background-color: #7dc2d7cf;
+	background-color: white;
+	max-width: 180px;
+	max-height: 180px;
+	padding: 2%;
+	margin: 2%;
+	
+	
 }
 
 .const {

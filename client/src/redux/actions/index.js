@@ -130,7 +130,7 @@ export function authTokenRouterPerf() {
 
 export function setUserData(payload) {
     return async function (dispatch) {
-        //console.log("payload actions: ", payload)
+        console.log("payload actions: ", payload)
         dispatch({
             type: SET_USER_DATA,
             payload
@@ -222,11 +222,11 @@ export function getPurchaseDetail(payload) {
 export function getGeoPosition(payload) {
     return async function (dispatch) {
         const { latitude, longitude } = payload.coords;
-        const position = await axios(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=1b59c5aed58644cc928b9590904634f9`)
-        //console.log(position.data.results[0].formatted.split(", "));
+        const position = await axios(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=4da1bb9c3214476a81ee2802fc018f48`).catch((err) =>{return err})
+        //console.log(position.data.results[0].components);
         dispatch({
             type: GET_GEOPOSITION,
-            payload: position.data.results[0].formatted.split(", ")
+            payload: position.data.results[0].components,
         })
     }
 }
