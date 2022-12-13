@@ -92,20 +92,20 @@ const CreateUser = () => {
 		console.log(files);
 		setErrors({
 			...errors,
-			[e.target.name]: ""
-		})
+			[e.target.name]: '',
+		});
 		if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(files[0].name)) {
 			console.log(files);
-		setErrors({
-			...errors,
-			[e.target.name]: "Debes usar un formato de imagen válido"
-		})
-		}else{
+			setErrors({
+				...errors,
+				[e.target.name]: 'Debes usar un formato de imagen válido',
+			});
+		} else {
 			console.log(files);
-		setErrors({
-			...errors,
-			[e.target.name]: ""
-		})
+			setErrors({
+				...errors,
+				[e.target.name]: '',
+			});
 			const data = new FormData();
 			data.append('file', files[0]);
 			data.append('upload_preset', 'LatamCom');
@@ -119,7 +119,7 @@ const CreateUser = () => {
 			);
 			const file = await res.json();
 			setInput({ ...input, profile_image: file.secure_url });
-			setLoading(false);	
+			setLoading(false);
 		}
 
 		/* setErrors(validateInput({ ...input, image: file.secure_url })); */
@@ -174,9 +174,7 @@ const CreateUser = () => {
 			return 'Solo se permite un max. de 30 caracteres';
 		}
 		if (
-			!/^([A-Z()_ÁÉÍÓÚÑ0-9-]* [A-Z()_ÁÉÍÓÚÑ 0-9-]*)$/i.test(
-				event.target.value,
-			)
+			!/^([A-Z()_ÁÉÍÓÚÑ0-9-]* [A-Z()_ÁÉÍÓÚÑ 0-9-]*)$/i.test(event.target.value)
 		) {
 			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
 		}
@@ -213,7 +211,7 @@ const CreateUser = () => {
 	// 	return '';
 	// }
 
-/* 	function controllerFormFirstname(event) {
+	/* 	function controllerFormFirstname(event) {
 		if (event.target.value.length < 4) {
 			return 'Solo se admite un min. de 3 caracteres';
 		}
@@ -361,24 +359,22 @@ const CreateUser = () => {
 		event.preventDefault();
 		console.log(input);
 		try {
-
-			let checkErrors=[]
+			let checkErrors = [];
 			for (let key in errors) {
-				if(errors[key].length === 0){
-					checkErrors.push(key)
+				if (errors[key].length === 0) {
+					checkErrors.push(key);
 				}
 			}
-console.log("check: ", checkErrors.length);
+			console.log('check: ', checkErrors.length);
 			if (Object.keys(errors).length === 6 && checkErrors.length === 6) {
-				await dispatch(createUser(input)).then(history.push("/home"))
-				alert("Usuario creado")
-			}else if(Object.keys(errors).length < 6){
+				await dispatch(createUser(input)).then(history.push('/home'));
+				alert('Usuario creado');
+			} else if (Object.keys(errors).length < 6) {
 				console.log(checkErrors);
-				alert("El formulario está incompleto")
-			}else{
-				alert("Hay errores en el formulario")
+				alert('El formulario está incompleto');
+			} else {
+				alert('Hay errores en el formulario');
 			}
-
 		} catch (error) {
 			alert(
 				'Chosen name already belongs to another user, please select again.',
@@ -389,11 +385,10 @@ console.log("check: ", checkErrors.length);
 	//---------------------------Render--------------------------------
 	return (
 		<div className={s.cont}>
+			<h1 className={s.h1}>CREATE USER</h1>
 			<div className={s.contF}>
-				<h1 className={s.h1}>CREATE USER</h1>
-
-				<form onSubmit={(e) => submitData(e)}>
-					<div className={s.contsp}>
+				<form className={s.contsp} onSubmit={(e) => submitData(e)}>
+					<div className={s.contl}>
 						<label className={s.label}>*U. Firstname: </label>
 						<input
 							className={s.input}
@@ -406,7 +401,7 @@ console.log("check: ", checkErrors.length);
 
 					<br />
 
-					<div className={s.contsp}>
+					<div className={s.contl}>
 						<label className={s.label}>*U. Lastname: </label>
 						<input
 							className={s.input}
@@ -419,7 +414,7 @@ console.log("check: ", checkErrors.length);
 
 					<br />
 
-					<div className={s.contsp}>
+					<div className={s.contl}>
 						<label className={s.label}>*U. Email: </label>
 						<input
 							className={s.input}
@@ -431,7 +426,7 @@ console.log("check: ", checkErrors.length);
 					</div>
 					<br />
 
-					<div className={s.contsp}>
+					<div className={s.contl}>
 						<label className={s.label}>*P. Image: </label>
 						<input
 							className={s.input}
@@ -452,7 +447,7 @@ console.log("check: ", checkErrors.length);
 
 					<br />
 
-					<div className={s.contsp}>
+					<div className={s.contl}>
 						<label className={s.label}>*P. Username: </label>
 						<input
 							className={s.input}
@@ -465,7 +460,7 @@ console.log("check: ", checkErrors.length);
 
 					<br />
 
-					<div className={s.contsp}>
+					<div className={s.contl}>
 						<label className={s.label}>*P. Password: </label>
 						<input
 							className={s.input}
@@ -481,11 +476,10 @@ console.log("check: ", checkErrors.length);
 					<br />
 
 					<br />
-					
-						<button className={s.btn} id='sendButtom' type='submit' >
-							SEND
-						</button>
-					
+
+					<button className={s.btn} id='sendButtom' type='submit'>
+						SEND
+					</button>
 				</form>
 			</div>
 		</div>

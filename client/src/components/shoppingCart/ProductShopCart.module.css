@@ -8,7 +8,7 @@
 .contG {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 }
 .contP {
 	display: flex;
@@ -34,6 +34,7 @@
 	height: 200px;
 	padding: 23px;
 	border-radius: 23px;
+	margin-bottom: 10px;
 	/* cursor: pointer; */
 	box-shadow: 2px 2px 15px #142328cc;
 }
