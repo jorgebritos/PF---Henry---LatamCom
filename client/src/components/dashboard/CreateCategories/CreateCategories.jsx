@@ -9,8 +9,7 @@ import { Delete, Edit } from '@mui/icons-material';
 
 
 function CreateCategory() {
-
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
     const categories = useSelector((state) => state.categories);
     const [data, setData] = useState([]);
@@ -78,13 +77,13 @@ function CreateCategory() {
         // window.scrollTo(0, 0);
     };
 
-    useEffect(() => {
-        dispatch(getAllCategories());
-    }, [dispatch]);
+	useEffect(() => {
+		dispatch(getAllCategories());
+	}, [dispatch]);
 
-    const abrirCerrarModalInsertar = () => {
-        setModalInsertar(!modalInsertar);
-    }
+	const abrirCerrarModalInsertar = () => {
+		setModalInsertar(!modalInsertar);
+	};
 
     const bodyInsertar = (
         <div className={s.modal}>
@@ -144,7 +143,7 @@ function CreateCategory() {
                         </TableRow>
                     </TableHead>
 
-                    {/* informacion de la  Tabla */}
+						{/* informacion de la  Tabla */}
 
                     <TableBody>
                         {categories && categories.map(e => (
@@ -189,4 +188,4 @@ function CreateCategory() {
     )
 }
 
-export default CreateCategory
+export default CreateCategory;
