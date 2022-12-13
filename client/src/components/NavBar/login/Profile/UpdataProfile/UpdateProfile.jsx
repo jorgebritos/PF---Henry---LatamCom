@@ -145,9 +145,7 @@ const UpdateProfile = (props) => {
 				.then(dispatch(updateUser(newDates)))
 				.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
 				.then(history.push('/profile/success'));
-				.then(dispatch(updateUser(newDates)))
-				.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
-				.then(history.push('/profile/success'));
+				
 		} catch (error) {
 			alert(error.message);
 		}

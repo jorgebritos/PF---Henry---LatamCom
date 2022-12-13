@@ -198,7 +198,6 @@ const CreateProduct = () => {
 							step={0.01}
 							autoComplete='off'
 							type='number'
-							step=".01"
 							min='0'></input>
 						{errors.price && <p>{errors.price}</p>}
 					</div>
