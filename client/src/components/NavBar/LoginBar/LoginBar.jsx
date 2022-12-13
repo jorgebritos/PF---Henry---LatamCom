@@ -26,19 +26,20 @@ function LoginRegister({ items = [] }) {
 	// const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	//const [usuario, setUsuario]=useState([]);
 
-	
+
 
 	// const [usuario, setUsuario]=useState([]);
-	
+
 
 	// console.log(loggedUserJWT)
 	// console.log(loggedUser)
 
 	const userConfig = (e) => {
 		e.preventDefault();
+		setIsOpen(!isOpen)
 		history.push('/profile');
 	};
-	
+
 
 	// useEffect(()=>{
 
@@ -47,6 +48,7 @@ function LoginRegister({ items = [] }) {
 
 	const Logout = /*async*/ (e) => {
 		e.preventDefault();
+		setIsOpen(!isOpen)
 		// const domain = "dev-g1jtn0qvoq0x04y4.us.auth0.com";
 		// const clientId = "jSKxgpG26EO0rS6t8vN35jzlpMo9gjPL";
 		// const returnTo =  "http://localhost:3000";
@@ -56,7 +58,7 @@ function LoginRegister({ items = [] }) {
 		//   { redirect: "manual" }
 		// );
 		// window.location.replace(response.url);
-		
+
 		// console.log('entre');
 		Swal.fire({
 			title: 'Sure about loging out?',
@@ -130,7 +132,7 @@ function LoginRegister({ items = [] }) {
 	// 			name: googleUser.given_name,
 	// 			email:googleUser.email,
 	// 		}))}
-			
+
 	// 	  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 	// 	  console.log("userInfo", userInfo)
 	// 	  if(loggedUser) {
@@ -172,8 +174,8 @@ function LoginRegister({ items = [] }) {
 			{Object.keys(userNow).length > 0
 				? (functionalUser = userNow.username)
 				: user
-				? (functionalUser = user.name)
-				: ''}
+					? (functionalUser = user.name)
+					: ''}
 			{Object.keys(userNow).length > 0 || isAuthenticated ? (
 				<div className={dropdown_wrapper} onKeyUp={keyHandler}>
 					<button

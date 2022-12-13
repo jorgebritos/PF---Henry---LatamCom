@@ -87,7 +87,7 @@ function Dropdown({ items = [], dropdownTitle }) {
                 {items.map((item, index) => {
                     return (
                         <li className={item_list} key={index}>
-                            <Link to={item.slug} style={{ "cursor": "pointer" }}>{item.anchor}</Link>
+                            <Link to={item.slug} onClick={e => setIsOpen(!isOpen)} style={{ "cursor": "pointer" }}>{item.anchor}</Link>
                         </li>
                     );
                 })}

@@ -2,8 +2,6 @@ const { Category } = require("../db.js");
 const axios = require("axios");
 
 const getCategories = async (req, res) => {
-
-
   try {
     let categoryTable = await Category.findAll();
 
@@ -47,7 +45,36 @@ const postCategories = async (req, res) => {
   }
 }
 
+const putCategory = async (req, res) => {
+  let { id, name } = req.body
+
+  let category = await Category.findOne({
+    where: { id, id }
+  })
+
+  category.name = name;
+
+  await category.save()
+
+  let categoryTable = await Category.findAll();
+
+  res.send(categoryTable)
+}
+
+const deleteCategory = async (req, res) => {
+  let { id } = req.params;
+  
+  
+  await Category.destroy({ where: { id: id } });
+
+  let categoryTable = await Category.findAll();
+
+  res.send(categoryTable)
+}
+
 module.exports = {
   getCategories,
-  postCategories
+  postCategories,
+  deleteCategory,
+  putCategory
 };

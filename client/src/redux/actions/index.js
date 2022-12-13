@@ -35,12 +35,14 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT"
 export const UPDATE_COMMENT = "UPDATE_COMMENT"
 export const UPDATE_RATING = "UPDATE_RATING"
 export const SET_USER_DATA = "SET_USER_DATA"
+export const UPDATE_CATEGORY = "UPDATE_CATEGORY"
 
 //RUTAS DELETE
 export const DELETE_COMMENT = "DELETE_COMMENT"
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
 export const DISMISSED_REPORT = "DISMISSED_REPORT"
+export const DELETE_CATEGORY = "DELETE_CATEGORY"
 
 //FILTRADOS
 export const FILTER_BY_BRAND = "FILTER_BY_BRAND"
@@ -323,6 +325,16 @@ export function createCategories(payload) {
 
 //RUTAS PUT
 
+export function updateCategory(payload){
+    return async function (dispatch) {
+        const info = await axios.put(`http://localhost:3001/categories/${payload.id}`, payload)
+        dispatch({
+            type: UPDATE_CATEGORY,
+            payload: info.data
+        })
+    }
+}
+
 export function updateUser(payload) {
     return async function (dispatch) {
         const info = await axios.put(`http://localhost:3001/users/${payload.id}`, payload)
@@ -366,6 +378,16 @@ export function updateComment(payload) {
 }
 
 //RUTAS DELETE
+
+export function deleteCategory(idCategory) {
+        return async function (dispatch) {
+            const deletedCategory = await axios.delete(`http://localhost:3001/categories/${idCategory}`)
+            dispatch({
+                type: DELETE_CATEGORY,
+                payload: deletedCategory.data
+            })
+        }
+}
 export function deleteComment(idUser, idProduct) {
     return async function (dispatch) {
         const deletedComment = await axios.delete(`http://localhost:3001/comments/${idUser}/${idProduct}`)
