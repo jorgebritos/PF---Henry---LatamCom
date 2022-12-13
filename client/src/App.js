@@ -10,6 +10,7 @@ import FooterBar from './components/Footer/FooterBar';
 import Product from './components/home/ProductDetail/ProductDetail/Product';
 import ProductShopCart from './components/shoppingCart/ProductShopCart.jsx';
 import CreateProduct from './components/dashboard/CreateProduct/CreateProduct';
+import CreateCategories from './components/dashboard/CreateCategories/CreateCategories';
 import ProductSended from './components/dashboard/CreateProduct/ProductSended.jsx';
 import { Profile } from './components/NavBar/login/Profile/Profile';
 import { LoginForm } from './components/NavBar/login/LoginForm/LoginForm';
@@ -147,6 +148,11 @@ function App() {
 				path='/profile/success'
 				component={Success}
 				isAllowed={isAllowed}
+			/>
+
+			<PrivateRoute path='/create/categories'
+				component={CreateCategories}
+				isAllowed={isAllowed && userNow.admin}
 			/>
 
 			{location.pathname === '/home' && <MyChatBot />}

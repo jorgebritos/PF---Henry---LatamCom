@@ -26,6 +26,7 @@ export const CREATE_PURCHASE = "CREATE_PURCHASE"
 export const POST_AUTHTOKENROUTERLOG = "GET_AUTHTOKENROUTERLOG"
 export const SEND_MAIL = "SEND_MAIL"
 export const PP_PURCHASE = "PP_PURCHASE"
+export const CREATE_CATEGORIES= "CREATE_CATEGORIES"
 
 
 //RUTAS PUT
@@ -308,6 +309,16 @@ export function buyShoppingCart(payload) {
             payload: info
         })
     }
+}
+
+export function createCategories(payload) {
+        return async function (dispatch) {
+            const info = await axios.post('http://localhost:3001/categories', payload)
+            dispatch({
+                type: CREATE_CATEGORIES,
+                payload: info.data
+            })
+        }
 }
 
 //RUTAS PUT

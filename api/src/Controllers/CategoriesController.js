@@ -21,6 +21,33 @@ const getCategories = async (req, res) => {
   }
 }
 
+const postCategories = async (req, res) => {
+
+  let { name } = req.body;
+
+  try {
+
+    let exists = await Category.findOne({
+      where: { name: name }
+    })
+
+    if (!name) return res.status(404).send('Missing parameters');
+
+    if (exists) return res.status(406).send("La Categoria ya existe");
+
+    else {
+      const newCategory = await Category.create({
+        name
+      });
+      return res.status(200).send(newCategory);
+    }
+
+  } catch (error) {
+    res.status(404).send(error);
+  }
+}
+
 module.exports = {
-  getCategories
+  getCategories,
+  postCategories
 };

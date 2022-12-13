@@ -54,7 +54,8 @@ function UpdateProduct() {
 		dispatch(updateProduct(productoSeleccionado));
 		dispatch(getAllProducts());
 		abrirCerrarModalEditar();
-		window.scrollTo(0, 0);
+		window.location.reload()
+		// window.scrollTo(0, 0);
 	};
 
 	const handleDelete = () => {
@@ -62,7 +63,8 @@ function UpdateProduct() {
 		dispatch(deleteProduct(productoSeleccionado.id));
 		dispatch(getAllProducts());
 		abrirCerrarModalEliminar();
-		window.scrollTo(0, 0);
+		window.location.reload()
+		// window.scrollTo(0, 0);
 	};
 
 	const handleChange = (e) => {
