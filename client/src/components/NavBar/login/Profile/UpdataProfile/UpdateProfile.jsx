@@ -255,7 +255,6 @@ const UpdateProfile = (props) => {
 								accept='image/*'
 								autoComplete='off'
 								onChange={uploadImage}>
-								<span></span>
 							</input>
 							{loading ? (
 								<h4>Uploading image...</h4>
