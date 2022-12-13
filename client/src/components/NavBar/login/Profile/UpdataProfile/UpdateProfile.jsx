@@ -251,6 +251,7 @@ const UpdateProfile = (props) => {
 								id="cloudinary"
 								type='file'
 								name='file'
+								accept="image/*"
 								autoComplete='off'
 								onChange={uploadImage}
 							/>
