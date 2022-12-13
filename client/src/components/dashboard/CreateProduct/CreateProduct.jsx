@@ -8,8 +8,7 @@ import s from './CreateProduct.module.css';
 const validateInput = (input) => {
 	let errors = {};
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
-	let regexURL =
-		/((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
+	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
 	if (!input.name || input.name?.trim() >= 1) {
 		errors.name = 'Introduce a name!';
@@ -140,10 +139,9 @@ const CreateProduct = () => {
 
 	return (
 		<div className={s.cont}>
+			<h1 className={s.h1}>CREATE PRODUCT</h1>
 			<div className={s.contF}>
-				<h1 className={s.h1}>CREATE PRODUCT</h1>
-
-				<form onSubmit={(e) => submitData(e)}>
+				<form className={s.form} onSubmit={(e) => submitData(e)}>
 					<div className={s.contsp}>
 						<label className={s.label}>*P. Name: </label>
 						<input
