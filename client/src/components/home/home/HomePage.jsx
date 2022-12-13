@@ -53,7 +53,7 @@ export default function HomePage() {
 			</div>
 			<div className={s.cont}>
 				<div className={s.filter}>
-					<Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} />
+					{window.location.search == "" ? <Filtros setCurrentPage={setCurrentPage} setOrder={setOrder} /> : ""}
 				</div>
 				<div className={s.conthome}>
 					<div className={s.pag}>
@@ -69,19 +69,19 @@ export default function HomePage() {
 					<div className={s.cads}>
 						{currentProducts.length > 0
 							? currentProducts.map((p) => {
-									return (
-										<CardProduct
-											key={p.id}
-											id={p.id}
-											name={p.name}
-											image={p.image}
-											categories={p.categories}
-											price={p.price.toFixed(2)}
-											rating={p.rating}
-											stock={p.stock}
-										/>
-									);
-							  })
+								return (
+									<CardProduct
+										key={p.id}
+										id={p.id}
+										name={p.name}
+										image={p.image}
+										categories={p.categories}
+										price={p.price.toFixed(2)}
+										rating={p.rating}
+										stock={p.stock}
+									/>
+								);
+							})
 							: ''}
 						{!currentProducts.length ? (
 							<h1>No se han encontrado productos</h1>
