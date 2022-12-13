@@ -94,6 +94,8 @@ function App() {
 			<Route path='/LoginForm' component={LoginForm} />
 			<Route exact path='/contact' component={ContactUs} />
 			<Route path='/favorites' component={ShowFavorites} />
+			<Route path='/SuccessPayment' component={SuccessedPayment}/>
+			
 			<PrivateRoute
 				path='/update'
 				component={UpdateProduct}
@@ -129,11 +131,6 @@ function App() {
 			<PrivateRoute
 				path='/buyproducts'
 				component={Buy}
-				isAllowed={isAllowed && !userNow.admin}
-			/>
-			<PrivateRoute
-				path='/SuccessPayment'
-				component={SuccessedPayment}
 				isAllowed={isAllowed && !userNow.admin}
 			/>
 			<PrivateRoute
