@@ -122,7 +122,7 @@ const ProductShopCart = () => {
 	// Comprar items: agregado localStorage
 	const buyItems = (event) => {
 		event.preventDefault();
-		localStorage.setItem('total', JSON.stringify(total));
+		localStorage.setItem('total', JSON.stringify(parseInt(total)));
 		history.push('/buyproducts');
 	};
 	///////////////////////////////////////
