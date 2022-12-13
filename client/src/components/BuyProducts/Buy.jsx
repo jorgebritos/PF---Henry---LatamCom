@@ -54,7 +54,7 @@ const Buy = () => {
 				<div className={s.description}>
 					<div>
 						<h3 className={s.h3}>Total:</h3>
-						{!total ? seeProducts() : <h2 className={s.h2}> ${total} USD</h2>}
+						{!total ? seeProducts() : <h2 className={s.h2}> ${total.toFixed(2)} USD</h2>}
 					</div>
 				</div>
 				<div className={s.metodoP}>
