@@ -21,7 +21,7 @@ export default function LandingPage() {
 					<button className={s.btn}>Entrar</button>
 				</Link>
 			</div>
-			<Carrusel/>
+			{/* <Carrusel/> */}
 		</div>
 	);
 }
