@@ -63,7 +63,7 @@ function NavBar() {
 	const loginUser = () => {
 		console.log("userInfo", userInfo)
 		console.log(loggedUser)
-		if (loggedUser) {
+		if (loggedUser !== null) {
 			dispatch(setUserData({
 				id: userInfo.id,
 				username: userInfo.username,
@@ -144,7 +144,7 @@ function NavBar() {
 							</Link>
 						</li>
 						{isAuthenticated && flag && !userNow.username ? exists() : ""}
-						{loggedUser && flagLogged && !userNow.username ? loginUser() : ""}
+						{userInfo && flagLogged && !userNow.username ? loginUser() : ""}
 						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
 								items={[
