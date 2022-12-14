@@ -143,7 +143,7 @@ function NavBar() {
 								<h3>Home</h3>
 							</Link>
 						</li>
-						{isAuthenticated && flag && !userNow.username ? exists() : ""}
+						{isAuthenticated && flag && allUsers.length > 1 && !userNow.username ? exists() : ""}
 						{userInfo && flagLogged && !userNow.username ? loginUser() : ""}
 						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
