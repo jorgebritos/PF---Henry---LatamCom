@@ -43,13 +43,16 @@ const Validate = (input) => {
 const UpdateProfile = (props) => {
 	const user = useSelector((state) => state.user);
 	const userNow = user.id ? user : JSON.parse(localStorage.getItem('userInfo'));
-	const allUsers = useSelector((state)=>state.allUsers)
+	const allUsers = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
 	const history = useHistory();
-	console.log("USERNOW",userNow)
+	console.log('USERNOW', userNow);
 	const [input, setInput] = useState({
 		firstname: userNow.name.split(' ', 1).join(),
-		lastname: userNow.name.split(' ').slice(1).join(" "),
+		lastname: userNow.name
+			.split(' ')
+			.slice(1)
+			.join(' '),
 		password: '',
 		confirm_password: '',
 		email: userNow.email,
@@ -66,9 +69,9 @@ const UpdateProfile = (props) => {
 		username: '',
 	});
 	const [loading, setLoading] = useState(false);
-	
-	const dataUser = allUsers.find((e)=> e.id === user.id)
-	const passwordUser = dataUser.password
+
+	const dataUser = allUsers.find((e) => e.id === user.id);
+	const passwordUser = dataUser.password;
 
 	const introduceData = (event) => {
 		event.preventDefault();
@@ -114,7 +117,7 @@ const UpdateProfile = (props) => {
 	const submitData = (event) => {
 		event.preventDefault();
 		try {
-			if(input.password === passwordUser){
+			if (input.password === passwordUser) {
 				const newDates = {
 					firstname: input.firstname,
 					lastname: input.lastname,
@@ -134,19 +137,14 @@ const UpdateProfile = (props) => {
 					admin: userNow.admin,
 					jwt: loggedUserJWT,
 				};
-	
+
 				dispatch(setUserData(userLocal))
 					.then(dispatch(updateUser(newDates)))
 					.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
 					.then(history.push('/profile/success'));
+			} else {
+				alert('Incorrect Password');
 			}
-			else{
-				alert(
-					"Incorrect Password"
-				)
-			}
-			
-				
 		} catch (error) {
 			alert(error.message);
 		}
@@ -154,11 +152,11 @@ const UpdateProfile = (props) => {
 	/////////////////////////////////////////////
 
 	// Visibility of password ///////////////////
-	const visibility = (e)=>{
+	const visibility = (e) => {
 		const { checked } = e.target;
-		const contraseña = document.getElementById("seePassword")
-		checked === true ? contraseña.type = "" : contraseña.type = "password"
-	}
+		const contraseña = document.getElementById('seePassword');
+		checked === true ? (contraseña.type = '') : (contraseña.type = 'password');
+	};
 	/////////////////////////////////////////////
 
 	if (!userNow) {
@@ -238,12 +236,11 @@ const UpdateProfile = (props) => {
 								name='file'
 								accept='image/*'
 								autoComplete='off'
-								onChange={uploadImage}>
-							</input>
+								onChange={uploadImage}></input>
 							{loading ? (
 								<h4>Uploading image...</h4>
 							) : input.profile_image !== null &&
-								userNow.picture === input.profile_image ? (
+							  userNow.picture === input.profile_image ? (
 								<div>
 									<p>You will keep the same picture</p>
 								</div>
@@ -283,8 +280,8 @@ const UpdateProfile = (props) => {
 							<input
 								className={s.input}
 								name='password'
-								id = "seePassword"
-								type="password"
+								id='seePassword'
+								type='password'
 								value={input.password}
 								autoComplete='off'
 								onChange={introduceData}
@@ -292,17 +289,19 @@ const UpdateProfile = (props) => {
 						</div>
 						<br />
 						<div>
-							<input
-								className={s.inputC}
-								type={'checkbox'}
-								name='seePassword'
-								onChange={(e) => visibility(e)}
-							/>
-							<span className={s.spanC}>See password</span>
+							<label className={s.labelC}>
+								<input
+									className={s.inputC}
+									type={'checkbox'}
+									name='seePassword'
+									onChange={(e) => visibility(e)}
+								/>
+								<span className={s.spanC}>See password</span>
+							</label>
 						</div>
 						<br />
 						<div className={s.div}>
-							<button className={s.btn} type='submit' id='sendButtom' >
+							<button className={s.btn} type='submit' id='sendButtom'>
 								SEND
 							</button>
 						</div>
