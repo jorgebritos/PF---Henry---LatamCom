@@ -109,6 +109,7 @@ function NavBar() {
 
 	function search(e) {
 		dispatch(newSearch(''));
+		
 	}
 
 	return (
@@ -134,7 +135,9 @@ function NavBar() {
 									{ anchor: 'Create Category', slug: '/create/categories' },
 									{ anchor: 'Create Product', slug: '/create/product' },
 									{ anchor: 'Update Product', slug: '/update' },
-									{ anchor: 'Purchases', slug: '/dashboard' }
+									{ anchor: 'Purchases', slug: '/dashboard' },
+									{ anchor: 'Reported Comments', slug: '/reportedcomments' },
+									{ anchor: 'Items Out Of Stock', slug: '/outofstock' },
 								]}
 								dropdownTitle='DASHBOARD'
 							/>

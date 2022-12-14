@@ -28,6 +28,8 @@ import Success from './components/NavBar/login/Profile/Success';
 import MyChatBot from './components/home/ChatBot/ChatBot.jsx';
 import PurchasesAdmin from './components/dashboard/PurchasesAdmin/PurchasesAdmin';
 import PrivateRoute from './components/PrivateRoute';
+import ReportedComments from './components/dashboard/ReportedComments/ReportedComments';
+import OutOfStock from './components/dashboard/OutOfStock/OutOfStock';
 
 function App() {
 	let location = useLocation();
@@ -123,6 +125,19 @@ function App() {
 				component={PurchasesAdmin}
 				isAllowed={isAllowed && userNow.admin}
 			/>
+			
+			<PrivateRoute
+				path='/reportedcomments'
+				component={ReportedComments}
+				isAllowed={isAllowed && userNow.admin}
+			/>
+			
+			<PrivateRoute
+				path='/outofstock'
+				component={OutOfStock}
+				isAllowed={isAllowed && userNow.admin}
+			/>
+
 			<PrivateRoute
 				exact
 				path='/profile'
