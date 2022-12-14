@@ -74,6 +74,8 @@ function LoginRegister({ items = [] }) {
 				localStorage.removeItem("loggedUserJWT");
 				localStorage.removeItem("loggedUser");
 				localStorage.removeItem("userInfo");
+				localStorage.removeItem("total");
+				localStorage.removeItem("cart");
 				logout();
 				history.push('/home');
 			} else {
