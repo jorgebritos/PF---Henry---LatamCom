@@ -82,9 +82,19 @@ export default function MyChatBot() {
                         message: `Puedes disfrutar de toda la experiencia después de ingresar tus datos para iniciar sesión haciendo click en el 'Login' de la parte superior de nuestra página o en el siguiente botón🤗`,
                         trigger: "6b"
                       },
+                      // {
+                      //   id:"6b",
+                      //   component: (<div><Link to="/LoginForm"><button className={s.btn}>Login</button></Link> </div>),
+                      //   trigger: "1a"
+                      // },
                       {
-                        id:"6b",
-                        component: (<div><Link to="/LoginForm"><button className={s.btn}>Login</button></Link> </div>),
+                        id:"6a",
+                        message: `Una vez dentro elige el producto que mas te guste y añadelo al carrito!`,
+                        trigger: "6c"
+                      },
+                      {
+                        id:"6c",
+                        message: `Ya con el producto en el carrito es momento de realizar la compra!`,
                         trigger: "1a"
                       },
                       {
