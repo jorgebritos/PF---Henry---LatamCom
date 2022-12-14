@@ -13,6 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getAllUsers, createUser } from '../../../redux/actions';
 import { useEffect } from 'react';
 import { setUserData } from '../../../redux/actions';
+import Swal from 'sweetalert2';
 
 function NavBar() {
 	const dispatch = useDispatch();
@@ -46,6 +47,11 @@ function NavBar() {
 			let { email } = user
 			dispatch(authTokenRouterLog({ email, password: email, confirm: true }))
 		} else {
+			Swal.fire({
+			title: 'Loged in!',
+			icon: 'success'
+		}).then((result) => {
+			if (result.isConfirmed) {
 			let { email, given_name, family_name, nickname } = user
 			let data = {
 				email,
@@ -58,7 +64,8 @@ function NavBar() {
 			window.location.reload()
 		}
 		setFlag(!flag)
-	}
+	});
+	}}
 
 	const loginUser = () => {
 		console.log("userInfo", userInfo)
