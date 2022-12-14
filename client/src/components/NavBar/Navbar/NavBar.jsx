@@ -27,6 +27,19 @@ function NavBar() {
 	const [flag, setFlag] = useState(true)
 	const [flagLogged, setFlagLogged] = useState(true)
 
+	// Renderización de favoritos //////////////////////
+	const [renderFavorites,setrenderFavorites] = useState(0)
+	
+	if(allUsers.length && renderFavorites === 0){
+		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === userNow.email)[0] : {}
+		if (exist) {
+			let { email, password } = exist
+			dispatch(authTokenRouterLog({ email, password, confirm: true }))
+			setrenderFavorites(1)
+		}
+	}
+	////////////////////////////////////////////////////
+
 	const exists = () => {
 		let exist = allUsers.length > 0 ? allUsers.filter((u) => u.email === user.email)[0] : {}
 		if (exist) {
@@ -64,7 +77,10 @@ function NavBar() {
 	}
 	useEffect(() => {
 		dispatch(getAllUsers());
+
 	}, [dispatch]);
+
+	
 
 	// useEffect(() => {
 	// 	const autenticarUsuario = () => {

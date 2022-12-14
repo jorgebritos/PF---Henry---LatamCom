@@ -151,16 +151,16 @@ export function getUser(id) {
         })
     }
 }
-
-export function getFavorites(id) {
-    return async function (dispatch) {
-        const favorites = await axios.get(`http://localhost:3001/favorites/${id}`)
-        dispatch({
-            type: GET_FAVORITES,
-            payload: favorites.data
-        })
-    }
-}
+// No existe
+// export function getFavorites(id) {
+//     return async function (dispatch) {
+//         const favorites = await axios.get(`http://localhost:3001/favorites/${id}`)
+//         dispatch({
+//             type: GET_FAVORITES,
+//             payload: favorites.data
+//         })
+//     }
+// }
 
 export function getAllCategories() {
     return async function (dispatch) {
