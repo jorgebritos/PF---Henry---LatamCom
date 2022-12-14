@@ -21,6 +21,7 @@ const ProductShopCart = () => {
 		setProductsSelected(cart);
 		let cant = cart;
 		totalAccount(cant);
+		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
