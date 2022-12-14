@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, /*useRef*/ } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { authTokenRouterLog } from '../../../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import logoSimbolo from '../../../../asset/logoS.png';
 import s from './LoginForm.module.css';
+// import {ReCAPTCHA} from "react-google-recaptcha";
 // import { setUserData } from '../../../../redux/actions';
 
 // import queryString from 'query-string';
 
 export const LoginForm = ({ location }) => {
-
+	// const captcha = useRef(null);
+	// const [captchaValido, setCaptchaValido]= useState(null);
+	// const [userValido, setUserValido]= useState(false);
 	const { isLoading, loginWithRedirect } = useAuth0();
 	const history = useHistory();
 	const logg = useSelector((state) => state.login);
@@ -23,6 +26,13 @@ export const LoginForm = ({ location }) => {
 		password:""
 	})
 
+	// function onChange(value) {
+	// 	if(captcha.current.getValue()){
+	// 		console.log("el usuario no es un robot")
+	// 		setCaptchaValido(true);
+	// 	}
+		
+	//   }
 	
 	useEffect (()=>{
 		if(logg.length>1){
@@ -98,6 +108,13 @@ export const LoginForm = ({ location }) => {
 		e.preventDefault();
 /* 		const value = e.target.value;
 		const property = e.target.name; */
+		// if(captcha.current.getValue()){
+		// 	setUserValido(true);
+		// 	setCaptchaValido(true);
+		// }else{
+		// 	setUserValido(false);
+		// 	setCaptchaValido(false);
+		// }
 
 		/* 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value })); */
@@ -128,6 +145,7 @@ export const LoginForm = ({ location }) => {
 	
 		<div className={s.back_ground}>
 			<h1 className={s.form_title}>LOG IN WITH</h1>
+			{/* {!userValido && */}
 			<div className={s.conten_form}>
 				<div className={s.cont}>
 					<img src={logoSimbolo} alt='Logo simbolo' height={'40px'} />
@@ -152,6 +170,14 @@ export const LoginForm = ({ location }) => {
 							placeholder=' Password..'
 						/>
 					</div>
+					{/* <div className="recaptcha"> */}
+					{/* <ReCAPTCHA
+					ref={captcha}
+    				sitekey="6LcN83ojAAAAAO2-qushcDrZc9ji3UhAhMP9NV4Z"
+					onChange={onChange}
+						/>
+					</div>
+					{captchaValido === false && <div className='error-captcha'>Please accept Captcha!</div>} */}
 					<br />
 					<button
 						className={s.btn}
@@ -176,6 +202,7 @@ export const LoginForm = ({ location }) => {
 					</button>
 				</div>
 			</div>
+			{/* } */}
 		</div>
 	);
 };
