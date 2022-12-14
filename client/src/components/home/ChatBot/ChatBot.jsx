@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ChatBot from 'react-simple-chatbot'
 import s from './ChatBot.module.css'
 import { ThemeProvider } from 'styled-components' //La documentación recomienda usar style components
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
 
 
@@ -20,7 +21,9 @@ const theme = {
 };
 
 export default function MyChatBot() {
+      const userC = useSelector((state)=> state.user)
 
+      useEffect(()=>{},[userC])
       return (
         <div>
           <ThemeProvider theme={theme}>
@@ -30,10 +33,13 @@ export default function MyChatBot() {
                 floating='true'
                 width='300px'
                 botDelay={2000}
+                userAvatar={userC.picture?userC.picture:''}
+                hideUserAvatar={userC.picture?false:true}
+                  
                   steps={[
                     {
                         id: '0',
-                        message: 'Hola!, Latamcom te manda un saludo 👋',
+                        message: `Hola${userC.name?`, ${userC.name.split(' ')[0]}`:''}!, Latamcom te manda un saludo 👋`,
                         trigger: '1',
                     },
                       {
