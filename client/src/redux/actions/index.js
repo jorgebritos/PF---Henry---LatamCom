@@ -242,7 +242,9 @@ export async function reportComment(payload) {
 
 export function authTokenRouterLog(payload) {
     return async function (dispatch) {
+        let logged = payload.logged
         const json = await axios.post('http://localhost:3001/login/loginForm', payload)
+        window.localStorage.setItem('loggedUser', JSON.stringify(logged));
         // console.log(json);
         dispatch({
             type: POST_AUTHTOKENROUTERLOG,
