@@ -98,7 +98,7 @@ const CreateUser = () => {
 			console.log(files);
 			setErrors({
 				...errors,
-				[e.target.name]: 'Debes usar un formato de imagen válido',
+				[e.target.name]: 'It must be a valid format',
 			});
 		} else {
 			console.log(files);
@@ -130,27 +130,30 @@ const CreateUser = () => {
 	//------------------------------Controllers Form---------------------------------
 
 	function controllerFormFirstname(event) {
-		if (event.target.value.length < 4) {
-			return 'Solo se admite un min. de 3 caracteres';
+		if (event.target.value.length < 1) {
+			return 'It must contain at least 1 character';
 		}
 		if (event.target.value.length > 30) {
-			return 'Solo se permite un max. de 30 caracteres';
+			return 'It can not exceed 30 characters';
+		}
+		if(event.target.value.includes(" ")){
+			return 'It only admit one name'
 		}
 		if (!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
-			return 'Solo se permiten letras';
+			return 'It only admit letters';
 		}
 		return '';
 	}
 
 	function controllerFormLastname(event) {
-		if (event.target.value.length < 5) {
-			return 'Solo se admite un min. de 4 caracteres';
+		if (event.target.value.length < 1) {
+			return 'It must contain at least 1 character';
 		}
 		if (event.target.value.length > 30) {
-			return 'Solo se permite un max. de 30 caracteres';
+			return 'It can not exceed 30 characters';
 		}
 		if (!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
-			return 'Solo se permiten letras';
+			return 'It only admit letters';
 		}
 		return '';
 	}
@@ -161,23 +164,29 @@ const CreateUser = () => {
 				event.target.value,
 			)
 		) {
-			return 'Esto no es un email';
+			return 'Please, enter a valid email';
 		}
 		return '';
 	}
 
 	function controllerFormUsername(event) {
-		if (event.target.value.length < 3) {
-			return 'Solo se admite un min. de 3 caracteres';
+		if(event.target.value.length < 1){
+			return 'It can not be empty'
 		}
+
 		if (event.target.value.length > 30) {
-			return 'Solo se permite un max. de 30 caracteres';
+			return 'It can not exceed 30 characters';
 		}
-		if (
-			!/^([A-Z()_ÁÉÍÓÚÑ0-9-]* [A-Z()_ÁÉÍÓÚÑ 0-9-]*)$/i.test(event.target.value)
-		) {
-			return 'Solo se admiten letras, uso de tilde y caracteres como: " (, ), -, _ " ';
+		
+		return '';
+	}
+	
+	function controllerFormPassword(event) {
+		
+		if (event.target.value.length < 4) {
+			return 'It must have at least 4 characters';
 		}
+		
 		return '';
 	}
 
@@ -337,6 +346,21 @@ const CreateUser = () => {
 
 				break;
 			case 'password':
+				setErrors({
+					...errors,
+					[event.target.name]: '',
+				});
+
+				setInput({
+					...input,
+					password: event.target.value,
+				});
+				if (controllerFormPassword(event).length > 0) {
+					setErrors({
+						...errors,
+						password: controllerFormPassword(event),
+					});
+				}
 				break;
 
 			default:
@@ -354,7 +378,7 @@ const CreateUser = () => {
 
 	///////////////////////////////////////////////////////
 
-	// Post Product /////////////////////////////
+	// Create user /////////////////////////////
 	const submitData = async (event) => {
 		event.preventDefault();
 		console.log(input);
@@ -368,12 +392,12 @@ const CreateUser = () => {
 			console.log('check: ', checkErrors.length);
 			if (Object.keys(errors).length === 6 && checkErrors.length === 6) {
 				await dispatch(createUser(input)).then(history.push('/home'));
-				alert('Usuario creado');
+				alert('User created');
 			} else if (Object.keys(errors).length < 6) {
 				console.log(checkErrors);
-				alert('El formulario está incompleto');
+				alert('The form in incomplete');
 			} else {
-				alert('Hay errores en el formulario');
+				alert('There are errors in the form');
 			}
 		} catch (error) {
 			alert(
@@ -382,6 +406,15 @@ const CreateUser = () => {
 		}
 	};
 	/////////////////////////////////////////////
+
+	// Visibility of password ///////////////////
+	const visibility = (e)=>{
+		const { checked } = e.target;
+		const contraseña = document.getElementById("seePassword")
+		checked === true ? contraseña.type = "" : contraseña.type = "password"
+	}
+	/////////////////////////////////////////////
+
 	//---------------------------Render--------------------------------
 	return (
 		<div className={s.cont}>
@@ -427,12 +460,13 @@ const CreateUser = () => {
 					<br />
 
 					<div className={s.contl}>
-						<label className={s.label}>*P. Image: </label>
+						<label className={s.label}>P. Image: </label>
 						<input
 							className={s.input}
 							name='profile_image'
 							onChange={uploadImage}
 							autoComplete='off'
+							accept='image/*'
 							type='file'></input>
 						{errors.profile_image && <p>{errors.profile_image}</p>}
 						{loading ? (
@@ -465,13 +499,23 @@ const CreateUser = () => {
 						<input
 							className={s.input}
 							name='password'
+							id="seePassword"
 							value={input.password}
+							type="password"
 							onChange={introduceData}
 							autoComplete='off'></input>
 						{errors.password && <p>{errors.password}</p>}
 					</div>
-
 					<br />
+					<div>
+						<input
+							className={s.inputC}
+							type={'checkbox'}
+							name='seePassword'
+							onChange={(e) => visibility(e)}
+						/>
+						<span className={s.spanC}>See password</span>
+					</div>
 
 					<br />
 

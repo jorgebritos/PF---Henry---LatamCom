@@ -46,13 +46,10 @@ const UpdateProfile = (props) => {
 	const allUsers = useSelector((state)=>state.allUsers)
 	const dispatch = useDispatch();
 	const history = useHistory();
-	
+	console.log("USERNOW",userNow)
 	const [input, setInput] = useState({
 		firstname: userNow.name.split(' ', 1).join(),
-		lastname: userNow.name
-		.split(' ')
-			.slice(1)
-			.join(),
+		lastname: userNow.name.split(' ').slice(1).join(" "),
 		password: '',
 		confirm_password: '',
 		email: userNow.email,

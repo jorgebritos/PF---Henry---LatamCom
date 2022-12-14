@@ -177,6 +177,7 @@ const CreateProduct = () => {
 							name='file'
 							onChange={uploadImage}
 							autoComplete='off'
+							accept='image/*'
 							type='file'></input>
 						{errors.image && <p>{errors.image}</p>}
 						{loading ? (
