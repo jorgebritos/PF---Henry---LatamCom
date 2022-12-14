@@ -136,8 +136,8 @@ const CreateUser = () => {
 		if (event.target.value.length > 30) {
 			return 'It can not exceed 30 characters';
 		}
-		if(event.target.value.includes(" ")){
-			return 'It only admit one name'
+		if (event.target.value.includes(' ')) {
+			return 'It only admit one name';
 		}
 		if (!/^[A-Z ÁÉÍÓÚÑ]*$/i.test(event.target.value)) {
 			return 'It only admit letters';
@@ -170,23 +170,22 @@ const CreateUser = () => {
 	}
 
 	function controllerFormUsername(event) {
-		if(event.target.value.length < 1){
-			return 'It can not be empty'
+		if (event.target.value.length < 1) {
+			return 'It can not be empty';
 		}
 
 		if (event.target.value.length > 30) {
 			return 'It can not exceed 30 characters';
 		}
-		
+
 		return '';
 	}
-	
+
 	function controllerFormPassword(event) {
-		
 		if (event.target.value.length < 4) {
 			return 'It must have at least 4 characters';
 		}
-		
+
 		return '';
 	}
 
@@ -408,11 +407,11 @@ const CreateUser = () => {
 	/////////////////////////////////////////////
 
 	// Visibility of password ///////////////////
-	const visibility = (e)=>{
+	const visibility = (e) => {
 		const { checked } = e.target;
-		const contraseña = document.getElementById("seePassword")
-		checked === true ? contraseña.type = "" : contraseña.type = "password"
-	}
+		const contraseña = document.getElementById('seePassword');
+		checked === true ? (contraseña.type = '') : (contraseña.type = 'password');
+	};
 	/////////////////////////////////////////////
 
 	//---------------------------Render--------------------------------
@@ -499,22 +498,24 @@ const CreateUser = () => {
 						<input
 							className={s.input}
 							name='password'
-							id="seePassword"
+							id='seePassword'
 							value={input.password}
-							type="password"
+							type='password'
 							onChange={introduceData}
 							autoComplete='off'></input>
 						{errors.password && <p>{errors.password}</p>}
 					</div>
 					<br />
 					<div>
-						<input
-							className={s.inputC}
-							type={'checkbox'}
-							name='seePassword'
-							onChange={(e) => visibility(e)}
-						/>
-						<span className={s.spanC}>See password</span>
+						<label className={s.labelC}>
+							<input
+								className={s.inputC}
+								type={'checkbox'}
+								name='seePassword'
+								onChange={(e) => visibility(e)}
+							/>
+							<span className={s.spanC}>See password</span>
+						</label>
 					</div>
 
 					<br />
