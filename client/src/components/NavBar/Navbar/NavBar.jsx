@@ -49,6 +49,7 @@ function NavBar() {
 
 	const loginUser = () => {
 		console.log("userInfo", userInfo)
+		console.log(loggedUser)
 		if (loggedUser) {
 			dispatch(setUserData({
 				id: userInfo.id,

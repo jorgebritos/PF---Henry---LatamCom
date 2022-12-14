@@ -105,7 +105,7 @@ function App() {
 			<PrivateRoute
 				path='/contact/messagesended'
 				component={messageSended}
-				isAllowed={userNow.admin}
+				isAllowed={isAllowed}
 			/>
 			<PrivateRoute
 				path='/create/product'

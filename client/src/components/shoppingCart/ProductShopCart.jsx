@@ -5,7 +5,7 @@ import s from './ProductShopCart.module.css';
 import { putLocalstorage } from '../../redux/actions';
 
 const ProductShopCart = () => {
-	const [total, setTotal] = useState(0);
+	const [total, setTotal] = useState(0.00);
 	const [productsSelected, setProductsSelected] = useState([]);
 	const history = useHistory();
 	const dispatch = useDispatch();

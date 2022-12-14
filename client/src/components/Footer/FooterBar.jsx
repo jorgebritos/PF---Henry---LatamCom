@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './FooterBar.module.css';
 import logoS from '../../asset/logoS.png';
+import { Link } from 'react-router-dom';
 
 export default function FooterBar() {
 	return (
@@ -9,9 +10,7 @@ export default function FooterBar() {
 				<div>
 					<img src={logoS} alt='' height={'55px'} />
 				</div>
-				<a className={s.a} href='/contact'>
-					Contact
-				</a>
+				<Link className={s.a} to={'/contact'}>Contact</Link>
 				<div>
 					<p>&copy; 2022 LatamCom, Inc</p>
 				</div>
