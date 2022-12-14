@@ -5,7 +5,7 @@ import s from './ProductShopCart.module.css';
 import { putLocalstorage } from '../../redux/actions';
 
 const ProductShopCart = () => {
-	const [total, setTotal] = useState(0);
+	const [total, setTotal] = useState(0.00);
 	const [productsSelected, setProductsSelected] = useState([]);
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const ProductShopCart = () => {
 		setProductsSelected(cart);
 		let cant = cart;
 		totalAccount(cant);
+		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
@@ -101,6 +102,7 @@ const ProductShopCart = () => {
 					'total',
 					JSON.stringify(cant[0].price * cant[0].amount),
 				);
+				console.log(cant[0].price * cant[0].amount);
 			}
 
 			if (cant.length > 1) {
@@ -116,13 +118,14 @@ const ProductShopCart = () => {
 			setTotal(0);
 			localStorage.setItem('total', JSON.stringify(0));
 		}
+		console.log(total);
 	};
 	///////////////////////////////////////
 
 	// Comprar items: agregado localStorage
 	const buyItems = (event) => {
 		event.preventDefault();
-		localStorage.setItem('total', JSON.stringify(parseInt(total)));
+		localStorage.setItem('total', JSON.stringify(parseFloat(total)));
 		history.push('/buyproducts');
 	};
 	///////////////////////////////////////

@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components' //La documentación recomienda
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
-
+//const user = useSelector((state) => state.user)
 
 //const theme = {} //tambien recomienda usar un objeto para añadir los estilos
 const theme = {

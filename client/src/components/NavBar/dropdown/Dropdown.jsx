@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getAllReported } from "../../../redux/actions";
 import {
     dropdown_wrapper,
     dropdown_activator,
@@ -9,11 +11,17 @@ import {
 } from "./dropdown.module.css";
 
 function Dropdown({ items = [], dropdownTitle }) {
+    const dispatch = useDispatch()
     const activatorRef = useRef(null);
     const dropdownListRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
+    const reportComment = useSelector((state)=> state.reportedComments)
+    const allProducts = useSelector((state) => state.allProducts);
+	const outOfStock =
+		allProducts.length > 0 ? allProducts.filter((p) => p.stock === 0) : [];
 
     const clickHandler = () => {
+        
         setIsOpen(!isOpen);
     };
 
@@ -38,14 +46,18 @@ function Dropdown({ items = [], dropdownTitle }) {
     };
 
     useEffect(() => {
+        dispatch(getAllReported())
         if (isOpen) {
             dropdownListRef.current.querySelector("a").focus();
             document.addEventListener("mousedown", clickOutsideHandler);
+            
         } else {
             document.addEventListener("mousedown", clickOutsideHandler);
         }
+        
+        // eslint-disable-next-line
     }, [isOpen]);
-
+    console.log(reportComment);
     return (
         <div className={dropdown_wrapper} onKeyUp={keyHandler}>
             <button
@@ -87,7 +99,9 @@ function Dropdown({ items = [], dropdownTitle }) {
                 {items.map((item, index) => {
                     return (
                         <li className={item_list} key={index}>
-                            <Link to={item.slug} onClick={e => setIsOpen(!isOpen)} style={{ "cursor": "pointer" }}>{item.anchor}</Link>
+                            <Link to={item.slug} onClick={e => setIsOpen(!isOpen)} style={{ "cursor": "pointer" }}>{item.anchor==='Reported Comments'&&reportComment.length?`${item.anchor} !!!`:
+                            item.anchor==='Items Out Of Stock'&&outOfStock.length?`${item.anchor} !!!`:
+                            item.anchor}</Link>
                         </li>
                     );
                 })}

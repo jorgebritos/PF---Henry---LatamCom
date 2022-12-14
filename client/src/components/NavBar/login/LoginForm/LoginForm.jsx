@@ -18,12 +18,12 @@ export const LoginForm = ({ location }) => {
 	const history = useHistory();
 	const logg = useSelector((state) => state.login);
 	const dispatch = useDispatch();
-	const user1 = useSelector((state)=> state.user)
+	const user1 = useSelector((state) => state.user)
 	// const loggedUserJWT =JSON.parse( localStorage.getItem('loggedUserJWT'));
 	// const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
 	const [logged, setLogin] = useState({
-		email:"",
-		password:""
+		email: "",
+		password: ""
 	})
 
 	// function onChange(value) {
@@ -31,20 +31,20 @@ export const LoginForm = ({ location }) => {
 	// 		console.log("el usuario no es un robot")
 	// 		setCaptchaValido(true);
 	// 	}
-		
+
 	//   }
-	
-	useEffect (()=>{
-		if(logg.length>1){
+
+	useEffect(() => {
+		if (logg.length > 1) {
 			window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
 			window.localStorage.setItem("userInfo", JSON.stringify(user1))
 			history.push("/home")
 		}
-		if(user1.length>1){
+		if (user1.length > 1) {
 			history.push("/home")
 		}
 	})
-	
+
 	// useEffect(() => {
 	// 	const autenticarUsuario = () => {
 	// 		if(isAuthenticated){
@@ -58,7 +58,7 @@ export const LoginForm = ({ location }) => {
 	// 			name: googleUser.given_name,
 	// 			email:googleUser.email,
 	// 		}))}
-			
+
 	// 	  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 	// 	  console.log("userInfo", userInfo)
 	// 	  if(loggedUser) {
@@ -76,7 +76,7 @@ export const LoginForm = ({ location }) => {
 
 	// 	autenticarUsuario();
 	//   }, [dispatch, isAuthenticated,loggedUserJWT,loggedUser, user]);
-	
+
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
@@ -106,8 +106,8 @@ export const LoginForm = ({ location }) => {
 
 	function confirmUser(e) {
 		e.preventDefault();
-/* 		const value = e.target.value;
-		const property = e.target.name; */
+		/* 		const value = e.target.value;
+				const property = e.target.name; */
 		// if(captcha.current.getValue()){
 		// 	setUserValido(true);
 		// 	setCaptchaValido(true);
@@ -119,10 +119,10 @@ export const LoginForm = ({ location }) => {
 		/* 		setInput({ ...input, [property]: value });
 		setErrors(validateInput({ ...input, [property]: value })); */
 		// seeUser();
-		dispatch(authTokenRouterLog({ ...logged, confirm: true }));
+		dispatch(authTokenRouterLog({ ...logged, confirm: true, logged: logged }));
 
 		//   console.log(a)
-		window.localStorage.setItem('loggedUser', JSON.stringify(logged));
+
 
 		// console.log(`logg despues del dispatch: ${logg}`);
 		// console.log(`user1: ${user1}`);
@@ -130,19 +130,20 @@ export const LoginForm = ({ location }) => {
 			alert('La contraseña es incorrecta');
 		} else {
 			setLogin({ email: '', password: '', admin: '' });
+			// alert('El usuario no existe')
 		}
 	}
-	
+
 	// if(logg){
 	// 	window.localStorage.setItem("loggedUserJWT", JSON.stringify(logg))
 	// 	history.push("/home")
 	// }
 	// console.log("antes del if:" + logg)
-	
-	
+
+
 
 	return (
-	
+
 		<div className={s.back_ground}>
 			<h1 className={s.form_title}>LOG IN WITH</h1>
 			{/* {!userValido && */}

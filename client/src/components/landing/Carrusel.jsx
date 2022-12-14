@@ -24,9 +24,9 @@ export default function Carrusel({ products }) {
 	const country = navigator.geolocation;
 
 	const countries = {
-		co: colombia,
-		ar: argentina,
-		uy: uruguay,
+		CO: colombia,
+		AR: argentina,
+		UY: uruguay,
 		latamcom: latamcom,
 	};
 
@@ -76,11 +76,11 @@ export default function Carrusel({ products }) {
 			) : (
 				<></>
 			)}
-			{geoloc.hasOwnProperty("country_code") ? (
+			{geoloc.hasOwnProperty("ISO_3166-1_alpha-2")&&countries[geoloc["ISO_3166-1_alpha-2"]] ? (
 				<div>
 					<img
-						src={countries[geoloc.country_code.toLowerCase()]}
-						alt={geoloc["ISO_3166-1_alpha-2"].toLowerCase()}
+						src={countries[geoloc["ISO_3166-1_alpha-2"]]}
+						alt={geoloc["ISO_3166-1_alpha-2"]}
 						className={s.imglatm}
 					/>
 				</div>
