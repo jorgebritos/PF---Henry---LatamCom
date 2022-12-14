@@ -23,7 +23,7 @@ export default function PurchasesAdmin() {
 		dispatch(getAllPurchases());
 		dispatch(getAllProducts());
 		dispatch(getAllReported());
-	}, [dispatch]);
+	}, [reportedComments,dispatch]);
 
 	let totalIncome = () => {
 		if (allPurchases.length > 0) {
