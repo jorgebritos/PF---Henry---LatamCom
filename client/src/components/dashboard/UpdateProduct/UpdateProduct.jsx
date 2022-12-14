@@ -54,7 +54,8 @@ function UpdateProduct() {
 		dispatch(updateProduct(productoSeleccionado));
 		dispatch(getAllProducts());
 		abrirCerrarModalEditar();
-		window.scrollTo(0, 0);
+		window.location.reload();
+		// window.scrollTo(0, 0);
 	};
 
 	const handleDelete = () => {
@@ -62,7 +63,8 @@ function UpdateProduct() {
 		dispatch(deleteProduct(productoSeleccionado.id));
 		dispatch(getAllProducts());
 		abrirCerrarModalEliminar();
-		window.scrollTo(0, 0);
+		window.location.reload();
+		// window.scrollTo(0, 0);
 	};
 
 	const handleChange = (e) => {
@@ -188,9 +190,9 @@ function UpdateProduct() {
 	);
 
 	return (
-		<div className={s.contenedor}>
+		<div className={s.back_ground}>
 			<h1 className={s.h1}>UpdateProduct</h1>
-			<div>
+			<div className={s.contenedor}>
 				<TableContainer>
 					<Table className={s.table}>
 						<TableHead>
@@ -214,7 +216,7 @@ function UpdateProduct() {
 									<TableRow key={e.id}>
 										<TableCell>{e.name}</TableCell>
 										<TableCell>{e.description}</TableCell>
-										<TableCell>{e.image}</TableCell>
+										<TableCell width={'20px'}>{e.image}</TableCell>
 										<TableCell>{e.price}</TableCell>
 										<TableCell>{e.stock}</TableCell>
 										<TableCell>{e.amountSold}</TableCell>

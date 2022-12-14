@@ -4,7 +4,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: calc(100vh - 163px);
+	min-height: calc(100vh - 163px);
 	background-color: #f5f5f5;
 	color: whitesmoke;
 }

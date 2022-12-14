@@ -130,9 +130,10 @@ function NavBar() {
 						{(isAuthenticated && userNow.admin) || userNow.admin ? (
 							<Dropdown
 								items={[
+									{ anchor: 'Create Category', slug: '/create/categories' },
 									{ anchor: 'Create Product', slug: '/create/product' },
 									{ anchor: 'Update Product', slug: '/update' },
-									{ anchor: 'Purchases', slug: '/dashboard' },
+									{ anchor: 'Purchases', slug: '/dashboard' }
 								]}
 								dropdownTitle='DASHBOARD'
 							/>

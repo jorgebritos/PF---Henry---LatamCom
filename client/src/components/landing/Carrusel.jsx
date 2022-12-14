@@ -24,13 +24,13 @@ export default function Carrusel({ products }) {
 	const country = navigator.geolocation;
 
 	const countries = {
-		co: colombia,
-		ar: argentina,
-		uy: uruguay,
+		CO: colombia,
+		AR: argentina,
+		UY: uruguay,
 		latamcom: latamcom,
 	};
 
-    // eslint-disable-next-line
+	// eslint-disable-next-line
 	const coordenadas = async (posicion) => {
 		dispatch(getGeoPosition(posicion));
 	};
@@ -40,59 +40,60 @@ export default function Carrusel({ products }) {
 	};
 
 	useEffect(() => {
-		dispatch(filterByRating(products));
+		let newProducts = [...products]
+		dispatch(filterByRating(newProducts));
 		country.getCurrentPosition(coordenadas, error)
-        // eslint-disable-next-line
+		// eslint-disable-next-line
 	}, [products]);
-	
+
 	return (
 		// <div className={s.carrusel}>
-			<Carousel key={'RC1'}
-				className={s.const}
-				showThumbs={false}
-				showArrows={false}
-				showStatus={false}
-				showIndicators={false}
-				infiniteLoop={true}
-				useKeyboardArrows={true}
-				autoPlay={true}
-				stopOnHover={true}
-				swipeable={true}
-				dynamicHeight={false}
-				emulateTouch={true}
-				autoFocus={true}
-                centerMode={true}
-                centerSlidePercentage={100}>
-				{result.length ? (
-					result.slice(0, 10).map((p) => (
-						<Link to={`/product/${p.id}`} key={`lcr${p.id}`}>
-                            <div key={`cr${p.id}`}>
-                                
-                                    <img className={s.img} src={p.image} alt={p.name} />
-                            </div>
-                        </Link>
-					))
-				) : (
-					<></>
-				)}
-				{geoloc.hasOwnProperty("country_code") ? (
-					<div>
-						<img
-							src={countries[geoloc.country_code.toLowerCase()]}
-							alt={geoloc["ISO_3166-1_alpha-2"].toLowerCase()}
-                            className={s.imglatm}
-						/>
-					</div>
-				) : (
-					<div>
-						<img
-							className={s.imglatm}
-							src={countries.latamcom}
-							alt='latamcom'
-						/>
-					</div>
-				)}
-			</Carousel>
+		<Carousel key={'RC1'}
+			className={s.const}
+			showThumbs={false}
+			showArrows={false}
+			showStatus={false}
+			showIndicators={false}
+			infiniteLoop={true}
+			useKeyboardArrows={true}
+			autoPlay={true}
+			stopOnHover={true}
+			swipeable={true}
+			dynamicHeight={false}
+			emulateTouch={true}
+			autoFocus={true}
+			centerMode={true}
+			centerSlidePercentage={100}>
+			{result.length ? (
+				result.slice(0, 10).map((p) => (
+					<Link to={`/product/${p.id}`} key={`lcr${p.id}`}>
+						<div key={`cr${p.id}`}>
+
+							<img className={s.img} src={p.image} alt={p.name} />
+						</div>
+					</Link>
+				))
+			) : (
+				<></>
+			)}
+			{geoloc.hasOwnProperty("ISO_3166-1_alpha-2")&&countries[geoloc["ISO_3166-1_alpha-2"]] ? (
+				<div>
+					<img
+						src={countries[geoloc["ISO_3166-1_alpha-2"]]}
+						alt={geoloc["ISO_3166-1_alpha-2"]}
+						className={s.imglatm}
+					/>
+				</div>
+			) : (
+				<div>
+					<img
+						className={s.imglatm}
+						src={countries.latamcom}
+						alt='latamcom'
+					/>
+				</div>
+			)}
+		</Carousel>
 		//</div>
 	);
 }

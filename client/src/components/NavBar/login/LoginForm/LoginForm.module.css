@@ -4,7 +4,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: calc(100vh - 163px);
+	min-height: calc(100vh - 13px);
 	background-color: #f5f5f5;
 	color: whitesmoke;
 }
@@ -114,3 +114,11 @@
 	margin-left: 10px;
 	font-size: medium;
 }
+
+/* .recaptcha {
+	margin-bottom: 20px;
+}
+.error-captcha {
+	color: red;
+	margin-bottom: 20px;
+} */

@@ -15,7 +15,8 @@ import {
     // LOCALSTORAGEUSERINFO,
     GET_ALL_PURCHASES,
     GET_USER_PURCHASES,
-    GET_ALL_REPORTED
+    GET_ALL_REPORTED,
+    CREATE_CATEGORIES
 } from "../actions"
 
 const initialState = {
@@ -38,7 +39,7 @@ const initialState = {
     createdPurchase: {},
     login: [],
     userPurchases: [],
-    geoposition:[],
+    geoposition: [],
     //LOCALSTORAGE
     localstorage: [],
 
@@ -59,11 +60,11 @@ export default function rootReducer(state = initialState, action) {
 
     switch (action.type) {
         case SET_USER_DATA:
-           // console.log("action", action    )
+            // console.log("action", action    )
             return {
                 ...state,
                 login: action.payload.jwt,
-                user: { id:action.payload.id, username: action.payload.username, picture: action.payload.picture, name: action.payload.name, email: action.payload.email, admin: action.payload.admin}
+                user: { id: action.payload.id, username: action.payload.username, picture: action.payload.picture, name: action.payload.name, email: action.payload.email, admin: action.payload.admin }
             }
         case GET_ALL_PRODUCTS:
             return {
@@ -77,11 +78,11 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 productComments: action.payload,
             }
-            case GET_ALL_REPORTED:
-                return {
-                    ...state,
-                    reportedComments: action.payload
-                }
+        case GET_ALL_REPORTED:
+            return {
+                ...state,
+                reportedComments: action.payload
+            }
         case GET_ALL_USERS:
             return {
                 ...state,
@@ -153,6 +154,11 @@ export default function rootReducer(state = initialState, action) {
             }
         case CREATE_COMMENT:
             return action.payload
+        case CREATE_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload
+            }
         case CREATE_PURCHASE:
             return {
                 ...state,
@@ -242,7 +248,7 @@ export default function rootReducer(state = initialState, action) {
                 }
             } else if (min > 0 && max === 0) {
                 for (const p of theProducts) {
-                    if ( min <= p.price) result.push(p)
+                    if (min <= p.price) result.push(p)
                 }
             } else if (max > 0 && min === 0) {
                 for (const p of theProducts) {
@@ -327,7 +333,7 @@ export default function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_RATING:
             ratingResults = [];
-            ratingResults = action.payload.sort((a, b) => a.rating - b.rating)
+            ratingResults = action.payload.sort((a, b) => b.rating - a.rating)
             return {
                 ...state,
                 filRating: ratingResults,
@@ -371,12 +377,12 @@ export default function rootReducer(state = initialState, action) {
                 localstorage: [action.payload]
 
             }
-            // case LOCALSTORAGEUSERINFO:
-            // return {
-            //     ...state,
-            //     localstorage: [action.payload]
+        // case LOCALSTORAGEUSERINFO:
+        // return {
+        //     ...state,
+        //     localstorage: [action.payload]
 
-            // }
+        // }
         default:
             return state;
     }

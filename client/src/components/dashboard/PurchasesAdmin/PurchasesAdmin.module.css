@@ -19,9 +19,9 @@
 	text-align: center;
 }
 .h3 {
-	color: #17abda;
+	color: #0f6f8c;
 	font-size: 1rem;
-	font-weight: 400;
+	font-weight: 600;
 }
 
 .hr {
@@ -105,6 +105,8 @@
 .link {
 	text-decoration: none;
 	list-style: none;
+	color: #17abda;
+	font-size: 1rem;
 }
 .productCard2 {
 	display: flex;
@@ -140,4 +142,34 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+.Card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 5px;
+	color: whitesmoke;
+
+	justify-content: space-around;
+	align-items: center;
+	background-color: #142328;
+	width: 550px;
+	height: 400px;
+	padding: 5px 0px;
+	border-radius: 23px;
+	/* cursor: pointer; */
+	box-shadow: 2px 2px 15px #142328cc;
+}
+
+.btn {
+	width: 140px;
+	height: 25px;
+	border-radius: 13px;
+	background-color: #17abda;
+	backdrop-filter: blur(4px);
+	border: none;
+}
+
+.btn:hover {
+	color: whitesmoke;
 }

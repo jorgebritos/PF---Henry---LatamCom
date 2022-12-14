@@ -7,7 +7,7 @@ import s from './CreateProduct.module.css';
 // Input Validate /////////////////////////////
 const validateInput = (input) => {
 	let errors = {};
-	let expreg = /[.*+\-?^${}()|[\]\\/]/;
+	let expreg = /[,*+\-?^${}()|[\]\\/]/;
 	let regexURL = /((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
 
 	if (!input.name || input.name?.trim() >= 1) {
@@ -20,11 +20,13 @@ const validateInput = (input) => {
 		errors.image = 'Introduce an image';
 	} else if (!input.price) {
 		errors.price = 'Introduce a price';
-	} else if (expreg.test(input.price)) {
+	} else if (input.price / 2 < 0) {
 		errors.price = 'Introduce a valid price';
-	} else if (expreg.test(input.brand)) {
-		errors.brand = 'Introduce a valid brand';
-	} else if (!input.categories.length) {
+	}else if(!input.stock){
+		errors.stock = "Introduce a stock"
+	} else if(input.stock / 2 < 0 || input.stock % 1 !== 0){
+		errors.stock = "Introduce a valid stock"
+	}else if (!input.categories.length) {
 		errors.categories = 'Category is required!';
 	}
 	const sendButton = document.getElementById('sendButtom');
@@ -50,7 +52,7 @@ const CreateProduct = () => {
 		name: '',
 		description: '',
 		image: '',
-		price: '',
+		price: '0.00',
 		stock: 0,
 		brand: '',
 		categories: [],
@@ -175,6 +177,7 @@ const CreateProduct = () => {
 							name='file'
 							onChange={uploadImage}
 							autoComplete='off'
+							accept='image/*'
 							type='file'></input>
 						{errors.image && <p>{errors.image}</p>}
 						{loading ? (
@@ -193,6 +196,7 @@ const CreateProduct = () => {
 							name='price'
 							value={input.price}
 							onChange={introduceData}
+							step={0.01}
 							autoComplete='off'
 							type='number'
 							min='0'></input>
@@ -202,7 +206,7 @@ const CreateProduct = () => {
 					<br />
 
 					<div className={s.contsp}>
-						<label className={s.label}>P. Stock: </label>
+						<label className={s.label}>*P. Stock: </label>
 						<input
 							className={s.input}
 							name='stock'

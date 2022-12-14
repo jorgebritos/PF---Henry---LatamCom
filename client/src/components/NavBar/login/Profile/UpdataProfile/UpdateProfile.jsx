@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { updateUser, setUserData } from '../../../../../redux/actions/index';
 import s from './UpdateProfile.module.css';
@@ -10,7 +10,7 @@ const Validate = (input) => {
 	let expreg = /[.*+\-?^${}()|[\]\\/]/;
 	// let regexURL =
 	// 	/((http|ftp|https):)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:~+#-]*[\w@?^=%&amp;~+#-])?/;
-	let regexPassword = /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/;
+	// let regexPassword = /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/;
 	let regexEmail = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 
 	if (!input.firstname) {
@@ -21,13 +21,6 @@ const Validate = (input) => {
 		errors.lastname = 'Introduce a lastname';
 	} else if (expreg.test(input.lastname)) {
 		errors.lastname = 'Name yourself properly!';
-	} else if (!input.password) {
-		errors.password = 'Introduce a password';
-	} else if (!regexPassword.test(input.password)) {
-		errors.password =
-			'The password must contain: 8-16 characters and 1 number,lowercase letter, uppercase letter and non alphanumeric character ';
-	} else if (input.confirm_password !== input.password) {
-		errors.confirm_password = 'Both passwords must be the same';
 	} else if (!input.email) {
 		errors.email = 'Introduce an email';
 	} else if (!regexEmail.test(input.email)) {
@@ -48,16 +41,18 @@ const Validate = (input) => {
 };
 
 const UpdateProfile = (props) => {
-	const userNow = JSON.parse(localStorage.getItem('userInfo'));
+	const user = useSelector((state) => state.user);
+	const userNow = user.id ? user : JSON.parse(localStorage.getItem('userInfo'));
+	const allUsers = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
 	const history = useHistory();
-
+	console.log('USERNOW', userNow);
 	const [input, setInput] = useState({
 		firstname: userNow.name.split(' ', 1).join(),
 		lastname: userNow.name
 			.split(' ')
 			.slice(1)
-			.join(),
+			.join(' '),
 		password: '',
 		confirm_password: '',
 		email: userNow.email,
@@ -74,6 +69,9 @@ const UpdateProfile = (props) => {
 		username: '',
 	});
 	const [loading, setLoading] = useState(false);
+
+	const dataUser = allUsers.find((e) => e.id === user.id);
+	const passwordUser = dataUser.password;
 
 	const introduceData = (event) => {
 		event.preventDefault();
@@ -109,10 +107,9 @@ const UpdateProfile = (props) => {
 
 	const deleteNewImage = (e) => {
 		e.preventDefault();
-		setInput({ ...input, profile_image: userNow.picture});
-		const deleteInfo = document.getElementById("cloudinary")
-		deleteInfo.value= ""
-		console.log("asdasdasd",deleteInfo)
+		setInput({ ...input, profile_image: userNow.picture });
+		const deleteInfo = document.getElementById('cloudinary');
+		deleteInfo.value = '';
 	};
 	////////////////////////////////////////
 
@@ -120,34 +117,45 @@ const UpdateProfile = (props) => {
 	const submitData = (event) => {
 		event.preventDefault();
 		try {
-			const newDates = {
-				firstname: input.firstname,
-				lastname: input.lastname,
-				password: input.password,
-				email: input.email,
-				profile_image: input.profile_image,
-				username: input.username,
-				id: userNow.id,
-			};
-			const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
-			const userLocal = {
-				id: userNow.id,
-				username: newDates.username,
-				picture: input.profile_image,
-				name: newDates.firstname + ' ' + newDates.lastname,
-				email: newDates.email,
-				admin: userNow.admin,
-				jwt: loggedUserJWT,
-			};
-			
-				
-			dispatch(setUserData(userLocal))
-			.then(dispatch(updateUser(newDates)))
-			.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
-			.then(history.push('/profile/success'));
+			if (input.password === passwordUser) {
+				const newDates = {
+					firstname: input.firstname,
+					lastname: input.lastname,
+					password: input.password,
+					email: input.email,
+					profile_image: input.profile_image,
+					username: input.username,
+					id: userNow.id,
+				};
+				const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
+				const userLocal = {
+					id: userNow.id,
+					username: newDates.username,
+					picture: input.profile_image,
+					name: newDates.firstname + ' ' + newDates.lastname,
+					email: newDates.email,
+					admin: userNow.admin,
+					jwt: loggedUserJWT,
+				};
+
+				dispatch(setUserData(userLocal))
+					.then(dispatch(updateUser(newDates)))
+					.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
+					.then(history.push('/profile/success'));
+			} else {
+				alert('Incorrect Password');
+			}
 		} catch (error) {
 			alert(error.message);
 		}
+	};
+	/////////////////////////////////////////////
+
+	// Visibility of password ///////////////////
+	const visibility = (e) => {
+		const { checked } = e.target;
+		const contraseña = document.getElementById('seePassword');
+		checked === true ? (contraseña.type = '') : (contraseña.type = 'password');
 	};
 	/////////////////////////////////////////////
 
@@ -164,7 +172,7 @@ const UpdateProfile = (props) => {
 
 				<div className={s.cont_form}>
 					<form className={s.form} onSubmit={submitData}>
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Firstname</label>
 							<input
 								className={s.input}
@@ -176,7 +184,7 @@ const UpdateProfile = (props) => {
 							{errors.firstname && <p>{errors.firstname}</p>}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Lastname</label>
 							<input
 								className={s.input}
@@ -188,32 +196,7 @@ const UpdateProfile = (props) => {
 							{errors.lastname && <p>{errors.lastname}</p>}
 						</div>
 						<br />
-
-						<div>
-							<label className={s.label}>Password</label>
-							<input
-								className={s.input}
-								name='password'
-								value={input.password}
-								autoComplete='off'
-								onChange={introduceData}
-							/>
-							{errors.password && <p>{errors.password}</p>}
-						</div>
-						<br />
-						<div>
-							<label className={s.label}>Confirm password</label>
-							<input
-								className={s.input}
-								name='confirm_password'
-								value={input.confirm_password}
-								autoComplete='off'
-								onChange={introduceData}
-							/>
-							{errors.confirm_password && <p>{errors.confirm_password}</p>}
-						</div>
-						<br />
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Email</label>
 							<input
 								className={s.input}
@@ -225,7 +208,7 @@ const UpdateProfile = (props) => {
 							{errors.email && <p>{errors.email}</p>}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							{userNow.picture ? (
 								<div>
 									<p>Actual image</p>
@@ -248,13 +231,12 @@ const UpdateProfile = (props) => {
 							<p>(this will replace the current image)</p>
 							<input
 								className={s.input}
-								id="cloudinary"
+								id='cloudinary'
 								type='file'
 								name='file'
-								accept="image/*"
+								accept='image/*'
 								autoComplete='off'
-								onChange={uploadImage}
-							/>
+								onChange={uploadImage}></input>
 							{loading ? (
 								<h4>Uploading image...</h4>
 							) : input.profile_image !== null &&
@@ -270,8 +252,9 @@ const UpdateProfile = (props) => {
 							)}
 						</div>
 						<br />
-						<div>
-							{document.getElementById("cloudinary") && document.getElementById("cloudinary").value  ? (
+						<div className={s.div}>
+							{document.getElementById('cloudinary') &&
+							document.getElementById('cloudinary').value ? (
 								<button className={s.btn} onClick={deleteNewImage}>
 									Delete new image
 								</button>
@@ -280,7 +263,7 @@ const UpdateProfile = (props) => {
 							)}
 						</div>
 						<br />
-						<div>
+						<div className={s.div}>
 							<label className={s.label}>Username</label>
 							<input
 								className={s.input}
@@ -292,8 +275,33 @@ const UpdateProfile = (props) => {
 							{errors.username && <p>{errors.username}</p>}
 						</div>
 						<br />
+						<div className={s.div}>
+							<label className={s.label}>Confirm Password</label>
+							<input
+								className={s.input}
+								name='password'
+								id='seePassword'
+								type='password'
+								value={input.password}
+								autoComplete='off'
+								onChange={introduceData}
+							/>
+						</div>
+						<br />
 						<div>
-							<button className={s.btn} type='submit' id='sendButtom' disabled>
+							<label className={s.labelC}>
+								<input
+									className={s.inputC}
+									type={'checkbox'}
+									name='seePassword'
+									onChange={(e) => visibility(e)}
+								/>
+								<span className={s.spanC}>See password</span>
+							</label>
+						</div>
+						<br />
+						<div className={s.div}>
+							<button className={s.btn} type='submit' id='sendButtom'>
 								SEND
 							</button>
 						</div>
