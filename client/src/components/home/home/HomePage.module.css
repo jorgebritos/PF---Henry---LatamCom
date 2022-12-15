@@ -46,5 +46,9 @@
 	align-items: center;
 	height: 230px;
 	width: 100%;
+	background-image: url('../../../asset/franja-03.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+
 	background-color: #a9d6e3cf;
 }
