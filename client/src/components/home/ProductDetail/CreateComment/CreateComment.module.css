@@ -63,6 +63,7 @@
 	background-color: #17abda;
 	backdrop-filter: blur(4px);
 	border: none;
+	margin-bottom: 5px;
 }
 
 .btn:hover {
