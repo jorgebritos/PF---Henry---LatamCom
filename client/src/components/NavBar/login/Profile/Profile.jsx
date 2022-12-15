@@ -28,7 +28,7 @@ export const Profile = () => {
 			</div>
 		);
 	}
-
+	console.log("userNow",userNow)
 	// Object.keys(userNow).length > 0 && !name ? setItems(userNow) : isAuthenticated ? setItems(user) : setItems(voidItem)
 
 	return (
@@ -37,20 +37,21 @@ export const Profile = () => {
 				<div className={s.conten}>
 					<div className={s.barPerfil}>
 						<div className={s.imgPerfil}>
-							{user ? (
-								<img
-									src={user.picture}
-									alt={user.name ? user.name : userNow.name}
-									className={s.img}
-								/>
-							) : userNow.picture ? (
+						
+							{userNow.picture ? (
 								<img
 									src={userNow.picture}
 									alt={userNow.name}
 									className={s.img}
 								/>
-							) : (
+							) :user ? (
 								<img src={usericon} alt={'user icon'} className={s.img} />
+							) :  (
+								<img
+									src={user.picture}
+									alt={user.name ? user.name : userNow.name}
+									className={s.img}
+								/>
 							)}
 						</div>
 						<div className={s.infoPerfil}>

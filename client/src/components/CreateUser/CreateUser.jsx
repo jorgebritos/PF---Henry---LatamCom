@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createUser, getAllUsers } from '../../redux/actions/index';
 import s from './CreateUser.module.css';
+
 
 // Input Validate /////////////////////////////
 /* const validateInput = (input) => {
@@ -57,9 +58,9 @@ import s from './CreateUser.module.css';
 const CreateUser = () => {
 	//Hooks and states ///////////////////////
 	const dispatch = useDispatch();
-
+	const allUsers = useSelector((state)=>state.allUsers)
 	const history = useHistory();
-
+	console.log(allUsers);
 	const [input, setInput] = useState({
 		firstname: '',
 		lastname: '',
@@ -89,19 +90,16 @@ const CreateUser = () => {
 
 	const uploadImage = async (e) => {
 		const files = e.target.files;
-		console.log(files);
 		setErrors({
 			...errors,
 			[e.target.name]: '',
 		});
 		if (!/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i.test(files[0].name)) {
-			console.log(files);
 			setErrors({
 				...errors,
 				[e.target.name]: 'It must be a valid format',
 			});
 		} else {
-			console.log(files);
 			setErrors({
 				...errors,
 				[e.target.name]: '',
@@ -185,7 +183,10 @@ const CreateUser = () => {
 		if (event.target.value.length < 4) {
 			return 'It must have at least 4 characters';
 		}
-
+		const email = document.getElementById("emailTest")
+		if(event.target.value === email.value){
+			return 'Your password can not be the same as your email'
+		}
 		return '';
 	}
 
@@ -259,7 +260,6 @@ const CreateUser = () => {
 
 		switch (event.target.name) {
 			case 'firstname':
-				console.log('err ', event.target.value);
 				setErrors({
 					...errors,
 					[event.target.name]: '',
@@ -270,7 +270,6 @@ const CreateUser = () => {
 					firstname: event.target.value,
 				});
 
-				console.log('erm', controllerFormFirstname(event));
 				if (controllerFormFirstname(event).length > 0) {
 					setErrors({
 						...errors,
@@ -281,7 +280,6 @@ const CreateUser = () => {
 				break;
 
 			case 'lastname':
-				console.log('err ', event.target.value);
 				setErrors({
 					...errors,
 					[event.target.name]: '',
@@ -292,7 +290,6 @@ const CreateUser = () => {
 					lastname: event.target.value,
 				});
 
-				console.log('erm', controllerFormLastname(event));
 				if (controllerFormLastname(event).length > 0) {
 					setErrors({
 						...errors,
@@ -302,7 +299,6 @@ const CreateUser = () => {
 
 				break;
 			case 'email':
-				console.log('err ', event.target.value);
 				setErrors({
 					...errors,
 					[event.target.name]: '',
@@ -313,7 +309,6 @@ const CreateUser = () => {
 					email: event.target.value,
 				});
 
-				console.log('erm', controllerFormEmail(event));
 				if (controllerFormEmail(event).length > 0) {
 					setErrors({
 						...errors,
@@ -335,7 +330,6 @@ const CreateUser = () => {
 					username: event.target.value,
 				});
 
-				console.log('erm', controllerFormUsername(event));
 				if (controllerFormUsername(event).length > 0) {
 					setErrors({
 						...errors,
@@ -369,18 +363,18 @@ const CreateUser = () => {
 		event.preventDefault();
 		const value = event.target.value;
 		const property = event.target.name;
-		console.log(property);
 		setInput({ ...input, [property]: value });
 		/* setErrors(validateInput({ ...input, [property]: value })) */
 	};
 	//-----------------------------------------------------------------------------------
 
 	///////////////////////////////////////////////////////
-
+	
+	
 	// Create user /////////////////////////////
 	const submitData = async (event) => {
 		event.preventDefault();
-		console.log(input);
+		
 		try {
 			let checkErrors = [];
 			for (let key in errors) {
@@ -388,14 +382,18 @@ const CreateUser = () => {
 					checkErrors.push(key);
 				}
 			}
-			console.log('check: ', checkErrors.length);
-			if (Object.keys(errors).length === 6 && checkErrors.length === 6) {
+			
+			const match = allUsers.find((e)=>e.email === input.email)
+
+			if (Object.keys(errors).length === 6 && checkErrors.length === 6 && !match ) {
 				await dispatch(createUser(input)).then(history.push('/home'));
 				alert('User created');
 			} else if (Object.keys(errors).length < 6) {
-				console.log(checkErrors);
+				
 				alert('The form in incomplete');
-			} else {
+			} else if(match){
+				alert('The email entered is currently in use')
+			}else {
 				alert('There are errors in the form');
 			}
 		} catch (error) {
@@ -451,6 +449,7 @@ const CreateUser = () => {
 						<input
 							className={s.input}
 							name='email'
+							id="emailTest"
 							value={input.email}
 							onChange={introduceData}
 							autoComplete='off'></input>

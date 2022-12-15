@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { updateUser, setUserData } from '../../../../../redux/actions/index';
 import s from './UpdateProfile.module.css';
 import Loading from '../../../../loading/Loading';
+// import { locals } from '../../../../../../../api/src/app';
 
 const Validate = (input) => {
 	let errors = {};
@@ -17,6 +18,8 @@ const Validate = (input) => {
 		errors.firstname = 'Introduce a firstname';
 	} else if (expreg.test(input.firstname)) {
 		errors.firstname = 'Name yourself properly!';
+	} else if(input.firstname.includes(" ")){
+		errors.firstname = "It only admit one name"
 	} else if (!input.lastname) {
 		errors.lastname = 'Introduce a lastname';
 	} else if (expreg.test(input.lastname)) {
@@ -43,6 +46,7 @@ const Validate = (input) => {
 const UpdateProfile = (props) => {
 	const user = useSelector((state) => state.user);
 	const userNow = user.id ? user : JSON.parse(localStorage.getItem('userInfo'));
+	const loggedUser = JSON.parse(localStorage.getItem("loggedUser"))
 	const allUsers = useSelector((state) => state.allUsers);
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -112,12 +116,41 @@ const UpdateProfile = (props) => {
 		deleteInfo.value = '';
 	};
 	////////////////////////////////////////
-
+	console.log("loggedUser",loggedUser)
 	// Uptade User //////////////////////////////
 	const submitData = (event) => {
 		event.preventDefault();
 		try {
-			if (input.password === passwordUser) {
+			if(loggedUser.email !== loggedUser.password){
+				if (input.password === passwordUser) {
+					const newDates = {
+						firstname: input.firstname,
+						lastname: input.lastname,
+						password: input.password,
+						email: input.email,
+						profile_image: input.profile_image,
+						username: input.username,
+						id: userNow.id,
+					};
+					const loggedUserJWT = JSON.parse(localStorage.getItem('loggedUserJWT'));
+					const userLocal = {
+						id: userNow.id,
+						username: newDates.username,
+						picture: input.profile_image,
+						name: newDates.firstname + ' ' + newDates.lastname,
+						email: newDates.email,
+						admin: userNow.admin,
+						jwt: loggedUserJWT,
+					};
+	
+					dispatch(setUserData(userLocal))
+						.then(dispatch(updateUser(newDates)))
+						.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
+						.then(history.push('/profile/success'));
+				} else {
+					alert('Incorrect Password');
+				}
+			}else{
 				const newDates = {
 					firstname: input.firstname,
 					lastname: input.lastname,
@@ -141,10 +174,9 @@ const UpdateProfile = (props) => {
 				dispatch(setUserData(userLocal))
 					.then(dispatch(updateUser(newDates)))
 					.then(localStorage.setItem('userInfo', JSON.stringify(userLocal)))
-					.then(history.push('/profile/success'));
-			} else {
-				alert('Incorrect Password');
+					.then(history.push('/profile/success'))
 			}
+			
 		} catch (error) {
 			alert(error.message);
 		}
@@ -152,6 +184,7 @@ const UpdateProfile = (props) => {
 	/////////////////////////////////////////////
 
 	// Visibility of password ///////////////////
+	
 	const visibility = (e) => {
 		const { checked } = e.target;
 		const contraseña = document.getElementById('seePassword');
@@ -275,31 +308,37 @@ const UpdateProfile = (props) => {
 							{errors.username && <p>{errors.username}</p>}
 						</div>
 						<br />
-						<div className={s.div}>
-							<label className={s.label}>Confirm Password</label>
-							<input
-								className={s.input}
-								name='password'
-								id='seePassword'
-								type='password'
-								value={input.password}
-								autoComplete='off'
-								onChange={introduceData}
-							/>
-						</div>
-						<br />
+						{loggedUser.email !== loggedUser.password ? (
 						<div>
-							<label className={s.labelC}>
+							<div className={s.div}>
+								<label className={s.label}>Confirm Password</label>
 								<input
-									className={s.inputC}
-									type={'checkbox'}
-									name='seePassword'
-									onChange={(e) => visibility(e)}
+									className={s.input}
+									name='password'
+									id='seePassword'
+									type='password'
+									value={input.password}
+									autoComplete='off'
+									onChange={introduceData}
 								/>
-								<span className={s.spanC}>See password</span>
-							</label>
+							</div>
+							<br />
+							<div>
+								<label className={s.labelC}>
+									<input
+										className={s.inputC}
+										type={'checkbox'}
+										name='seePassword'
+										onChange={(e) => visibility(e)}
+									/>
+									<span className={s.spanC}>See password</span>
+								</label>
+							</div>
+							<br />
 						</div>
-						<br />
+						
+						):""}
+						
 						<div className={s.div}>
 							<button className={s.btn} type='submit' id='sendButtom'>
 								SEND
