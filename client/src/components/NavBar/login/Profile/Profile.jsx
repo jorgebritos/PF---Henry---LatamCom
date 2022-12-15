@@ -44,14 +44,8 @@ export const Profile = () => {
 									alt={userNow.name}
 									className={s.img}
 								/>
-							) :user ? (
+							) : (
 								<img src={usericon} alt={'user icon'} className={s.img} />
-							) :  (
-								<img
-									src={user.picture}
-									alt={user.name ? user.name : userNow.name}
-									className={s.img}
-								/>
 							)}
 						</div>
 						<div className={s.infoPerfil}>
