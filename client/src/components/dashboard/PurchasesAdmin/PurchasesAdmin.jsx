@@ -23,7 +23,7 @@ export default function PurchasesAdmin() {
 		dispatch(getAllPurchases());
 		dispatch(getAllProducts());
 		dispatch(getAllReported());
-	}, [reportedComments,dispatch]);
+	}, [reportedComments, dispatch]);
 
 	let totalIncome = () => {
 		if (allPurchases.length > 0) {
@@ -48,11 +48,11 @@ export default function PurchasesAdmin() {
 				<h1 className={s.h1}>Total Income: ${totalIncome()} USD</h1>
 			</div>
 
-			<hr className={s.hr} />
+			{/* <hr className={s.hr} /> */}
 
 			<div className={s.conte_row}>
 				<div>
-					<h2 className={s.h2}>REPORTED COMMENTS</h2>
+					{/* <h2 className={s.h2}>REPORTED COMMENTS</h2>
 					<div className={s.cads}>
 						{reportedComments.length > 0 ? (
 							reportedComments.map((c) => {
@@ -87,15 +87,15 @@ export default function PurchasesAdmin() {
 						) : (
 							<h3>All Good for now!</h3>
 						)}
-					</div>
+					</div> */}
 				</div>
-				<br />
-				<hr className={s.hr} />
+				{/* <br />
+				<hr className={s.hr} /> */}
 				<br />
 				<div>
-					<h2 className={s.h2}>ITEMS OUT OF STOCK</h2>
+					{/* <h2 className={s.h2}>ITEMS OUT OF STOCK</h2> */}
 
-					<div className={s.cads}>
+					{/* <div className={s.cads}>
 						{outOfStock.length > 0 ? (
 							outOfStock.map((p) => {
 								return (
@@ -121,7 +121,7 @@ export default function PurchasesAdmin() {
 						) : (
 							<h3 className={s.h2}>Currently, your shop has no items</h3>
 						)}
-					</div>
+					</div> */}
 				</div>
 				<br />
 				<hr className={s.hr} />
