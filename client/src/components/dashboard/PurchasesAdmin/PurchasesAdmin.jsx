@@ -2,22 +2,22 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	deleteComment,
-	dismissReport,
+	// deleteComment,
+	// dismissReport,
 	getAllProducts,
 	getAllPurchases,
 	getAllReported,
 } from '../../../redux/actions';
-import { Link, NavLink } from 'react-router-dom';
+// import { Link, NavLink } from 'react-router-dom';
 import s from './PurchasesAdmin.module.css';
 
 export default function PurchasesAdmin() {
 	const dispatch = useDispatch();
 	const allPurchases = useSelector((state) => state.purchasesAdmin);
-	const allProducts = useSelector((state) => state.allProducts);
+	// const allProducts = useSelector((state) => state.allProducts);
 	const reportedComments = useSelector((state) => state.reportedComments);
-	const outOfStock =
-		allProducts.length > 0 ? allProducts.filter((p) => p.stock === 0) : [];
+	// const outOfStock =
+	// 	allProducts.length > 0 ? allProducts.filter((p) => p.stock === 0) : [];
 
 	useEffect(() => {
 		dispatch(getAllPurchases());
@@ -38,9 +38,9 @@ export default function PurchasesAdmin() {
 		}
 	};
 
-	const dismissedReport = (id) => {
-		dispatch(dismissReport(id));
-	};
+	// const dismissedReport = (id) => {
+	// 	dispatch(dismissReport(id));
+	// };
 
 	return (
 		<div className={s.conten}>
