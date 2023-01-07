@@ -37,7 +37,7 @@ const renderer = ({ seconds, completed }) => {
 const Counter = () => {
 	return (
 		<span className={s.contador}>
-			<Countdown date={Date.now() + 15000} renderer={renderer} />
+			<Countdown date={Date.now() + 30000} renderer={renderer} />
 		</span>
 	);
 };
