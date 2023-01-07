@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import s from './SuccessedPayment.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPurchase, getPurchaseDetail } from '../../redux/actions';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import Counter from './Counter';
 
 const purchaseStruct = (purchase) => {
@@ -19,45 +19,60 @@ const purchaseStruct = (purchase) => {
 	return pStruct;
 };
 
+
 const SuccessedPayment = (req) => {
-	const history = useHistory();
+	// const history = useHistory();
 	const search = req.location.search;
 	const dispatch = useDispatch();
 	const purchased = useSelector((state) => state.purchase);
-	const created = useSelector((state) => state.createdPurchase);
-	useEffect(() => {
-		dispatch(getPurchaseDetail(search)).catch(() => {
-			return (
-				<div className={s.container}>
-					<div className={s.card}>
-						<div className={s.topcard}>
-							<img
-								src='https://img.icons8.com/color/300/000000/cancel--v1.png'
-								alt='error'
-								className={s.img}
-							/>
-						</div>
-						<div className={s.buttoncard}>
-							<p>An error interrupted the transaction, please try later.</p>
+	// const created = useSelector((state) => state.createdPurchase);
+
+	const handleClick = () => {
+		if(typeof purchased === 'object' && purchased.hasOwnProperty('data'))
+		{
+			let products = JSON.parse(localStorage.getItem('cart'));
+			let amounts = [];
+			for (const p of products) {
+				amounts.push(p.amount);
+			}
+			dispatch(createPurchase({ purchase: purchaseStruct(purchased), amounts }));
+			localStorage.removeItem('cart');
+			localStorage.removeItem('idUser');
+			// history.push('/home');
+		}
+		else{
+			dispatch(getPurchaseDetail(search)).catch(() => {
+				return (
+					<div className={s.container}>
+						<div className={s.card}>
+							<div className={s.topcard}>
+								<img
+									src='https://img.icons8.com/color/300/000000/cancel--v1.png'
+									alt='error'
+									className={s.img}
+								/>
+							</div>
+							<div className={s.buttoncard}>
+								<p>An error interrupted the transaction, please try later.</p>
+							</div>
 						</div>
 					</div>
-				</div>
-			);
-		});
-	}, [created, dispatch, search]);
-
-	const handleClick = (e) => {
-		e.preventDefault();
-		let products = JSON.parse(localStorage.getItem('cart'));
-		let amounts = [];
-		for (const p of products) {
-			amounts.push(p.amount);
+				);
+			});
 		}
-		dispatch(createPurchase({ purchase: purchaseStruct(purchased), amounts }));
-		localStorage.removeItem('cart');
-		localStorage.removeItem('idUser');
-		history.push('/home');
 	};
+
+	useEffect(() => {
+		handleClick()
+		
+		
+		// eslint-disable-next-line
+	}, [dispatch, search,purchased]);
+
+	const toHome=(e)=>{
+		e.preventDefault()
+		window.location.href='/home'
+	}
 
 	return (
 		<div className={s.container}>
@@ -84,9 +99,9 @@ const SuccessedPayment = (req) => {
 					{purchased ? (
 						<span className={s.messagge}>
 							Your purchase was successfully complete!
-							{created.hasOwnProperty('id')
+							{/* {created.hasOwnProperty('id')
 								? (window.location.href = `${window.location.origin}/home`)
-								: ''}
+								: ''} */}
 						</span>
 					) : (
 						<div className={s.messagge}>
@@ -96,7 +111,7 @@ const SuccessedPayment = (req) => {
 					)}
 				</div>
 				{purchased ? (
-					<button className={s.homebtn} onClick={(e) => handleClick(e)}>
+					<button className={s.homebtn} onClick={(e) => toHome(e)}>
 						Return to Home
 					</button>
 				) : (
