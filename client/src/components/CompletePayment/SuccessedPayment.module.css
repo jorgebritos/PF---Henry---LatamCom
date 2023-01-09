@@ -101,3 +101,16 @@
 .homelnk:hover {
 	cursor: pointer;
 }
+
+.vMessage{
+	display: flex;
+	justify-content: center;
+	font-size: larger;
+	font-weight: 800;
+}
+
+.description{
+	display: flex;
+	justify-content: center;
+	color:white
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useEffect } from 'react';
 import s from './SuccessedPayment.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +25,7 @@ const SuccessedPayment = (req) => {
 	const search = req.location.search;
 	const dispatch = useDispatch();
 	const purchased = useSelector((state) => state.purchase);
-	// const created = useSelector((state) => state.createdPurchase);
+	const [failed, setFailed] = useState(false);
 
 	const handleClick = () => {
 		if(typeof purchased === 'object' && purchased.hasOwnProperty('data'))
@@ -42,6 +42,7 @@ const SuccessedPayment = (req) => {
 		}
 		else{
 			dispatch(getPurchaseDetail(search)).catch(() => {
+				setFailed(true)
 				return (
 					<div className={s.container}>
 						<div className={s.card}>
@@ -78,7 +79,7 @@ const SuccessedPayment = (req) => {
 		<div className={s.container}>
 			<div className={s.card}>
 				<div className={s.topcard}>
-					{!purchased ? (
+					{!purchased && !failed ? (
 						<iframe
 							title=' '
 							src='https://giphy.com/embed/NEmoHeRrWFvdO4sNaY'
@@ -87,7 +88,14 @@ const SuccessedPayment = (req) => {
 							frameBorder='0'
 							className='giphy-embed'
 							allowFullScreen></iframe>
-					) : (
+					) : failed?(
+						<img
+							src='https://img.icons8.com/color/300/000000/cancel--v1.png'
+							alt='error'
+							className={s.img}
+						/>
+							
+					):(
 						<img
 							src='https://img.icons8.com/office/350/000000/checked--v1.png'
 							alt='success'
@@ -104,10 +112,9 @@ const SuccessedPayment = (req) => {
 								: ''} */}
 						</span>
 					) : (
-						<div className={s.messagge}>
-							<span>Verifiying purchase process...</span>
-							<Counter />
-						</div>
+						
+							
+							<Counter flag={failed}/>
 					)}
 				</div>
 				{purchased ? (
