@@ -17,6 +17,7 @@ const CreateComment = () => {
 	const dispatch = useDispatch();
 	const [flag, setFlag] = useState(true);
 	const [show, setShow] = useState(false);
+	const values = [1, 2, 3, 4, 5];
 
 	const product = useSelector((state) => state.productDetail);
 	let comments = useSelector((state) => state.productComments);
@@ -29,7 +30,7 @@ const CreateComment = () => {
 
 	const [comment, setComment] = useState({
 		comment: '',
-		rating: 1,
+		rating: 5,
 	});
 
 	function handleComment(e) {
@@ -38,6 +39,7 @@ const CreateComment = () => {
 			...comment,
 			[e.target.name]: e.target.value,
 		});
+
 		return comment;
 	}
 
@@ -53,6 +55,24 @@ const CreateComment = () => {
 		}
 		return newRating;
 	};
+
+	const showStars = (e, value) => {
+		e.preventDefault()
+		document.getElementById('rating').innerHTML = ""
+		values.forEach(i => {
+			let img = document.createElement('img');
+			img.src = i <= value ? star : ""
+			img.id = i
+			img.value = i
+			img.name = "rating"
+			img.alt = "vacio"
+			img.addEventListener('click', function (e) {
+				handleComment(e)
+				showStars(e, i);
+			})
+			document.getElementById('rating').appendChild(img)
+		})
+	}
 
 	async function reportCommentary(e, comment) {
 		e.preventDefault();
@@ -126,16 +146,20 @@ const CreateComment = () => {
 							<div className={s.rating}>
 								<label>Rating:</label>
 								<br />
-								<select
-									className={s.select}
-									name='rating'
-									onChange={(e) => handleComment(e)}>
-									<option value='1'>1</option>
-									<option value='2'>2</option>
-									<option value='3'>3</option>
-									<option value='4'>4</option>
-									<option value='5'>5</option>
-								</select>
+								<div id={'rating'}></div>
+								{document.getElementById('rating') ? document.getElementById('rating').innerHTML === "" ? values.forEach(i => {
+									let img = document.createElement('img');
+									img.src = star
+									img.id = i
+									img.value = i
+									img.name = "rating"
+									img.alt = "vacio"
+									img.addEventListener('click', function (e) {
+										handleComment(e)
+										showStars(e, i);
+									})
+									document.getElementById('rating').appendChild(img)
+								}) : "" : ""}
 								<br />
 							</div>
 							<div className={s.comment}>
