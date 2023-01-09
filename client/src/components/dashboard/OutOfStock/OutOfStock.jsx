@@ -24,7 +24,7 @@ export default function OutOfStock() {
 						outOfStock.map((p) => {
 							return (
 								<Link className={s.link} to={'/update'} key={p.id}>
-									<div className={s.productCard}>
+									<div className={s.productCard} onPointerOver={e => localStorage.setItem("product", JSON.stringify(p))}>
 										<div className={s.cimg}>
 											<img
 												className={s.img}

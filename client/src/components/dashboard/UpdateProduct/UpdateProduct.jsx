@@ -40,6 +40,14 @@ function UpdateProduct() {
 		categories: '',
 	});
 
+	function simplify() {
+		let item = JSON.parse(localStorage.getItem("product"));
+		if (item) {
+			seleccionarProducto(item, "Editar");
+			localStorage.removeItem("product")
+		}
+	}
+
 	const handleSubmit = () => {
 		let newProduct = data;
 		newProduct.forEach((producto) => {
@@ -73,7 +81,6 @@ function UpdateProduct() {
 			...prevState,
 			[name]: value,
 		}));
-		console.log(productoSeleccionado);
 	};
 
 	const seleccionarProducto = (e, caso) => {
@@ -83,6 +90,7 @@ function UpdateProduct() {
 
 	useEffect(() => {
 		dispatch(getAllProducts());
+		simplify();
 	}, [dispatch]);
 
 	// const abrirCerrarModalInsertar = () => {

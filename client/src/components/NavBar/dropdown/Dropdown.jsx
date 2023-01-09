@@ -57,7 +57,6 @@ function Dropdown({ items = [], dropdownTitle }) {
         
         // eslint-disable-next-line
     }, [isOpen]);
-    console.log(reportComment);
     return (
         <div className={dropdown_wrapper} onKeyUp={keyHandler}>
             <button
